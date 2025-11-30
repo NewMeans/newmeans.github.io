@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NewMeans · Insta Redirect</title>
+  <meta http-equiv="Cache-Control" content="no-store" />
+  <style>
+    :root { color-scheme: light dark; }
+    html,body { height:100%; margin:0; font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial,sans-serif; }
+    body { display:flex; align-items:center; justify-content:center; text-align:center; padding:2rem; }
+    main { max-width:480px; }
+    code { font-size:0.95rem; background:#f6f8fa; padding:0.2rem 0.4rem; border-radius:4px; color:#d6336c; }
+  </style>
+  <script>
+    // TODO: 리디렉션할 Instagram URL을 여기에 넣으세요. 예: 'https://instagram.com/newmeans'
+    const targetUrl = 'https://www.instagram.com/typer_newmeans/';
+
+    if (targetUrl) {
+      // JS 리디렉션 (즉시 이동)
+      window.location.replace(targetUrl);
+    }
+  </script>
+</head>
+<body>
+  <main>
+    <h1>@NewMeans</h1>
+    <p>이 페이지는 Instagram 링크 리디렉션을 위해 예약되어 있습니다.</p>
+    <p><strong>설정 방법</strong></p>
+    <ol>
+      <li><code>insta/index.html</code> 파일을 열어 <code>targetUrl</code>에 실제 Instagram URL을 입력합니다.</li>
+      <li>필요하면 <code>meta refresh</code> 태그도 아래에 추가할 수 있습니다.</li>
+      <li>변경 후 커밋 &amp; 푸시하면 <code>/insta</code> 경로로 접속 시 자동으로 이동합니다.</li>
+    </ol>
+    <p>Instagram 링크가 아직 설정되지 않았습니다.</p>
+  </main>
+</body>
+</html>
