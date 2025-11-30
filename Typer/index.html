@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Typer | NewMeans</title>
+  <style>
+    html,body{height:100%;margin:0}
+    body{display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial;color:#111;background:#fff}
+    main{text-align:center;padding:2rem}
+    a{color:inherit;text-decoration:underline}
+  </style>
+  <script>
+    (function() {
+      var playUrl = 'https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share';
+      var appStoreUrl = 'https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938';
+      var ua = navigator.userAgent || '';
+      var platform = navigator.platform || '';
+
+      var isAndroid = /Android/i.test(ua);
+      var isIOS = /(iPhone|iPad|iPod)/i.test(ua) || (platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      var isMac = /Macintosh|Mac OS X/i.test(ua) || /Mac/i.test(platform);
+
+      var target = playUrl;
+      if (isAndroid) {
+        target = playUrl;
+      } else if (isIOS || isMac) {
+        target = appStoreUrl;
+      }
+
+      window.location.replace(target);
+    })();
+  </script>
+</head>
+<body>
+  <main>
+    <h1>Typer</h1>
+    <p>앱 스토어로 이동 중입니다.</p>
+    <p>자동으로 이동하지 않는다면 <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938">App Store</a> 또는 <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share">Google Play</a>를 눌러주세요.</p>
+  </main>
+</body>
+</html>
