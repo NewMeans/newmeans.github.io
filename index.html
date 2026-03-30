@@ -1,22 +1,224 @@
-
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NewMeans</title>
-  <style>
-    html,body{height:100%;margin:0}
-    body{display:flex;align-items:center;justify-content:center;font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Noto Sans',Arial;color:#111;background:#fff}
-    main{text-align:center;padding:2rem}
-    a{color:inherit;text-decoration:underline}
-  </style>
+  <meta name="description" content="NewMeans is a small team in Seoul making Typer, a tactile arcade game built around mechanical keyboard sound.">
+  <meta name="theme-color" content="#f7efe2">
+  <link rel="icon" type="image/png" href="NewMeans%20Web%20Assets/Logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main>
-    <h1>NewMeans</h1>
-    <p>NewMeans의 웹사이트입니다.</p>
-    <p><a href="/app-ads.txt">앱 인증 파일 (app-ads.txt)</a></p>
+  <main class="site-shell">
+    <section class="hero" id="top" data-hero>
+      <div class="hero-shell">
+        <header class="hero-bar">
+          <a class="hero-brand" href="#top" aria-label="NewMeans home">
+            <img class="hero-brand__logo" src="assets/brand/newmeans-logo.png" alt="NewMeans">
+          </a>
+
+          <div class="hero-bar__actions">
+            <a class="hero-bar__link" href="#typer">Gameplay</a>
+            <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false" aria-label="Enable sound">
+              <svg class="sound-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 14H8.5L13 18V6L8.5 10H5V14Z" fill="currentColor"></path>
+                <path d="M16 9C17.3 10.1 18 11.5 18 13C18 14.5 17.3 15.9 16 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+              </svg>
+              <span class="sr-only sound-toggle__label">Sound Off</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="hero-layout">
+          <div class="hero-copy" data-reveal style="--reveal-delay: 80ms;">
+            <p class="eyebrow">NewMeans presents</p>
+            <img class="hero-product-logo" src="assets/brand/typer-logo.png" alt="Typer">
+            <h1 class="hero-title">Mechanical keyboard joy, turned into a quick-hit arcade game.</h1>
+            <p class="hero-summary">Break blocks, chase scores, and build a desk setup that sounds as good as it looks.</p>
+
+            <div class="hero-actions">
+              <a class="store-link store-link--primary" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+              <a class="store-link store-link--secondary" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+
+            <ul class="hero-points" aria-label="Typer highlights">
+              <li>Switch-led sound</li>
+              <li>Collectible desks</li>
+              <li>Short score runs</li>
+            </ul>
+
+            <div class="hero-subactions">
+              <button class="hero-link" type="button" data-scroll-next>See gameplay</button>
+              <p class="hero-hint">Tap the desk on screen or use your keyboard.</p>
+            </div>
+          </div>
+
+          <div class="hero-stage-shell" data-reveal style="--reveal-delay: 180ms;">
+            <div class="hero-stage">
+              <div class="monitor-wrap">
+                <div class="monitor-body">
+                  <div class="monitor-screen">
+                    <div class="monitor-panel" data-monitor-panel>
+                      <div class="monitor-output" data-monitor-output aria-live="polite"></div>
+                      <div class="monitor-visualizer" data-visualizer aria-hidden="true"></div>
+                    </div>
+                  </div>
+                  <div class="monitor-controls" aria-hidden="true">
+                    <span class="monitor-dot"></span>
+                    <span class="monitor-dot"></span>
+                    <span class="monitor-dot"></span>
+                    <span class="monitor-power"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="keyboard-wrap">
+                <img class="hero-cable" src="NewMeans Web Assets/DeskImages/cable.png" alt="" loading="eager" decoding="async">
+                <div class="keyboard-bed" data-keyboard-bed aria-hidden="true"></div>
+                <div class="keyboard-grid" data-keyboard></div>
+                <img class="hero-sculpture" src="NewMeans Web Assets/DeskImages/sculpture.png" alt="" loading="eager" decoding="async">
+                <img class="keyboard-frame" src="NewMeans Web Assets/DeskImages/frame.png" alt="" loading="eager" decoding="async">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--proof" id="typer">
+      <div class="section-frame">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Current release</p>
+          <img class="section-logo" src="assets/brand/typer-logo.png" alt="Typer">
+          <h2 class="section-title">Break numbered blocks with the sound profile you actually want to hear.</h2>
+          <p class="section-summary">Short runs, readable goals, and a desk you keep tuning between matches.</p>
+        </div>
+
+        <div class="proof-layout">
+          <div class="proof-viewer" data-reveal style="--reveal-delay: 80ms;">
+            <div class="phone-shell" data-device-viewer tabindex="0" aria-label="Typer screenshots">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen">
+                <div class="phone-track" data-slide-track>
+                  <figure class="phone-slide" data-slide>
+                    <img data-slide-image alt="" loading="eager" decoding="async">
+                  </figure>
+                  <figure class="phone-slide" data-slide>
+                    <img data-slide-image alt="" loading="eager" decoding="async">
+                  </figure>
+                  <figure class="phone-slide" data-slide>
+                    <img data-slide-image alt="" loading="eager" decoding="async">
+                  </figure>
+                  <figure class="phone-slide" data-slide>
+                    <img data-slide-image alt="" loading="eager" decoding="async">
+                  </figure>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide-dots" data-slide-dots aria-label="Typer screenshot selector">
+              <button class="slide-dot" type="button" data-slide-dot></button>
+              <button class="slide-dot" type="button" data-slide-dot></button>
+              <button class="slide-dot" type="button" data-slide-dot></button>
+              <button class="slide-dot" type="button" data-slide-dot></button>
+            </div>
+          </div>
+
+          <div class="proof-details" data-reveal style="--reveal-delay: 140ms;">
+            <div class="rule-list">
+              <article class="rule-item">
+                <p class="rule-item__label">Choose the switch</p>
+                <p class="rule-item__body">Pick the sound texture you want driving the whole session before the first block drops.</p>
+              </article>
+
+              <article class="rule-item">
+                <p class="rule-item__label">Stay in the loop</p>
+                <p class="rule-item__body">Rounds stay short and readable, so it works when you only have a few minutes to spare.</p>
+              </article>
+
+              <article class="rule-item">
+                <p class="rule-item__label">Keep the desk yours</p>
+                <p class="rule-item__body">Collect keycaps and frames that make the game feel personal before you even hit play.</p>
+              </article>
+            </div>
+
+            <div class="proof-actions">
+              <a class="store-link store-link--primary" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+              <a class="store-link store-link--secondary" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--detail" id="desk">
+      <div class="section-frame">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Desk tuning</p>
+          <h2 class="section-title">Change the frame, swap the caps, and keep every run feeling like your own setup.</h2>
+          <p class="section-summary">Typer stays tactile before, during, and after the score chase.</p>
+        </div>
+
+        <div class="detail-editorial">
+          <figure class="detail-panel detail-panel--custom" data-reveal style="--reveal-delay: 60ms;">
+            <img src="NewMeans Web Assets/Screenshots/IMG_3497.PNG" alt="Typer desk customization screen with different keyboard themes and keycap options." loading="eager" decoding="async">
+          </figure>
+
+          <div class="detail-text" data-reveal style="--reveal-delay: 120ms;">
+            <article class="detail-block">
+              <p class="detail-label">Desk building</p>
+              <p class="detail-body">Collect keycaps and frames that change the mood before the first block appears.</p>
+            </article>
+
+            <article class="detail-block">
+              <p class="detail-label">Quick breaks</p>
+              <p class="detail-body">The rhythm is fast enough for score chasing and short enough to fit between other things.</p>
+            </article>
+
+            <article class="detail-block">
+              <p class="detail-label">Readable motion</p>
+              <p class="detail-body">Bright projectile trails, clean blocks, and a monitor HUD keep the action easy to parse.</p>
+            </article>
+          </div>
+
+          <figure class="detail-panel detail-panel--gameplay" data-reveal style="--reveal-delay: 150ms;">
+            <img src="NewMeans Web Assets/Screenshots/IMG_7203.PNG" alt="Typer gameplay screen with numbered blocks, a score monitor, and early round action." loading="eager" decoding="async">
+          </figure>
+
+          <figure class="detail-panel detail-panel--gameplay-alt" data-reveal style="--reveal-delay: 190ms;">
+            <img src="NewMeans Web Assets/Screenshots/IMG_7204.PNG" alt="Typer gameplay screen with blue blocks and multiple projectile trails." loading="eager" decoding="async">
+          </figure>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="footer-frame" data-reveal>
+      <p class="eyebrow">Install now</p>
+      <h2 class="section-title section-title--center">Install it, pick a switch, and let the desk do the rest.</h2>
+      <p class="section-summary section-summary--center">NewMeans is a small team in Seoul making games that feel good to hear.</p>
+
+      <div class="hero-actions footer-actions">
+        <a class="store-link store-link--primary" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+        <a class="store-link store-link--secondary" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+      </div>
+
+      <div class="footer-meta">
+        <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
+        <button class="copyright-button" type="button" data-copyright-trigger>© 2026 NewMeans</button>
+        <a href="/app-ads.txt">app-ads.txt</a>
+      </div>
+
+      <p class="footer-note">Made in Seoul by NewMeans.</p>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" defer></script>
+  <script src="main.js" defer></script>
 </body>
 </html>
