@@ -1,5 +1,4 @@
 const ASSET_PATHS = {
-  poster: "NewMeans Web Assets/Screenshots/IMG_3496.PNG",
   desk: {
     keyNormal: "NewMeans Web Assets/DeskImages/keycap_0.png",
     keyWide: "NewMeans Web Assets/DeskImages/keycap_1.png"
@@ -12,39 +11,41 @@ const ASSET_PATHS = {
   }
 };
 
+const KEYBOARD_GEOMETRY = {
+  normalKey: { width: 281, height: 281 },
+  wideKey: { width: 461, height: 281 },
+  usableWidthRatio: 0.654,
+  usableHeightRatio: 0.698
+};
+
 const VISUAL_KEY_LAYOUT = [
   [
+    { label: "Q", value: "Q", span: 1 },
     { label: "W", value: "W", span: 1 },
     { label: "E", value: "E", span: 1 },
     { label: "R", value: "R", span: 1 },
-    { label: "'", value: "Apostrophe", span: 1 },
-    { label: "M", value: "M", span: 1 },
-    { label: "K", value: "K", span: 2, wide: true }
-  ],
-  [
-    { label: "A", value: "A", span: 2, wide: true },
-    { label: "I", value: "I", span: 1 },
-    { label: "N", value: "N", span: 1 },
-    { label: "G", value: "G", span: 1 },
     { label: "T", value: "T", span: 1 },
-    { label: "H", value: "H", span: 1 }
+    { label: "Back", value: "Backspace", span: 2, wide: true }
   ],
   [
+    { label: "Space", value: "Space", span: 2, wide: true },
+    { label: "A", value: "A", span: 1 },
     { label: "S", value: "S", span: 1 },
-    { label: "O", value: "O", span: 1 },
-    { label: "U", value: "U", span: 1 },
     { label: "D", value: "D", span: 1 },
-    { label: "L", value: "L", span: 1 },
-    { label: "Y", value: "Y", span: 2, wide: true }
+    { label: "F", value: "F", span: 1 },
+    { label: "G", value: "G", span: 1 }
+  ],
+  [
+    { label: "Z", value: "Z", span: 1 },
+    { label: "X", value: "X", span: 1 },
+    { label: "C", value: "C", span: 1 },
+    { label: "V", value: "V", span: 1 },
+    { label: "B", value: "B", span: 1 },
+    { label: "Enter", value: "Enter", span: 2, wide: true }
   ]
 ];
 
 const TYPER_SLIDES = [
-  {
-    src: ASSET_PATHS.screenshots.customization,
-    label: "Desk customization",
-    alt: "Typer desk customization screen with different keyboard themes."
-  },
   {
     src: ASSET_PATHS.screenshots.gameplayOne,
     label: "Gameplay view one",
@@ -59,6 +60,11 @@ const TYPER_SLIDES = [
     src: ASSET_PATHS.screenshots.gameplayThree,
     label: "Gameplay view three",
     alt: "Typer gameplay screen with purple blocks and dense projectile trails."
+  },
+  {
+    src: ASSET_PATHS.screenshots.customization,
+    label: "Desk customization",
+    alt: "Typer desk customization screen with different keyboard themes."
   }
 ];
 
@@ -70,14 +76,24 @@ const AUDIO_CONFIG = {
 };
 
 const TERMINAL_CONFIG = {
+  initialLines: [
+    "Typer ver0.1.0",
+    "int main(void) {",
+    "  printf(\"by NewMeans\");",
+    "}",
+    ""
+  ],
   maxStoredLines: 18,
   desktopVisibleLines: 7,
   mobileVisibleLines: 5
 };
 
+document.documentElement.classList.add("has-js");
+
 document.addEventListener("DOMContentLoaded", () => {
   initSlides();
   initScrollButtons();
+  initReveals();
   initHero();
 });
 
@@ -85,11 +101,12 @@ function initHero() {
   const hero = document.querySelector("[data-hero]");
   const monitorOutput = document.querySelector("[data-monitor-output]");
   const keyboardRoot = document.querySelector("[data-keyboard]");
+  const keyboardBed = document.querySelector("[data-keyboard-bed]");
   const visualizerRoot = document.querySelector("[data-visualizer]");
   const soundToggle = document.querySelector("[data-sound-toggle]");
   const copyrightTrigger = document.querySelector("[data-copyright-trigger]");
 
-  if (!hero || !monitorOutput || !keyboardRoot || !visualizerRoot || !soundToggle) {
+  if (!hero || !monitorOutput || !keyboardRoot || !keyboardBed || !visualizerRoot || !soundToggle) {
     return;
   }
 
@@ -99,21 +116,39 @@ function initHero() {
   const audio = createAudioController(soundToggle, copyrightTrigger);
 
   let heroVisible = true;
-  let terminalBuffer = [""];
+  let terminalBuffer = [...TERMINAL_CONFIG.initialLines];
   let visualizerResetTimer = 0;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0];
-      heroVisible = !!entry && entry.isIntersecting && entry.intersectionRatio > 0.28;
-    },
-    { threshold: [0, 0.28, 0.55] }
-  );
+  initHeroProgress(hero);
+  syncKeyboardGeometry(keyboardRoot, keyboardBed);
 
-  observer.observe(hero);
+  if (typeof window.IntersectionObserver === "function") {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        heroVisible = !!entry && entry.isIntersecting && entry.intersectionRatio > 0.28;
+      },
+      { threshold: [0, 0.28, 0.55] }
+    );
+
+    observer.observe(hero);
+  }
+
   resetVisualizer(visualizerBars);
   renderTerminal();
   window.addEventListener("resize", renderTerminal);
+
+  if (typeof window.ResizeObserver === "function") {
+    const resizeObserver = new window.ResizeObserver(() => {
+      syncKeyboardGeometry(keyboardRoot, keyboardBed);
+    });
+
+    resizeObserver.observe(keyboardBed);
+  } else {
+    window.addEventListener("resize", () => {
+      syncKeyboardGeometry(keyboardRoot, keyboardBed);
+    });
+  }
 
   keyboardRoot.addEventListener("pointerdown", (event) => {
     const keyButton = event.target.closest("[data-key]");
@@ -123,7 +158,7 @@ function initHero() {
 
     const value = keyButton.dataset.keyValue;
     pressKey(value, keyMap);
-    insertCharacter(screenKeyToCharacter(value));
+    handleScreenAction(value);
     pulseVisualizer();
     audio.playKey();
   });
@@ -145,8 +180,6 @@ function initHero() {
     audio.playKey();
   });
 
-  document.documentElement.classList.add("hero-enhanced");
-
   function handlePhysicalAction(action) {
     if (action.type === "newline") {
       insertNewLine();
@@ -159,6 +192,25 @@ function initHero() {
     }
 
     insertCharacter(action.value);
+  }
+
+  function handleScreenAction(value) {
+    if (value === "Backspace") {
+      removeCharacter();
+      return;
+    }
+
+    if (value === "Enter") {
+      insertNewLine();
+      return;
+    }
+
+    if (value === "Space") {
+      insertCharacter(" ");
+      return;
+    }
+
+    insertCharacter(screenKeyToCharacter(value));
   }
 
   function insertCharacter(character) {
@@ -253,6 +305,71 @@ function initHero() {
   }
 }
 
+function initHeroProgress(hero) {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    hero.style.setProperty("--hero-progress", "0");
+    return;
+  }
+
+  let frameId = 0;
+
+  const updateProgress = () => {
+    frameId = 0;
+    const rect = hero.getBoundingClientRect();
+    const viewportHeight = window.innerHeight || 1;
+    const travel = Math.max(hero.offsetHeight - viewportHeight * 0.35, 1);
+    const offset = Math.min(Math.max(-rect.top, 0), travel);
+    const progress = offset / travel;
+    hero.style.setProperty("--hero-progress", progress.toFixed(3));
+  };
+
+  const requestUpdate = () => {
+    if (frameId !== 0) {
+      return;
+    }
+
+    frameId = window.requestAnimationFrame(updateProgress);
+  };
+
+  updateProgress();
+  window.addEventListener("scroll", requestUpdate, { passive: true });
+  window.addEventListener("resize", requestUpdate);
+}
+
+function initReveals() {
+  const revealElements = Array.from(document.querySelectorAll("[data-reveal]"));
+
+  if (revealElements.length === 0) {
+    return;
+  }
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || typeof window.IntersectionObserver !== "function") {
+    revealElements.forEach((element) => {
+      element.classList.add("is-visible");
+    });
+    return;
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      threshold: 0.18,
+      rootMargin: "0px 0px -12% 0px"
+    }
+  );
+
+  revealElements.forEach((element) => observer.observe(element));
+}
+
 function buildKeyboard(root) {
   const keyMap = new Map();
   root.innerHTML = "";
@@ -265,14 +382,11 @@ function buildKeyboard(root) {
       const button = document.createElement("button");
       const cap = document.createElement("img");
       const shine = document.createElement("span");
-      const label = document.createElement("span");
 
       button.type = "button";
       button.className = key.wide ? "key key--wide" : "key";
       button.dataset.key = "";
       button.dataset.keyValue = key.value;
-      button.style.gridColumn = `span ${key.span}`;
-      button.style.setProperty("--key-ratio", key.wide ? `${461 / 281}` : "1");
       button.setAttribute("aria-label", humanizeKey(key.value));
 
       cap.className = "key__cap";
@@ -281,12 +395,8 @@ function buildKeyboard(root) {
 
       shine.className = "key__shine";
 
-      label.className = "key__label";
-      label.textContent = key.label;
-
       button.appendChild(cap);
       button.appendChild(shine);
-      button.appendChild(label);
       rowElement.appendChild(button);
       keyMap.set(key.value, button);
     });
@@ -295,6 +405,41 @@ function buildKeyboard(root) {
   });
 
   return keyMap;
+}
+
+function syncKeyboardGeometry(root, bed) {
+  const bedWidth = bed.clientWidth;
+  const bedHeight = bed.clientHeight;
+
+  if (!bedWidth || !bedHeight) {
+    return;
+  }
+
+  const wideRatio = KEYBOARD_GEOMETRY.wideKey.width / KEYBOARD_GEOMETRY.wideKey.height;
+  const usableWidth = bedWidth * KEYBOARD_GEOMETRY.usableWidthRatio;
+  const usableHeight = bedHeight * KEYBOARD_GEOMETRY.usableHeightRatio;
+  const denominator = 2.5 - wideRatio;
+
+  if (denominator <= 0) {
+    return;
+  }
+
+  const normalKeySize = (2.5 * usableHeight - usableWidth) / denominator;
+  const gap = (usableHeight - 3 * normalKeySize) / 2;
+
+  if (normalKeySize <= 0 || gap < 0) {
+    return;
+  }
+
+  const wideKeySize = normalKeySize * wideRatio;
+  const gridWidth = 5 * normalKeySize + wideKeySize + 5 * gap;
+  const gridHeight = 3 * normalKeySize + 2 * gap;
+
+  root.style.setProperty("--key-size", `${normalKeySize}px`);
+  root.style.setProperty("--wide-key-size", `${wideKeySize}px`);
+  root.style.setProperty("--key-gap", `${gap}px`);
+  root.style.setProperty("--keyboard-grid-width", `${gridWidth}px`);
+  root.style.setProperty("--keyboard-grid-height", `${gridHeight}px`);
 }
 
 function buildVisualizer(root, count) {
@@ -358,7 +503,23 @@ function screenKeyToCharacter(value) {
 }
 
 function humanizeKey(value) {
-  return value === "Apostrophe" ? "Apostrophe" : value;
+  if (value === "Apostrophe") {
+    return "Apostrophe";
+  }
+
+  if (value === "Backspace") {
+    return "Backspace";
+  }
+
+  if (value === "Enter") {
+    return "Enter";
+  }
+
+  if (value === "Space") {
+    return "Space";
+  }
+
+  return value;
 }
 
 function initSlides() {
