@@ -29,13 +29,6 @@
           <span class="lang-toggle__sep" aria-hidden="true">/</span>
           <button type="button" data-lang-set="en" class="lang-toggle__btn">EN</button>
         </div>
-        <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false"
-                data-i18n-attr="aria-label" data-i18n="sound.enable" aria-label="소리 켜기">
-          <svg class="sound-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 14H8.5L13 18V6L8.5 10H5V14Z" fill="currentColor"></path>
-            <path d="M16 9C17.3 10.1 18 11.5 18 13C18 14.5 17.3 15.9 16 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
-          </svg>
-        </button>
       </div>
     </div>
   </header>
@@ -52,20 +45,6 @@
             <a class="link-arrow" href="#works" data-i18n="hero.ctaWorks">제품 보기</a>
             <a class="link-arrow" href="#studio" data-i18n="hero.ctaStudio">스튜디오</a>
           </div>
-        </div>
-
-        <div class="hero__stage" data-reveal style="--reveal-delay:120ms">
-          <div class="stage">
-            <p class="stage__label" data-i18n="hero.signature">Signature · 눌러보세요</p>
-            <div class="monitor">
-              <div class="monitor__screen">
-                <div class="monitor__out" data-monitor-output aria-live="polite"></div>
-                <div class="monitor__viz" data-visualizer aria-hidden="true"></div>
-              </div>
-            </div>
-            <div class="keyboard" data-keyboard></div>
-          </div>
-          <p class="stage__hint" data-i18n="hero.hint">화면의 키보드를 눌러보세요. 소리는 오른쪽 위에서 켤 수 있어요.</p>
         </div>
       </div>
     </section>
@@ -101,6 +80,7 @@
               <p class="card__desc" data-i18n="works.typer.desc">기계식 키보드 소리로 즐기는 타건음 게임. 부수고, 듣고, 꾸미는 재미.</p>
             </div>
             <div class="card__foot">
+              <a class="card__more" href="typer.html" data-i18n="works.more">자세히</a>
               <a class="store" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
               <a class="store" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
             </div>
@@ -113,19 +93,10 @@
               <p class="card__desc" data-i18n="works.dopa.desc">세상의 모든 즐거움을 연구하는 AI 심리테스트. 대화를 넣으면 AI가 분석 보고서를 써줍니다.</p>
             </div>
             <div class="card__foot">
+              <a class="card__more" href="dopamine.html" data-i18n="works.more">자세히</a>
               <a class="store" href="https://dodae.me/" target="_blank" rel="noopener noreferrer">dodae.me →</a>
             </div>
           </article>
-        </div>
-
-        <div class="metrics" data-reveal>
-          <p class="metrics__cap" data-i18n="works.metricsCap">Typer · 유료 마케팅 없이</p>
-          <ul class="metrics__list">
-            <li><b>30,000+</b><span data-i18n="works.m1">오가닉 다운로드</span></li>
-            <li><b>4.74★</b><span data-i18n="works.m2">평균 평점</span></li>
-            <li><b>177</b><span data-i18n="works.m3">출시 국가</span></li>
-            <li><b>15</b><span data-i18n="works.m4">리뷰 언어권</span></li>
-          </ul>
         </div>
       </div>
     </section>
@@ -164,13 +135,12 @@
         <li><a href="/app-ads.txt">app-ads.txt</a></li>
       </ul>
       <div class="foot__meta">
-        <button class="foot__copy" type="button" data-copyright-trigger>© 2026 NewMeans</button>
+        <span class="foot__copy">© 2026 NewMeans</span>
         <span class="foot__note" data-i18n="foot.note">Made in Seoul.</span>
       </div>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" defer></script>
   <script src="i18n.js" defer></script>
   <script src="main.js" defer></script>
 </body>

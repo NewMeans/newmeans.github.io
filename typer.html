@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="typer.meta.title">Typer — NewMeans</title>
+  <meta name="description" data-i18n-attr="content" data-i18n="typer.meta.description"
+        content="Typer는 기계식 키보드 소리를 중심에 둔 감각형 캐주얼 게임입니다. NewMeans 제작.">
+  <meta name="theme-color" content="#faf8f3">
+  <link rel="icon" type="image/png" href="assets/brand/typer-icon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="typer.css">
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
+
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a class="brand" href="index.html" data-i18n="nav.backHome" aria-label="NewMeans home">← NewMeans</a>
+      <nav class="site-nav__links" aria-label="Breadcrumb">
+        <span aria-current="page">Typer</span>
+      </nav>
+      <div class="site-nav__tools">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang-set="ko" class="lang-toggle__btn">KO</button>
+          <span class="lang-toggle__sep" aria-hidden="true">/</span>
+          <button type="button" data-lang-set="en" class="lang-toggle__btn">EN</button>
+        </div>
+        <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false"
+                data-i18n-attr="aria-label" data-i18n="sound.enable" aria-label="소리 켜기">
+          <svg class="sound-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 14H8.5L13 18V6L8.5 10H5V14Z" fill="currentColor"></path>
+            <path d="M16 9C17.3 10.1 18 11.5 18 13C18 14.5 17.3 15.9 16 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO with the interactive desk -->
+    <section class="tp-hero" id="top">
+      <div class="tp-hero__inner">
+        <div class="tp-hero__copy" data-reveal>
+          <p class="eyebrow" data-i18n="typer.eyebrow">게임 · iOS / Android</p>
+          <h1 class="tp-hero__title" data-i18n="typer.tagline">부수고, 듣고, 꾸미는 재미.</h1>
+          <p class="tp-hero__lead" data-i18n="typer.lead">기계식 키보드 소리를 중심에 둔 감각형 캐주얼 게임. 화면 속 키보드를 눌러보세요.</p>
+          <div class="tp-hero__cta">
+            <a class="store store--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+            <a class="store" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+          </div>
+          <p class="tp-hint" data-i18n="typer.hint">키보드를 눌러보세요. 오른쪽 위에서 소리를 켤 수 있어요.</p>
+        </div>
+
+        <div class="tp-hero__stage" data-reveal style="--reveal-delay:120ms">
+          <div class="desk" data-desk>
+            <div class="monitor">
+              <img class="monitor__img" src="NewMeans%20Web%20Assets/DeskImages/moniter.png" alt="" loading="eager" decoding="async">
+              <div class="monitor__screen">
+                <div class="monitor__out" data-monitor-output aria-live="polite"></div>
+              </div>
+              <img class="desk__cactus" src="NewMeans%20Web%20Assets/DeskImages/sculpture.png" alt="" loading="eager" decoding="async">
+            </div>
+            <img class="desk__cable" src="NewMeans%20Web%20Assets/DeskImages/cable.png" alt="" loading="eager" decoding="async">
+            <div class="keyboard">
+              <img class="keyboard__frame" src="NewMeans%20Web%20Assets/DeskImages/frame.png" alt="" loading="eager" decoding="async">
+              <div class="keys" data-keyboard></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- METRICS -->
+    <section class="band" id="numbers">
+      <div class="band__inner">
+        <div class="metrics" data-reveal>
+          <p class="metrics__cap" data-i18n="typer.metricsCap">유료 마케팅 없이</p>
+          <ul class="metrics__list">
+            <li><b>30,000+</b><span data-i18n="typer.m1">오가닉 다운로드</span></li>
+            <li><b>4.74★</b><span data-i18n="typer.m2">평균 평점</span></li>
+            <li><b>177</b><span data-i18n="typer.m3">출시 국가</span></li>
+            <li><b>15</b><span data-i18n="typer.m4">리뷰 언어권</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PILLARS -->
+    <section class="band" id="how">
+      <div class="band__inner">
+        <div class="band__head band__head--row" data-reveal>
+          <p class="kicker" data-i18n="crumb.works">제품</p>
+          <h2 class="band__title" data-i18n="typer.pillars.title">부수고, 듣고, 꾸미고</h2>
+        </div>
+        <div class="pillars" data-reveal>
+          <article class="pillar">
+            <p class="pillar__n">01</p>
+            <h3 class="pillar__k" data-i18n="typer.p1.k">부수고</h3>
+            <p class="pillar__d" data-i18n="typer.p1.d">숫자가 적힌 키캡 블록을 공으로 부숩니다. 짧고 부드러운 반복.</p>
+          </article>
+          <article class="pillar">
+            <p class="pillar__n">02</p>
+            <h3 class="pillar__k" data-i18n="typer.p2.k">듣고</h3>
+            <p class="pillar__d" data-i18n="typer.p2.d">스위치마다 다른 타건음. 스위치는 외형이 아니라 ‘청각적 스킨’입니다.</p>
+          </article>
+          <article class="pillar">
+            <p class="pillar__n">03</p>
+            <h3 class="pillar__k" data-i18n="typer.p3.k">꾸미고</h3>
+            <p class="pillar__d" data-i18n="typer.p3.d">키캡·프레임·모니터를 모아 나만의 책상을 만듭니다. 10만 가지가 넘는 조합.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="band" id="gallery">
+      <div class="band__inner">
+        <div class="band__head" data-reveal>
+          <p class="kicker" data-i18n="crumb.works">제품</p>
+          <h2 class="band__title" data-i18n="typer.gallery.title">게임 속 풍경</h2>
+        </div>
+        <div class="gallery" data-reveal>
+          <figure class="shot"><img src="NewMeans%20Web%20Assets/Screenshots/IMG_7203.PNG" alt="Typer gameplay" loading="lazy" decoding="async"></figure>
+          <figure class="shot"><img src="NewMeans%20Web%20Assets/Screenshots/IMG_7206.PNG" alt="Typer gameplay" loading="lazy" decoding="async"></figure>
+          <figure class="shot"><img src="NewMeans%20Web%20Assets/Screenshots/IMG_7204.PNG" alt="Typer gameplay" loading="lazy" decoding="async"></figure>
+          <figure class="shot"><img src="NewMeans%20Web%20Assets/Screenshots/IMG_3497.PNG" alt="Typer desk customization" loading="lazy" decoding="async"></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOT CTA -->
+    <section class="band tp-cta" id="get">
+      <div class="band__inner" data-reveal>
+        <h2 class="band__title" data-i18n="typer.foot.title">설치하고, 스위치를 고르고, 나머지는 책상에 맡기세요.</h2>
+        <div class="tp-cta__row">
+          <a class="store store--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+          <a class="store" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="site-foot__inner">
+      <a class="foot__mark" href="index.html">New<span>Means</span></a>
+      <ul class="foot__links">
+        <li><a href="index.html" data-i18n="nav.backHome">← NewMeans</a></li>
+        <li><a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+      </ul>
+      <div class="foot__meta">
+        <button class="foot__copy" type="button" data-copyright-trigger>© 2026 NewMeans</button>
+        <span class="foot__note" data-i18n="foot.note">Made in Seoul.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" defer></script>
+  <script src="i18n.js" defer></script>
+  <script src="main.js" defer></script>
+</body>
+</html>

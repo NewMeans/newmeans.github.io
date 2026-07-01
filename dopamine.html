@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="dopa.meta.title">도파민대학교 — NewMeans</title>
+  <meta name="description" data-i18n-attr="content" data-i18n="dopa.meta.description"
+        content="도파민대학교는 대화를 분석해 연구 보고서를 써주는 AI 심리테스트 플랫폼입니다. NewMeans 제작.">
+  <meta name="theme-color" content="#faf8f3">
+  <link rel="icon" type="image/png" href="assets/brand/typer-icon.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dopamine.css">
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
+
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a class="brand" href="index.html" data-i18n="nav.backHome" aria-label="NewMeans home">← NewMeans</a>
+      <nav class="site-nav__links" aria-label="Breadcrumb">
+        <span aria-current="page">도파민대학교</span>
+      </nav>
+      <div class="site-nav__tools">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang-set="ko" class="lang-toggle__btn">KO</button>
+          <span class="lang-toggle__sep" aria-hidden="true">/</span>
+          <button type="button" data-lang-set="en" class="lang-toggle__btn">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="dp-hero" id="top">
+      <div class="dp-hero__inner" data-reveal>
+        <img class="dp-logo" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
+        <p class="eyebrow dp-eyebrow" data-i18n="dopa.eyebrow">AI · Web</p>
+        <h1 class="dp-tagline" data-i18n="dopa.tagline">세상의 모든 즐거움을 연구합니다.</h1>
+        <p class="dp-lead" data-i18n="dopa.lead">AI 초개인화 심리테스트 플랫폼. 대화를 넣으면 AI가 당신에 대한 연구 보고서를 써줍니다.</p>
+        <div class="dp-cta">
+          <a class="btn-accent" href="https://dodae.me/" target="_blank" rel="noopener noreferrer" data-i18n="dopa.cta">dodae.me 에서 시작하기</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT IT DOES -->
+    <section class="band" id="what">
+      <div class="band__inner">
+        <div class="band__head band__head--row" data-reveal>
+          <p class="kicker" data-i18n="crumb.works">제품</p>
+          <h2 class="band__title" data-i18n="dopa.what.title">무엇을 하나요</h2>
+        </div>
+        <div class="prose" data-reveal style="--reveal-delay:100ms">
+          <p data-i18n="dopa.what.p1">대표 콘텐츠는 ‘에겐-테토 테스트’. 카카오톡 대화를 올리면 참여자 각자의 성향을 분석해 웃긴 연구 보고서를 만들어 줍니다.</p>
+          <p data-i18n="dopa.what.p2">MBTI처럼 정해진 유형이 아니라, 참여한 사람 수만큼 다른 결과가 나옵니다. 2,000명이 하면 2,000개의 결과.</p>
+          <p data-i18n="dopa.what.p3">체인소맨 같은 IP 테스트로 연구 범위를 계속 넓혀 가고 있어요.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOT CTA -->
+    <section class="band dp-foot" id="get">
+      <div class="band__inner" data-reveal>
+        <h2 class="band__title" data-i18n="dopa.foot.title">당신에 대한 연구가 지금 시작됩니다.</h2>
+        <div class="dp-cta dp-cta__center">
+          <a class="btn-accent" href="https://dodae.me/" target="_blank" rel="noopener noreferrer" data-i18n="dopa.cta">dodae.me 에서 시작하기</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <div class="site-foot__inner">
+      <a class="foot__mark" href="index.html">New<span>Means</span></a>
+      <ul class="foot__links">
+        <li><a href="index.html" data-i18n="nav.backHome">← NewMeans</a></li>
+        <li><a href="https://dodae.me/" target="_blank" rel="noopener noreferrer">dodae.me</a></li>
+      </ul>
+      <div class="foot__meta">
+        <span class="foot__copy">© 2026 NewMeans</span>
+        <span class="foot__note" data-i18n="foot.note">Made in Seoul.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="i18n.js" defer></script>
+  <script src="main.js" defer></script>
+</body>
+</html>

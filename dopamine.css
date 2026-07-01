@@ -1,0 +1,51 @@
+/* Dopamine University product page — coral accent theme.
+ * Re-points the accent tokens to coral so shared components (kicker, links,
+ * role tags, brand mark) pick up the product's identity. */
+body { --mint: var(--coral); --mint-ink: var(--coral-ink); }
+
+.dp-hero { border-bottom: 1px solid var(--line); }
+.dp-hero__inner {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: clamp(56px, 10vw, 120px) var(--pad);
+}
+.dp-logo { width: clamp(210px, 32vw, 320px); height: auto; margin-bottom: 6px; }
+.dp-eyebrow { color: var(--coral-ink); }
+.dp-tagline {
+  margin: 22px 0 0;
+  max-width: 20ch;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 5vw, 3.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+}
+.dp-lead {
+  margin: 24px 0 0;
+  max-width: 46ch;
+  color: var(--ink-soft);
+  font-size: 1.14rem;
+  word-break: keep-all;
+}
+.dp-cta { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 24px;
+  border-radius: 999px;
+  background: var(--coral);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  transition: background-color 160ms ease, transform 160ms ease;
+}
+.btn-accent:hover { background: var(--coral-ink); }
+.btn-accent:active { transform: translateY(1px); }
+
+.dp-cta__center { justify-content: center; }
+.dp-foot { text-align: center; }
+.dp-foot .band__title { margin: 0 auto 26px; max-width: 22ch; }
