@@ -1,224 +1,177 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>NewMeans</title>
-  <meta name="description" content="NewMeans is a small team in Seoul making Typer, a tactile arcade game built around mechanical keyboard sound.">
-  <meta name="theme-color" content="#f7efe2">
-  <link rel="icon" type="image/png" href="NewMeans%20Web%20Assets/Logo.png">
+  <title data-i18n="meta.title">NewMeans — 서울의 2인 스튜디오</title>
+  <meta name="description" data-i18n-attr="content" data-i18n="meta.description"
+        content="NewMeans는 게임과 AI 서비스를 직접 만들고 운영하는 서울의 2인 스튜디오입니다.">
+  <meta name="theme-color" content="#faf8f3">
+  <link rel="icon" type="image/png" href="assets/brand/typer-icon.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main class="site-shell">
-    <section class="hero" id="top" data-hero>
-      <div class="hero-shell">
-        <header class="hero-bar">
-          <a class="hero-brand" href="#top" aria-label="NewMeans home">
-            <img class="hero-brand__logo" src="assets/brand/newmeans-logo.png" alt="NewMeans">
-          </a>
+  <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
 
-          <div class="hero-bar__actions">
-            <a class="hero-bar__link" href="#typer">Gameplay</a>
-            <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false" aria-label="Enable sound">
-              <svg class="sound-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 14H8.5L13 18V6L8.5 10H5V14Z" fill="currentColor"></path>
-                <path d="M16 9C17.3 10.1 18 11.5 18 13C18 14.5 17.3 15.9 16 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
-              </svg>
-              <span class="sr-only sound-toggle__label">Sound Off</span>
-            </button>
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a class="brand" href="#top" aria-label="NewMeans">New<span>Means</span></a>
+      <nav class="site-nav__links" aria-label="Primary">
+        <a href="#works" data-i18n="nav.works">제품</a>
+        <a href="#studio" data-i18n="nav.studio">스튜디오</a>
+      </nav>
+      <div class="site-nav__tools">
+        <div class="lang-toggle" role="group" aria-label="Language">
+          <button type="button" data-lang-set="ko" class="lang-toggle__btn">KO</button>
+          <span class="lang-toggle__sep" aria-hidden="true">/</span>
+          <button type="button" data-lang-set="en" class="lang-toggle__btn">EN</button>
+        </div>
+        <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false"
+                data-i18n-attr="aria-label" data-i18n="sound.enable" aria-label="소리 켜기">
+          <svg class="sound-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 14H8.5L13 18V6L8.5 10H5V14Z" fill="currentColor"></path>
+            <path d="M16 9C17.3 10.1 18 11.5 18 13C18 14.5 17.3 15.9 16 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero__inner">
+        <div class="hero__copy" data-reveal>
+          <p class="eyebrow" data-i18n="hero.eyebrow">서울의 2인 스튜디오</p>
+          <h1 class="hero__title" data-i18n="hero.title">우리가 만들고 싶은 건, 사람들이 즐겁게 쓰는 제품입니다.</h1>
+          <p class="hero__lead" data-i18n="hero.lead">서울의 두 사람이 게임과 AI 서비스를 직접 만들고 운영합니다.</p>
+          <div class="hero__cta">
+            <a class="link-arrow" href="#works" data-i18n="hero.ctaWorks">제품 보기</a>
+            <a class="link-arrow" href="#studio" data-i18n="hero.ctaStudio">스튜디오</a>
           </div>
-        </header>
+        </div>
 
-        <div class="hero-layout">
-          <div class="hero-copy" data-reveal style="--reveal-delay: 80ms;">
-            <p class="eyebrow">NewMeans presents</p>
-            <img class="hero-product-logo" src="assets/brand/typer-logo.png" alt="Typer">
-            <h1 class="hero-title">Mechanical keyboard joy, turned into a quick-hit arcade game.</h1>
-            <p class="hero-summary">Break blocks, chase scores, and build a desk setup that sounds as good as it looks.</p>
-
-            <div class="hero-actions">
-              <a class="store-link store-link--primary" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-              <a class="store-link store-link--secondary" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
-            </div>
-
-            <ul class="hero-points" aria-label="Typer highlights">
-              <li>Switch-led sound</li>
-              <li>Collectible desks</li>
-              <li>Short score runs</li>
-            </ul>
-
-            <div class="hero-subactions">
-              <button class="hero-link" type="button" data-scroll-next>See gameplay</button>
-              <p class="hero-hint">Tap the desk on screen or use your keyboard.</p>
-            </div>
-          </div>
-
-          <div class="hero-stage-shell" data-reveal style="--reveal-delay: 180ms;">
-            <div class="hero-stage">
-              <div class="monitor-wrap">
-                <div class="monitor-body">
-                  <div class="monitor-screen">
-                    <div class="monitor-panel" data-monitor-panel>
-                      <div class="monitor-output" data-monitor-output aria-live="polite"></div>
-                      <div class="monitor-visualizer" data-visualizer aria-hidden="true"></div>
-                    </div>
-                  </div>
-                  <div class="monitor-controls" aria-hidden="true">
-                    <span class="monitor-dot"></span>
-                    <span class="monitor-dot"></span>
-                    <span class="monitor-dot"></span>
-                    <span class="monitor-power"></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="keyboard-wrap">
-                <img class="hero-cable" src="NewMeans Web Assets/DeskImages/cable.png" alt="" loading="eager" decoding="async">
-                <div class="keyboard-bed" data-keyboard-bed aria-hidden="true"></div>
-                <div class="keyboard-grid" data-keyboard></div>
-                <img class="hero-sculpture" src="NewMeans Web Assets/DeskImages/sculpture.png" alt="" loading="eager" decoding="async">
-                <img class="keyboard-frame" src="NewMeans Web Assets/DeskImages/frame.png" alt="" loading="eager" decoding="async">
+        <div class="hero__stage" data-reveal style="--reveal-delay:120ms">
+          <div class="stage">
+            <p class="stage__label" data-i18n="hero.signature">Signature · 눌러보세요</p>
+            <div class="monitor">
+              <div class="monitor__screen">
+                <div class="monitor__out" data-monitor-output aria-live="polite"></div>
+                <div class="monitor__viz" data-visualizer aria-hidden="true"></div>
               </div>
             </div>
+            <div class="keyboard" data-keyboard></div>
           </div>
+          <p class="stage__hint" data-i18n="hero.hint">화면의 키보드를 눌러보세요. 소리는 오른쪽 위에서 켤 수 있어요.</p>
         </div>
       </div>
     </section>
 
-    <section class="section section--proof" id="typer">
-      <div class="section-frame">
-        <div class="section-heading" data-reveal>
-          <p class="eyebrow">Current release</p>
-          <img class="section-logo" src="assets/brand/typer-logo.png" alt="Typer">
-          <h2 class="section-title">Break numbered blocks with the sound profile you actually want to hear.</h2>
-          <p class="section-summary">Short runs, readable goals, and a desk you keep tuning between matches.</p>
+    <!-- MANIFESTO -->
+    <section class="band" id="how">
+      <div class="band__inner">
+        <div class="band__head" data-reveal>
+          <p class="kicker" data-i18n="how.kicker">우리가 일하는 방식</p>
+          <h2 class="band__title" data-i18n="how.title">작은 팀이 할 수 있는 걸, 끝까지 합니다.</h2>
         </div>
-
-        <div class="proof-layout">
-          <div class="proof-viewer" data-reveal style="--reveal-delay: 80ms;">
-            <div class="phone-shell" data-device-viewer tabindex="0" aria-label="Typer screenshots">
-              <div class="phone-notch" aria-hidden="true"></div>
-              <div class="phone-screen">
-                <div class="phone-track" data-slide-track>
-                  <figure class="phone-slide" data-slide>
-                    <img data-slide-image alt="" loading="eager" decoding="async">
-                  </figure>
-                  <figure class="phone-slide" data-slide>
-                    <img data-slide-image alt="" loading="eager" decoding="async">
-                  </figure>
-                  <figure class="phone-slide" data-slide>
-                    <img data-slide-image alt="" loading="eager" decoding="async">
-                  </figure>
-                  <figure class="phone-slide" data-slide>
-                    <img data-slide-image alt="" loading="eager" decoding="async">
-                  </figure>
-                </div>
-              </div>
-            </div>
-
-            <div class="slide-dots" data-slide-dots aria-label="Typer screenshot selector">
-              <button class="slide-dot" type="button" data-slide-dot></button>
-              <button class="slide-dot" type="button" data-slide-dot></button>
-              <button class="slide-dot" type="button" data-slide-dot></button>
-              <button class="slide-dot" type="button" data-slide-dot></button>
-            </div>
-          </div>
-
-          <div class="proof-details" data-reveal style="--reveal-delay: 140ms;">
-            <div class="rule-list">
-              <article class="rule-item">
-                <p class="rule-item__label">Choose the switch</p>
-                <p class="rule-item__body">Pick the sound texture you want driving the whole session before the first block drops.</p>
-              </article>
-
-              <article class="rule-item">
-                <p class="rule-item__label">Stay in the loop</p>
-                <p class="rule-item__body">Rounds stay short and readable, so it works when you only have a few minutes to spare.</p>
-              </article>
-
-              <article class="rule-item">
-                <p class="rule-item__label">Keep the desk yours</p>
-                <p class="rule-item__body">Collect keycaps and frames that make the game feel personal before you even hit play.</p>
-              </article>
-            </div>
-
-            <div class="proof-actions">
-              <a class="store-link store-link--primary" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-              <a class="store-link store-link--secondary" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
-            </div>
-          </div>
+        <div class="prose" data-reveal style="--reveal-delay:100ms">
+          <p data-i18n="how.p1">두 사람이 기획하고, 개발하고, 디자인하고, 운영합니다. 만들고 싶은 걸 직접 만들어 세상에 내놓고, 사용자 반응을 보며 고쳐 나갑니다.</p>
+          <p data-i18n="how.p2">게임이든 AI 서비스든, 결은 달라도 목표는 같습니다. 사람들이 즐겁게 쓰는 것.</p>
+          <p data-i18n="how.p3">Typer는 5년 전 나눈 농담 하나에서 시작했어요. “이 벽돌깨기에 타건음을 입히면 어떨까?” 그 농담이 지금은 전 세계 스토어에 있습니다.</p>
         </div>
       </div>
     </section>
 
-    <section class="section section--detail" id="desk">
-      <div class="section-frame">
-        <div class="section-heading" data-reveal>
-          <p class="eyebrow">Desk tuning</p>
-          <h2 class="section-title">Change the frame, swap the caps, and keep every run feeling like your own setup.</h2>
-          <p class="section-summary">Typer stays tactile before, during, and after the score chase.</p>
+    <!-- WORKS -->
+    <section class="band band--works" id="works">
+      <div class="band__inner">
+        <div class="band__head band__head--row" data-reveal>
+          <p class="kicker" data-i18n="works.kicker">제품 / 01</p>
+          <h2 class="band__title" data-i18n="works.title">지금 만들고 운영하는 것들</h2>
         </div>
 
-        <div class="detail-editorial">
-          <figure class="detail-panel detail-panel--custom" data-reveal style="--reveal-delay: 60ms;">
-            <img src="NewMeans Web Assets/Screenshots/IMG_3497.PNG" alt="Typer desk customization screen with different keyboard themes and keycap options." loading="eager" decoding="async">
-          </figure>
+        <div class="cards">
+          <article class="card card--typer" data-reveal>
+            <div class="card__body">
+              <p class="card__chip"><span class="dot dot--typer"></span><span data-i18n="works.typer.chip">게임 · iOS / Android</span></p>
+              <h3 class="card__name">Typer</h3>
+              <p class="card__desc" data-i18n="works.typer.desc">기계식 키보드 소리로 즐기는 타건음 게임. 부수고, 듣고, 꾸미는 재미.</p>
+            </div>
+            <div class="card__foot">
+              <a class="store" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+              <a class="store" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+            </div>
+          </article>
 
-          <div class="detail-text" data-reveal style="--reveal-delay: 120ms;">
-            <article class="detail-block">
-              <p class="detail-label">Desk building</p>
-              <p class="detail-body">Collect keycaps and frames that change the mood before the first block appears.</p>
-            </article>
+          <article class="card card--dopa" data-reveal style="--reveal-delay:80ms">
+            <div class="card__body">
+              <p class="card__chip"><span class="dot dot--dopa"></span><span data-i18n="works.dopa.chip">AI · Web</span></p>
+              <h3 class="card__name" data-i18n="works.dopa.name">도파민대학교</h3>
+              <p class="card__desc" data-i18n="works.dopa.desc">세상의 모든 즐거움을 연구하는 AI 심리테스트. 대화를 넣으면 AI가 분석 보고서를 써줍니다.</p>
+            </div>
+            <div class="card__foot">
+              <a class="store" href="https://dodae.me/" target="_blank" rel="noopener noreferrer">dodae.me →</a>
+            </div>
+          </article>
+        </div>
 
-            <article class="detail-block">
-              <p class="detail-label">Quick breaks</p>
-              <p class="detail-body">The rhythm is fast enough for score chasing and short enough to fit between other things.</p>
-            </article>
+        <div class="metrics" data-reveal>
+          <p class="metrics__cap" data-i18n="works.metricsCap">Typer · 유료 마케팅 없이</p>
+          <ul class="metrics__list">
+            <li><b>30,000+</b><span data-i18n="works.m1">오가닉 다운로드</span></li>
+            <li><b>4.74★</b><span data-i18n="works.m2">평균 평점</span></li>
+            <li><b>177</b><span data-i18n="works.m3">출시 국가</span></li>
+            <li><b>15</b><span data-i18n="works.m4">리뷰 언어권</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-            <article class="detail-block">
-              <p class="detail-label">Readable motion</p>
-              <p class="detail-body">Bright projectile trails, clean blocks, and a monitor HUD keep the action easy to parse.</p>
-            </article>
-          </div>
+    <!-- STUDIO -->
+    <section class="band band--studio" id="studio">
+      <div class="band__inner">
+        <div class="band__head band__head--row" data-reveal>
+          <p class="kicker" data-i18n="studio.kicker">스튜디오 / 02</p>
+          <h2 class="band__title" data-i18n="studio.title">두 사람이 만듭니다</h2>
+        </div>
 
-          <figure class="detail-panel detail-panel--gameplay" data-reveal style="--reveal-delay: 150ms;">
-            <img src="NewMeans Web Assets/Screenshots/IMG_7203.PNG" alt="Typer gameplay screen with numbered blocks, a score monitor, and early round action." loading="eager" decoding="async">
-          </figure>
-
-          <figure class="detail-panel detail-panel--gameplay-alt" data-reveal style="--reveal-delay: 190ms;">
-            <img src="NewMeans Web Assets/Screenshots/IMG_7204.PNG" alt="Typer gameplay screen with blue blocks and multiple projectile trails." loading="eager" decoding="async">
-          </figure>
+        <div class="studio">
+          <p class="studio__lead" data-reveal data-i18n="studio.lead">게임 클라이언트 개발자와 AI 엔지니어. 기획·개발·디자인·운영을 나눠 맡아, 작은 팀이 낼 수 있는 최대 속도로 만듭니다.</p>
+          <ul class="roles" data-reveal style="--reveal-delay:80ms">
+            <li class="role">
+              <span class="role__tag">CEO</span>
+              <span class="role__desc" data-i18n="studio.role1">기획 · 클라이언트 개발 · 디자인 · 운영</span>
+            </li>
+            <li class="role">
+              <span class="role__tag">CTO</span>
+              <span class="role__desc" data-i18n="studio.role2">AI · 풀스택 · 빌드/배포 · QA 자동화</span>
+            </li>
+          </ul>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-frame" data-reveal>
-      <p class="eyebrow">Install now</p>
-      <h2 class="section-title section-title--center">Install it, pick a switch, and let the desk do the rest.</h2>
-      <p class="section-summary section-summary--center">NewMeans is a small team in Seoul making games that feel good to hear.</p>
-
-      <div class="hero-actions footer-actions">
-        <a class="store-link store-link--primary" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-        <a class="store-link store-link--secondary" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+  <footer class="site-foot" id="contact">
+    <div class="site-foot__inner">
+      <p class="foot__mark">New<span>Means</span></p>
+      <ul class="foot__links">
+        <li><a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a></li>
+        <li><a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li><a href="/app-ads.txt">app-ads.txt</a></li>
+      </ul>
+      <div class="foot__meta">
+        <button class="foot__copy" type="button" data-copyright-trigger>© 2026 NewMeans</button>
+        <span class="foot__note" data-i18n="foot.note">Made in Seoul.</span>
       </div>
-
-      <div class="footer-meta">
-        <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
-        <button class="copyright-button" type="button" data-copyright-trigger>© 2026 NewMeans</button>
-        <a href="/app-ads.txt">app-ads.txt</a>
-      </div>
-
-      <p class="footer-note">Made in Seoul by NewMeans.</p>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" defer></script>
+  <script src="i18n.js" defer></script>
   <script src="main.js" defer></script>
 </body>
 </html>
