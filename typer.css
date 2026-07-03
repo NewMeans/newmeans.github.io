@@ -1,108 +1,112 @@
-/* Typer product page. Shared system in base.css; this file adds the page's
- * own layout, the interactive desk (monitor + keycap keyboard), and the
- * playable game section. Accent = mint over a warm desk palette.
- * Desk geometry mirrors the real assets (keycap_0 281x281, keycap_1 461x281). */
+/* Typer 페이지 — v3 시스템 위. 데스크(모니터+keyboard.js 키보드+케이블),
+ * 실물 웹 게임(game.js), 커스터마이저(스위치/키캡/프레임/모니터).
+ * 픽셀 텍스트는 --pixel(DNF BitBit), 크롬은 --font. */
+
+@font-face{
+  font-family:'DNFBitBit';
+  src:url('assets/fonts/DNFBitBitv2.ttf') format('truetype');
+  font-display:swap;
+}
 
 .tp{ --screen-ink:#7FD9B8; }
 
 /* ---------- HERO ---------- */
 .tp-hero{border-bottom:1px solid var(--line)}
-.tp-hero__inner{
-  display:grid; grid-template-columns:0.86fr 1.14fr; gap:clamp(32px,5vw,64px); align-items:center;
-  padding-top:clamp(40px,6vw,84px); padding-bottom:clamp(44px,6vw,84px);
-}
-.tp-hero__copy{max-width:34ch}
-.tp-wordmark{margin:18px 0 0; height:clamp(46px,7vw,78px); width:auto}
-.tp-hero__title{margin:20px 0 0; font-family:var(--display); font-weight:700;
-  font-size:clamp(1.9rem,3.6vw,2.9rem); line-height:1.1; letter-spacing:-.02em}
-.tp-hero__lead{margin:16px 0 0; color:var(--ink-soft); font-size:1.06rem}
-.tp-hero__cta{margin-top:26px; display:flex; flex-wrap:wrap; gap:12px}
-.tp-hint{margin:16px 0 0; font-family:var(--mono); font-size:.8rem; letter-spacing:.04em; color:var(--ink-soft)}
+.tp-hero__inner{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(30px,5vw,60px); align-items:center;
+  padding-top:clamp(36px,6vw,72px); padding-bottom:clamp(40px,6vw,76px)}
+.tp-wordmark{height:clamp(44px,6.4vw,66px); width:auto; image-rendering:pixelated}
+.tp-hero__title{margin:20px 0 0; font-size:clamp(1.7rem,3.2vw,2.5rem); line-height:1.14}
+.tp-hero__lead{margin:14px 0 0; color:var(--ink-2); max-width:30ch}
+.tp-hero__proof{margin:14px 0 0; font-size:13.5px; font-weight:600; color:var(--mint-text)}
+.tp-hero__cta{margin-top:24px; display:flex; flex-wrap:wrap; gap:12px}
+.tp-hint{margin:14px 0 0; font-size:13px; color:var(--ink-3)}
 
-/* ---------- the desk ---------- */
-.desk{position:relative; width:min(100%,560px); margin:0 auto; justify-self:center}
-.monitor{position:relative; width:84%; margin:0 auto; aspect-ratio:1354/1222; z-index:2;
-  filter:drop-shadow(0 14px 20px rgba(22,19,15,.16))}
+/* ---------- 데스크 (모니터 + 키보드 모듈 + 케이블) ---------- */
+.desk{position:relative; width:min(100%,540px); margin:0 auto; justify-self:center}
+.monitor{position:relative; width:78%; margin:0 auto; aspect-ratio:1354/1222; z-index:2;
+  filter:drop-shadow(0 14px 20px rgba(27,24,21,.15))}
 .monitor__img{width:100%; height:100%; display:block}
 .monitor__screen{position:absolute; left:7.2%; right:7.2%; top:8.5%; bottom:23.5%;
-  overflow:hidden; display:flex; flex-direction:column; padding:3% 4%}
-.monitor__out{display:grid; align-content:start; gap:2px; font-family:var(--mono);
-  font-size:clamp(.6rem,1.15vw,.82rem); line-height:1.35}
-.screen__line{margin:0; color:var(--screen-ink); white-space:pre-wrap; word-break:break-word}
+  overflow:hidden; display:flex; flex-direction:column; padding:4% 5%}
+.monitor__out{display:grid; align-content:start; gap:2px; font-family:var(--pixel);
+  font-size:clamp(.56rem,1.05vw,.78rem); line-height:1.45; letter-spacing:.02em}
+.screen__line{margin:0; color:var(--screen-ink); white-space:pre-wrap; word-break:break-all}
 .screen__caret{display:inline-block; width:.55em; height:1em; background:var(--screen-ink);
   vertical-align:-2px; margin-left:1px; animation:tp-caret 1s steps(1) infinite}
 @keyframes tp-caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
-.desk__cactus{position:absolute; left:-3%; bottom:-7%; width:22%; z-index:4; pointer-events:none;
-  filter:drop-shadow(0 6px 8px rgba(22,19,15,.12))}
-.desk__cable{position:absolute; left:92%; top:49%; width:62%; z-index:4; pointer-events:none}
+.desk__cactus{position:absolute; left:-4%; bottom:-6%; width:20%; z-index:4; pointer-events:none;
+  filter:drop-shadow(0 6px 8px rgba(27,24,21,.12))}
+/* 케이블: 키보드 오른쪽 위에 꽂혀 화면 오른쪽 밖으로 나감 (페이지 overflow clip이 자름) */
+.desk__cable{position:absolute; left:86%; top:47%; width:96%; max-width:none; z-index:1; pointer-events:none}
+.desk__kb{position:relative; width:100%; margin-top:-2%; z-index:3}
 
-.keyboard{position:relative; width:100%; margin:-1% auto 0; aspect-ratio:2125/1131; z-index:3}
-.keyboard__frame{position:relative; width:100%; height:100%; display:block; z-index:0}
-.keyboard::after{content:""; position:absolute; left:3.6%; right:3.6%; top:10.6%; bottom:6.4%;
-  background:#2a2320; border-radius:1.6%/3%; z-index:1}
-.keys{position:absolute; left:50%; top:15%; transform:translateX(-50%); width:89%;
-  display:flex; flex-direction:column; align-items:center; z-index:2}
-.kbrow{display:flex; justify-content:center; width:100%}
-.kbrow:not(:last-child){margin-bottom:1.2%}
-.kcap{flex:0 0 auto; width:14.1%; aspect-ratio:1/1; padding:0; border:0; background:none; cursor:pointer;
-  position:relative; transform-origin:center bottom; transition:transform 90ms ease}
-.kcap:not(:last-child){margin-right:1.2%}
-.kcap--wide{width:23.1%; aspect-ratio:461/281}
-.kcap__img{width:100%; height:100%; object-fit:fill; display:block; user-select:none; -webkit-user-drag:none}
-.kcap.is-active{transform:scale(.9)}
+/* ---------- PLAY ---------- */
+.tp-play{padding:clamp(48px,7vw,88px) 0; border-bottom:1px solid var(--line)}
+.tp-play__inner{display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,60px); align-items:center}
+.tp-play__copy h2{font-size:clamp(24px,3.2vw,34px)}
+.tp-play__copy p{margin:14px 0 0; color:var(--ink-2); max-width:30ch}
+.tp-play__list{margin:20px 0 0; display:grid; gap:9px; list-style:none}
+.tp-play__list li{display:flex; gap:11px; align-items:baseline; font-size:.98rem; color:var(--ink-2)}
+.tp-play__list b{font-family:var(--pixel); font-weight:400; font-size:12px; color:var(--mint-text); flex:none; width:3.4em}
+.tp-game-frame{justify-self:center; width:min(100%,360px)}
 
-/* ---------- PLAY: the game (signature) ---------- */
-.tp-play{padding:clamp(56px,8vw,104px) 0}
-.tp-play__inner{display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(32px,5vw,60px); align-items:center}
-.tp-play__copy{max-width:32ch}
-.tp-play h2{font-family:var(--kr); font-weight:700; font-size:clamp(24px,3.2vw,36px); line-height:1.12; letter-spacing:-.01em; margin:14px 0 0}
-.tp-play p{margin:16px 0 0; color:var(--ink-soft); font-size:1.04rem}
-.tp-play__rules{margin:22px 0 0; list-style:none; display:grid; gap:10px}
-.tp-play__rules li{display:flex; gap:12px; align-items:baseline; font-size:.98rem}
-.tp-play__rules b{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--mint-deep); flex:none; width:2.4em}
-.tp-game-frame{justify-self:center; width:min(100%,380px);
-  border:1px solid var(--line); border-radius:20px; padding:14px; background:var(--cream);
-  box-shadow:0 22px 46px rgba(22,19,15,.10)}
+/* ---------- CUSTOMIZE ---------- */
+.tp-custom{padding:clamp(48px,7vw,88px) 0; border-bottom:1px solid var(--line)}
+.tp-custom__inner{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(30px,5vw,56px); align-items:start}
+.tp-custom__stage{position:relative; overflow:clip; border-radius:20px}
+.tp-custom .desk{width:min(100%,480px)}
+.tp-custom .desk__cable{width:70%; left:84%}
+.tp-custom__copy h2{font-size:clamp(24px,3.2vw,34px)}
+.tp-custom__copy > p{margin:14px 0 0; color:var(--ink-2); max-width:34ch}
+.picker{margin-top:24px}
+.picker + .picker{margin-top:18px}
+.picker__label{display:flex; align-items:baseline; gap:10px; margin-bottom:9px}
+.picker__label b{font-weight:600; font-size:14px}
+.picker__label span{font-size:12.5px; color:var(--ink-3)}
+.picker__row{display:flex; flex-wrap:wrap; gap:8px}
+.pick{width:46px; height:46px; border-radius:11px; border:1.5px solid var(--line); background:var(--card);
+  display:grid; place-items:center; padding:6px; transition:border-color .15s, transform .15s var(--ease)}
+.pick img{max-width:100%; max-height:100%; object-fit:contain}
+.pick:hover{transform:translateY(-2px)}
+.pick.is-on{border-color:var(--mint-text); box-shadow:0 0 0 1px var(--mint-text)}
+.pick--swatch img{border-radius:6px}
 
-/* ---------- STATS (editorial) ---------- */
-.tp-stats{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--cream)}
-.tp-stats__inner{padding:clamp(40px,5vw,64px) 0}
-.tp-stats__cap{font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; font-size:12px; color:var(--mint-deep)}
-.tp-stats__row{margin-top:22px; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(18px,3vw,40px)}
-.tp-stat b{display:block; font-family:var(--display); font-weight:700; font-size:clamp(2rem,4vw,3rem); line-height:1; letter-spacing:-.02em}
-.tp-stat span{display:block; margin-top:8px; color:var(--ink-soft); font-size:.9rem}
+/* ---------- STATS ---------- */
+.tp-stats{border-bottom:1px solid var(--line); background:var(--card)}
+.tp-stats__inner{padding:clamp(34px,5vw,56px) 0; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(18px,3vw,40px)}
+.tp-stat b{display:block; font-family:var(--pixel); font-weight:400; font-size:clamp(1.7rem,3.4vw,2.5rem); line-height:1; color:var(--ink)}
+.tp-stat span{display:block; margin-top:8px; color:var(--ink-2); font-size:.9rem}
 
-/* ---------- PILLARS (flat editorial) ---------- */
-.tp-pillars{padding:clamp(56px,8vw,104px) 0}
-.pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px); margin-top:8px}
-.pillar{padding-top:20px; border-top:2px solid var(--ink)}
-.pillar__n{font-family:var(--mono); font-size:12px; letter-spacing:.12em; color:var(--mint-deep)}
-.pillar__k{margin:14px 0 8px; font-family:var(--kr); font-weight:700; font-size:clamp(1.3rem,2vw,1.6rem); letter-spacing:-.01em}
-.pillar__d{margin:0; color:var(--ink-soft); font-size:1rem}
+/* ---------- THREE ---------- */
+.tp-three{padding:clamp(48px,7vw,88px) 0}
+.three{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px); margin-top:8px}
+.third{padding-top:18px; border-top:2px solid var(--ink)}
+.third h3{font-size:clamp(1.2rem,1.9vw,1.5rem)}
+.third p{margin:10px 0 0; color:var(--ink-2); font-size:.98rem}
 
 /* ---------- GALLERY ---------- */
-.tp-gallery{padding:0 0 clamp(56px,8vw,104px)}
-.gallery{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,1.8vw,22px)}
-.shot{margin:0; border:1px solid var(--line); border-radius:22px; overflow:hidden; background:#efe9df; aspect-ratio:1170/2532}
+.tp-gallery{padding:0 0 clamp(48px,7vw,88px)}
+.gallery{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(12px,1.8vw,20px)}
+.shot{margin:0; border:1px solid var(--line); border-radius:18px; overflow:hidden; background:#efe9df; aspect-ratio:1170/2532}
 .shot img{width:100%; height:100%; object-fit:cover; display:block}
 
-/* ---------- FOOT CTA ---------- */
-.tp-cta{border-top:1px solid var(--line); text-align:center; padding:clamp(52px,7vw,96px) 0}
-.tp-cta h2{font-family:var(--kr); font-weight:700; font-size:clamp(1.6rem,3vw,2.4rem); letter-spacing:-.01em; max-width:22ch; margin:0 auto 26px}
+/* ---------- DOWNLOAD CTA ---------- */
+.tp-cta{border-top:1px solid var(--line); text-align:center; padding:clamp(46px,7vw,84px) 0}
+.tp-cta h2{font-size:clamp(1.5rem,2.8vw,2.1rem); max-width:24ch; margin:0 auto 10px}
+.tp-cta p{color:var(--ink-2); margin:0 auto 24px}
 .tp-cta__row{display:flex; flex-wrap:wrap; justify-content:center; gap:12px}
 
 /* ---------- RESPONSIVE ---------- */
 @media (max-width:1024px){
-  .tp-hero__inner{grid-template-columns:1fr; gap:34px}
-  .tp-hero__copy{order:1; max-width:none}
-  .tp-hero__stage{order:2}
-  .desk{max-width:460px}
-  .tp-play__inner{grid-template-columns:1fr; gap:34px}
-  .tp-play__copy{order:1; max-width:none}
-  .tp-play__stage{order:2}
+  .tp-hero__inner{grid-template-columns:1fr; gap:30px}
+  .tp-hero__copy{order:1} .tp-hero__stage{order:2}
+  .desk{max-width:440px}
+  .tp-play__inner{grid-template-columns:1fr; gap:30px}
+  .tp-play__copy{order:1} .tp-play__stage{order:2; justify-self:center}
+  .tp-custom__inner{grid-template-columns:1fr; gap:26px}
   .gallery{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:640px){
-  .tp-stats__row{grid-template-columns:repeat(2,1fr); gap:26px}
-  .pillars{grid-template-columns:1fr; gap:24px}
+  .tp-stats__inner{grid-template-columns:repeat(2,1fr); gap:24px}
+  .three{grid-template-columns:1fr; gap:22px}
 }

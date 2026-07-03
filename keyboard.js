@@ -43,6 +43,7 @@
     var frame = new Image(); frame.className = "tp-kb__frame"; frame.alt = ""; frame.src = base + "frame.png"; board.appendChild(frame);
     var keys = document.createElement("div"); keys.className = "tp-kb__keys"; board.appendChild(keys);
 
+    var capImgs = [];
     ROWS.forEach(function (row) {
       var r = document.createElement("div"); r.className = "tp-kb__row";
       row.forEach(function (t) {
@@ -50,10 +51,19 @@
         var b = document.createElement("button"); b.type = "button"; b.className = "tp-kb__cap";
         b.setAttribute("data-key", ""); b.setAttribute("aria-label", wide ? "wide key" : "key"); b.dataset.wide = wide ? "1" : "";
         var img = new Image(); img.alt = ""; img.src = base + (wide ? "keycap_1.png" : "keycap_0.png");
-        b.appendChild(img); r.appendChild(b);
+        img.dataset.wide = wide ? "1" : "";
+        b.appendChild(img); r.appendChild(b); capImgs.push(img);
       });
       keys.appendChild(r);
     });
+    // swap sprites in place — {normal, wide, frame} (any subset)
+    root.__tpSkin = function (skin) {
+      if (skin.frame) frame.src = skin.frame;
+      capImgs.forEach(function (img) {
+        if (img.dataset.wide === "1") { if (skin.wide) img.src = skin.wide; }
+        else if (skin.normal) img.src = skin.normal;
+      });
+    };
 
     function layout() {
       var W = board.clientWidth; if (!W) return;
@@ -86,5 +96,8 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", auto);
   else auto();
-  window.TyperKeyboard = { mount: mount };
+  window.TyperKeyboard = {
+    mount: mount,
+    setSkin: function (el, skin) { if (el && el.__tpSkin) el.__tpSkin(skin); }
+  };
 })();

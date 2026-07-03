@@ -3,14 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n="typer.meta.title">Typer — NewMeans</title>
+  <title data-i18n="typer.meta.title">Typer — 기계식 키보드 타건음 아케이드</title>
   <meta name="description" data-i18n-attr="content" data-i18n="typer.meta.description"
-        content="Typer는 기계식 키보드 소리를 중심에 둔 감각형 캐주얼 게임입니다. NewMeans 제작.">
-  <meta name="theme-color" content="#FAF8F3">
+        content="기계식 키보드 타건음, 데스크 꾸미기, 브릭브레이커를 하나로 묶은 하이브리드 캐주얼 게임. NewMeans 제작.">
+  <meta name="theme-color" content="#FCFBF7">
   <link rel="icon" type="image/png" href="assets/brand/typer-icon.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="typer.css">
 </head>
@@ -20,20 +19,17 @@
   <header class="nav">
     <div class="wrap nav__in">
       <a class="nav__brand" href="index.html" aria-label="NewMeans home">
-        <img class="nav__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans">
+        <img class="nav__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans">
       </a>
       <span class="nav__here">Typer</span>
       <div class="nav__spacer"></div>
       <div class="nav__tools">
-        <div class="toggle" role="group" aria-label="Language">
-          <button type="button" data-lang-set="ko">KO</button>
-          <button type="button" data-lang-set="en">EN</button>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang-set="ko">KO</button><span>·</span><button type="button" data-lang-set="en">EN</button>
         </div>
-        <button class="snd" type="button" data-sound-toggle aria-pressed="false"
-                data-i18n-attr="aria-label" data-i18n="sound.enable" aria-label="소리 켜기" title="Sound">
+        <button class="snd" id="snd" aria-pressed="false" aria-label="Toggle sound" title="Sound">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
-            <path class="wave" d="M16 8.5a4 4 0 0 1 0 7"></path>
+            <path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 8.5a4 4 0 0 1 0 7"/>
           </svg>
         </button>
       </div>
@@ -41,56 +37,87 @@
   </header>
 
   <main id="main">
-    <!-- HERO: the interactive desk -->
+    <!-- HERO -->
     <section class="tp-hero" id="top">
       <div class="wrap tp-hero__inner">
         <div class="tp-hero__copy" data-reveal>
-          <p class="eyebrow" data-i18n="typer.eyebrow">게임 · iOS / Android</p>
-          <img class="tp-wordmark pixel" src="assets/brand/typer-logo.png" alt="Typer">
+          <img class="tp-wordmark" src="assets/brand/typer-logo.png" alt="Typer">
           <h1 class="tp-hero__title" data-i18n="typer.tagline">부수고, 듣고, 꾸미는 재미.</h1>
-          <p class="tp-hero__lead" data-i18n="typer.lead">기계식 키보드 소리를 중심에 둔 감각형 캐주얼 게임. 화면 속 키보드를 눌러보세요.</p>
+          <p class="tp-hero__lead" data-i18n="typer.lead">기계식 키보드 타건음, 데스크 꾸미기, 브릭브레이커를 하나로 묶은 하이브리드 캐주얼 게임.</p>
+          <p class="tp-hero__proof" data-i18n="typer.proof">다운로드 30,000+ · 평점 4.74 · 177개국 출시</p>
           <div class="tp-hero__cta">
-            <a class="btn btn--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-            <a class="btn btn--ghost" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+            <a class="btn btn--solid" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+            <a class="btn btn--outline" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer">Google Play</a>
           </div>
-          <p class="tp-hint" data-i18n="typer.hint">키보드를 눌러보세요. 오른쪽 위에서 소리를 켤 수 있어요.</p>
+          <p class="tp-hint" data-i18n="typer.hint">키보드 클릭 시 타건음 재생 · 우측 상단에서 소리 켜기</p>
         </div>
 
-        <div class="tp-hero__stage" data-reveal style="--reveal-delay:120ms">
-          <div class="desk" data-desk>
+        <div class="tp-hero__stage" data-reveal>
+          <div class="desk" id="deskHero">
             <div class="monitor">
-              <img class="monitor__img" src="assets/desk/moniter.png" alt="" loading="eager" decoding="async">
-              <div class="monitor__screen">
+              <img class="monitor__img" data-monitor src="assets/desk/moniter.png" alt="" loading="eager" decoding="async">
+              <div class="monitor__screen" data-screen>
                 <div class="monitor__out" data-monitor-output aria-live="polite"></div>
               </div>
               <img class="desk__cactus" src="assets/desk/sculpture.png" alt="" loading="eager" decoding="async">
             </div>
-            <img class="desk__cable" src="assets/desk/cable.png" alt="" loading="eager" decoding="async">
-            <div class="keyboard">
-              <img class="keyboard__frame" src="assets/desk/frame.png" alt="" loading="eager" decoding="async">
-              <div class="keys" data-keyboard></div>
-            </div>
+            <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="eager" decoding="async">
+            <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PLAY: the playable core loop (signature) -->
+    <!-- PLAY -->
     <section class="tp-play" id="play">
       <div class="wrap tp-play__inner">
         <div class="tp-play__copy" data-reveal>
-          <p class="eyebrow" data-i18n="typer.play.kicker">직접 해보기</p>
-          <h2 data-i18n="typer.play.title">브라우저에서 바로 플레이</h2>
-          <p data-i18n="typer.play.lead">숫자 블록을 공으로 부수는 Typer의 코어 루프. 드래그해서 조준하고, 손을 놓으면 공이 발사됩니다.</p>
-          <ul class="tp-play__rules">
-            <li><b>AIM</b><span data-i18n="typer.play.r1">드래그해서 각도를 잡습니다.</span></li>
-            <li><b>FIRE</b><span data-i18n="typer.play.r2">손을 놓으면 공이 우르르 발사됩니다.</span></li>
-            <li><b>CLEAR</b><span data-i18n="typer.play.r3">블록이 바닥에 닿기 전에 모두 부수세요.</span></li>
+          <h2 data-i18n="typer.play.title">웹에서 바로 플레이</h2>
+          <p data-i18n="typer.play.lead">실제 게임과 같은 규칙의 라이트 버전. 블록을 부술 때마다 장착한 스위치의 타건음.</p>
+          <ul class="tp-play__list">
+            <li><b>AIM</b><span data-i18n="typer.play.r1">드래그로 조준</span></li>
+            <li><b>FIRE</b><span data-i18n="typer.play.r2">손을 놓으면 발사</span></li>
+            <li><b>BALL</b><span data-i18n="typer.play.r3">초록 불빛 수집 시 공 +1</span></li>
           </ul>
         </div>
-        <div class="tp-play__stage" data-reveal style="--reveal-delay:120ms">
+        <div class="tp-play__stage" data-reveal>
           <div class="tp-game-frame">
-            <div data-typer-game data-base="assets/"></div>
+            <div id="game" data-typer-game data-base="assets/"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMIZE -->
+    <section class="tp-custom" id="custom">
+      <div class="wrap tp-custom__inner">
+        <div class="tp-custom__stage" data-reveal>
+          <div class="desk" id="deskCustom">
+            <div class="monitor">
+              <img class="monitor__img" data-monitor src="assets/desk/moniter.png" alt="" loading="lazy" decoding="async">
+            </div>
+            <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="lazy" decoding="async">
+            <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
+          </div>
+        </div>
+        <div class="tp-custom__copy" data-reveal>
+          <h2 data-i18n="typer.custom.title">내 책상 만들기</h2>
+          <p data-i18n="typer.custom.lead">게임에 들어 있는 실제 아이템으로 조합하는 데스크. 스위치를 바꾸면 위 게임의 타건음도 함께 변경.</p>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.switch">스위치</b><span data-i18n="typer.custom.switchNote">클릭 시 실제 타건음</span></div>
+            <div class="picker__row" id="pickSwitch"></div>
+          </div>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.keycap">키캡</b></div>
+            <div class="picker__row" id="pickKeycap"></div>
+          </div>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.frame">프레임</b></div>
+            <div class="picker__row" id="pickFrame"></div>
+          </div>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.monitor">모니터</b></div>
+            <div class="picker__row" id="pickMonitor"></div>
           </div>
         </div>
       </div>
@@ -99,37 +126,31 @@
     <!-- STATS -->
     <section class="tp-stats" id="numbers">
       <div class="wrap tp-stats__inner" data-reveal>
-        <p class="tp-stats__cap" data-i18n="typer.metricsCap">유료 마케팅 없이</p>
-        <div class="tp-stats__row">
-          <div class="tp-stat"><b>30,000+</b><span data-i18n="typer.m1">오가닉 다운로드</span></div>
-          <div class="tp-stat"><b>4.74★</b><span data-i18n="typer.m2">평균 평점</span></div>
-          <div class="tp-stat"><b>177</b><span data-i18n="typer.m3">출시 국가</span></div>
-          <div class="tp-stat"><b>15</b><span data-i18n="typer.m4">리뷰 언어권</span></div>
-        </div>
+        <div class="tp-stat"><b>30,000+</b><span data-i18n="typer.m1">오가닉 다운로드</span></div>
+        <div class="tp-stat"><b>4.74</b><span data-i18n="typer.m2">평균 평점</span></div>
+        <div class="tp-stat"><b>177</b><span data-i18n="typer.m3">출시 국가</span></div>
+        <div class="tp-stat"><b>15</b><span data-i18n="typer.m4">리뷰 언어</span></div>
       </div>
     </section>
 
-    <!-- PILLARS -->
-    <section class="tp-pillars" id="how">
+    <!-- THREE -->
+    <section class="tp-three" id="how">
       <div class="wrap">
-        <div class="sec-head" data-reveal>
+        <div class="head" data-reveal>
           <h2 data-i18n="typer.pillars.title">부수고, 듣고, 꾸미고</h2>
         </div>
-        <div class="pillars" data-reveal>
-          <article class="pillar">
-            <p class="pillar__n">THE LOOP</p>
-            <h3 class="pillar__k" data-i18n="typer.p1.k">부수고</h3>
-            <p class="pillar__d" data-i18n="typer.p1.d">숫자가 적힌 키캡 블록을 공으로 부숩니다. 짧고 부드러운 반복.</p>
+        <div class="three" data-reveal>
+          <article class="third">
+            <h3 data-i18n="typer.p1.k">부수고</h3>
+            <p data-i18n="typer.p1.d">공으로 숫자 키캡을 부수는 한 판. 블록 체력은 생성 레벨과 동일.</p>
           </article>
-          <article class="pillar">
-            <p class="pillar__n">THE SOUND</p>
-            <h3 class="pillar__k" data-i18n="typer.p2.k">듣고</h3>
-            <p class="pillar__d" data-i18n="typer.p2.d">스위치마다 다른 타건음. 스위치는 외형이 아니라 ‘청각적 스킨’입니다.</p>
+          <article class="third">
+            <h3 data-i18n="typer.p2.k">듣고</h3>
+            <p data-i18n="typer.p2.d">스위치 7종의 서로 다른 타건음. 외형이 아니라 소리를 갈아 끼우는 스킨.</p>
           </article>
-          <article class="pillar">
-            <p class="pillar__n">THE DESK</p>
-            <h3 class="pillar__k" data-i18n="typer.p3.k">꾸미고</h3>
-            <p class="pillar__d" data-i18n="typer.p3.d">키캡·프레임·모니터를 모아 나만의 책상을 만듭니다. 10만 가지가 넘는 조합.</p>
+          <article class="third">
+            <h3 data-i18n="typer.p3.k">꾸미고</h3>
+            <p data-i18n="typer.p3.d">볼·오브제·모니터·프레임·스위치·키캡, 6개 카테고리의 데스크테리어.</p>
           </article>
         </div>
       </div>
@@ -138,8 +159,8 @@
     <!-- GALLERY -->
     <section class="tp-gallery" id="gallery">
       <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <h2 data-i18n="typer.gallery.title">게임 속 풍경</h2>
+        <div class="head" data-reveal>
+          <h2 data-i18n="typer.gallery.title">게임 화면</h2>
         </div>
         <div class="gallery" data-reveal>
           <figure class="shot"><img src="assets/screens/typer/IMG_7203.PNG" alt="Typer gameplay" loading="lazy" decoding="async"></figure>
@@ -150,32 +171,175 @@
       </div>
     </section>
 
-    <!-- FOOT CTA -->
+    <!-- DOWNLOAD -->
     <section class="tp-cta" id="get">
       <div class="wrap" data-reveal>
-        <h2 data-i18n="typer.foot.title">설치하고, 스위치를 고르고, 나머지는 책상에 맡기세요.</h2>
+        <h2 data-i18n="typer.cta.title">App Store와 Google Play에서 무료</h2>
+        <p data-i18n="typer.cta.sub">iOS · Android · 4개 언어 지원</p>
         <div class="tp-cta__row">
-          <a class="btn btn--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-          <a class="btn btn--ghost" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+          <a class="btn btn--solid" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+          <a class="btn btn--outline" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer">Google Play</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="wrap foot__in">
-      <a href="index.html" aria-label="NewMeans home"><img class="foot__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans"></a>
-      <ul class="foot__links">
-        <li><a href="index.html" data-i18n="nav.backHome">← NewMeans</a></li>
-        <li><a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-      </ul>
-      <p class="foot__meta">© 2026 NewMeans</p>
+    <div class="wrap foot__grid">
+      <div class="foot__brand">
+        <a href="index.html" aria-label="NewMeans home"><img class="foot__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans"></a>
+        <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오</p>
+      </div>
+      <div class="foot__col">
+        <h4 data-i18n="foot.products">제품</h4>
+        <a href="typer.html">Typer</a>
+        <a href="dopamine.html" data-i18n="foot.dopa">도파민대학교</a>
+      </div>
+      <div class="foot__col">
+        <h4 data-i18n="foot.contact">연락</h4>
+        <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
+        <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+    <div class="wrap foot__base">
+      <span>© 2026 NewMeans</span>
+      <span>Typer · Dopamine University</span>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" defer></script>
   <script src="i18n.js" defer></script>
-  <script src="main.js" defer></script>
+  <script src="keyboard.js" defer></script>
   <script src="game.js" defer></script>
+  <script>
+  (function(){
+    "use strict";
+
+    /* ---------- 사운드 게이트 ---------- */
+    var soundOn=false, sndBtn=document.getElementById('snd');
+    sndBtn.addEventListener('click', function(){ soundOn=!soundOn; sndBtn.setAttribute('aria-pressed', soundOn); });
+
+    /* ---------- 커스터마이징 데이터 (실제 게임 아이템) ---------- */
+    var SWITCHES=[
+      {id:'4000',n:'Blue'},{id:'4001',n:'Brown'},{id:'4002',n:'Red'},{id:'4003',n:'Chocolate'},
+      {id:'4004',n:'Capacitive'},{id:'4005',n:'Low Profile'},{id:'4006',n:'White'}];
+    var SWITCH_CLIPS={4000:4,4001:5,4002:5,4003:5,4004:5,4005:5,4006:5};
+    var KEYCAPS=[
+      {id:'5000',n:'Retro'},{id:'5001',n:'Modern'},{id:'5002',n:'Mint Choco'},{id:'5003',n:'Mocha Latte'},
+      {id:'5004',n:'Lavender Sky'},{id:'5005',n:'Sunset Breeze'},{id:'5006',n:'Midnight Edge'},{id:'5007',n:'Silver Paws'}];
+    var FRAMES=[
+      {id:'3000',n:'Retro'},{id:'3001',n:'Modern'},{id:'3002',n:'Mocha Latte'},{id:'3003',n:'Mint Choco'},
+      {id:'3004',n:'Lavender Sky'},{id:'3005',n:'Sunset Breeze'},{id:'3006',n:'Midnight Edge',noCable:true},{id:'3007',n:'Silver Paws'}];
+    var MONITORS=[
+      {id:'2000',n:'Retro'},{id:'2001',n:'Modern'},{id:'2002',n:'Modern White'},{id:'2003',n:'Studio PC'}];
+    var cur={sw:'4000', cap:null, fr:null, mon:'2000'};
+
+    /* ---------- 스위치 타건음 (HTMLAudio 풀) ---------- */
+    var pools={};
+    function pool(id){
+      if(pools[id]) return pools[id];
+      var arr=[]; var n=SWITCH_CLIPS[id]||5;
+      for(var i=0;i<n;i++){ var a=new Audio('assets/audio/switch/'+id+'/'+i+'.m4a'); a.preload='auto'; arr.push(a); }
+      pools[id]=arr; return arr;
+    }
+    function clack(){
+      if(!soundOn) return;
+      var arr=pool(cur.sw); var a=arr[(Math.random()*arr.length)|0];
+      try{ (a.paused ? a : a.cloneNode()).play(); }catch(e){}
+    }
+
+    /* ---------- 데스크: 키보드 프레스 → 타건음 + 모니터 타이핑 ---------- */
+    var CODE='function desk(){\n  play("thock");\n  collect(coin);\n  decorate(desk);\n}\n// by NewMeans\n';
+    var typed=0, out=document.querySelector('[data-monitor-output]');
+    function seedScreen(){
+      if(!out) return;
+      out.innerHTML='';
+      ['Typer ver0.1.0','int main(void) {','  printf("by NewMeans");','  return (0);','}'].forEach(function(t){
+        var p=document.createElement('p'); p.className='screen__line'; p.textContent=t; out.appendChild(p);
+      });
+      var live=document.createElement('p'); live.className='screen__line'; live.dataset.live='1';
+      var caret=document.createElement('span'); caret.className='screen__caret';
+      live.appendChild(caret); out.appendChild(live);
+    }
+    function typeChar(){
+      if(!out) return;
+      var live=out.querySelector('[data-live]'); if(!live) return;
+      var ch=CODE[typed++ % CODE.length];
+      if(ch==='\n'){ live.removeAttribute('data-live'); live.querySelector('.screen__caret').remove();
+        var nl=document.createElement('p'); nl.className='screen__line'; nl.dataset.live='1';
+        var c2=document.createElement('span'); c2.className='screen__caret'; nl.appendChild(c2); out.appendChild(nl);
+        while(out.children.length>9) out.removeChild(out.firstChild);
+      } else {
+        live.insertBefore(document.createTextNode(ch), live.querySelector('.screen__caret'));
+      }
+    }
+    seedScreen();
+    document.querySelectorAll('[data-typer-keyboard]').forEach(function(kb){
+      kb.addEventListener('pointerdown', function(e){
+        if(!e.target.closest('[data-key]')) return;
+        clack(); if(kb.closest('#deskHero')) typeChar();
+      });
+    });
+
+    /* ---------- 커스터마이저 ---------- */
+    var game=document.getElementById('game');
+    var desks=[].slice.call(document.querySelectorAll('.desk .desk__kb'));
+    var monitors=[].slice.call(document.querySelectorAll('[data-monitor]'));
+    var cables=[].slice.call(document.querySelectorAll('[data-cable]'));
+    var screen=document.querySelector('[data-screen]');
+
+    function applySwitch(id){ cur.sw=id; pool(id); if(window.TyperGame&&game) TyperGame.setSwitch(game,id); clack(); }
+    function applyKeycap(id){
+      cur.cap=id;
+      var n='assets/shop/keycap/'+id+'_0.png', w='assets/shop/keycap/'+id+'_1.png';
+      desks.forEach(function(d){ TyperKeyboard.setSkin(d,{normal:n, wide:w}); });
+      if(window.TyperGame&&game) TyperGame.setKeycap(game,n);
+    }
+    function applyFrame(f){
+      cur.fr=f.id;
+      desks.forEach(function(d){ TyperKeyboard.setSkin(d,{frame:'assets/shop/frame/'+f.id+'_1.png'}); });
+      cables.forEach(function(c){
+        if(f.noCable){ c.style.display='none'; }
+        else { c.style.display=''; c.src='assets/shop/frame/'+f.id+'_2.png'; }
+      });
+    }
+    function applyMonitor(id){
+      cur.mon=id;
+      monitors.forEach(function(m){ m.src='assets/shop/monitor/'+id+'.png'; });
+      if(screen) screen.style.display = id==='2000' ? '' : 'none';   // 타이핑 오버레이는 레트로 CRT 전용
+    }
+
+    function buildPicker(rootId, items, thumb, isOn, onPick){
+      var row=document.getElementById(rootId); if(!row) return;
+      items.forEach(function(it){
+        var b=document.createElement('button'); b.type='button'; b.className='pick';
+        b.title=it.n; b.setAttribute('aria-label', it.n);
+        var im=new Image(); im.alt=''; im.loading='lazy'; im.src=thumb(it); b.appendChild(im);
+        if(isOn(it)) b.classList.add('is-on');
+        b.addEventListener('click', function(){
+          row.querySelectorAll('.pick').forEach(function(p){ p.classList.remove('is-on'); });
+          b.classList.add('is-on'); onPick(it);
+        });
+        row.appendChild(b);
+      });
+    }
+    buildPicker('pickSwitch', SWITCHES, function(it){ return 'assets/shop/switch/'+it.id+'.png'; },
+      function(it){ return it.id===cur.sw; }, function(it){ applySwitch(it.id); });
+    buildPicker('pickKeycap', KEYCAPS, function(it){ return 'assets/shop/keycap/'+it.id+'_s.png'; },
+      function(it){ return it.id==='5000'; }, function(it){ applyKeycap(it.id); });
+    buildPicker('pickFrame', FRAMES, function(it){ return 'assets/shop/frame/'+it.id+'_s.png'; },
+      function(it){ return it.id==='3000'; }, function(it){ applyFrame(it); });
+    buildPicker('pickMonitor', MONITORS, function(it){ return 'assets/shop/monitor/'+it.id+'.png'; },
+      function(it){ return it.id==='2000'; }, function(it){ applyMonitor(it.id); });
+
+    /* ---------- 게임 사운드 게이트 연결 ---------- */
+    window.addEventListener('DOMContentLoaded', function(){
+      if(window.TyperGame&&game) TyperGame.setSounds(game, function(){ return soundOn; });
+    });
+
+    /* ---------- 리빌 ---------- */
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.14});
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+  })();
+  </script>
 </body>
 </html>
