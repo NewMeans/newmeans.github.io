@@ -12,14 +12,16 @@
   "use strict";
 
   var WIDE_AT = { 5: 1, 6: 1, 17: 1 };   // R1C5, R2C0, R3C5
+  /* bed: 컷아웃을 완전히 덮고 베젤 밑으로 살짝 들어가는 크기(프레임이 위에서 가림).
+     컷아웃 모서리 곡률은 프레임 아트가 그리므로 베드 radius는 최소로. */
   var GEO = {
-    retro:  { aspect: "2125/1131", top: 0.1443, k: 0.1298, g: 0.0068, bed: "9% 3% 6% 3%" },
-    modern: { aspect: "2071/1031", top: 0.0863, k: 0.1328, g: 0.0068, bed: "7.2% 3.6% 7.2% 3.6%" }
+    retro:  { aspect: "2125/1131", top: 0.1443, k: 0.1298, g: 0.0068, bed: "10% 2.4% 5% 2.4%" },
+    modern: { aspect: "2071/1031", top: 0.0863, k: 0.1328, g: 0.0068, bed: "4.5% 2% 4.5% 2%" }
   };
 
   var CSS =
     ".tp-kb{position:relative}" +
-    ".tp-kb__bed{position:absolute;background:#332B27;border-radius:14px;z-index:0}" +
+    ".tp-kb__bed{position:absolute;background:#332B27;border-radius:6px;z-index:0}" +
     ".tp-kb__board{position:relative;width:100%;z-index:1}" +
     ".tp-kb__frame{position:relative;width:100%;height:100%;display:block}" +
     ".tp-kb__keys{position:absolute;left:50%;transform:translateX(-50%);z-index:2;" +

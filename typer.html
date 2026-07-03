@@ -72,7 +72,6 @@
                 <span>&nbsp;&nbsp;printf("by NewMeans");</span>
                 <span>&nbsp;&nbsp;return 0;</span>
                 <span>}</span>
-                <span class="bar">100% <i></i></span>
               </div>
               <img class="desk__cactus" src="assets/desk/sculpture.png" alt="" loading="eager" decoding="async">
             </div>
@@ -80,6 +79,34 @@
               <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="eager" decoding="async">
               <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMIZE : 선택은 위 데스크와 아래 게임에 즉시 적용 -->
+    <section class="tp-custom" id="custom">
+      <div class="wrap">
+        <div class="tp-custom__head" data-reveal>
+          <h2 data-i18n="typer.custom.title">내 책상 만들기</h2>
+          <p data-i18n="typer.custom.lead">게임에 들어 있는 실제 아이템. 선택은 위 데스크와 아래 게임에 바로 적용.</p>
+        </div>
+        <div class="tp-custom__pickers" data-reveal>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.switch">스위치</b><span data-i18n="typer.custom.switchNote">클릭 시 실제 타건음</span></div>
+            <div class="picker__row" id="pickSwitch"></div>
+          </div>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.keycap">키캡</b></div>
+            <div class="picker__row" id="pickKeycap"></div>
+          </div>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.frame">프레임</b></div>
+            <div class="picker__row" id="pickFrame"></div>
+          </div>
+          <div class="picker">
+            <div class="picker__label"><b data-i18n="typer.custom.monitor">모니터</b></div>
+            <div class="picker__row" id="pickMonitor"></div>
           </div>
         </div>
       </div>
@@ -100,52 +127,6 @@
         <div class="tp-play__stage" data-reveal>
           <div class="tp-game-frame">
             <div id="game" data-typer-game data-base="assets/"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CUSTOMIZE -->
-    <section class="tp-custom" id="custom">
-      <div class="wrap tp-custom__inner">
-        <div class="tp-custom__stage" data-reveal>
-          <div class="desk" id="deskCustom">
-            <div class="monitor">
-              <img class="monitor__img" data-monitor src="assets/desk/moniter.png" alt="" loading="lazy" decoding="async">
-              <div class="monitor__boot" data-boot>
-                <b>Typer <span style="font-size:.55em">ver0.0.1</span></b>
-                <span>#include &lt;stdio.h&gt;</span>
-                <span>int main(void) {</span>
-                <span>&nbsp;&nbsp;printf("by NewMeans");</span>
-                <span>&nbsp;&nbsp;return 0;</span>
-                <span>}</span>
-                <span class="bar">100% <i></i></span>
-              </div>
-            </div>
-            <div class="desk__kbwrap">
-              <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="lazy" decoding="async">
-              <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
-            </div>
-          </div>
-        </div>
-        <div class="tp-custom__copy" data-reveal>
-          <h2 data-i18n="typer.custom.title">내 책상 만들기</h2>
-          <p data-i18n="typer.custom.lead">게임에 들어 있는 실제 아이템으로 조합하는 데스크. 스위치를 바꾸면 위 게임의 타건음도 함께 변경.</p>
-          <div class="picker">
-            <div class="picker__label"><b data-i18n="typer.custom.switch">스위치</b><span data-i18n="typer.custom.switchNote">클릭 시 실제 타건음</span></div>
-            <div class="picker__row" id="pickSwitch"></div>
-          </div>
-          <div class="picker">
-            <div class="picker__label"><b data-i18n="typer.custom.keycap">키캡</b></div>
-            <div class="picker__row" id="pickKeycap"></div>
-          </div>
-          <div class="picker">
-            <div class="picker__label"><b data-i18n="typer.custom.frame">프레임</b></div>
-            <div class="picker__row" id="pickFrame"></div>
-          </div>
-          <div class="picker">
-            <div class="picker__label"><b data-i18n="typer.custom.monitor">모니터</b></div>
-            <div class="picker__row" id="pickMonitor"></div>
           </div>
         </div>
       </div>
@@ -265,20 +246,20 @@
       {id:'5007',n:'Silver Paws',  bed:'#1E1E1E',text:'#4F4F4F',slots:[7,10,9,8,11,12, 13,10,8,7,11,9, 11,7,9,8,10,13]}];
     /* 프레임: 지오메트리 + 케이블 배치(프레임 우상단 포트에 플러그, % of 프레임) */
     var FRAMES=[
-      {id:'3000',n:'Retro',geo:'retro',cable:{w:72,left:82,top:-27}},
-      {id:'3001',n:'Modern',geo:'modern',cable:{w:58,left:84,top:-31}},
-      {id:'3002',n:'Mocha Latte',geo:'modern',cable:{w:80,left:83,top:-20}},
-      {id:'3003',n:'Lavender Sky',geo:'modern',cable:{w:80,left:83,top:-20}},
-      {id:'3004',n:'Sunset Breeze',geo:'modern',cable:{w:80,left:83,top:-20}},
-      {id:'3005',n:'Mint Choco',geo:'modern',cable:{w:80,left:83,top:-20}},
+      {id:'3000',n:'Retro',geo:'retro',cable:{w:72,left:86,top:-27}},
+      {id:'3001',n:'Modern',geo:'modern',cable:{w:54,left:88,top:-29}},
+      {id:'3002',n:'Mocha Latte',geo:'modern',cable:{w:80,left:88,top:-20}},
+      {id:'3003',n:'Lavender Sky',geo:'modern',cable:{w:80,left:88,top:-20}},
+      {id:'3004',n:'Sunset Breeze',geo:'modern',cable:{w:80,left:88,top:-20}},
+      {id:'3005',n:'Mint Choco',geo:'modern',cable:{w:80,left:88,top:-20}},
       {id:'3006',n:'Midnight Edge',geo:'modern'},
-      {id:'3007',n:'Silver Paws',geo:'modern',cable:{w:60,left:83,top:-32}}];
+      {id:'3007',n:'Silver Paws',geo:'modern',cable:{w:56,left:88,top:-30}}];
     /* 모니터: 화면 텍스트 색(fg) + 부트 스크린 인셋 — 유니티 MonitorData 실측 */
     var MONITORS=[
-      {id:'2000',n:'Retro',fg:'#65CDA7',inset:'9.8% 9.5% 21% 9.5%'},
-      {id:'2001',n:'Modern',fg:'#E2E2E2',inset:'7% 7% 45% 7%'},
-      {id:'2002',n:'Modern White',fg:'#FFAEEC',inset:'6% 6% 28% 6%'},
-      {id:'2003',n:'Studio PC',fg:'#73B77B',inset:'6% 6% 37% 6%'}];
+      {id:'2000',n:'Retro',fg:'#65CDA7',inset:'9.8% 30% 21% 9.5%'},
+      {id:'2001',n:'Modern',fg:'#E2E2E2',inset:'7% 34% 45% 7%'},
+      {id:'2002',n:'Modern White',fg:'#FFAEEC',inset:'6% 34% 28% 6%'},
+      {id:'2003',n:'Studio PC',fg:'#73B77B',inset:'6% 36% 37% 6%'}];
     var cur={sw:'4000', cap:null, fr:null, mon:'2000'};
 
     /* ---------- 스위치 타건음 (HTMLAudio 풀) ---------- */
@@ -365,7 +346,7 @@
       cur.cap=it.id;
       var slots=it.slots.map(function(n){ return 'assets/shop/keycap/'+it.id+'_'+n+'.png'; });
       desks.forEach(function(d){ TyperKeyboard.setSkin(d,{slots:slots, bed:it.bed}); });
-      if(window.TyperGame&&game) TyperGame.setKeycap(game,'assets/shop/keycap/'+it.id+'_0.png', it.text);
+      if(window.TyperGame&&game) TyperGame.setKeycap(game,'assets/shop/keycap/'+it.id+'_0.png', it.text, 'assets/shop/keycap/'+it.id+'_'+it.slots[5]+'.png');
     }
     function applyFrame(f){
       cur.fr=f.id;

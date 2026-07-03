@@ -87,6 +87,7 @@
     var greenImg = img(base + "game/collectable.png");
     var coinImg = img(base + "game/coin.png");
     var capImg = img(base + "desk/keycap_0.png");
+    var wideImg = img(base + "desk/keycap_1.png");
 
     var fontReady = false;
     try {
@@ -178,17 +179,31 @@
     function bx(c) { return field.x + c * cell; }
     function by(r) { return field.y + cell * 0.24 + r * cell; }
 
+    // 블록 사각형 — 와이드(2칸 점유, 스프라이트 원본 비율)는 행 가장자리에 붙는다
+    function brect(bl) {
+      var h = cell * 0.92, y = by(bl.row);
+      if (!bl.wide) return { x: bx(bl.col) + cell * 0.04, y: y, w: h, h: h };
+      var wr = (wideImg.naturalWidth && wideImg.naturalHeight) ? wideImg.naturalWidth / wideImg.naturalHeight : 461 / 281;
+      var w = h * wr;
+      var x = bl.col === 0 ? bx(0) + cell * 0.04 : bx(7) - cell * 0.04 - w;
+      return { x: x, y: y, w: w, h: h };
+    }
+
     function advance() {
       var i;
       for (i = 0; i < blocks.length; i++) blocks[i].row++;
       for (i = 0; i < greens.length; i++) greens[i].row++;
       level++; saveBest();
-      // new top row: 2–4 blocks + one +ball pickup (per the game doc)
-      var slots = [0, 1, 2, 3, 4, 5, 6].sort(function () { return Math.random() - 0.5; });
-      var nBlocks = 2 + ((Math.random() * 3) | 0);
+      // 새 줄: 키보드처럼 와이드 키캡이 좌/우 번갈아 + 1u 블록 + 공 픽업 1개
+      var side = level % 2 ? 5 : 0;                       // 와이드 위치 (col 5–6 또는 0–1)
+      blocks.push({ col: side, row: 0, hp: level, max: level, wide: true, coin: Math.random() < 0.28, flash: 0 });
+      var pool = [];
+      for (i = 0; i < 7; i++) if (i < side || i > side + 1) pool.push(i);
+      pool.sort(function () { return Math.random() - 0.5; });
+      var nBlocks = 2 + ((Math.random() * 2) | 0);
       for (i = 0; i < nBlocks; i++)
-        blocks.push({ col: slots[i], row: 0, hp: level, max: level, coin: Math.random() < 0.28, flash: 0 });
-      greens.push({ col: slots[nBlocks], row: 0, t: Math.random() * 6 });
+        blocks.push({ col: pool[i], row: 0, hp: level, max: level, coin: Math.random() < 0.28, flash: 0 });
+      greens.push({ col: pool[nBlocks], row: 0, t: Math.random() * 6 });
       // game over when a live block reaches the launcher line
       for (i = 0; i < blocks.length; i++)
         if (by(blocks[i].row) + cell * 0.92 >= field.bottom - ballR * 2.4) { phase = "over"; saveBest(); return; }
@@ -231,19 +246,18 @@
     /* ---------- physics ---------- */
     function hitBlocks(b) {
       for (var i = 0; i < blocks.length; i++) {
-        var bl = blocks[i];
-        var x = bx(bl.col) + cell * 0.04, y = by(bl.row), s = cell * 0.92;
-        var cx = Math.max(x, Math.min(b.x, x + s)), cy = Math.max(y, Math.min(b.y, y + s));
+        var bl = blocks[i], r = brect(bl);
+        var cx = Math.max(r.x, Math.min(b.x, r.x + r.w)), cy = Math.max(r.y, Math.min(b.y, r.y + r.h));
         var dx = b.x - cx, dy = b.y - cy;
         if (dx * dx + dy * dy > ballR * ballR) continue;
-        var oL = b.x - x, oR = x + s - b.x, oT = b.y - y, oB = y + s - b.y;
+        var oL = b.x - r.x, oR = r.x + r.w - b.x, oT = b.y - r.y, oB = r.y + r.h - b.y;
         if (Math.min(oL, oR) < Math.min(oT, oB)) { b.vx = -b.vx; b.x += (oL < oR ? -1 : 1) * (ballR - Math.abs(dx) + .5); }
         else { b.vy = -b.vy; b.y += (oT < oB ? -1 : 1) * (ballR - Math.abs(dy) + .5); }
         bl.flash = 1; thock();
         if (--bl.hp <= 0) {
           blocks.splice(i, 1);
-          fxParts.push({ x: x + s / 2, y: y + s / 2, vx: (Math.random() - .5) * 6, vy: -4 - Math.random() * 3, rot: 0, vr: (Math.random() - .5) * .3, life: 1, s: s });
-          if (bl.coin) { coinsFalling.push({ x: x + s / 2, y: y + s / 2, vy: 2 }); }
+          fxParts.push({ x: r.x + r.w / 2, y: r.y + r.h / 2, vx: (Math.random() - .5) * 6, vy: -4 - Math.random() * 3, rot: 0, vr: (Math.random() - .5) * .3, life: 1, s: r.h, wide: bl.wide });
+          if (bl.coin) { coinsFalling.push({ x: r.x + r.w / 2, y: r.y + r.h / 2, vy: 2 }); }
         }
         return;
       }
@@ -320,14 +334,15 @@
 
     var hpColor = "#6B564E";
     function drawBlock(bl) {
-      var x = bx(bl.col) + cell * 0.04, y = by(bl.row), s = cell * 0.92;
+      var r = brect(bl);
       var sc = bl.flash > 0 ? 1 - bl.flash * 0.08 : 1;
       if (bl.flash > 0) bl.flash = Math.max(0, bl.flash - 0.12);
-      var cxp = x + s / 2, cyp = y + s / 2, ss = s * sc;
-      if (capImg.complete) ctx.drawImage(capImg, cxp - ss / 2, cyp - ss / 2, ss, ss);
+      var cxp = r.x + r.w / 2, cyp = r.y + r.h / 2;
+      var im = bl.wide ? wideImg : capImg;
+      if (im.complete) ctx.drawImage(im, cxp - r.w * sc / 2, cyp - r.h * sc / 2, r.w * sc, r.h * sc);
       ctx.fillStyle = hpColor;
-      ctx.font = px(s * 0.34); ctx.textAlign = "center"; ctx.textBaseline = "middle";
-      ctx.fillText(bl.hp, cxp, cyp - s * 0.04);
+      ctx.font = px(r.h * 0.3); ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(bl.hp, cxp, cyp - r.h * 0.08);
     }
 
     function drawGreen(g) {
@@ -361,7 +376,9 @@
         p.x += p.vx; p.y += p.vy; p.vy += 0.3; p.rot += p.vr; p.life -= 0.03;
         if (p.life <= 0 || p.y > H) { fxParts.splice(i, 1); continue; }
         ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.globalAlpha = Math.max(0, p.life);
-        if (capImg.complete) ctx.drawImage(capImg, -p.s / 2, -p.s / 2, p.s, p.s);
+        var pim = p.wide ? wideImg : capImg;
+        var pw = p.wide ? p.s * 1.64 : p.s;
+        if (pim.complete) ctx.drawImage(pim, -pw / 2, -p.s / 2, pw, p.s);
         ctx.restore(); ctx.globalAlpha = 1;
       }
       for (var c = 0; c < coinsFalling.length; c++) {
@@ -437,7 +454,11 @@
     root.__tg = {
       reset: reset,
       setSwitch: function (id) { loadBank(String(id)); },
-      setKeycap: function (src, textColor) { capImg = img(src); if (textColor) hpColor = textColor; },
+      setKeycap: function (src, textColor, wideSrc) {
+        capImg = img(src);
+        if (textColor) hpColor = textColor;
+        if (wideSrc) wideImg = img(wideSrc);
+      },
       setSounds: function (fn) { isSoundOn = fn; }
     };
   }
@@ -452,7 +473,7 @@
   window.TyperGame = {
     mount: mount,
     setSwitch: function (el, id) { if (el && el.__tg) el.__tg.setSwitch(id); },
-    setKeycap: function (el, src, textColor) { if (el && el.__tg) el.__tg.setKeycap(src, textColor); },
+    setKeycap: function (el, src, textColor, wideSrc) { if (el && el.__tg) el.__tg.setKeycap(src, textColor, wideSrc); },
     setSounds: function (el, fn) { if (el && el.__tg) el.__tg.setSounds(fn); }
   };
 })();

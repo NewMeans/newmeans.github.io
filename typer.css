@@ -65,15 +65,13 @@
 .tp-play__list b{font-family:var(--pixel); font-weight:400; font-size:12px; color:var(--mint-text); flex:none; width:3.4em}
 .tp-game-frame{justify-self:center; width:min(100%,360px)}
 
-/* ---------- CUSTOMIZE ---------- */
-.tp-custom{padding:clamp(48px,7vw,88px) 0; border-bottom:1px solid var(--line)}
-.tp-custom__inner{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(30px,5vw,56px); align-items:start}
-.tp-custom__stage{position:relative; overflow:clip; border-radius:20px}
-.tp-custom .desk{width:min(100%,480px)}
-.tp-custom__copy h2{font-size:clamp(24px,3.2vw,34px)}
-.tp-custom__copy > p{margin:14px 0 0; color:var(--ink-2); max-width:34ch}
-.picker{margin-top:24px}
-.picker + .picker{margin-top:18px}
+/* ---------- CUSTOMIZE : 피커 스트립 (미리보기는 위 히어로 데스크) ---------- */
+.tp-custom{padding:clamp(36px,5vw,60px) 0; border-bottom:1px solid var(--line)}
+.tp-custom__head{display:flex; align-items:baseline; gap:18px; flex-wrap:wrap; margin-bottom:clamp(18px,3vw,26px)}
+.tp-custom__head h2{font-size:clamp(22px,2.8vw,30px)}
+.tp-custom__head p{color:var(--ink-2); font-size:.98rem}
+.tp-custom__pickers{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(18px,3vw,28px) clamp(24px,4vw,48px)}
+.picker{margin:0}
 .picker__label{display:flex; align-items:baseline; gap:10px; margin-bottom:9px}
 .picker__label b{font-weight:600; font-size:14px}
 .picker__label span{font-size:12.5px; color:var(--ink-3)}
@@ -117,7 +115,7 @@
   .desk{max-width:440px}
   .tp-play__inner{grid-template-columns:1fr; gap:30px}
   .tp-play__copy{order:1} .tp-play__stage{order:2; justify-self:center}
-  .tp-custom__inner{grid-template-columns:1fr; gap:26px}
+  .tp-custom__pickers{grid-template-columns:1fr}
   .gallery{grid-template-columns:repeat(2,1fr)}
 }
 @media (max-width:640px){
