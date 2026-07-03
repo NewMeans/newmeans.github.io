@@ -3,87 +3,89 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-i18n="meta.title">NewMeans — 게임과 AI를 만드는 2인 스튜디오</title>
-<meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="NewMeans는 게임과 AI를 둘이서 만들고 운영하는 작은 스튜디오입니다.">
-<meta name="theme-color" content="#FBF8F1">
+<title data-i18n="meta.title">뉴민스 NewMeans — 게임과 AI를 만드는 2인 스튜디오</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="게임 하나, AI 하나, 사람은 둘. 뉴민스는 Typer와 도파민대학교를 만들고 운영하는 2인 스튜디오입니다.">
+<meta name="theme-color" content="#FCFBF7">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="base.css">
 <style>
-/* Home-specific. Shared system in base.css; logo.js + keyboard.js inject their own. */
-.u-mint{color:var(--mint-deep)} .u-coral{color:var(--coral-deep)}
+/* Home. 공용 시스템은 base.css, 데모 모듈(logo.js/keyboard.js)은 자체 CSS 주입. */
 
 /* ---------- HERO ---------- */
-.hero{padding:clamp(40px,7vw,86px) 0 clamp(48px,7vw,92px)}
-.hero__grid{display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(32px,5vw,68px); align-items:center}
-.hero__h1{font-size:clamp(44px,7.4vw,88px); line-height:.98; letter-spacing:-.035em}
-.hero__h1 .l2{display:block}
-.hero__sub{margin-top:26px; max-width:34ch; font-size:clamp(16px,1.5vw,18px); color:var(--ink-soft)}
-.hero__cta{margin-top:32px; display:flex; align-items:center; gap:24px; flex-wrap:wrap}
-.hero__sig{display:flex; justify-content:center}
-.sig-logo{width:min(100%,460px)}
-.loaded .hero__copy > *{animation:rise .8s var(--ease) both}
-.loaded .hero__copy > *:nth-child(2){animation-delay:.06s}
-.loaded .hero__copy > *:nth-child(3){animation-delay:.12s}
-.loaded .hero__sig{animation:rise .9s var(--ease) .1s both}
-@keyframes rise{from{opacity:0; transform:translateY(18px)}to{opacity:1; transform:none}}
+.hero{padding:clamp(40px,7vw,84px) 0 clamp(46px,7vw,88px)}
+.hero__grid{display:grid; grid-template-columns:1fr .95fr; gap:clamp(30px,5vw,64px); align-items:center}
+.hero__h1{font-size:clamp(40px,6.2vw,72px)}
+.hero__h1 .l{display:block}
+.hero__h1 em{font-style:normal}
+.hero__h1 .mint{color:var(--mint-text)}
+.hero__h1 .coral{color:var(--coral-text)}
+.hero__sub{margin-top:24px; max-width:33ch; font-size:clamp(16px,1.5vw,17.5px); color:var(--ink-2)}
+.hero__cta{margin-top:30px; display:flex; align-items:center; gap:22px; flex-wrap:wrap}
+.hero__sig{display:flex; flex-direction:column; align-items:center; gap:14px}
+.sig-logo{width:min(100%,440px)}
+.sig-hint{font-size:13px; color:var(--ink-3)}
+.loaded .hero__copy > *{animation:rise .7s var(--ease) both}
+.loaded .hero__copy > *:nth-child(2){animation-delay:.05s}
+.loaded .hero__copy > *:nth-child(3){animation-delay:.1s}
+.loaded .hero__sig{animation:rise .8s var(--ease) .08s both}
+@keyframes rise{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
+@media (prefers-reduced-motion:reduce){.loaded .hero__copy > *,.loaded .hero__sig{animation:none}}
 
-/* ---------- WORKS (alternating editorial) ---------- */
-.works{padding:clamp(40px,6vw,72px) 0}
-.work{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,64px); align-items:center;
-  padding:clamp(30px,5vw,56px) 0; border-top:1px solid var(--line)}
-.work:last-child{border-bottom:1px solid var(--line)}
+/* ---------- WORKS ---------- */
+.works{padding:clamp(36px,6vw,64px) 0 0}
+.work{display:grid; grid-template-columns:1fr 1fr; gap:clamp(26px,5vw,60px); align-items:center;
+  padding:clamp(30px,5vw,52px) 0; border-top:1px solid var(--line)}
 .work__demo{display:flex; align-items:center; justify-content:center}
-.work__wordmark{height:clamp(30px,4vw,40px); width:auto}
-.work__wordmark--dopa{height:clamp(40px,5.4vw,58px)}
-.work__kind{margin-top:14px; font-family:var(--display); font-size:13px; font-weight:600; color:var(--ink-faint)}
-.work__desc{margin-top:16px; font-size:1.06rem; color:var(--ink-soft); max-width:32ch}
-.work__more{margin-top:22px}
+.work__wordmark{height:clamp(28px,3.6vw,36px); width:auto}
+.work__wordmark--dopa{height:clamp(38px,5vw,52px)}
+.work__kind{margin-top:13px; font-size:14px; font-weight:500; color:var(--ink-3)}
+.work__desc{margin-top:14px; font-size:1.03rem; color:var(--ink-2); max-width:33ch}
+.work__proof{margin-top:12px; font-size:13.5px; font-weight:600; color:var(--mint-text)}
+.work__more{margin-top:20px}
 
-/* keyboard demo mount */
-.kbd-mount{width:min(100%,400px)}
-/* dopamine chat demo */
-.chat{width:min(100%,380px); background:var(--card); border:1px solid var(--coral-wash); border-radius:20px;
-  padding:clamp(15px,2vw,20px); box-shadow:0 20px 44px rgba(206,67,39,.10)}
-.chat__bar{display:flex; align-items:center; gap:7px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--line-soft)}
-.chat__ava{width:26px; height:26px; border-radius:8px; background:var(--coral); display:grid; place-items:center; flex:none}
-.chat__ava img{width:17px; height:17px}
+.kbd-mount{width:min(100%,390px)}
+.chat{width:min(100%,370px); background:var(--card); border:1px solid var(--line-2); border-radius:18px;
+  padding:clamp(15px,2vw,19px); box-shadow:0 16px 40px rgba(27,24,21,.07)}
+.chat__bar{display:flex; align-items:center; gap:7px; margin-bottom:13px; padding-bottom:11px; border-bottom:1px solid var(--line-2)}
+.chat__ava{width:25px; height:25px; border-radius:8px; background:var(--coral); display:grid; place-items:center; flex:none}
+.chat__ava img{width:16px; height:16px}
 .chat__who{font-weight:600; font-size:13px}
-.chat__tag{margin-left:auto; font-size:11px; color:var(--coral-deep); font-weight:600}
-.bub{max-width:82%; padding:10px 14px; border-radius:15px; font-size:13.5px; margin-bottom:9px; line-height:1.45;
+.chat__tag{margin-left:auto; font-size:11.5px; color:var(--coral-text); font-weight:600}
+.bub{max-width:82%; padding:10px 13px; border-radius:14px; font-size:13.5px; margin-bottom:8px; line-height:1.45;
   opacity:0; transform:translateY(8px); transition:.35s var(--ease)}
 .bub.show{opacity:1; transform:none}
-.bub--in{background:var(--paper); border:1px solid var(--line-soft); border-bottom-left-radius:5px}
+.bub--in{background:var(--paper); border:1px solid var(--line-2); border-bottom-left-radius:5px}
 .bub--out{background:var(--coral); color:#fff; margin-left:auto; border-bottom-right-radius:5px}
-.rep{margin-top:4px; display:flex; align-items:center; gap:11px; padding:12px 14px; border-radius:14px;
-  background:var(--mint-wash); border:1px solid color-mix(in srgb,var(--mint) 40%,transparent);
+.rep{margin-top:4px; display:flex; align-items:center; gap:10px; padding:11px 13px; border-radius:13px;
+  background:var(--mint-bg); border:1px solid color-mix(in srgb,var(--mint) 45%,transparent);
   opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
 .rep.show{opacity:1; transform:none}
-.rep__b{width:28px; height:28px; border-radius:50%; background:var(--mint); color:#fff; display:grid; place-items:center; flex:none; font-weight:700; font-size:15px}
-.rep b{color:var(--mint-deep); font-size:13.5px} .rep small{display:block; color:var(--ink-faint); font-size:11px; margin-top:1px}
+.rep__b{width:26px; height:26px; border-radius:50%; background:var(--mint-text); color:#fff; display:grid; place-items:center; flex:none; font-weight:700; font-size:14px}
+.rep b{color:var(--mint-text); font-size:13px} .rep small{display:block; color:var(--ink-3); font-size:11px; margin-top:1px}
 
 /* ---------- STUDIO ---------- */
-.studio{padding:clamp(48px,7vw,96px) 0}
-.studio__grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(28px,5vw,64px); align-items:start}
-.studio__lead{font-family:var(--display); font-weight:600; font-size:clamp(20px,2.4vw,28px); line-height:1.32; letter-spacing:-.02em}
-.studio__lead em{font-style:normal; color:var(--mint-deep)}
-.studio__body{color:var(--ink-soft); font-size:1.06rem}
-.studio__body p+p{margin-top:16px}
-.roles{margin-top:24px; display:grid; gap:10px}
-.role{display:flex; gap:14px; align-items:baseline; padding-top:12px; border-top:1px solid var(--line-soft)}
-.role b{font-family:var(--display); font-weight:600; flex:none; width:8.5em; color:var(--ink)}
-.role span{color:var(--ink-soft); font-size:.98rem}
+.studio{padding:clamp(46px,7vw,88px) 0 0}
+.studio__grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(26px,5vw,60px); align-items:start;
+  border-top:1px solid var(--line); padding-top:clamp(30px,5vw,52px)}
+.studio__lead{font-weight:700; font-size:clamp(19px,2.2vw,25px); line-height:1.34; letter-spacing:-.02em; margin-top:14px}
+.studio__lead em{font-style:normal; color:var(--mint-text)}
+.studio__body{color:var(--ink-2); font-size:1.03rem}
+.studio__body p+p{margin-top:14px}
+.roles{margin-top:22px; display:grid; gap:0}
+.role{display:flex; gap:14px; align-items:baseline; padding:11px 0; border-top:1px solid var(--line-2)}
+.role b{font-weight:600; flex:none; width:8.5em; color:var(--ink)}
+.role span{color:var(--ink-2); font-size:.96rem}
 
 @media (max-width:860px){
-  .hero__grid{grid-template-columns:1fr; gap:22px}
-  .hero__sig{order:-1; justify-content:flex-start}
-  .sig-logo{width:min(100%,380px)}
-  .work{grid-template-columns:1fr; gap:24px}
+  .hero__grid{grid-template-columns:1fr; gap:20px}
+  .hero__sig{order:-1; align-items:flex-start}
+  .sig-logo{width:min(100%,360px)}
+  .sig-hint{display:none}
+  .work{grid-template-columns:1fr; gap:22px}
   .work__text{order:1} .work__demo{order:2}
-  .studio__grid{grid-template-columns:1fr; gap:18px}
+  .studio__grid{grid-template-columns:1fr; gap:16px}
 }
 </style>
 </head>
@@ -95,7 +97,7 @@
     <a class="nav__brand" href="#top" aria-label="NewMeans"><img class="nav__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans"></a>
     <div class="nav__spacer"></div>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#works" data-i18n="nav.works">제품</a>
+      <a href="#works" data-i18n="nav.works">만드는 것</a>
       <a href="#studio" data-i18n="nav.studio">소개</a>
     </nav>
     <div class="nav__tools">
@@ -116,15 +118,19 @@
   <section class="hero">
     <div class="wrap hero__grid">
       <div class="hero__copy">
-        <h1 class="hero__h1"><span data-i18n="home.h1a">게임과 AI를</span><span class="l2 u-mint" data-i18n="home.h1b">둘이서 만들어요</span></h1>
-        <p class="hero__sub" data-i18n="home.sub">만들고 싶은 걸 직접 만들어 세상에 내놓고, 사람들 반응을 보며 고쳐 나가요. 지금은 타건음 게임 Typer와 AI 심리테스트 도파민대학교, 두 개를 운영하고 있어요.</p>
+        <h1 class="hero__h1">
+          <span class="l"><span data-i18n="home.h1a">감각적이고</span> <em class="coral" data-i18n="home.h1a2">재밌는</em></span>
+          <span class="l"><em class="mint" data-i18n="home.h1b">디지털</em> <span data-i18n="home.h1b2">경험</span></span>
+        </h1>
+        <p class="hero__sub" data-i18n="home.sub">기계식 키보드 게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.</p>
         <div class="hero__cta">
-          <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보러가기</span><span class="arw">→</span></a>
-          <a class="link" href="mailto:newmeans.dev@gmail.com" data-i18n="home.cta2">메일 보내기</a>
+          <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보기</span><span class="arw">→</span></a>
+          <a class="link" href="mailto:newmeans.dev@gmail.com" data-i18n="home.cta2">문의하기</a>
         </div>
       </div>
       <div class="hero__sig">
         <div class="sig-logo" data-newmeans-logo></div>
+        <p class="sig-hint" data-i18n="home.sig.hint">글자 드래그 가능</p>
       </div>
     </div>
   </section>
@@ -133,8 +139,7 @@
   <section class="works" id="works">
     <div class="wrap">
       <div class="head">
-        <h2 data-i18n="home.works.title">요즘 만드는 것</h2>
-        <p class="head__note" data-i18n="home.works.note">둘이서 만들어 직접 운영하는 제품 두 개예요.</p>
+        <h2 data-i18n="home.works.title">제품</h2>
       </div>
 
       <!-- Typer -->
@@ -144,18 +149,19 @@
         </div>
         <div class="work__text">
           <img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer">
-          <p class="work__kind" data-i18n="home.typer.kind">모바일 게임 · iOS / Android</p>
-          <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 소리로 노는 게임이에요. 숫자 블록을 공으로 부수고, 스위치마다 다른 타건음을 듣고, 코인을 모아 내 책상을 꾸며요.</p>
+          <p class="work__kind" data-i18n="home.typer.kind">iOS · Android 게임</p>
+          <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 타건음 아케이드. 공으로 키캡 블록을 부수고, 스위치로 소리를 바꾸고, 코인으로 책상을 꾸미는 게임.</p>
+          <p class="work__proof" data-i18n="home.typer.proof">다운로드 30,000+ · 평점 4.74 · 유료 마케팅 없이</p>
           <p class="work__more"><a class="link" href="typer.html"><span data-i18n="home.typer.more">Typer 보기</span><span class="arw">→</span></a></p>
         </div>
       </article>
 
       <!-- Dopamine -->
-      <article class="work work--r" data-reveal>
+      <article class="work" data-reveal>
         <div class="work__text">
           <img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
-          <p class="work__kind" data-i18n="home.dopa.kind">AI 심리테스트 · Web</p>
-          <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 넣으면 AI가 성향을 분석해서, 나만의 웃긴 심리 리포트를 써주는 웹 심리테스트예요.</p>
+          <p class="work__kind" data-i18n="home.dopa.kind">웹 · AI 심리테스트</p>
+          <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 분석해 심리 리포트를 써주는 AI. 정해진 유형 없이, 2,000명이면 2,000개의 결과.</p>
           <p class="work__more"><a class="link" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
         </div>
         <div class="work__demo">
@@ -181,12 +187,12 @@
   <section class="studio" id="studio">
     <div class="wrap studio__grid">
       <div>
-        <div class="head" style="margin-bottom:18px"><h2 data-i18n="home.studio.title">우리 둘</h2></div>
-        <p class="studio__lead"><span data-i18n="home.studio.lead1">큰 팀이 할 일을</span> <em data-i18n="home.studio.lead2">작은 팀이 끝까지</em> <span data-i18n="home.studio.lead3">해내는 걸 좋아해요.</span></p>
+        <h2 data-i18n="home.studio.title">스튜디오</h2>
+        <p class="studio__lead"><span data-i18n="home.studio.lead1">한 명은 게임, 한 명은 AI.</span> <em data-i18n="home.studio.lead2">나머지는 반반.</em></p>
       </div>
       <div class="studio__body">
-        <p data-i18n="home.studio.p1">게임 클라이언트 개발자와 AI 엔지니어, 둘이서 기획부터 개발·디자인·운영까지 나눠 맡아요. 만들고 싶은 게 생기면 바로 만들어보고, 별로면 빠르게 접고, 괜찮으면 오래 다듬어요.</p>
-        <p data-i18n="home.studio.p2">게임이든 AI든 결은 달라도 목표는 같아요. 사람들이 즐겁게 쓰는 것.</p>
+        <p data-i18n="home.studio.p1">둘이서 기획부터 개발·디자인·운영까지 맡는 구조. 게임 클라이언트 개발자와 AI 엔지니어의 조합.</p>
+        <p data-i18n="home.studio.p2">Typer는 “벽돌깨기에 타건음을 입히면 어떨까”라는 아이디어에서 시작해, 지금은 177개국에 출시된 게임.</p>
         <div class="roles">
           <div class="role"><b data-i18n="home.role1.n">클라이언트 · 게임</b><span data-i18n="home.role1.d">기획 · 게임 개발 · 디자인 · 운영</span></div>
           <div class="role"><b data-i18n="home.role2.n">AI · 서버</b><span data-i18n="home.role2.d">AI · 풀스택 · 빌드/배포 · QA 자동화</span></div>
@@ -200,7 +206,7 @@
   <div class="wrap foot__grid">
     <div class="foot__brand">
       <img class="foot__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans">
-      <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오. 만들고 싶은 걸 만들어요.</p>
+      <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오</p>
     </div>
     <div class="foot__col">
       <h4 data-i18n="foot.products">제품</h4>
@@ -216,7 +222,7 @@
   </div>
   <div class="wrap foot__base">
     <span>© 2026 NewMeans</span>
-    <span data-i18n="foot.madeby">둘이서 만들었어요</span>
+    <span>Typer · Dopamine University</span>
   </div>
 </footer>
 
@@ -229,7 +235,7 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
 
-  /* WebAudio thock for the keyboard demo */
+  /* 키보드 데모 타건음 */
   var actx=null, on=false, sndBtn=document.getElementById('snd');
   function ensure(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
   sndBtn.addEventListener('click', function(){ on=!on; sndBtn.setAttribute('aria-pressed',on); if(on){ ensure(); thock(); } });
@@ -250,11 +256,11 @@
     if(kb) kb.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-key]')) thock(); });
   });
 
-  /* reveal */
+  /* 리빌 */
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});
   document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
 
-  /* chat demo */
+  /* 채팅 데모 */
   var chat=document.getElementById('chat');
   if(chat){
     var steps=[].slice.call(chat.querySelectorAll('[data-step]')), running=false, loop;
