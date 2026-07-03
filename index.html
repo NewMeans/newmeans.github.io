@@ -1,147 +1,416 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n="meta.title">NewMeans — 서울의 2인 스튜디오</title>
-  <meta name="description" data-i18n-attr="content" data-i18n="meta.description"
-        content="NewMeans는 게임과 AI 서비스를 직접 만들고 운영하는 서울의 2인 스튜디오입니다.">
-  <meta name="theme-color" content="#faf8f3">
-  <link rel="icon" type="image/png" href="assets/brand/typer-icon.jpg">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title data-i18n="meta.title">NewMeans — 게임 & AI 스튜디오</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="NewMeans는 게임과 AI를 만드는 2인 스튜디오입니다.">
+<meta name="theme-color" content="#FAF8F3">
+<link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   NewMeans — Home  ·  clean / modern / flat / crafted
+   Self-contained page styles. logo.js + keyboard.js inject their own CSS.
+   ============================================================ */
+:root{
+  --paper:#FAF8F3; --ink:#16130F; --ink-soft:#5a5248;
+  --mint:#2FA98A; --mint-deep:#1E7D66; --mint-tint:#DCF0E8;
+  --coral:#F76B6B; --coral-deep:#E4623F;
+  --cream:#FFFDF6;
+  --line:rgba(22,19,15,.12);
+  --display:'Space Grotesk',sans-serif;
+  --kr:'IBM Plex Sans KR',sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--kr); color:var(--ink); background:var(--paper);
+  line-height:1.55; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+:lang(ko),[lang="ko"]{word-break:keep-all}
+img{display:block; max-width:100%}
+a{color:inherit; text-decoration:none}
+button{font:inherit; color:inherit; background:none; border:none; cursor:pointer}
+::selection{background:var(--mint); color:var(--cream)}
+
+.skip-link{position:absolute; left:-9999px; top:0; z-index:100; background:var(--ink); color:var(--cream); padding:10px 16px; border-radius:8px}
+.skip-link:focus{left:12px; top:12px}
+.wrap{max-width:1240px; margin:0 auto; padding:0 clamp(20px,4vw,52px)}
+.mono{font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase; font-size:12px}
+.pixel{image-rendering:pixelated; image-rendering:-moz-crisp-edges;}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:sticky; top:0; z-index:60;
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  background:rgba(250,248,243,.82);
+  border-bottom:1px solid var(--line);
+}
+.nav__in{display:flex; align-items:center; gap:18px; height:78px}
+.nav__logo{height:40px; width:auto; flex:none; transition:opacity .25s}
+.nav__brand:hover .nav__logo{opacity:.75}
+.nav__spacer{flex:1}
+.nav__links{display:flex; gap:28px}
+.nav__links a{position:relative; font-size:15px; font-weight:500; padding:6px 0; color:var(--ink)}
+.nav__links a::after{
+  content:""; position:absolute; left:0; right:100%; bottom:0; height:2px;
+  background:var(--mint); transition:right .3s var(--ease);
+}
+.nav__links a:hover::after{right:0}
+.nav__tools{display:flex; align-items:center; gap:12px}
+.toggle{
+  display:inline-flex; align-items:center; gap:2px;
+  border:1.5px solid var(--line); border-radius:999px; padding:4px; background:var(--cream);
+}
+.toggle button{padding:4px 10px; border-radius:999px; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-soft); transition:.2s}
+.toggle button.is-active{background:var(--ink); color:var(--cream)}
+.snd{
+  width:40px; height:40px; border-radius:50%; border:1.5px solid var(--line);
+  background:var(--cream); display:grid; place-items:center; transition:.2s;
+}
+.snd:hover{border-color:var(--mint)}
+.snd svg{width:18px; height:18px}
+.snd .wave{opacity:0; transition:.2s}
+.snd[aria-pressed="true"]{background:var(--mint); border-color:var(--mint)}
+.snd[aria-pressed="true"] svg{color:var(--cream)}
+.snd[aria-pressed="true"] .wave{opacity:1}
+
+/* ---------- HERO ---------- */
+.hero{position:relative; padding:clamp(44px,7vw,96px) 0 clamp(52px,7vw,100px); border-bottom:1px solid var(--line)}
+.hero__grid{display:grid; grid-template-columns:1.02fr .98fr; gap:clamp(28px,5vw,64px); align-items:center}
+
+.h1{font-family:var(--kr); font-weight:700; line-height:1.08; letter-spacing:-.015em; font-size:clamp(42px,6.8vw,84px)}
+.h1 .line{display:block; overflow:hidden}
+.h1 .line > span{display:inline-block; transform:translateY(108%); transition:transform .85s var(--ease)}
+.loaded .h1 .line > span{transform:translateY(0)}
+.h1 .l1 > span{transition-delay:.10s}
+.h1 .l2 > span{transition-delay:.22s}
+.h1 em{font-style:normal; color:var(--coral-deep)}
+.h1 .mint{color:var(--mint-deep)}
+
+.studio-tag{font-size:clamp(16px,1.55vw,19px); color:var(--ink-soft); margin-top:26px;
+  opacity:0; transform:translateY(12px); transition:.7s var(--ease) .4s}
+.loaded .studio-tag{opacity:1; transform:none}
+.cta{display:flex; flex-wrap:wrap; gap:14px; margin-top:32px; opacity:0; transform:translateY(12px); transition:.7s var(--ease) .52s}
+.loaded .cta{opacity:1; transform:none}
+.btn{display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:10px; font-weight:600; font-size:15px; transition:transform .2s var(--ease), background .2s, border-color .2s, color .2s}
+.btn--fill{background:var(--ink); color:var(--cream)}
+.btn--fill:hover{background:var(--mint-deep)}
+.btn--fill .arw{transition:transform .2s var(--ease)}
+.btn--fill:hover .arw{transform:translateX(3px)}
+.btn--ghost{border:1.5px solid var(--line)}
+.btn--ghost:hover{border-color:var(--ink); color:var(--ink)}
+
+/* ------- interactive logo signature (logo.js mounts here) ------- */
+.hero__sig{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(10px,1.6vw,20px);
+  opacity:0; transform:translateY(10px); transition:.8s var(--ease) .2s}
+.loaded .hero__sig{opacity:1; transform:none}
+.sig-logo{width:min(100%,520px)}
+
+/* ---------- WORKS ---------- */
+.works{padding:clamp(56px,8vw,110px) 0 clamp(48px,7vw,96px)}
+.sec-head{margin-bottom:clamp(28px,4vw,48px); padding-bottom:16px; border-bottom:1px solid var(--line);
+  display:flex; align-items:baseline; gap:14px}
+.sec-head h2{font-family:var(--kr); font-weight:700; font-size:clamp(26px,3.6vw,40px); line-height:1; letter-spacing:-.01em}
+.sec-head .n{font-family:var(--mono); color:var(--ink-soft); font-size:13px}
+
+.tiles{display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,32px)}
+.tile{position:relative; border-radius:22px; overflow:hidden; min-height:clamp(420px,48vw,540px);
+  border:1px solid var(--line); background:transparent; display:flex; flex-direction:column;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s}
+[data-reveal]{opacity:0; transform:translateY(34px); transition:opacity .7s var(--ease), transform .7s var(--ease)}
+[data-reveal].in{opacity:1; transform:none}
+.tile:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(22,19,15,.09)}
+.tile--typer{border-color:rgba(47,169,138,.4)}
+.tile--typer:hover{border-color:rgba(47,169,138,.7)}
+.tile--dopa{border-color:rgba(247,107,107,.42)}
+.tile--dopa:hover{border-color:rgba(247,107,107,.75)}
+
+.tile__head{position:relative; padding:clamp(24px,3vw,34px) clamp(24px,3vw,36px) 0; z-index:3}
+.chip{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  padding:7px 13px; border-radius:999px; border:1.5px solid}
+.chip.m{color:var(--mint-deep); border-color:rgba(47,169,138,.4)}
+.chip.c{color:var(--coral-deep); border-color:rgba(228,98,63,.4)}
+.chip .d{width:7px; height:7px; border-radius:50%}
+.chip.m .d{background:var(--mint)} .chip.c .d{background:var(--coral)}
+.tile__wordmark{margin-top:20px; height:clamp(30px,4vw,42px); width:auto}
+.tile--dopa .tile__wordmark{height:clamp(42px,6vw,64px)}
+.tile__tag{margin-top:14px; font-size:clamp(14px,1.6vw,17px); max-width:24em; color:var(--ink)}
+
+.tile__foot{margin-top:auto; position:relative; z-index:4; display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:18px clamp(24px,3vw,36px); border-top:1px solid var(--line)}
+.tile__more{display:inline-flex; align-items:center; gap:8px; font-weight:600}
+.tile__more .arw{transition:transform .2s var(--ease)}
+.tile__more:hover .arw{transform:translateX(4px)}
+.tile__micro{font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-soft)}
+
+/* --- TYPER: the in-game keyboard (keyboard.js mounts here) --- */
+.kbd-wrap{flex:1; display:flex; align-items:center; justify-content:center; padding:clamp(16px,3vw,28px) clamp(22px,3vw,34px)}
+.kbd-mount{width:min(100%,420px)}
+.press-hint{text-align:center; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--mint-deep); padding:0 0 clamp(20px,3vw,26px)}
+
+/* --- DOPAMINE: chat demo (centerpiece) --- */
+.chat-wrap{flex:1; display:flex; align-items:center; justify-content:center; padding:clamp(16px,3vw,26px) clamp(20px,3vw,30px)}
+.chat{width:min(96%,400px); background:var(--cream); border:1px solid rgba(228,98,63,.28); border-radius:18px;
+  padding:clamp(16px,2.4vw,22px); box-shadow:0 18px 40px rgba(228,98,63,.10)}
+.chat__bar{display:flex; align-items:center; gap:6px; margin-bottom:14px}
+.chat__bar i{width:9px; height:9px; border-radius:50%; background:var(--coral)}
+.chat__bar i:nth-child(2){background:#f7b26b} .chat__bar i:nth-child(3){background:var(--mint)}
+.chat__bar b{margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:var(--coral-deep); text-transform:uppercase}
+.bub{max-width:82%; padding:11px 15px; border-radius:16px; font-size:14px; margin-bottom:10px; line-height:1.45;
+  opacity:0; transform:translateY(8px); transition:.35s var(--ease)}
+.bub.show{opacity:1; transform:none}
+.bub--in{background:#fff; border:1px solid var(--line); border-bottom-left-radius:5px}
+.bub--out{background:var(--coral); color:var(--cream); margin-left:auto; border-bottom-right-radius:5px}
+.typing{display:inline-flex; gap:5px; padding:13px 16px; background:#fff; border-radius:16px; border-bottom-left-radius:5px; border:1px solid var(--line);
+  opacity:0; transform:translateY(8px); transition:.3s}
+.typing.show{opacity:1; transform:none}
+.typing i{width:6px; height:6px; border-radius:50%; background:var(--coral); animation:blip 1s infinite}
+.typing i:nth-child(2){animation-delay:.16s} .typing i:nth-child(3){animation-delay:.32s}
+@keyframes blip{0%,100%{transform:translateY(0); opacity:.4}50%{transform:translateY(-5px); opacity:1}}
+.result{margin-top:4px; display:flex; align-items:center; gap:12px; padding:13px 15px; border-radius:14px;
+  background:var(--mint-tint); border:1px solid rgba(47,169,138,.5);
+  opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
+.result.show{opacity:1; transform:none}
+.result .badge{width:30px; height:30px; border-radius:50%; background:var(--mint); color:#fff; display:grid; place-items:center; flex:none; font-size:16px; font-weight:700}
+.result b{color:var(--mint-deep); font-size:14px} .result small{display:block; color:var(--ink-soft); font-size:11px; font-family:var(--mono); margin-top:2px}
+
+/* ---------- FOOTER ---------- */
+.foot{border-top:1px solid var(--line); padding:clamp(36px,5vw,56px) 0 40px}
+.foot__in{display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap}
+.foot__logo{height:34px; width:auto}
+.foot__links{display:flex; gap:24px; flex-wrap:wrap; font-size:14px; list-style:none}
+.foot__links a:hover{color:var(--mint-deep)}
+.foot__meta{font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-soft); text-transform:uppercase}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:900px){
+  .hero__grid{grid-template-columns:1fr; text-align:left}
+  .hero__sig{order:-1; align-items:flex-start; margin-bottom:8px}
+  .sig-logo{width:min(100%,440px)}
+  .tiles{grid-template-columns:1fr}
+}
+@media (max-width:620px){
+  .nav__links{display:none}
+  .nav__in{height:66px}
+  .nav__logo{height:34px}
+  .h1{font-size:clamp(36px,10.5vw,54px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
+  .h1 .line > span{transform:none}
+  .studio-tag,.cta,.hero__sig{opacity:1; transform:none}
+  [data-reveal]{opacity:1; transform:none}
+}
+</style>
 </head>
 <body>
-  <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
 
-  <header class="site-nav">
-    <div class="site-nav__inner">
-      <a class="brand" href="#top" aria-label="NewMeans">New<span>Means</span></a>
-      <nav class="site-nav__links" aria-label="Primary">
-        <a href="#works" data-i18n="nav.works">제품</a>
-        <a href="#studio" data-i18n="nav.studio">스튜디오</a>
-      </nav>
-      <div class="site-nav__tools">
-        <div class="lang-toggle" role="group" aria-label="Language">
-          <button type="button" data-lang-set="ko" class="lang-toggle__btn">KO</button>
-          <span class="lang-toggle__sep" aria-hidden="true">/</span>
-          <button type="button" data-lang-set="en" class="lang-toggle__btn">EN</button>
-        </div>
+<a class="skip-link" href="#works" data-i18n="nav.skip">본문으로 건너뛰기</a>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="wrap nav__in">
+    <a class="nav__brand" href="#top" aria-label="NewMeans home">
+      <img class="nav__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans">
+    </a>
+    <div class="nav__spacer"></div>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#works" data-i18n="nav.products">제품</a>
+      <a href="#footer" data-i18n="nav.studio">스튜디오</a>
+    </nav>
+    <div class="nav__tools">
+      <div class="toggle" role="group" aria-label="Language">
+        <button type="button" data-lang-set="ko">KO</button>
+        <button type="button" data-lang-set="en">EN</button>
+      </div>
+      <button class="snd" id="snd" aria-pressed="false" aria-label="Toggle sound" title="Sound">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 9v6h4l5 4V5L8 9H4z"/>
+          <path class="wave" d="M16 8.5a4 4 0 0 1 0 7"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <h1 class="h1" id="h1">
+        <span class="line l1"><span>감각적이고 <em>재밌는</em></span></span>
+        <span class="line l2"><span><span class="mint">디지털</span> 경험</span></span>
+      </h1>
+      <p class="studio-tag" data-i18n="home.tag">게임과 AI를 만드는 2인 스튜디오</p>
+      <div class="cta">
+        <a class="btn btn--fill" href="#works"><span data-i18n="home.seeProducts">제품 보기</span><span class="arw">→</span></a>
+        <a class="btn btn--ghost" href="mailto:newmeans.dev@gmail.com" data-i18n="home.contact">문의하기</a>
       </div>
     </div>
-  </header>
 
-  <main id="main">
-    <!-- HERO -->
-    <section class="hero" id="top">
-      <div class="hero__inner">
-        <div class="hero__copy" data-reveal>
-          <p class="eyebrow" data-i18n="hero.eyebrow">서울의 2인 스튜디오</p>
-          <h1 class="hero__title" data-i18n="hero.title">우리가 만들고 싶은 건, 사람들이 즐겁게 쓰는 제품입니다.</h1>
-          <p class="hero__lead" data-i18n="hero.lead">서울의 두 사람이 게임과 AI 서비스를 직접 만들고 운영합니다.</p>
-          <div class="hero__cta">
-            <a class="link-arrow" href="#works" data-i18n="hero.ctaWorks">제품 보기</a>
-            <a class="link-arrow" href="#studio" data-i18n="hero.ctaStudio">스튜디오</a>
+    <div class="hero__sig">
+      <div class="sig-logo" data-newmeans-logo></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WORKS ============ -->
+<section class="works" id="works">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 data-i18n="home.products">제품</h2>
+      <span class="n">02</span>
+    </div>
+
+    <div class="tiles">
+      <!-- TYPER -->
+      <article class="tile tile--typer" data-reveal>
+        <div class="tile__head">
+          <span class="chip m"><span class="d"></span><span data-i18n="home.typer.chip">게임 · iOS / Android</span></span>
+          <img class="tile__wordmark pixel" src="assets/brand/typer-logo.png" alt="Typer">
+          <p class="tile__tag" data-i18n="home.typer.tag">기계식 키보드 타건음 아케이드</p>
+        </div>
+
+        <div class="kbd-wrap">
+          <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
+        </div>
+        <p class="press-hint" data-i18n="home.typer.hint">키캡을 눌러 타건음을 들어보세요</p>
+
+        <div class="tile__foot">
+          <a class="tile__more" href="typer.html"><span data-i18n="home.more">자세히 보기</span><span class="arw">→</span></a>
+          <span class="tile__micro">App Store · Google Play</span>
+        </div>
+      </article>
+
+      <!-- DOPAMINE -->
+      <article class="tile tile--dopa" data-reveal style="transition-delay:.08s">
+        <div class="tile__head">
+          <span class="chip c"><span class="d"></span><span data-i18n="home.dopa.chip">AI 심리테스트 · Web</span></span>
+          <img class="tile__wordmark" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
+          <p class="tile__tag" data-i18n="home.dopa.tag">대화를 분석하는 AI 심리테스트.</p>
+        </div>
+
+        <div class="chat-wrap">
+          <div class="chat" id="chat">
+            <div class="chat__bar"><i></i><i></i><i></i><b data-i18n="home.dopa.analyzing">AI 분석 중</b></div>
+            <div class="bub bub--in" data-step="1" data-i18n="home.dopa.msg1">나 요즘 자꾸 밤에 폰만 봐 ㅠ</div>
+            <div class="bub bub--out" data-step="2" data-i18n="home.dopa.msg2">오 그거 도파민 신호일지도?</div>
+            <div class="typing" data-step="3"><i></i><i></i><i></i></div>
+            <div class="result" data-step="4">
+              <span class="badge">✓</span>
+              <span><b data-i18n="home.dopa.result">분석 완료 · 자극 추구형</b><small data-i18n="home.dopa.resultSub">AI 심리 리포트 생성됨</small></span>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- MANIFESTO -->
-    <section class="band" id="how">
-      <div class="band__inner">
-        <div class="band__head" data-reveal>
-          <p class="kicker" data-i18n="how.kicker">우리가 일하는 방식</p>
-          <h2 class="band__title" data-i18n="how.title">작은 팀이 할 수 있는 걸, 끝까지 합니다.</h2>
+        <div class="tile__foot">
+          <a class="tile__more" href="dopamine.html"><span data-i18n="home.more">자세히 보기</span><span class="arw">→</span></a>
+          <span class="tile__micro">dodae.me</span>
         </div>
-        <div class="prose" data-reveal style="--reveal-delay:100ms">
-          <p data-i18n="how.p1">두 사람이 기획하고, 개발하고, 디자인하고, 운영합니다. 만들고 싶은 걸 직접 만들어 세상에 내놓고, 사용자 반응을 보며 고쳐 나갑니다.</p>
-          <p data-i18n="how.p2">게임이든 AI 서비스든, 결은 달라도 목표는 같습니다. 사람들이 즐겁게 쓰는 것.</p>
-          <p data-i18n="how.p3">Typer는 5년 전 나눈 농담 하나에서 시작했어요. “이 벽돌깨기에 타건음을 입히면 어떨까?” 그 농담이 지금은 전 세계 스토어에 있습니다.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- WORKS -->
-    <section class="band band--works" id="works">
-      <div class="band__inner">
-        <div class="band__head band__head--row" data-reveal>
-          <p class="kicker" data-i18n="works.kicker">제품 / 01</p>
-          <h2 class="band__title" data-i18n="works.title">지금 만들고 운영하는 것들</h2>
-        </div>
-
-        <div class="cards">
-          <article class="card card--typer" data-reveal>
-            <div class="card__body">
-              <p class="card__chip"><span class="dot dot--typer"></span><span data-i18n="works.typer.chip">게임 · iOS / Android</span></p>
-              <img class="card__logo" src="assets/brand/typer-logo.png" alt="Typer">
-              <p class="card__desc" data-i18n="works.typer.desc">기계식 키보드 소리로 즐기는 타건음 게임. 부수고, 듣고, 꾸미는 재미.</p>
-            </div>
-            <div class="card__foot">
-              <a class="card__more" href="typer.html" data-i18n="works.more">자세히</a>
-              <a class="store" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-              <a class="store" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
-            </div>
-          </article>
-
-          <article class="card card--dopa" data-reveal style="--reveal-delay:80ms">
-            <div class="card__body">
-              <p class="card__chip"><span class="dot dot--dopa"></span><span data-i18n="works.dopa.chip">AI · Web</span></p>
-              <img class="card__logo card__logo--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
-              <p class="card__desc" data-i18n="works.dopa.desc">세상의 모든 즐거움을 연구하는 AI 심리테스트. 대화를 넣으면 AI가 분석 보고서를 써줍니다.</p>
-            </div>
-            <div class="card__foot">
-              <a class="card__more" href="dopamine.html" data-i18n="works.more">자세히</a>
-              <a class="store" href="https://dodae.me/" target="_blank" rel="noopener noreferrer">dodae.me →</a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- STUDIO -->
-    <section class="band band--studio" id="studio">
-      <div class="band__inner">
-        <div class="band__head band__head--row" data-reveal>
-          <p class="kicker" data-i18n="studio.kicker">스튜디오 / 02</p>
-          <h2 class="band__title" data-i18n="studio.title">두 사람이 만듭니다</h2>
-        </div>
-
-        <div class="studio">
-          <p class="studio__lead" data-reveal data-i18n="studio.lead">게임 클라이언트 개발자와 AI 엔지니어. 기획·개발·디자인·운영을 나눠 맡아, 작은 팀이 낼 수 있는 최대 속도로 만듭니다.</p>
-          <ul class="roles" data-reveal style="--reveal-delay:80ms">
-            <li class="role">
-              <span class="role__tag">CEO</span>
-              <span class="role__desc" data-i18n="studio.role1">기획 · 클라이언트 개발 · 디자인 · 운영</span>
-            </li>
-            <li class="role">
-              <span class="role__tag">CTO</span>
-              <span class="role__desc" data-i18n="studio.role2">AI · 풀스택 · 빌드/배포 · QA 자동화</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-foot" id="contact">
-    <div class="site-foot__inner">
-      <p class="foot__mark">New<span>Means</span></p>
-      <ul class="foot__links">
-        <li><a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a></li>
-        <li><a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-        <li><a href="/app-ads.txt">app-ads.txt</a></li>
-      </ul>
-      <div class="foot__meta">
-        <span class="foot__copy">© 2026 NewMeans</span>
-        <span class="foot__note" data-i18n="foot.note">Made in Seoul.</span>
-      </div>
+      </article>
     </div>
-  </footer>
+  </div>
+</section>
+</main>
 
-  <script src="i18n.js" defer></script>
-  <script src="main.js" defer></script>
+<!-- ============ FOOTER ============ -->
+<footer class="foot" id="footer">
+  <div class="wrap foot__in">
+    <img class="foot__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans">
+    <ul class="foot__links">
+      <li><a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a></li>
+      <li><a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a></li>
+      <li><a href="https://dodae.me/" target="_blank" rel="noopener">dodae.me</a></li>
+    </ul>
+    <p class="foot__meta">© 2026 NewMeans · <span data-i18n="home.seoul">서울</span></p>
+  </div>
+</footer>
+
+<script src="i18n.js" defer></script>
+<script src="logo.js" defer></script>
+<script src="keyboard.js" defer></script>
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- entrance ---------- */
+  requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
+
+  /* ---------- rich H1 (colored words survive language switch) ---------- */
+  var H1 = {
+    ko:'<span class="line l1"><span>감각적이고 <em>재밌는</em></span></span><span class="line l2"><span><span class="mint">디지털</span> 경험</span></span>',
+    en:'<span class="line l1"><span>Sensory, <em>playful</em></span></span><span class="line l2"><span><span class="mint">digital</span> experiences</span></span>'
+  };
+  function paintH1(lang){ var h1=document.getElementById('h1'); if(h1) h1.innerHTML = H1[lang] || H1.ko; }
+  window.addEventListener('nm:langchange', function(e){ paintH1(e.detail.lang); });
+  // i18n.js applies on init before this listener attaches; paint once from current lang.
+  paintH1(document.documentElement.getAttribute('lang') || 'ko');
+
+  /* ---------- WebAudio: keycap thock ---------- */
+  var actx=null, soundOn=false;
+  var sndBtn = document.getElementById('snd');
+  function ensure(){ if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
+  sndBtn.addEventListener('click', function(){
+    soundOn=!soundOn; sndBtn.setAttribute('aria-pressed', soundOn);
+    if(soundOn){ ensure(); thock(); }
+  });
+  function thock(){
+    if(!soundOn||!actx) return;
+    var t = actx.currentTime;
+    var dur=0.05, buf=actx.createBuffer(1, actx.sampleRate*dur, actx.sampleRate);
+    var d=buf.getChannelData(0);
+    for(var i=0;i<d.length;i++){ d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2); }
+    var src=actx.createBufferSource(); src.buffer=buf;
+    var bp=actx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1000+Math.random()*350; bp.Q.value=0.8;
+    var g=actx.createGain(); g.gain.setValueAtTime(0.35,t); g.gain.exponentialRampToValueAtTime(0.001,t+dur);
+    src.connect(bp); bp.connect(g); g.connect(actx.destination); src.start(t);
+    var o=actx.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(185,t); o.frequency.exponentialRampToValueAtTime(90,t+0.06);
+    var g2=actx.createGain(); g2.gain.setValueAtTime(0.25,t); g2.gain.exponentialRampToValueAtTime(0.001,t+0.08);
+    o.connect(g2); g2.connect(actx.destination); o.start(t); o.stop(t+0.09);
+  }
+  // keyboard.js auto-mounts the keycaps; we add sound on top of its own press animation.
+  window.addEventListener('DOMContentLoaded', function(){
+    var kb = document.querySelector('[data-typer-keyboard]');
+    if(kb) kb.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-key]')) thock(); });
+  });
+
+  /* ---------- scroll reveal ---------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, {threshold:.18});
+  document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
+
+  /* ---------- Dopamine AI analysis demo ---------- */
+  var chat = document.getElementById('chat');
+  if(chat){
+    var steps = Array.prototype.slice.call(chat.querySelectorAll('[data-step]'));
+    var running=false, loopTimer;
+    function runChat(){
+      if(running) return; running=true;
+      steps.forEach(function(s){ s.classList.remove('show'); });
+      [[0,220],[1,900],[2,900]].forEach(function(p){ setTimeout(function(){ steps[p[0]].classList.add('show'); }, p[1]); });
+      setTimeout(function(){ steps[2].classList.remove('show'); steps[3].classList.add('show'); running=false; }, 2600);
+    }
+    if(reduce){ steps.forEach(function(s){ s.classList.add('show'); }); steps[2].classList.remove('show'); }
+    else {
+      var cio = new IntersectionObserver(function(en){
+        if(en[0].isIntersecting){ runChat(); loopTimer = setInterval(runChat, 5200); }
+        else { clearInterval(loopTimer); }
+      }, {threshold:.4});
+      cio.observe(chat);
+      chat.closest('.tile').addEventListener('mouseenter', function(){ clearInterval(loopTimer); runChat(); loopTimer=setInterval(runChat,5200); });
+    }
+  }
+})();
+</script>
 </body>
 </html>
