@@ -1,51 +1,118 @@
-/* Dopamine University product page — coral accent theme.
- * Re-points the accent tokens to coral so shared components (kicker, links,
- * role tags, brand mark) pick up the product's identity. */
-body { --mint: var(--coral); --mint-ink: var(--coral-ink); }
+/* Dopamine University page. Shared system in base.css; coral accent.
+ * Signature = the chat → AI research-report flow, plus an embedded mini test.
+ * Characters (DrTeto/AsEgen) sit on white cards so their backgrounds blend. */
 
-.dp-hero { border-bottom: 1px solid var(--line); }
-.dp-hero__inner {
-  max-width: var(--wrap);
-  margin: 0 auto;
-  padding: clamp(56px, 10vw, 120px) var(--pad);
+.dp{
+  --accent:var(--coral); --accent-deep:var(--coral-deep); --accent-tint:var(--coral-tint);
+  background:
+    radial-gradient(120% 90% at 100% -10%, rgba(247,107,107,.10), transparent 60%),
+    var(--paper);
 }
-.dp-logo { width: clamp(210px, 32vw, 320px); height: auto; margin-bottom: 6px; }
-.dp-eyebrow { color: var(--coral-ink); }
-.dp-tagline {
-  margin: 22px 0 0;
-  max-width: 20ch;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.2rem, 5vw, 3.9rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  word-break: keep-all;
-}
-.dp-lead {
-  margin: 24px 0 0;
-  max-width: 46ch;
-  color: var(--ink-soft);
-  font-size: 1.14rem;
-  word-break: keep-all;
-}
-.dp-cta { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 12px; }
 
-.btn-accent {
-  display: inline-flex;
-  align-items: center;
-  min-height: 50px;
-  padding: 0 24px;
-  border-radius: 999px;
-  background: var(--coral);
-  color: #fff;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 15px;
-  transition: background-color 160ms ease, transform 160ms ease;
-}
-.btn-accent:hover { background: var(--coral-ink); }
-.btn-accent:active { transform: translateY(1px); }
+/* ---------- HERO ---------- */
+.dp-hero{border-bottom:1px solid var(--line)}
+.dp-hero__inner{display:grid; grid-template-columns:1.02fr .98fr; gap:clamp(32px,5vw,64px); align-items:center;
+  padding-top:clamp(44px,7vw,88px); padding-bottom:clamp(48px,7vw,88px)}
+.dp-logo{height:clamp(30px,4vw,44px); width:auto; margin-bottom:22px}
+.dp-hero__title{font-family:var(--kr); font-weight:700; font-size:clamp(2rem,4.4vw,3.4rem); line-height:1.12; letter-spacing:-.02em; margin:14px 0 0}
+.dp-hero__title em{font-style:normal; color:var(--coral-deep)}
+.dp-hero__lead{margin:18px 0 0; color:var(--ink-soft); font-size:1.08rem; max-width:32ch}
+.dp-hero__cta{margin-top:28px}
 
-.dp-cta__center { justify-content: center; }
-.dp-foot { text-align: center; }
-.dp-foot .band__title { margin: 0 auto 26px; max-width: 22ch; }
+/* ---------- chat → AI report (signature) ---------- */
+.dp-chat{width:min(100%,400px); justify-self:center; background:var(--cream);
+  border:1px solid rgba(228,98,63,.28); border-radius:22px; padding:clamp(16px,2.4vw,22px);
+  box-shadow:0 22px 46px rgba(228,98,63,.12)}
+.dp-chat__bar{display:flex; align-items:center; gap:8px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line)}
+.dp-chat__ava{width:30px; height:30px; border-radius:9px; background:var(--coral); display:grid; place-items:center; flex:none}
+.dp-chat__ava img{width:20px; height:20px}
+.dp-chat__who{font-weight:600; font-size:14px}
+.dp-chat__tag{margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--coral-deep)}
+.bub{max-width:82%; padding:11px 15px; border-radius:16px; font-size:14px; margin-bottom:10px; line-height:1.45;
+  opacity:0; transform:translateY(8px); transition:.35s var(--ease)}
+.bub.show{opacity:1; transform:none}
+.bub--in{background:#fff; border:1px solid var(--line); border-bottom-left-radius:5px}
+.bub--out{background:var(--coral); color:var(--cream); margin-left:auto; border-bottom-right-radius:5px}
+.typing{display:inline-flex; gap:5px; padding:13px 16px; background:#fff; border-radius:16px; border-bottom-left-radius:5px; border:1px solid var(--line);
+  opacity:0; transform:translateY(8px); transition:.3s}
+.typing.show{opacity:1; transform:none}
+.typing i{width:6px; height:6px; border-radius:50%; background:var(--coral); animation:dp-blip 1s infinite}
+.typing i:nth-child(2){animation-delay:.16s} .typing i:nth-child(3){animation-delay:.32s}
+@keyframes dp-blip{0%,100%{transform:translateY(0); opacity:.4}50%{transform:translateY(-5px); opacity:1}}
+.report{margin-top:6px; padding:14px 16px; border-radius:16px; background:#fff; border:1px solid rgba(228,98,63,.4);
+  opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
+.report.show{opacity:1; transform:none}
+.report__top{display:flex; align-items:center; gap:10px}
+.report__badge{width:30px; height:30px; border-radius:50%; background:var(--coral); color:#fff; display:grid; place-items:center; flex:none; font-weight:700}
+.report__title{font-weight:700; font-size:14px; color:var(--coral-deep)}
+.report__sub{font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:1px}
+.report__bar{margin-top:12px; height:8px; border-radius:99px; background:var(--coral-tint); overflow:hidden}
+.report__fill{height:100%; width:72%; background:var(--coral); border-radius:99px}
+.report__meta{margin-top:8px; display:flex; justify-content:space-between; font-family:var(--mono); font-size:10px; color:var(--ink-soft)}
+
+/* ---------- WHAT: the egen-teto professors ---------- */
+.dp-what{padding:clamp(56px,8vw,104px) 0}
+.dp-what__grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,28px); margin-top:8px}
+.dp-prof{position:relative; border:1px solid var(--line); border-radius:22px; overflow:hidden; background:#fff;
+  display:flex; flex-direction:column; min-height:340px}
+.dp-prof__label{position:absolute; top:16px; left:16px; z-index:2; display:inline-flex; align-items:center; gap:8px;
+  font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; padding:7px 12px; border-radius:999px;
+  background:rgba(255,253,246,.9); border:1.5px solid rgba(228,98,63,.4); color:var(--coral-deep)}
+.dp-prof__img{margin-top:auto; width:76%; max-width:260px; align-self:center}
+.dp-prof__cap{position:absolute; bottom:0; left:0; right:0; padding:16px 18px;
+  background:linear-gradient(transparent, rgba(255,255,255,.94) 34%); text-align:center}
+.dp-prof__name{font-weight:700; font-size:15px}
+.dp-prof__desc{font-size:.9rem; color:var(--ink-soft); margin-top:2px}
+.dp-what__note{margin-top:clamp(22px,3vw,30px); max-width:56ch; color:var(--ink-soft); font-size:1.02rem}
+.dp-what__note b{color:var(--ink)}
+
+/* ---------- MINI TEST ---------- */
+.dp-test{border-top:1px solid var(--line); background:var(--cream)}
+.dp-test__inner{padding:clamp(52px,7vw,96px) 0; max-width:680px; margin:0 auto}
+.dp-test__head{text-align:center; margin-bottom:clamp(28px,4vw,40px)}
+.dp-test__head h2{font-family:var(--kr); font-weight:700; font-size:clamp(1.6rem,3vw,2.3rem); letter-spacing:-.01em; margin:10px 0 0}
+.dp-test__head p{color:var(--ink-soft); margin-top:10px}
+.quiz{position:relative}
+.quiz__progress{height:6px; border-radius:99px; background:var(--coral-tint); overflow:hidden; margin-bottom:22px}
+.quiz__progress i{display:block; height:100%; width:0; background:var(--coral); border-radius:99px; transition:width .4s var(--ease)}
+.quiz__q{font-family:var(--kr); font-weight:700; font-size:clamp(1.2rem,2.2vw,1.5rem); letter-spacing:-.01em; text-align:center; min-height:2.4em; display:flex; align-items:center; justify-content:center}
+.quiz__opts{display:grid; gap:12px; margin-top:22px}
+.quiz__opt{text-align:left; padding:16px 18px; border-radius:14px; border:1.5px solid var(--line); background:#fff; font-size:1rem; font-weight:500;
+  transition:border-color .2s, transform .15s var(--ease), background .2s}
+.quiz__opt:hover{border-color:var(--coral); transform:translateY(-2px)}
+.quiz__step{font-family:var(--mono); font-size:12px; letter-spacing:.1em; color:var(--coral-deep); text-align:center; margin-top:16px}
+
+/* result */
+.quiz__result{text-align:center; display:none}
+.quiz__result.show{display:block; animation:dp-pop .5s var(--ease)}
+@keyframes dp-pop{from{opacity:0; transform:translateY(12px)}to{opacity:1; transform:none}}
+.quiz__result-img{width:150px; height:190px; object-fit:cover; object-position:top center; margin:0 auto; border-radius:16px; background:#fff; border:1px solid var(--line)}
+.quiz__result h3{font-family:var(--kr); font-weight:700; font-size:clamp(1.5rem,2.6vw,2rem); margin:16px 0 0}
+.quiz__result h3 em{font-style:normal; color:var(--coral-deep)}
+.quiz__spectrum{margin:20px auto 0; max-width:340px}
+.quiz__spectrum-bar{height:12px; border-radius:99px; background:linear-gradient(90deg,#F7B26B,var(--coral)); position:relative}
+.quiz__spectrum-bar i{position:absolute; top:50%; left:50%; width:22px; height:22px; border-radius:50%; background:#fff; border:3px solid var(--coral-deep); transform:translate(-50%,-50%); transition:left .6s var(--ease)}
+.quiz__spectrum-ends{display:flex; justify-content:space-between; margin-top:8px; font-family:var(--mono); font-size:12px; color:var(--ink-soft)}
+.quiz__result p{color:var(--ink-soft); margin:16px auto 0; max-width:38ch}
+.quiz__result-cta{margin-top:24px; display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
+.quiz__retry{font-family:var(--mono); font-size:12px; letter-spacing:.06em; color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px}
+
+/* ---------- PLATFORM framing ---------- */
+.dp-platform{padding:clamp(56px,8vw,104px) 0}
+.dp-platform__lead{font-family:var(--kr); font-weight:700; font-size:clamp(1.5rem,2.8vw,2.2rem); line-height:1.3; letter-spacing:-.01em; max-width:20ch}
+.dp-platform__lead em{font-style:normal; color:var(--coral-deep)}
+.dp-platform__p{margin-top:20px; color:var(--ink-soft); font-size:1.06rem; max-width:52ch}
+
+/* ---------- FOOT CTA ---------- */
+.dp-cta-sec{border-top:1px solid var(--line); text-align:center; padding:clamp(52px,7vw,96px) 0}
+.dp-cta-sec h2{font-family:var(--kr); font-weight:700; font-size:clamp(1.6rem,3vw,2.4rem); letter-spacing:-.01em; max-width:22ch; margin:0 auto 12px}
+.dp-cta-sec p{color:var(--ink-soft); margin:0 auto 26px; max-width:34ch}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1024px){
+  .dp-hero__inner{grid-template-columns:1fr; gap:36px}
+  .dp-hero__copy{order:1} .dp-hero__stage{order:2}
+}
+@media (max-width:560px){
+  .dp-what__grid{grid-template-columns:1fr}
+}
