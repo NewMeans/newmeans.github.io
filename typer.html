@@ -67,8 +67,10 @@
               </div>
               <img class="desk__cactus" src="assets/desk/sculpture.png" alt="" loading="eager" decoding="async">
             </div>
-            <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="eager" decoding="async">
-            <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
+            <div class="desk__kbwrap">
+              <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="eager" decoding="async">
+              <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -102,8 +104,10 @@
             <div class="monitor">
               <img class="monitor__img" data-monitor src="assets/desk/moniter.png" alt="" loading="lazy" decoding="async">
             </div>
-            <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="lazy" decoding="async">
-            <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
+            <div class="desk__kbwrap">
+              <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="lazy" decoding="async">
+              <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
+            </div>
           </div>
         </div>
         <div class="tp-custom__copy" data-reveal>
@@ -230,12 +234,26 @@
       {id:'4000',n:'Blue'},{id:'4001',n:'Brown'},{id:'4002',n:'Red'},{id:'4003',n:'Chocolate'},
       {id:'4004',n:'Capacitive'},{id:'4005',n:'Low Profile'},{id:'4006',n:'White'}];
     var SWITCH_CLIPS={4000:4,4001:5,4002:5,4003:5,4004:5,4005:5,4006:5};
+    /* 키캡: 1.png가 실제 와이드 아트(5000/5006)인지, 1u 악센트 키인지 세트별 구분 */
     var KEYCAPS=[
-      {id:'5000',n:'Retro'},{id:'5001',n:'Modern'},{id:'5002',n:'Mint Choco'},{id:'5003',n:'Mocha Latte'},
-      {id:'5004',n:'Lavender Sky'},{id:'5005',n:'Sunset Breeze'},{id:'5006',n:'Midnight Edge'},{id:'5007',n:'Silver Paws'}];
+      {id:'5000',n:'Retro',wide:1,wr:461/281},
+      {id:'5001',n:'Modern'},
+      {id:'5002',n:'Mocha Latte'},
+      {id:'5003',n:'Lavender Sky'},
+      {id:'5004',n:'Sunset Breeze'},
+      {id:'5005',n:'Mint Choco'},
+      {id:'5006',n:'Midnight Edge',wide:1,wr:469/281},
+      {id:'5007',n:'Silver Paws'}];
+    /* 프레임: 지오메트리(retro/modern) + 케이블 배치(프레임 우상단 포트 기준, % of 프레임) */
     var FRAMES=[
-      {id:'3000',n:'Retro'},{id:'3001',n:'Modern'},{id:'3002',n:'Mocha Latte'},{id:'3003',n:'Mint Choco'},
-      {id:'3004',n:'Lavender Sky'},{id:'3005',n:'Sunset Breeze'},{id:'3006',n:'Midnight Edge',noCable:true},{id:'3007',n:'Silver Paws'}];
+      {id:'3000',n:'Retro',geo:'retro',cable:{w:55,left:85,top:-22}},
+      {id:'3001',n:'Modern',geo:'modern',cable:{w:46,left:87,top:-26}},
+      {id:'3002',n:'Mocha Latte',geo:'modern',cable:{w:58,left:87,top:-15}},
+      {id:'3003',n:'Lavender Sky',geo:'modern',cable:{w:58,left:87,top:-15}},
+      {id:'3004',n:'Sunset Breeze',geo:'modern',cable:{w:58,left:87,top:-15}},
+      {id:'3005',n:'Mint Choco',geo:'modern',cable:{w:58,left:87,top:-15}},
+      {id:'3006',n:'Midnight Edge',geo:'modern'},
+      {id:'3007',n:'Silver Paws',geo:'modern',cable:{w:46,left:87,top:-28}}];
     var MONITORS=[
       {id:'2000',n:'Retro'},{id:'2001',n:'Modern'},{id:'2002',n:'Modern White'},{id:'2003',n:'Studio PC'}];
     var cur={sw:'4000', cap:null, fr:null, mon:'2000'};
@@ -291,12 +309,16 @@
     var tpTitle=document.getElementById('tpTitle');
     function wrapTitle(){
       if(!tpTitle) return;
-      var text=tpTitle.textContent; tpTitle.textContent='';
-      for(var i=0;i<text.length;i++){
-        var ch=text[i];
-        if(ch===' '){ tpTitle.appendChild(document.createTextNode(' ')); continue; }
-        var s=document.createElement('span'); s.className='k'; s.textContent=ch; tpTitle.appendChild(s);
-      }
+      var words=tpTitle.textContent.split(' ');
+      tpTitle.textContent='';
+      words.forEach(function(word,wi){
+        if(wi) tpTitle.appendChild(document.createTextNode(' '));
+        var w=document.createElement('span'); w.style.whiteSpace='nowrap';
+        for(var i=0;i<word.length;i++){
+          var s=document.createElement('span'); s.className='k'; s.textContent=word[i]; w.appendChild(s);
+        }
+        tpTitle.appendChild(w);
+      });
     }
     if(tpTitle){
       wrapTitle();
@@ -316,18 +338,23 @@
     var screen=document.querySelector('[data-screen]');
 
     function applySwitch(id){ cur.sw=id; pool(id); if(window.TyperGame&&game) TyperGame.setSwitch(game,id); clack(); }
-    function applyKeycap(id){
-      cur.cap=id;
-      var n='assets/shop/keycap/'+id+'_0.png', w='assets/shop/keycap/'+id+'_1.png';
-      desks.forEach(function(d){ TyperKeyboard.setSkin(d,{normal:n, wide:w}); });
+    function applyKeycap(it){
+      cur.cap=it.id;
+      var n='assets/shop/keycap/'+it.id+'_0.png', s1='assets/shop/keycap/'+it.id+'_1.png';
+      // 와이드 아트가 있으면 그대로, 없으면 악센트 키를 9-slice로 (스트레치 금지)
+      var skin = it.wide
+        ? {normal:n, accent:null, wide:s1, wideRatio:it.wr}
+        : {normal:n, accent:s1, wide:null, wideRatio:1.64};
+      desks.forEach(function(d){ TyperKeyboard.setSkin(d,skin); });
       if(window.TyperGame&&game) TyperGame.setKeycap(game,n);
     }
     function applyFrame(f){
       cur.fr=f.id;
-      desks.forEach(function(d){ TyperKeyboard.setSkin(d,{frame:'assets/shop/frame/'+f.id+'_1.png'}); });
+      desks.forEach(function(d){ TyperKeyboard.setSkin(d,{geo:f.geo, frame:'assets/shop/frame/'+f.id+'_1.png'}); });
       cables.forEach(function(c){
-        if(f.noCable){ c.style.display='none'; }
-        else { c.style.display=''; c.src='assets/shop/frame/'+f.id+'_2.png'; }
+        if(!f.cable){ c.style.display='none'; return; }
+        c.style.display=''; c.src='assets/shop/frame/'+f.id+'_2.png';
+        c.style.width=f.cable.w+'%'; c.style.left=f.cable.left+'%'; c.style.top=f.cable.top+'%';
       });
     }
     function applyMonitor(id){
@@ -353,7 +380,7 @@
     buildPicker('pickSwitch', SWITCHES, function(it){ return 'assets/shop/switch/'+it.id+'.png'; },
       function(it){ return it.id===cur.sw; }, function(it){ applySwitch(it.id); });
     buildPicker('pickKeycap', KEYCAPS, function(it){ return 'assets/shop/keycap/'+it.id+'_s.png'; },
-      function(it){ return it.id==='5000'; }, function(it){ applyKeycap(it.id); });
+      function(it){ return it.id==='5000'; }, function(it){ applyKeycap(it); });
     buildPicker('pickFrame', FRAMES, function(it){ return 'assets/shop/frame/'+it.id+'_s.png'; },
       function(it){ return it.id==='3000'; }, function(it){ applyFrame(it); });
     buildPicker('pickMonitor', MONITORS, function(it){ return 'assets/shop/monitor/'+it.id+'.png'; },

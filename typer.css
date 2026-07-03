@@ -41,9 +41,10 @@
 @keyframes tp-caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
 .desk__cactus{position:absolute; left:-4%; bottom:-6%; width:20%; z-index:4; pointer-events:none;
   filter:drop-shadow(0 6px 8px rgba(27,24,21,.12))}
-/* 케이블: 키보드 오른쪽 위에 꽂혀 화면 오른쪽 밖으로 나감 (페이지 overflow clip이 자름) */
-.desk__cable{position:absolute; left:86%; top:47%; width:96%; max-width:none; z-index:1; pointer-events:none}
-.desk__kb{position:relative; width:100%; margin-top:-2%; z-index:3}
+/* 키보드 랩: 케이블은 프레임 우상단 포트에 꽂혀 위·오른쪽으로 — 위치/크기는 프레임별 JS 설정 */
+.desk__kbwrap{position:relative; width:100%; margin-top:-2%}
+.desk__cable{position:absolute; left:85%; top:-22%; width:55%; max-width:none; z-index:0; pointer-events:none}
+.desk__kb{position:relative; z-index:2}
 
 /* ---------- PLAY ---------- */
 .tp-play{padding:clamp(48px,7vw,88px) 0; border-bottom:1px solid var(--line)}
@@ -60,7 +61,6 @@
 .tp-custom__inner{display:grid; grid-template-columns:1.05fr .95fr; gap:clamp(30px,5vw,56px); align-items:start}
 .tp-custom__stage{position:relative; overflow:clip; border-radius:20px}
 .tp-custom .desk{width:min(100%,480px)}
-.tp-custom .desk__cable{width:70%; left:84%}
 .tp-custom__copy h2{font-size:clamp(24px,3.2vw,34px)}
 .tp-custom__copy > p{margin:14px 0 0; color:var(--ink-2); max-width:34ch}
 .picker{margin-top:24px}
