@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-i18n="meta.title">뉴민스 NewMeans — 게임과 AI를 만드는 2인 스튜디오</title>
-<meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="게임 하나, AI 하나, 사람은 둘. 뉴민스는 Typer와 도파민대학교를 만들고 운영하는 2인 스튜디오입니다.">
+<title data-i18n="meta.title">NewMeans — 게임과 AI를 만드는 2인 스튜디오</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.">
 <meta name="theme-color" content="#FCFBF7">
 <meta property="og:type" content="website">
 <meta property="og:title" content="NewMeans — 게임과 AI를 만드는 2인 스튜디오">
-<meta property="og:description" content="키보드 소리로 노는 게임 Typer, 대화를 읽는 AI 도파민대학교.">
+<meta property="og:description" content="게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.">
 <meta property="og:image" content="https://newmeans.github.io/assets/brand/newmeans-logo.png">
 <meta property="og:url" content="https://newmeans.github.io/">
 <meta name="twitter:card" content="summary_large_image">
@@ -17,54 +17,41 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
 <link rel="stylesheet" href="base.css">
 <style>
-/* Home. 공용 시스템은 base.css, 데모 모듈(logo.js/keyboard.js)은 자체 CSS 주입. */
+/* Home. 공용 시스템은 base.css, 데모 모듈(logo.js/keyboard.js)은 자체 CSS 주입.
+   구조: 살아있는 로고가 헤드라인 — 카피는 캡션 한 줄.
+   제품은 풀블리드 컬러 밴드(민트 세계 / 코랄 세계). */
 
-/* ---------- HERO ---------- */
-.hero{padding:clamp(40px,7vw,84px) 0 clamp(46px,7vw,88px)}
-.hero__grid{display:grid; grid-template-columns:1fr .95fr; gap:clamp(30px,5vw,64px); align-items:center}
-.hero__h1{font-size:clamp(34px,5.2vw,62px); cursor:default}
-.hero__h1 .l{display:block}
-.hero__h1 em{font-style:normal}
-.hero__h1 .mint{color:var(--mint-text)}
-.hero__h1 .coral{color:var(--coral-text)}
-/* 키캡 타이포 — 글자가 눌린다 */
-.hero__h1 .k{display:inline-block; transition:transform .14s var(--ease)}
-.hero__h1 .k:hover{transform:translateY(.06em)}
-.hero__h1 .k.on{transform:translateY(.1em) scale(.97)}
-@media (prefers-reduced-motion:reduce){.hero__h1 .k{transition:none}}
-.hero__sub{margin-top:24px; max-width:33ch; font-size:clamp(16px,1.5vw,17.5px); color:var(--ink-2)}
-.hero__cta{margin-top:30px; display:flex; align-items:center; gap:22px; flex-wrap:wrap}
-.hero__sig{display:flex; flex-direction:column; align-items:center; gap:14px}
-.sig-logo{width:min(100%,440px)}
-.sig-hint{font-size:13px; color:var(--ink-3)}
-.loaded .hero__copy > *{animation:rise .7s var(--ease) both}
-.loaded .hero__copy > *:nth-child(2){animation-delay:.05s}
-.loaded .hero__copy > *:nth-child(3){animation-delay:.1s}
-.loaded .hero__sig{animation:rise .8s var(--ease) .08s both}
+/* ---------- HERO : 토끼가 곧 헤드라인 ---------- */
+.hero{padding:clamp(36px,6vw,68px) 0 clamp(44px,7vw,84px)}
+.hero__in{display:flex; flex-direction:column; align-items:center; text-align:center}
+.sig-logo{width:min(92%,560px)}
+.hero__tag{margin-top:clamp(18px,3vw,28px); font-size:clamp(17px,2vw,22px); font-weight:600; letter-spacing:-.015em}
+.hero__cta{margin-top:26px; display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:center}
+.loaded .hero__in > *{animation:rise .7s var(--ease) both}
+.loaded .hero__in > *:nth-child(2){animation-delay:.08s}
+.loaded .hero__in > *:nth-child(3){animation-delay:.16s}
 @keyframes rise{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
-@media (prefers-reduced-motion:reduce){.loaded .hero__copy > *,.loaded .hero__sig{animation:none}}
+@media (prefers-reduced-motion:reduce){.loaded .hero__in > *{animation:none}}
 
-/* ---------- WORKS ---------- */
-.works{padding:clamp(36px,6vw,64px) 0 0}
-.works .head{margin-bottom:8px}
+/* ---------- 제품 밴드 : 제품마다 하나의 세계 ---------- */
+.band{padding:clamp(52px,8vw,100px) 0}
+.band--typer{background:var(--mint-bg)}
+.band--dopa{background:var(--coral-bg)}
+.band__grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,64px); align-items:center}
+.band__demo{display:flex; align-items:center; justify-content:center}
 .work__wordmark-link{display:inline-block; transition:opacity .18s}
 .work__wordmark-link:hover{opacity:.7}
-.work{display:grid; grid-template-columns:1fr 1fr; gap:clamp(26px,5vw,60px); align-items:center;
-  padding:clamp(30px,5vw,52px) 0; border-top:1px solid var(--line)}
-.work__demo{display:flex; align-items:center; justify-content:center;
-  padding:clamp(22px,3.4vw,40px); border-radius:24px}
-.work--typer .work__demo{background:var(--mint-bg)}
-.work--dopa .work__demo{background:var(--coral-bg)}
-.work__wordmark{height:clamp(28px,3.6vw,36px); width:auto}
-.work__wordmark--dopa{height:clamp(38px,5vw,52px)}
-.work__kind{margin-top:13px; font-size:14px; font-weight:500; color:var(--ink-3)}
-.work__desc{margin-top:14px; font-size:1.03rem; color:var(--ink-2); max-width:33ch}
-.work__proof{margin-top:12px; font-size:13.5px; font-weight:600; color:var(--mint-text)}
+.work__wordmark{height:clamp(30px,3.8vw,38px); width:auto}
+.work__wordmark--dopa{height:clamp(40px,5.2vw,54px)}
+.work__kind{margin-top:13px; font-size:14px; font-weight:500; color:var(--ink-2)}
+.work__desc{margin-top:14px; font-size:1.03rem; color:var(--ink); max-width:33ch; opacity:.86}
+.work__proof{margin-top:12px; font-size:13.5px; font-weight:700; color:var(--mint-text)}
 .work__more{margin-top:20px}
+.band--dopa .link:hover{color:var(--coral-text); text-decoration-color:var(--coral-text)}
 
-.kbd-mount{width:min(100%,390px)}
-.chat{width:min(100%,370px); background:var(--card); border:1px solid var(--line-2); border-radius:18px;
-  padding:clamp(15px,2vw,19px); box-shadow:0 16px 40px rgba(27,24,21,.07)}
+.kbd-mount{width:min(100%,400px)}
+.chat{width:min(100%,370px); background:var(--card); border-radius:18px;
+  padding:clamp(15px,2vw,19px); box-shadow:0 18px 40px rgba(198,66,55,.14)}
 .chat__bar{display:flex; align-items:center; gap:7px; margin-bottom:13px; padding-bottom:11px; border-bottom:1px solid var(--line-2)}
 .chat__ava{width:25px; height:25px; border-radius:8px; background:var(--coral); display:grid; place-items:center; flex:none}
 .chat__ava img{width:16px; height:16px}
@@ -76,32 +63,26 @@
 .bub--in{background:var(--paper); border:1px solid var(--line-2); border-bottom-left-radius:5px}
 .bub--out{background:var(--coral); color:#fff; margin-left:auto; border-bottom-right-radius:5px}
 .rep{margin-top:4px; display:flex; align-items:center; gap:10px; padding:11px 13px; border-radius:13px;
-  background:var(--mint-bg); border:1px solid color-mix(in srgb,var(--mint) 45%,transparent);
-  opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
+  background:var(--mint-bg); opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
 .rep.show{opacity:1; transform:none}
 .rep__b{width:26px; height:26px; border-radius:50%; background:var(--mint-text); color:#fff; display:grid; place-items:center; flex:none; font-weight:700; font-size:14px}
 .rep b{color:var(--mint-text); font-size:13px} .rep small{display:block; color:var(--ink-3); font-size:11px; margin-top:1px}
 
 /* ---------- STUDIO ---------- */
-.studio{padding:clamp(46px,7vw,88px) 0 0}
-.studio__grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(26px,5vw,60px); align-items:start;
-  border-top:1px solid var(--line); padding-top:clamp(30px,5vw,52px)}
-.studio__lead{font-weight:700; font-size:clamp(19px,2.2vw,25px); line-height:1.34; letter-spacing:-.02em; margin-top:14px}
-.studio__lead em{font-style:normal; color:var(--mint-text)}
+.studio{padding:clamp(52px,8vw,96px) 0 0}
+.studio__grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(26px,5vw,60px); align-items:start}
+.studio__lead{font-weight:700; font-size:clamp(20px,2.4vw,27px); line-height:1.3; letter-spacing:-.02em; margin-top:14px}
 .studio__body{color:var(--ink-2); font-size:1.03rem}
 .studio__body p+p{margin-top:14px}
-.roles{margin-top:22px; display:grid; gap:0}
+.roles{margin-top:22px; display:grid}
 .role{display:flex; gap:14px; align-items:baseline; padding:11px 0; border-top:1px solid var(--line-2)}
 .role b{font-weight:600; flex:none; width:8.5em; color:var(--ink)}
 .role span{color:var(--ink-2); font-size:.96rem}
 
 @media (max-width:860px){
-  .hero__grid{grid-template-columns:1fr; gap:20px}
-  .hero__sig{order:-1; align-items:flex-start}
-  .sig-logo{width:min(100%,360px)}
-  .sig-hint{display:none}
-  .work{grid-template-columns:1fr; gap:22px}
-  .work__text{order:1} .work__demo{order:2}
+  .sig-logo{width:min(96%,440px)}
+  .band__grid{grid-template-columns:1fr; gap:24px}
+  .band__text{order:1} .band__demo{order:2}
   .studio__grid{grid-template-columns:1fr; gap:16px}
 }
 </style>
@@ -114,8 +95,8 @@
     <a class="nav__brand" href="#top" aria-label="NewMeans"><img class="nav__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
     <div class="nav__spacer"></div>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#works" data-i18n="nav.works">만드는 것</a>
-      <a href="#studio" data-i18n="nav.studio">소개</a>
+      <a href="#works" data-i18n="nav.works">제품</a>
+      <a href="#studio" data-i18n="nav.studio">스튜디오</a>
     </nav>
     <div class="nav__tools">
       <div class="lang" role="group" aria-label="Language">
@@ -131,72 +112,58 @@
 </header>
 
 <main id="top">
-  <!-- HERO -->
+  <!-- HERO : 소개는 얘가 합니다 -->
   <section class="hero">
-    <div class="wrap hero__grid">
-      <div class="hero__copy">
-        <h1 class="hero__h1" id="h1">
-          <span class="l"><span data-i18n="home.h1a1">키보드 소리로 노는 </span><em class="mint" data-i18n="home.h1a2">게임</em><span data-i18n="home.h1a3">,</span></span>
-          <span class="l"><span data-i18n="home.h1b1">대화를 읽는 </span><em class="coral" data-i18n="home.h1b2">AI</em><span data-i18n="home.h1b3">.</span></span>
-        </h1>
-        <p class="hero__sub" data-i18n="home.sub">기획부터 운영까지 직접 하는 2인 스튜디오, 뉴민스.</p>
-        <div class="hero__cta">
-          <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보기</span><span class="arw">→</span></a>
-          <a class="link" href="mailto:newmeans.dev@gmail.com" data-i18n="home.cta2">문의하기</a>
-        </div>
-      </div>
-      <div class="hero__sig">
-        <div class="sig-logo" data-newmeans-logo></div>
-        <p class="sig-hint" data-i18n="home.sig.hint">글자 드래그 가능</p>
+    <div class="wrap hero__in">
+      <div class="sig-logo" data-newmeans-logo></div>
+      <h1 class="hero__tag" data-i18n="home.tag">게임과 AI를 만드는 2인 스튜디오</h1>
+      <div class="hero__cta">
+        <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보기</span><span class="arw">→</span></a>
+        <a class="link" href="mailto:newmeans.dev@gmail.com" data-i18n="home.cta2">문의하기</a>
       </div>
     </div>
   </section>
 
-  <!-- WORKS -->
-  <section class="works" id="works">
-    <div class="wrap">
-      <div class="head">
-        <h2 data-i18n="home.works.title">제품</h2>
+  <!-- TYPER : 민트 세계 -->
+  <section class="band band--typer" id="works">
+    <div class="wrap band__grid">
+      <div class="band__text" data-reveal>
+        <a class="work__wordmark-link" href="typer.html"><img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer"></a>
+        <p class="work__kind" data-i18n="home.typer.kind">게임 · iOS / Android</p>
+        <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 타건음 아케이드. 공으로 키캡 블록을 부수고, 스위치로 소리를 바꾸고, 코인으로 책상을 꾸미는 게임.</p>
+        <p class="work__proof" data-i18n="home.typer.proof">다운로드 30,000+ · 평점 4.74 · 유료 마케팅 없이</p>
+        <p class="work__more"><a class="link" href="typer.html"><span data-i18n="home.typer.more">Typer 보기</span><span class="arw">→</span></a></p>
       </div>
+      <div class="band__demo" data-reveal>
+        <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
+      </div>
+    </div>
+  </section>
 
-      <!-- Typer -->
-      <article class="work work--typer" data-reveal>
-        <div class="work__demo">
-          <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
-        </div>
-        <div class="work__text">
-          <a class="work__wordmark-link" href="typer.html"><img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer"></a>
-          <p class="work__kind" data-i18n="home.typer.kind">iOS · Android 게임</p>
-          <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 타건음 아케이드. 공으로 키캡 블록을 부수고, 스위치로 소리를 바꾸고, 코인으로 책상을 꾸미는 게임.</p>
-          <p class="work__proof" data-i18n="home.typer.proof">다운로드 30,000+ · 평점 4.74 · 유료 마케팅 없이</p>
-          <p class="work__more"><a class="link" href="typer.html"><span data-i18n="home.typer.more">Typer 보기</span><span class="arw">→</span></a></p>
-        </div>
-      </article>
-
-      <!-- Dopamine -->
-      <article class="work work--dopa" data-reveal>
-        <div class="work__text">
-          <a class="work__wordmark-link" href="dopamine.html"><img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
-          <p class="work__kind" data-i18n="home.dopa.kind">웹 · AI 심리테스트</p>
-          <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 분석해 심리 리포트를 써주는 AI. 정해진 유형 없이, 2,000명이면 2,000개의 결과.</p>
-          <p class="work__more"><a class="link" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
-        </div>
-        <div class="work__demo">
-          <div class="chat" id="chat">
-            <div class="chat__bar">
-              <span class="chat__ava"><img src="assets/brand/dopamine-symbol.png" alt=""></span>
-              <span class="chat__who" data-i18n="home.dopa.who">카카오톡 대화</span>
-              <span class="chat__tag" data-i18n="home.dopa.tag">AI 분석 중</span>
-            </div>
-            <div class="bub bub--in" data-step data-i18n="home.dopa.m1">나 요즘 자꾸 밤에 폰만 봐 ㅠ</div>
-            <div class="bub bub--out" data-step data-i18n="home.dopa.m2">오 그거 도파민 신호일지도?</div>
-            <div class="rep" data-step>
-              <span class="rep__b">✓</span>
-              <span><b data-i18n="home.dopa.result">분석 완료 · 자극 추구형</b><small data-i18n="home.dopa.resultSub">AI 심리 리포트 생성됨</small></span>
-            </div>
+  <!-- DOPAMINE : 코랄 세계 -->
+  <section class="band band--dopa" id="dopa">
+    <div class="wrap band__grid">
+      <div class="band__demo" data-reveal>
+        <div class="chat" id="chat">
+          <div class="chat__bar">
+            <span class="chat__ava"><img src="assets/brand/dopamine-symbol.png" alt=""></span>
+            <span class="chat__who" data-i18n="home.dopa.who">카카오톡 대화</span>
+            <span class="chat__tag" data-i18n="home.dopa.tag">AI 분석 중</span>
+          </div>
+          <div class="bub bub--in" data-step data-i18n="home.dopa.m1">나 요즘 자꾸 밤에 폰만 봐 ㅠ</div>
+          <div class="bub bub--out" data-step data-i18n="home.dopa.m2">오 그거 도파민 신호일지도?</div>
+          <div class="rep" data-step>
+            <span class="rep__b">✓</span>
+            <span><b data-i18n="home.dopa.result">분석 완료 · 자극 추구형</b><small data-i18n="home.dopa.resultSub">AI 심리 리포트 생성됨</small></span>
           </div>
         </div>
-      </article>
+      </div>
+      <div class="band__text" data-reveal>
+        <a class="work__wordmark-link" href="dopamine.html"><img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
+        <p class="work__kind" data-i18n="home.dopa.kind">AI 심리테스트 · Web</p>
+        <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 분석해 심리 리포트를 써주는 AI. 정해진 유형 없이, 2,000명이면 2,000개의 결과.</p>
+        <p class="work__more"><a class="link" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
+      </div>
     </div>
   </section>
 
@@ -205,10 +172,10 @@
     <div class="wrap studio__grid">
       <div>
         <h2 data-i18n="home.studio.title">스튜디오</h2>
-        <p class="studio__lead"><span data-i18n="home.studio.lead1">한 명은 게임, 한 명은 AI.</span> <em data-i18n="home.studio.lead2">나머지는 반반.</em></p>
+        <p class="studio__lead" data-i18n="home.studio.lead">아이디어부터 운영까지, 두 사람.</p>
       </div>
       <div class="studio__body">
-        <p data-i18n="home.studio.p1">둘이서 기획부터 개발·디자인·운영까지 맡는 구조. 게임 클라이언트 개발자와 AI 엔지니어의 조합.</p>
+        <p data-i18n="home.studio.p1">게임 클라이언트 개발자와 AI 엔지니어의 조합. 기획·개발·디자인·운영 전부 내부 작업.</p>
         <p data-i18n="home.studio.p2">Typer는 “벽돌깨기에 타건음을 입히면 어떨까”라는 아이디어에서 시작해, 지금은 177개국에 출시된 게임.</p>
         <div class="roles">
           <div class="role"><b data-i18n="home.role1.n">클라이언트 · 게임</b><span data-i18n="home.role1.d">기획 · 게임 개발 · 디자인 · 운영</span></div>
@@ -252,6 +219,14 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
 
+  /* 로고 셀프 데모 — 설명 라벨 대신 직접 보여주기 */
+  if(!reduce){
+    setTimeout(function(){
+      var el=document.querySelector('[data-newmeans-logo]');
+      if(window.NewMeansLogo && el) NewMeansLogo.poke(el);
+    }, 1500);
+  }
+
   /* 키보드 데모 타건음 */
   var actx=null, on=false, sndBtn=document.getElementById('snd');
   function ensure(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
@@ -274,29 +249,6 @@
     var kb=document.querySelector('[data-typer-keyboard]');
     if(kb) kb.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-key]')) thock(); });
   });
-
-  /* 키캡 타이포 — 헤드라인 글자를 낱자 span으로 감싸 눌리게 (언어 전환 시 재감쌈) */
-  var h1=document.getElementById('h1');
-  function wrapChars(){
-    if(!h1) return;
-    h1.querySelectorAll('[data-i18n]').forEach(function(el){
-      var text=el.textContent; el.textContent='';
-      for(var i=0;i<text.length;i++){
-        var ch=text[i];
-        if(ch===' '){ el.appendChild(document.createTextNode(' ')); continue; }
-        var s=document.createElement('span'); s.className='k'; s.textContent=ch; el.appendChild(s);
-      }
-    });
-  }
-  if(h1){
-    wrapChars();
-    window.addEventListener('nm:langchange', function(){ requestAnimationFrame(wrapChars); });
-    h1.addEventListener('pointerdown', function(e){
-      var k=e.target.closest('.k'); if(!k) return;
-      k.classList.add('on'); thock();
-      setTimeout(function(){ k.classList.remove('on'); }, 140);
-    });
-  }
 
   /* 리빌 */
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});

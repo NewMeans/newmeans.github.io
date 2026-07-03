@@ -155,6 +155,18 @@
       requestAnimationFrame(tick);
     }
     measure(); updMax(); requestAnimationFrame(tick);
+
+    // 셀프 데모: 글자 하나가 튀어올랐다 돌아오는 포크 — 인터랙션이 스스로를 소개한다
+    root.__nmPoke = function () {
+      var words = pieces.filter(function (p) { return p.word; });
+      if (!words.length) return;
+      var p = words[(Math.random() * words.length) | 0];
+      measure();
+      var s = rect.width / 560;                          // 크기 보정
+      p.vx = (Math.random() < 0.5 ? -1 : 1) * (9 + Math.random() * 5) * s;
+      p.vy = -(27 + Math.random() * 8) * s;
+      away = p;
+    };
   }
 
   function auto() {
@@ -163,5 +175,8 @@
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", auto);
   else auto();
-  window.NewMeansLogo = { mount: mount };
+  window.NewMeansLogo = {
+    mount: mount,
+    poke: function (el) { if (el && el.__nmPoke) el.__nmPoke(); }
+  };
 })();
