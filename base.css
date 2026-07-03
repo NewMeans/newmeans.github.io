@@ -17,10 +17,10 @@
   --accent:var(--mint); --accent-deep:var(--mint-deep); --accent-tint:var(--mint-tint);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%; overflow-x:clip}
 body{
   font-family:var(--kr); color:var(--ink); background:var(--paper);
-  line-height:1.55; overflow-x:hidden; -webkit-font-smoothing:antialiased;
+  line-height:1.55; overflow-x:clip; -webkit-font-smoothing:antialiased;
 }
 :lang(ko),[lang="ko"]{word-break:keep-all}
 img{display:block; max-width:100%}
