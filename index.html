@@ -6,6 +6,12 @@
 <title data-i18n="meta.title">뉴민스 NewMeans — 게임과 AI를 만드는 2인 스튜디오</title>
 <meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="게임 하나, AI 하나, 사람은 둘. 뉴민스는 Typer와 도파민대학교를 만들고 운영하는 2인 스튜디오입니다.">
 <meta name="theme-color" content="#FCFBF7">
+<meta property="og:type" content="website">
+<meta property="og:title" content="NewMeans — 게임과 AI를 만드는 2인 스튜디오">
+<meta property="og:description" content="키보드 소리로 노는 게임 Typer, 대화를 읽는 AI 도파민대학교.">
+<meta property="og:image" content="https://newmeans.github.io/assets/brand/newmeans-logo.png">
+<meta property="og:url" content="https://newmeans.github.io/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -40,6 +46,9 @@
 
 /* ---------- WORKS ---------- */
 .works{padding:clamp(36px,6vw,64px) 0 0}
+.works .head{margin-bottom:8px}
+.work__wordmark-link{display:inline-block; transition:opacity .18s}
+.work__wordmark-link:hover{opacity:.7}
 .work{display:grid; grid-template-columns:1fr 1fr; gap:clamp(26px,5vw,60px); align-items:center;
   padding:clamp(30px,5vw,52px) 0; border-top:1px solid var(--line)}
 .work__demo{display:flex; align-items:center; justify-content:center;
@@ -102,7 +111,7 @@
 
 <header class="nav">
   <div class="wrap nav__in">
-    <a class="nav__brand" href="#top" aria-label="NewMeans"><img class="nav__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans"></a>
+    <a class="nav__brand" href="#top" aria-label="NewMeans"><img class="nav__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
     <div class="nav__spacer"></div>
     <nav class="nav__links" aria-label="Primary">
       <a href="#works" data-i18n="nav.works">만드는 것</a>
@@ -156,7 +165,7 @@
           <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
         </div>
         <div class="work__text">
-          <img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer">
+          <a class="work__wordmark-link" href="typer.html"><img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer"></a>
           <p class="work__kind" data-i18n="home.typer.kind">iOS · Android 게임</p>
           <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 타건음 아케이드. 공으로 키캡 블록을 부수고, 스위치로 소리를 바꾸고, 코인으로 책상을 꾸미는 게임.</p>
           <p class="work__proof" data-i18n="home.typer.proof">다운로드 30,000+ · 평점 4.74 · 유료 마케팅 없이</p>
@@ -167,7 +176,7 @@
       <!-- Dopamine -->
       <article class="work work--dopa" data-reveal>
         <div class="work__text">
-          <img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
+          <a class="work__wordmark-link" href="dopamine.html"><img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
           <p class="work__kind" data-i18n="home.dopa.kind">웹 · AI 심리테스트</p>
           <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 분석해 심리 리포트를 써주는 AI. 정해진 유형 없이, 2,000명이면 2,000개의 결과.</p>
           <p class="work__more"><a class="link" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
@@ -213,7 +222,7 @@
 <footer class="foot" id="footer">
   <div class="wrap foot__grid">
     <div class="foot__brand">
-      <img class="foot__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans">
+      <img class="foot__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
       <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오</p>
     </div>
     <div class="foot__col">
@@ -247,8 +256,10 @@
   var actx=null, on=false, sndBtn=document.getElementById('snd');
   function ensure(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
   sndBtn.addEventListener('click', function(){ on=!on; sndBtn.setAttribute('aria-pressed',on); if(on){ ensure(); thock(); } });
+  function nudge(){ sndBtn.classList.remove('nudge'); void sndBtn.offsetWidth; sndBtn.classList.add('nudge'); }
   function thock(){
-    if(!on||!actx) return; var t=actx.currentTime, dur=0.05;
+    if(!on){ nudge(); return; }
+    if(!actx) return; var t=actx.currentTime, dur=0.05;
     var buf=actx.createBuffer(1,actx.sampleRate*dur,actx.sampleRate), d=buf.getChannelData(0);
     for(var i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);
     var s=actx.createBufferSource(); s.buffer=buf;

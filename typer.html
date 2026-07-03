@@ -7,6 +7,12 @@
   <meta name="description" data-i18n-attr="content" data-i18n="typer.meta.description"
         content="기계식 키보드 타건음, 데스크 꾸미기, 브릭브레이커를 하나로 묶은 하이브리드 캐주얼 게임. NewMeans 제작.">
   <meta name="theme-color" content="#FCFBF7">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Typer — 기계식 키보드 타건음 아케이드">
+  <meta property="og:description" content="다운로드 30,000+ · 평점 4.74 · 177개국. 웹에서 바로 플레이.">
+  <meta property="og:image" content="https://newmeans.github.io/assets/brand/typer-icon.png">
+  <meta property="og:url" content="https://newmeans.github.io/typer.html">
+  <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" href="assets/brand/typer-icon.png">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
@@ -19,7 +25,7 @@
   <header class="nav">
     <div class="wrap nav__in">
       <a class="nav__brand" href="index.html" aria-label="NewMeans home">
-        <img class="nav__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans">
+        <img class="nav__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
       </a>
       <span class="nav__here">Typer</span>
       <div class="nav__spacer"></div>
@@ -42,7 +48,7 @@
       <div class="wrap tp-hero__inner">
         <div class="tp-hero__copy" data-reveal>
           <img class="tp-wordmark" src="assets/brand/typer-logo.png" alt="Typer">
-          <h1 class="tp-hero__title" data-i18n="typer.tagline">부수고, 듣고, 꾸미는 재미.</h1>
+          <h1 class="tp-hero__title" id="tpTitle" data-i18n="typer.tagline">부수고, 듣고, 꾸미는 재미.</h1>
           <p class="tp-hero__lead" data-i18n="typer.lead">기계식 키보드 타건음, 데스크 꾸미기, 브릭브레이커를 하나로 묶은 하이브리드 캐주얼 게임.</p>
           <p class="tp-hero__proof" data-i18n="typer.proof">다운로드 30,000+ · 평점 4.74 · 177개국 출시</p>
           <div class="tp-hero__cta">
@@ -187,7 +193,7 @@
   <footer class="foot">
     <div class="wrap foot__grid">
       <div class="foot__brand">
-        <a href="index.html" aria-label="NewMeans home"><img class="foot__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans"></a>
+        <a href="index.html" aria-label="NewMeans home"><img class="foot__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
         <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오</p>
       </div>
       <div class="foot__col">
@@ -217,6 +223,7 @@
     /* ---------- 사운드 게이트 ---------- */
     var soundOn=false, sndBtn=document.getElementById('snd');
     sndBtn.addEventListener('click', function(){ soundOn=!soundOn; sndBtn.setAttribute('aria-pressed', soundOn); });
+    function nudge(){ sndBtn.classList.remove('nudge'); void sndBtn.offsetWidth; sndBtn.classList.add('nudge'); }
 
     /* ---------- 커스터마이징 데이터 (실제 게임 아이템) ---------- */
     var SWITCHES=[
@@ -242,7 +249,7 @@
       pools[id]=arr; return arr;
     }
     function clack(){
-      if(!soundOn) return;
+      if(!soundOn){ nudge(); return; }
       var arr=pool(cur.sw); var a=arr[(Math.random()*arr.length)|0];
       try{ (a.paused ? a : a.cloneNode()).play(); }catch(e){}
     }
@@ -279,6 +286,27 @@
         clack(); if(kb.closest('#deskHero')) typeChar();
       });
     });
+
+    /* ---------- 키캡 타이포: 타이틀 글자 프레스 = 실제 스위치 타건음 ---------- */
+    var tpTitle=document.getElementById('tpTitle');
+    function wrapTitle(){
+      if(!tpTitle) return;
+      var text=tpTitle.textContent; tpTitle.textContent='';
+      for(var i=0;i<text.length;i++){
+        var ch=text[i];
+        if(ch===' '){ tpTitle.appendChild(document.createTextNode(' ')); continue; }
+        var s=document.createElement('span'); s.className='k'; s.textContent=ch; tpTitle.appendChild(s);
+      }
+    }
+    if(tpTitle){
+      wrapTitle();
+      window.addEventListener('nm:langchange', function(){ requestAnimationFrame(wrapTitle); });
+      tpTitle.addEventListener('pointerdown', function(e){
+        var k=e.target.closest('.k'); if(!k) return;
+        k.classList.add('on'); clack();
+        setTimeout(function(){ k.classList.remove('on'); }, 140);
+      });
+    }
 
     /* ---------- 커스터마이저 ---------- */
     var game=document.getElementById('game');

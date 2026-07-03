@@ -15,7 +15,12 @@
 .tp-hero__inner{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(30px,5vw,60px); align-items:center;
   padding-top:clamp(36px,6vw,72px); padding-bottom:clamp(40px,6vw,76px)}
 .tp-wordmark{height:clamp(44px,6.4vw,66px); width:auto; image-rendering:pixelated}
-.tp-hero__title{margin:20px 0 0; font-size:clamp(1.7rem,3.2vw,2.5rem); line-height:1.14}
+.tp-hero__title{margin:20px 0 0; font-size:clamp(1.7rem,3.2vw,2.5rem); line-height:1.14; cursor:default}
+/* 키캡 타이포 — 누르면 실제 스위치 타건음 */
+.tp-hero__title .k{display:inline-block; transition:transform .14s var(--ease)}
+.tp-hero__title .k:hover{transform:translateY(.07em)}
+.tp-hero__title .k.on{transform:translateY(.11em) scale(.97)}
+@media (prefers-reduced-motion:reduce){.tp-hero__title .k{transition:none}}
 .tp-hero__lead{margin:14px 0 0; color:var(--ink-2); max-width:30ch}
 .tp-hero__proof{margin:14px 0 0; font-size:13.5px; font-weight:600; color:var(--mint-text)}
 .tp-hero__cta{margin-top:24px; display:flex; flex-wrap:wrap; gap:12px}

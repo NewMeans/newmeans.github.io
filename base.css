@@ -10,11 +10,11 @@
   --ink-2:#6B655A;         /* 본문 보조 */
   --ink-3:#A49D91;         /* 캡션 */
   --mint:#85C6A8;          /* 로고 원색 — 그래픽용 */
-  --mint-text:#17705A;     /* 텍스트/링크용 딥민트 */
-  --mint-bg:#EAF3ED;
-  --coral:#F76B6B;
-  --coral-text:#C7492B;
-  --coral-bg:#FBEAE4;
+  --mint-text:#20805C;     /* 로고와 같은 hue의 텍스트용 민트 */
+  --mint-bg:#E9F3EC;
+  --coral:#F76B6B;         /* 도파민 살몬 원색 */
+  --coral-text:#C64237;    /* 같은 hue의 텍스트용 코랄 */
+  --coral-bg:#FBEAE6;
   --card:#FFFFFF;
   --line:rgba(27,24,21,.14);
   --line-2:rgba(27,24,21,.07);
@@ -73,6 +73,9 @@ h1,h2,h3{font-weight:800; letter-spacing:-.03em; line-height:1.06}
 .snd .wave{opacity:0; transition:.2s}
 .snd[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
 .snd[aria-pressed="true"] .wave{opacity:1}
+/* 소리 꺼진 채 두드리면 토글이 살짝 나댐 */
+.snd.nudge{animation:snd-nudge .5s var(--ease) 2}
+@keyframes snd-nudge{40%{transform:scale(1.16); border-color:var(--accent); color:var(--accent)}}
 
 /* ---------- 링크·버튼 ---------- */
 .link{display:inline-flex; align-items:center; gap:6px; font-weight:600; color:var(--ink);
