@@ -16,11 +16,16 @@
 /* ---------- HERO ---------- */
 .hero{padding:clamp(40px,7vw,84px) 0 clamp(46px,7vw,88px)}
 .hero__grid{display:grid; grid-template-columns:1fr .95fr; gap:clamp(30px,5vw,64px); align-items:center}
-.hero__h1{font-size:clamp(40px,6.2vw,72px)}
+.hero__h1{font-size:clamp(34px,5.2vw,62px); cursor:default}
 .hero__h1 .l{display:block}
 .hero__h1 em{font-style:normal}
 .hero__h1 .mint{color:var(--mint-text)}
 .hero__h1 .coral{color:var(--coral-text)}
+/* 키캡 타이포 — 글자가 눌린다 */
+.hero__h1 .k{display:inline-block; transition:transform .14s var(--ease)}
+.hero__h1 .k:hover{transform:translateY(.06em)}
+.hero__h1 .k.on{transform:translateY(.1em) scale(.97)}
+@media (prefers-reduced-motion:reduce){.hero__h1 .k{transition:none}}
 .hero__sub{margin-top:24px; max-width:33ch; font-size:clamp(16px,1.5vw,17.5px); color:var(--ink-2)}
 .hero__cta{margin-top:30px; display:flex; align-items:center; gap:22px; flex-wrap:wrap}
 .hero__sig{display:flex; flex-direction:column; align-items:center; gap:14px}
@@ -37,7 +42,10 @@
 .works{padding:clamp(36px,6vw,64px) 0 0}
 .work{display:grid; grid-template-columns:1fr 1fr; gap:clamp(26px,5vw,60px); align-items:center;
   padding:clamp(30px,5vw,52px) 0; border-top:1px solid var(--line)}
-.work__demo{display:flex; align-items:center; justify-content:center}
+.work__demo{display:flex; align-items:center; justify-content:center;
+  padding:clamp(22px,3.4vw,40px); border-radius:24px}
+.work--typer .work__demo{background:var(--mint-bg)}
+.work--dopa .work__demo{background:var(--coral-bg)}
 .work__wordmark{height:clamp(28px,3.6vw,36px); width:auto}
 .work__wordmark--dopa{height:clamp(38px,5vw,52px)}
 .work__kind{margin-top:13px; font-size:14px; font-weight:500; color:var(--ink-3)}
@@ -118,11 +126,11 @@
   <section class="hero">
     <div class="wrap hero__grid">
       <div class="hero__copy">
-        <h1 class="hero__h1">
-          <span class="l"><span data-i18n="home.h1a">감각적이고</span> <em class="coral" data-i18n="home.h1a2">재밌는</em></span>
-          <span class="l"><em class="mint" data-i18n="home.h1b">디지털</em> <span data-i18n="home.h1b2">경험</span></span>
+        <h1 class="hero__h1" id="h1">
+          <span class="l"><span data-i18n="home.h1a1">키보드 소리로 노는 </span><em class="mint" data-i18n="home.h1a2">게임</em><span data-i18n="home.h1a3">,</span></span>
+          <span class="l"><span data-i18n="home.h1b1">대화를 읽는 </span><em class="coral" data-i18n="home.h1b2">AI</em><span data-i18n="home.h1b3">.</span></span>
         </h1>
-        <p class="hero__sub" data-i18n="home.sub">기계식 키보드 게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.</p>
+        <p class="hero__sub" data-i18n="home.sub">기획부터 운영까지 직접 하는 2인 스튜디오, 뉴민스.</p>
         <div class="hero__cta">
           <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보기</span><span class="arw">→</span></a>
           <a class="link" href="mailto:newmeans.dev@gmail.com" data-i18n="home.cta2">문의하기</a>
@@ -143,7 +151,7 @@
       </div>
 
       <!-- Typer -->
-      <article class="work" data-reveal>
+      <article class="work work--typer" data-reveal>
         <div class="work__demo">
           <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
         </div>
@@ -157,7 +165,7 @@
       </article>
 
       <!-- Dopamine -->
-      <article class="work" data-reveal>
+      <article class="work work--dopa" data-reveal>
         <div class="work__text">
           <img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
           <p class="work__kind" data-i18n="home.dopa.kind">웹 · AI 심리테스트</p>
@@ -255,6 +263,29 @@
     var kb=document.querySelector('[data-typer-keyboard]');
     if(kb) kb.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-key]')) thock(); });
   });
+
+  /* 키캡 타이포 — 헤드라인 글자를 낱자 span으로 감싸 눌리게 (언어 전환 시 재감쌈) */
+  var h1=document.getElementById('h1');
+  function wrapChars(){
+    if(!h1) return;
+    h1.querySelectorAll('[data-i18n]').forEach(function(el){
+      var text=el.textContent; el.textContent='';
+      for(var i=0;i<text.length;i++){
+        var ch=text[i];
+        if(ch===' '){ el.appendChild(document.createTextNode(' ')); continue; }
+        var s=document.createElement('span'); s.className='k'; s.textContent=ch; el.appendChild(s);
+      }
+    });
+  }
+  if(h1){
+    wrapChars();
+    window.addEventListener('nm:langchange', function(){ requestAnimationFrame(wrapChars); });
+    h1.addEventListener('pointerdown', function(e){
+      var k=e.target.closest('.k'); if(!k) return;
+      k.classList.add('on'); thock();
+      setTimeout(function(){ k.classList.remove('on'); }, 140);
+    });
+  }
 
   /* 리빌 */
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});

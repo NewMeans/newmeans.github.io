@@ -81,14 +81,18 @@ h1,h2,h3{font-weight:800; letter-spacing:-.03em; line-height:1.06}
 .link:hover{color:var(--mint-text); text-decoration-color:var(--mint-text)}
 .link .arw{transition:transform .18s var(--ease)}
 .link:hover .arw{transform:translateX(3px)}
+/* 키캡 버튼 — 바닥 림 + 물리적 눌림. 이 스튜디오의 버튼은 키캡. */
 .btn{display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:12px; font-weight:600; font-size:15px;
-  transition:background .2s, color .2s, border-color .2s, transform .18s var(--ease)}
-.btn--solid{background:var(--ink); color:var(--paper)}
-.btn--solid:hover{background:var(--mint-text)}
+  transition:background .2s, color .2s, border-color .2s, transform .07s ease, box-shadow .07s ease}
+.btn--solid{background:var(--ink); color:var(--paper); box-shadow:0 4px 0 #000}
+.btn--solid:hover{background:var(--accent)}
+.btn--solid:active{transform:translateY(4px); box-shadow:0 0 0 #000}
 .btn--solid .arw{transition:transform .18s var(--ease)}
 .btn--solid:hover .arw{transform:translateX(3px)}
-.btn--outline{border:1.5px solid var(--line); color:var(--ink)}
+.btn--outline{border:1.5px solid var(--line); color:var(--ink); background:var(--card); box-shadow:0 3px 0 var(--line)}
 .btn--outline:hover{border-color:var(--ink)}
+.btn--outline:active{transform:translateY(3px); box-shadow:0 0 0 var(--line)}
+@media (prefers-reduced-motion:reduce){.btn{transition:none}}
 
 /* ---------- 섹션 헤딩 ---------- */
 .head{margin-bottom:clamp(26px,4.5vw,44px)}
