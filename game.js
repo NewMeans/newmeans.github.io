@@ -318,13 +318,14 @@
       rr(ctx, field.x, field.y, field.w, field.h, 14); ctx.fill();
     }
 
+    var hpColor = "#6B564E";
     function drawBlock(bl) {
       var x = bx(bl.col) + cell * 0.04, y = by(bl.row), s = cell * 0.92;
       var sc = bl.flash > 0 ? 1 - bl.flash * 0.08 : 1;
       if (bl.flash > 0) bl.flash = Math.max(0, bl.flash - 0.12);
       var cxp = x + s / 2, cyp = y + s / 2, ss = s * sc;
       if (capImg.complete) ctx.drawImage(capImg, cxp - ss / 2, cyp - ss / 2, ss, ss);
-      ctx.fillStyle = "#6B564E";
+      ctx.fillStyle = hpColor;
       ctx.font = px(s * 0.34); ctx.textAlign = "center"; ctx.textBaseline = "middle";
       ctx.fillText(bl.hp, cxp, cyp - s * 0.04);
     }
@@ -436,7 +437,7 @@
     root.__tg = {
       reset: reset,
       setSwitch: function (id) { loadBank(String(id)); },
-      setKeycap: function (src) { capImg = img(src); },
+      setKeycap: function (src, textColor) { capImg = img(src); if (textColor) hpColor = textColor; },
       setSounds: function (fn) { isSoundOn = fn; }
     };
   }
@@ -451,7 +452,7 @@
   window.TyperGame = {
     mount: mount,
     setSwitch: function (el, id) { if (el && el.__tg) el.__tg.setSwitch(id); },
-    setKeycap: function (el, src) { if (el && el.__tg) el.__tg.setKeycap(src); },
+    setKeycap: function (el, src, textColor) { if (el && el.__tg) el.__tg.setKeycap(src, textColor); },
     setSounds: function (el, fn) { if (el && el.__tg) el.__tg.setSounds(fn); }
   };
 })();

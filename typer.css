@@ -8,7 +8,7 @@
   font-display:swap;
 }
 
-.tp{ --screen-ink:#7FD9B8; }
+.tp{ --screen-ink:#65CDA7; }   /* 레트로 모니터 실제 fg */
 
 /* ---------- HERO ---------- */
 .tp-hero{border-bottom:1px solid var(--line)}
@@ -39,12 +39,21 @@
 .screen__caret{display:inline-block; width:.55em; height:1em; background:var(--screen-ink);
   vertical-align:-2px; margin-left:1px; animation:tp-caret 1s steps(1) infinite}
 @keyframes tp-caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+/* 부트 스크린 (모니터별 인셋/색상은 JS) — 월페이퍼의 부팅 화면 재현 */
+.monitor__boot{position:absolute; overflow:hidden; display:flex; flex-direction:column; justify-content:center;
+  gap:.35em; font-family:var(--pixel); font-size:clamp(.5rem,1vw,.72rem); line-height:1.4; letter-spacing:.02em; pointer-events:none}
+.monitor__boot[hidden]{display:none}
+.monitor__boot b{font-weight:400; font-size:1.7em}
+.monitor__boot .bar{display:flex; align-items:center; gap:.6em; margin-top:.4em}
+.monitor__boot .bar i{flex:1; height:.85em; border:2px solid currentColor; border-radius:2px; position:relative}
+.monitor__boot .bar i::before{content:""; position:absolute; inset:2px; background:currentColor}
 .desk__cactus{position:absolute; left:-4%; bottom:-6%; width:20%; z-index:4; pointer-events:none;
   filter:drop-shadow(0 6px 8px rgba(27,24,21,.12))}
-/* 키보드 랩: 케이블은 프레임 우상단 포트에 꽂혀 위·오른쪽으로 — 위치/크기는 프레임별 JS 설정 */
+/* 키보드 랩: 케이블은 프레임 우상단 포트에 꽂혀 위·오른쪽으로 — 위치/크기는 프레임별 JS 설정.
+   정렬: 모니터(2) < 케이블(2, DOM 후순) < 키보드(3) — 인게임과 동일 */
 .desk__kbwrap{position:relative; width:100%; margin-top:-2%}
-.desk__cable{position:absolute; left:85%; top:-22%; width:55%; max-width:none; z-index:0; pointer-events:none}
-.desk__kb{position:relative; z-index:2}
+.desk__cable{position:absolute; left:82%; top:-27%; width:72%; max-width:none; z-index:2; pointer-events:none}
+.desk__kb{position:relative; z-index:3}
 
 /* ---------- PLAY ---------- */
 .tp-play{padding:clamp(48px,7vw,88px) 0; border-bottom:1px solid var(--line)}

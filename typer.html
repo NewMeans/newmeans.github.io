@@ -65,6 +65,15 @@
               <div class="monitor__screen" data-screen>
                 <div class="monitor__out" data-monitor-output aria-live="polite"></div>
               </div>
+              <div class="monitor__boot" data-boot hidden>
+                <b>Typer <span style="font-size:.55em">ver0.0.1</span></b>
+                <span>#include &lt;stdio.h&gt;</span>
+                <span>int main(void) {</span>
+                <span>&nbsp;&nbsp;printf("by NewMeans");</span>
+                <span>&nbsp;&nbsp;return 0;</span>
+                <span>}</span>
+                <span class="bar">100% <i></i></span>
+              </div>
               <img class="desk__cactus" src="assets/desk/sculpture.png" alt="" loading="eager" decoding="async">
             </div>
             <div class="desk__kbwrap">
@@ -103,6 +112,15 @@
           <div class="desk" id="deskCustom">
             <div class="monitor">
               <img class="monitor__img" data-monitor src="assets/desk/moniter.png" alt="" loading="lazy" decoding="async">
+              <div class="monitor__boot" data-boot>
+                <b>Typer <span style="font-size:.55em">ver0.0.1</span></b>
+                <span>#include &lt;stdio.h&gt;</span>
+                <span>int main(void) {</span>
+                <span>&nbsp;&nbsp;printf("by NewMeans");</span>
+                <span>&nbsp;&nbsp;return 0;</span>
+                <span>}</span>
+                <span class="bar">100% <i></i></span>
+              </div>
             </div>
             <div class="desk__kbwrap">
               <img class="desk__cable" data-cable src="assets/desk/cable.png" alt="" loading="lazy" decoding="async">
@@ -234,28 +252,33 @@
       {id:'4000',n:'Blue'},{id:'4001',n:'Brown'},{id:'4002',n:'Red'},{id:'4003',n:'Chocolate'},
       {id:'4004',n:'Capacitive'},{id:'4005',n:'Low Profile'},{id:'4006',n:'White'}];
     var SWITCH_CLIPS={4000:4,4001:5,4002:5,4003:5,4004:5,4005:5,4006:5};
-    /* 키캡: 1.png가 실제 와이드 아트(5000/5006)인지, 1u 악센트 키인지 세트별 구분 */
+    /* 키캡: 유니티 data.asset 실측 — slots = 18칸 위치별 스프라이트 번호,
+       bed = 배경판 색, text = 블록 숫자 색 (와이드 슬롯: R1C5·R2C0·R3C5) */
     var KEYCAPS=[
-      {id:'5000',n:'Retro',wide:1,wr:461/281},
-      {id:'5001',n:'Modern'},
-      {id:'5002',n:'Mocha Latte'},
-      {id:'5003',n:'Lavender Sky'},
-      {id:'5004',n:'Sunset Breeze'},
-      {id:'5005',n:'Mint Choco'},
-      {id:'5006',n:'Midnight Edge',wide:1,wr:469/281},
-      {id:'5007',n:'Silver Paws'}];
-    /* 프레임: 지오메트리(retro/modern) + 케이블 배치(프레임 우상단 포트 기준, % of 프레임) */
+      {id:'5000',n:'Retro',        bed:'#332B27',text:'#67544F',slots:[0,0,0,0,0,1, 1,0,0,0,0,0, 0,0,0,0,0,1]},
+      {id:'5001',n:'Modern',       bed:'#28282A',text:'#0A0806',slots:[2,0,0,0,0,3, 3,0,0,0,0,1, 1,0,0,0,0,3]},
+      {id:'5002',n:'Mocha Latte',  bed:'#212424',text:'#0A0806',slots:[2,0,0,0,0,3, 3,0,0,0,0,1, 1,0,0,0,0,4]},
+      {id:'5003',n:'Lavender Sky', bed:'#1C1C22',text:'#0A0806',slots:[2,0,0,0,0,3, 3,0,0,0,0,1, 1,0,0,0,0,4]},
+      {id:'5004',n:'Sunset Breeze',bed:'#302D2C',text:'#0A0806',slots:[2,0,0,0,0,3, 3,0,0,0,0,1, 1,0,0,0,0,4]},
+      {id:'5005',n:'Mint Choco',   bed:'#212424',text:'#0A0806',slots:[2,0,0,0,0,3, 3,0,0,0,0,1, 1,0,0,0,0,3]},
+      {id:'5006',n:'Midnight Edge',bed:'#1E1E1E',text:'#C4D3D3',slots:[0,0,0,0,0,1, 1,0,0,0,0,0, 0,0,0,0,0,1]},
+      {id:'5007',n:'Silver Paws',  bed:'#1E1E1E',text:'#4F4F4F',slots:[7,10,9,8,11,12, 13,10,8,7,11,9, 11,7,9,8,10,13]}];
+    /* 프레임: 지오메트리 + 케이블 배치(프레임 우상단 포트에 플러그, % of 프레임) */
     var FRAMES=[
-      {id:'3000',n:'Retro',geo:'retro',cable:{w:55,left:85,top:-22}},
-      {id:'3001',n:'Modern',geo:'modern',cable:{w:46,left:87,top:-26}},
-      {id:'3002',n:'Mocha Latte',geo:'modern',cable:{w:58,left:87,top:-15}},
-      {id:'3003',n:'Lavender Sky',geo:'modern',cable:{w:58,left:87,top:-15}},
-      {id:'3004',n:'Sunset Breeze',geo:'modern',cable:{w:58,left:87,top:-15}},
-      {id:'3005',n:'Mint Choco',geo:'modern',cable:{w:58,left:87,top:-15}},
+      {id:'3000',n:'Retro',geo:'retro',cable:{w:72,left:82,top:-27}},
+      {id:'3001',n:'Modern',geo:'modern',cable:{w:58,left:84,top:-31}},
+      {id:'3002',n:'Mocha Latte',geo:'modern',cable:{w:80,left:83,top:-20}},
+      {id:'3003',n:'Lavender Sky',geo:'modern',cable:{w:80,left:83,top:-20}},
+      {id:'3004',n:'Sunset Breeze',geo:'modern',cable:{w:80,left:83,top:-20}},
+      {id:'3005',n:'Mint Choco',geo:'modern',cable:{w:80,left:83,top:-20}},
       {id:'3006',n:'Midnight Edge',geo:'modern'},
-      {id:'3007',n:'Silver Paws',geo:'modern',cable:{w:46,left:87,top:-28}}];
+      {id:'3007',n:'Silver Paws',geo:'modern',cable:{w:60,left:83,top:-32}}];
+    /* 모니터: 화면 텍스트 색(fg) + 부트 스크린 인셋 — 유니티 MonitorData 실측 */
     var MONITORS=[
-      {id:'2000',n:'Retro'},{id:'2001',n:'Modern'},{id:'2002',n:'Modern White'},{id:'2003',n:'Studio PC'}];
+      {id:'2000',n:'Retro',fg:'#65CDA7',inset:'9.8% 9.5% 21% 9.5%'},
+      {id:'2001',n:'Modern',fg:'#E2E2E2',inset:'7% 7% 45% 7%'},
+      {id:'2002',n:'Modern White',fg:'#FFAEEC',inset:'6% 6% 28% 6%'},
+      {id:'2003',n:'Studio PC',fg:'#73B77B',inset:'6% 6% 37% 6%'}];
     var cur={sw:'4000', cap:null, fr:null, mon:'2000'};
 
     /* ---------- 스위치 타건음 (HTMLAudio 풀) ---------- */
@@ -340,13 +363,9 @@
     function applySwitch(id){ cur.sw=id; pool(id); if(window.TyperGame&&game) TyperGame.setSwitch(game,id); clack(); }
     function applyKeycap(it){
       cur.cap=it.id;
-      var n='assets/shop/keycap/'+it.id+'_0.png', s1='assets/shop/keycap/'+it.id+'_1.png';
-      // 와이드 아트가 있으면 그대로, 없으면 악센트 키를 9-slice로 (스트레치 금지)
-      var skin = it.wide
-        ? {normal:n, accent:null, wide:s1, wideRatio:it.wr}
-        : {normal:n, accent:s1, wide:null, wideRatio:1.64};
-      desks.forEach(function(d){ TyperKeyboard.setSkin(d,skin); });
-      if(window.TyperGame&&game) TyperGame.setKeycap(game,n);
+      var slots=it.slots.map(function(n){ return 'assets/shop/keycap/'+it.id+'_'+n+'.png'; });
+      desks.forEach(function(d){ TyperKeyboard.setSkin(d,{slots:slots, bed:it.bed}); });
+      if(window.TyperGame&&game) TyperGame.setKeycap(game,'assets/shop/keycap/'+it.id+'_0.png', it.text);
     }
     function applyFrame(f){
       cur.fr=f.id;
@@ -357,11 +376,21 @@
         c.style.width=f.cable.w+'%'; c.style.left=f.cable.left+'%'; c.style.top=f.cable.top+'%';
       });
     }
+    var boots=[].slice.call(document.querySelectorAll('[data-boot]'));
     function applyMonitor(id){
       cur.mon=id;
-      monitors.forEach(function(m){ m.src='assets/shop/monitor/'+id+'.png'; });
-      if(screen) screen.style.display = id==='2000' ? '' : 'none';   // 타이핑 오버레이는 레트로 CRT 전용
+      var m=null; MONITORS.forEach(function(x){ if(x.id===id) m=x; });
+      monitors.forEach(function(el){ el.src='assets/shop/monitor/'+id+'.png'; });
+      // 히어로: 레트로 CRT엔 타이핑 화면, 그 외엔 부트 스크린. 커스터마이저: 항상 부트 스크린.
+      if(screen) screen.style.display = id==='2000' ? '' : 'none';
+      boots.forEach(function(b){
+        var inHero=!!b.closest('#deskHero');
+        var show=inHero ? id!=='2000' : true;
+        b.hidden=!show;
+        b.style.inset=m.inset; b.style.color=m.fg;
+      });
     }
+    applyMonitor('2000');
 
     function buildPicker(rootId, items, thumb, isOn, onPick){
       var row=document.getElementById(rootId); if(!row) return;
