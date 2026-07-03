@@ -3,138 +3,108 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-i18n="meta.title">NewMeans — 게임 & AI 스튜디오</title>
-<meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="NewMeans는 게임과 AI를 만드는 2인 스튜디오입니다.">
-<meta name="theme-color" content="#FAF8F3">
+<title data-i18n="meta.title">NewMeans — 게임과 AI를 만드는 2인 스튜디오</title>
+<meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="NewMeans는 게임과 AI를 둘이서 만들고 운영하는 작은 스튜디오입니다.">
+<meta name="theme-color" content="#FBF8F1">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
 <link rel="stylesheet" href="base.css">
 <style>
-/* Home-specific styles. Shared system lives in base.css.
-   logo.js + keyboard.js inject their own CSS. */
+/* Home-specific. Shared system in base.css; logo.js + keyboard.js inject their own. */
+.u-mint{color:var(--mint-deep)} .u-coral{color:var(--coral-deep)}
 
 /* ---------- HERO ---------- */
-.hero{position:relative; padding:clamp(44px,7vw,96px) 0 clamp(52px,7vw,100px); border-bottom:1px solid var(--line)}
-.hero__grid{display:grid; grid-template-columns:1.02fr .98fr; gap:clamp(28px,5vw,64px); align-items:center}
+.hero{padding:clamp(40px,7vw,86px) 0 clamp(48px,7vw,92px)}
+.hero__grid{display:grid; grid-template-columns:1.08fr .92fr; gap:clamp(32px,5vw,68px); align-items:center}
+.hero__h1{font-size:clamp(44px,7.4vw,88px); line-height:.98; letter-spacing:-.035em}
+.hero__h1 .l2{display:block}
+.hero__sub{margin-top:26px; max-width:34ch; font-size:clamp(16px,1.5vw,18px); color:var(--ink-soft)}
+.hero__cta{margin-top:32px; display:flex; align-items:center; gap:24px; flex-wrap:wrap}
+.hero__sig{display:flex; justify-content:center}
+.sig-logo{width:min(100%,460px)}
+.loaded .hero__copy > *{animation:rise .8s var(--ease) both}
+.loaded .hero__copy > *:nth-child(2){animation-delay:.06s}
+.loaded .hero__copy > *:nth-child(3){animation-delay:.12s}
+.loaded .hero__sig{animation:rise .9s var(--ease) .1s both}
+@keyframes rise{from{opacity:0; transform:translateY(18px)}to{opacity:1; transform:none}}
 
-.h1{font-family:var(--kr); font-weight:700; line-height:1.08; letter-spacing:-.015em; font-size:clamp(42px,6.8vw,84px)}
-.h1 .line{display:block; overflow:hidden}
-.h1 .line > span{display:inline-block; transform:translateY(108%); transition:transform .85s var(--ease)}
-.loaded .h1 .line > span{transform:translateY(0)}
-.h1 .l1 > span{transition-delay:.10s}
-.h1 .l2 > span{transition-delay:.22s}
-.h1 em{font-style:normal; color:var(--coral-deep)}
-.h1 .mint{color:var(--mint-deep)}
+/* ---------- WORKS (alternating editorial) ---------- */
+.works{padding:clamp(40px,6vw,72px) 0}
+.work{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,64px); align-items:center;
+  padding:clamp(30px,5vw,56px) 0; border-top:1px solid var(--line)}
+.work:last-child{border-bottom:1px solid var(--line)}
+.work__demo{display:flex; align-items:center; justify-content:center}
+.work__wordmark{height:clamp(30px,4vw,40px); width:auto}
+.work__wordmark--dopa{height:clamp(40px,5.4vw,58px)}
+.work__kind{margin-top:14px; font-family:var(--display); font-size:13px; font-weight:600; color:var(--ink-faint)}
+.work__desc{margin-top:16px; font-size:1.06rem; color:var(--ink-soft); max-width:32ch}
+.work__more{margin-top:22px}
 
-.studio-tag{font-size:clamp(16px,1.55vw,19px); color:var(--ink-soft); margin-top:26px;
-  opacity:0; transform:translateY(12px); transition:.7s var(--ease) .4s}
-.loaded .studio-tag{opacity:1; transform:none}
-.cta{display:flex; flex-wrap:wrap; gap:14px; margin-top:32px; opacity:0; transform:translateY(12px); transition:.7s var(--ease) .52s}
-.loaded .cta{opacity:1; transform:none}
-
-/* ------- interactive logo signature (logo.js mounts here) ------- */
-.hero__sig{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(10px,1.6vw,20px);
-  opacity:0; transform:translateY(10px); transition:.8s var(--ease) .2s}
-.loaded .hero__sig{opacity:1; transform:none}
-.sig-logo{width:min(100%,520px)}
-
-/* ---------- WORKS ---------- */
-.works{padding:clamp(56px,8vw,110px) 0 clamp(48px,7vw,96px)}
-.tiles{display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,32px)}
-.tile{position:relative; border-radius:22px; overflow:hidden; min-height:clamp(420px,48vw,540px);
-  border:1px solid var(--line); background:transparent; display:flex; flex-direction:column;
-  transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s}
-.tile:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(22,19,15,.09)}
-.tile--typer{border-color:rgba(47,169,138,.4)}
-.tile--typer:hover{border-color:rgba(47,169,138,.7)}
-.tile--dopa{border-color:rgba(247,107,107,.42)}
-.tile--dopa:hover{border-color:rgba(247,107,107,.75)}
-
-.tile__head{position:relative; padding:clamp(24px,3vw,34px) clamp(24px,3vw,36px) 0; z-index:3}
-.tile__wordmark{margin-top:20px; height:clamp(30px,4vw,42px); width:auto}
-.tile--dopa .tile__wordmark{height:clamp(42px,6vw,64px)}
-.tile__tag{margin-top:14px; font-size:clamp(14px,1.6vw,17px); max-width:24em; color:var(--ink)}
-
-.tile__foot{margin-top:auto; position:relative; z-index:4; display:flex; align-items:center; justify-content:space-between; gap:12px;
-  padding:18px clamp(24px,3vw,36px); border-top:1px solid var(--line)}
-.tile__more{display:inline-flex; align-items:center; gap:8px; font-weight:600}
-.tile__more .arw{transition:transform .2s var(--ease)}
-.tile__more:hover .arw{transform:translateX(4px)}
-.tile__micro{font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-soft)}
-
-/* --- TYPER: the in-game keyboard (keyboard.js mounts here) --- */
-.kbd-wrap{flex:1; display:flex; align-items:center; justify-content:center; padding:clamp(16px,3vw,28px) clamp(22px,3vw,34px)}
-.kbd-mount{width:min(100%,420px)}
-.press-hint{text-align:center; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--mint-deep); padding:0 0 clamp(20px,3vw,26px)}
-
-/* --- DOPAMINE: chat demo (centerpiece) --- */
-.chat-wrap{flex:1; display:flex; align-items:center; justify-content:center; padding:clamp(16px,3vw,26px) clamp(20px,3vw,30px)}
-.chat{width:min(96%,400px); background:var(--cream); border:1px solid rgba(228,98,63,.28); border-radius:18px;
-  padding:clamp(16px,2.4vw,22px); box-shadow:0 18px 40px rgba(228,98,63,.10)}
-.chat__bar{display:flex; align-items:center; gap:6px; margin-bottom:14px}
-.chat__bar i{width:9px; height:9px; border-radius:50%; background:var(--coral)}
-.chat__bar i:nth-child(2){background:#f7b26b} .chat__bar i:nth-child(3){background:var(--mint)}
-.chat__bar b{margin-left:auto; font-family:var(--mono); font-size:10px; letter-spacing:.12em; color:var(--coral-deep); text-transform:uppercase}
-.bub{max-width:82%; padding:11px 15px; border-radius:16px; font-size:14px; margin-bottom:10px; line-height:1.45;
+/* keyboard demo mount */
+.kbd-mount{width:min(100%,400px)}
+/* dopamine chat demo */
+.chat{width:min(100%,380px); background:var(--card); border:1px solid var(--coral-wash); border-radius:20px;
+  padding:clamp(15px,2vw,20px); box-shadow:0 20px 44px rgba(206,67,39,.10)}
+.chat__bar{display:flex; align-items:center; gap:7px; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid var(--line-soft)}
+.chat__ava{width:26px; height:26px; border-radius:8px; background:var(--coral); display:grid; place-items:center; flex:none}
+.chat__ava img{width:17px; height:17px}
+.chat__who{font-weight:600; font-size:13px}
+.chat__tag{margin-left:auto; font-size:11px; color:var(--coral-deep); font-weight:600}
+.bub{max-width:82%; padding:10px 14px; border-radius:15px; font-size:13.5px; margin-bottom:9px; line-height:1.45;
   opacity:0; transform:translateY(8px); transition:.35s var(--ease)}
 .bub.show{opacity:1; transform:none}
-.bub--in{background:#fff; border:1px solid var(--line); border-bottom-left-radius:5px}
-.bub--out{background:var(--coral); color:var(--cream); margin-left:auto; border-bottom-right-radius:5px}
-.typing{display:inline-flex; gap:5px; padding:13px 16px; background:#fff; border-radius:16px; border-bottom-left-radius:5px; border:1px solid var(--line);
-  opacity:0; transform:translateY(8px); transition:.3s}
-.typing.show{opacity:1; transform:none}
-.typing i{width:6px; height:6px; border-radius:50%; background:var(--coral); animation:blip 1s infinite}
-.typing i:nth-child(2){animation-delay:.16s} .typing i:nth-child(3){animation-delay:.32s}
-@keyframes blip{0%,100%{transform:translateY(0); opacity:.4}50%{transform:translateY(-5px); opacity:1}}
-.result{margin-top:4px; display:flex; align-items:center; gap:12px; padding:13px 15px; border-radius:14px;
-  background:var(--mint-tint); border:1px solid rgba(47,169,138,.5);
+.bub--in{background:var(--paper); border:1px solid var(--line-soft); border-bottom-left-radius:5px}
+.bub--out{background:var(--coral); color:#fff; margin-left:auto; border-bottom-right-radius:5px}
+.rep{margin-top:4px; display:flex; align-items:center; gap:11px; padding:12px 14px; border-radius:14px;
+  background:var(--mint-wash); border:1px solid color-mix(in srgb,var(--mint) 40%,transparent);
   opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
-.result.show{opacity:1; transform:none}
-.result .badge{width:30px; height:30px; border-radius:50%; background:var(--mint); color:#fff; display:grid; place-items:center; flex:none; font-size:16px; font-weight:700}
-.result b{color:var(--mint-deep); font-size:14px} .result small{display:block; color:var(--ink-soft); font-size:11px; font-family:var(--mono); margin-top:2px}
+.rep.show{opacity:1; transform:none}
+.rep__b{width:28px; height:28px; border-radius:50%; background:var(--mint); color:#fff; display:grid; place-items:center; flex:none; font-weight:700; font-size:15px}
+.rep b{color:var(--mint-deep); font-size:13.5px} .rep small{display:block; color:var(--ink-faint); font-size:11px; margin-top:1px}
 
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:900px){
-  .hero__grid{grid-template-columns:1fr; text-align:left}
-  .hero__sig{order:-1; align-items:flex-start; margin-bottom:8px}
-  .sig-logo{width:min(100%,440px)}
-  .tiles{grid-template-columns:1fr}
-}
-@media (max-width:620px){
-  .h1{font-size:clamp(36px,10.5vw,54px)}
-}
-@media (prefers-reduced-motion:reduce){
-  .h1 .line > span{transform:none}
-  .studio-tag,.cta,.hero__sig{opacity:1; transform:none}
+/* ---------- STUDIO ---------- */
+.studio{padding:clamp(48px,7vw,96px) 0}
+.studio__grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(28px,5vw,64px); align-items:start}
+.studio__lead{font-family:var(--display); font-weight:600; font-size:clamp(20px,2.4vw,28px); line-height:1.32; letter-spacing:-.02em}
+.studio__lead em{font-style:normal; color:var(--mint-deep)}
+.studio__body{color:var(--ink-soft); font-size:1.06rem}
+.studio__body p+p{margin-top:16px}
+.roles{margin-top:24px; display:grid; gap:10px}
+.role{display:flex; gap:14px; align-items:baseline; padding-top:12px; border-top:1px solid var(--line-soft)}
+.role b{font-family:var(--display); font-weight:600; flex:none; width:8.5em; color:var(--ink)}
+.role span{color:var(--ink-soft); font-size:.98rem}
+
+@media (max-width:860px){
+  .hero__grid{grid-template-columns:1fr; gap:22px}
+  .hero__sig{order:-1; justify-content:flex-start}
+  .sig-logo{width:min(100%,380px)}
+  .work{grid-template-columns:1fr; gap:24px}
+  .work__text{order:1} .work__demo{order:2}
+  .studio__grid{grid-template-columns:1fr; gap:18px}
 }
 </style>
 </head>
 <body>
-
 <a class="skip-link" href="#works" data-i18n="nav.skip">본문으로 건너뛰기</a>
 
-<!-- ============ NAV ============ -->
 <header class="nav">
   <div class="wrap nav__in">
-    <a class="nav__brand" href="#top" aria-label="NewMeans home">
-      <img class="nav__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans">
-    </a>
+    <a class="nav__brand" href="#top" aria-label="NewMeans"><img class="nav__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans"></a>
     <div class="nav__spacer"></div>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#works" data-i18n="nav.products">제품</a>
-      <a href="#footer" data-i18n="nav.studio">스튜디오</a>
+      <a href="#works" data-i18n="nav.works">제품</a>
+      <a href="#studio" data-i18n="nav.studio">소개</a>
     </nav>
     <div class="nav__tools">
-      <div class="toggle" role="group" aria-label="Language">
-        <button type="button" data-lang-set="ko">KO</button>
-        <button type="button" data-lang-set="en">EN</button>
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang-set="ko">KO</button><span>·</span><button type="button" data-lang-set="en">EN</button>
       </div>
       <button class="snd" id="snd" aria-pressed="false" aria-label="Toggle sound" title="Sound">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 9v6h4l5 4V5L8 9H4z"/>
-          <path class="wave" d="M16 8.5a4 4 0 0 1 0 7"/>
+          <path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 8.5a4 4 0 0 1 0 7"/>
         </svg>
       </button>
     </div>
@@ -142,96 +112,111 @@
 </header>
 
 <main id="top">
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="wrap hero__grid">
-    <div class="hero__copy">
-      <h1 class="h1" id="h1">
-        <span class="line l1"><span>감각적이고 <em>재밌는</em></span></span>
-        <span class="line l2"><span><span class="mint">디지털</span> 경험</span></span>
-      </h1>
-      <p class="studio-tag" data-i18n="home.tag">게임과 AI를 만드는 2인 스튜디오</p>
-      <div class="cta">
-        <a class="btn btn--fill" href="#works"><span data-i18n="home.seeProducts">제품 보기</span><span class="arw">→</span></a>
-        <a class="btn btn--ghost" href="mailto:newmeans.dev@gmail.com" data-i18n="home.contact">문의하기</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div class="hero__copy">
+        <h1 class="hero__h1"><span data-i18n="home.h1a">게임과 AI를</span><span class="l2 u-mint" data-i18n="home.h1b">둘이서 만들어요</span></h1>
+        <p class="hero__sub" data-i18n="home.sub">만들고 싶은 걸 직접 만들어 세상에 내놓고, 사람들 반응을 보며 고쳐 나가요. 지금은 타건음 게임 Typer와 AI 심리테스트 도파민대학교, 두 개를 운영하고 있어요.</p>
+        <div class="hero__cta">
+          <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보러가기</span><span class="arw">→</span></a>
+          <a class="link" href="mailto:newmeans.dev@gmail.com" data-i18n="home.cta2">메일 보내기</a>
+        </div>
+      </div>
+      <div class="hero__sig">
+        <div class="sig-logo" data-newmeans-logo></div>
       </div>
     </div>
+  </section>
 
-    <div class="hero__sig">
-      <div class="sig-logo" data-newmeans-logo></div>
-    </div>
-  </div>
-</section>
+  <!-- WORKS -->
+  <section class="works" id="works">
+    <div class="wrap">
+      <div class="head">
+        <h2 data-i18n="home.works.title">요즘 만드는 것</h2>
+        <p class="head__note" data-i18n="home.works.note">둘이서 만들어 직접 운영하는 제품 두 개예요.</p>
+      </div>
 
-<!-- ============ WORKS ============ -->
-<section class="works" id="works">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 data-i18n="home.products">제품</h2>
-      <span class="n">02</span>
-    </div>
-
-    <div class="tiles">
-      <!-- TYPER -->
-      <article class="tile tile--typer" data-reveal>
-        <div class="tile__head">
-          <span class="chip m"><span class="d"></span><span data-i18n="home.typer.chip">게임 · iOS / Android</span></span>
-          <img class="tile__wordmark pixel" src="assets/brand/typer-logo.png" alt="Typer">
-          <p class="tile__tag" data-i18n="home.typer.tag">기계식 키보드 타건음 아케이드</p>
-        </div>
-
-        <div class="kbd-wrap">
+      <!-- Typer -->
+      <article class="work" data-reveal>
+        <div class="work__demo">
           <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
         </div>
-        <p class="press-hint" data-i18n="home.typer.hint">키캡을 눌러 타건음을 들어보세요</p>
-
-        <div class="tile__foot">
-          <a class="tile__more" href="typer.html"><span data-i18n="home.more">자세히 보기</span><span class="arw">→</span></a>
-          <span class="tile__micro">App Store · Google Play</span>
+        <div class="work__text">
+          <img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer">
+          <p class="work__kind" data-i18n="home.typer.kind">모바일 게임 · iOS / Android</p>
+          <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 소리로 노는 게임이에요. 숫자 블록을 공으로 부수고, 스위치마다 다른 타건음을 듣고, 코인을 모아 내 책상을 꾸며요.</p>
+          <p class="work__more"><a class="link" href="typer.html"><span data-i18n="home.typer.more">Typer 보기</span><span class="arw">→</span></a></p>
         </div>
       </article>
 
-      <!-- DOPAMINE -->
-      <article class="tile tile--dopa" data-reveal style="transition-delay:.08s">
-        <div class="tile__head">
-          <span class="chip c"><span class="d"></span><span data-i18n="home.dopa.chip">AI 심리테스트 · Web</span></span>
-          <img class="tile__wordmark" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
-          <p class="tile__tag" data-i18n="home.dopa.tag">대화를 분석하는 AI 심리테스트.</p>
+      <!-- Dopamine -->
+      <article class="work work--r" data-reveal>
+        <div class="work__text">
+          <img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
+          <p class="work__kind" data-i18n="home.dopa.kind">AI 심리테스트 · Web</p>
+          <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 넣으면 AI가 성향을 분석해서, 나만의 웃긴 심리 리포트를 써주는 웹 심리테스트예요.</p>
+          <p class="work__more"><a class="link" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
         </div>
-
-        <div class="chat-wrap">
+        <div class="work__demo">
           <div class="chat" id="chat">
-            <div class="chat__bar"><i></i><i></i><i></i><b data-i18n="home.dopa.analyzing">AI 분석 중</b></div>
-            <div class="bub bub--in" data-step="1" data-i18n="home.dopa.msg1">나 요즘 자꾸 밤에 폰만 봐 ㅠ</div>
-            <div class="bub bub--out" data-step="2" data-i18n="home.dopa.msg2">오 그거 도파민 신호일지도?</div>
-            <div class="typing" data-step="3"><i></i><i></i><i></i></div>
-            <div class="result" data-step="4">
-              <span class="badge">✓</span>
+            <div class="chat__bar">
+              <span class="chat__ava"><img src="assets/brand/dopamine-symbol.png" alt=""></span>
+              <span class="chat__who" data-i18n="home.dopa.who">카카오톡 대화</span>
+              <span class="chat__tag" data-i18n="home.dopa.tag">AI 분석 중</span>
+            </div>
+            <div class="bub bub--in" data-step data-i18n="home.dopa.m1">나 요즘 자꾸 밤에 폰만 봐 ㅠ</div>
+            <div class="bub bub--out" data-step data-i18n="home.dopa.m2">오 그거 도파민 신호일지도?</div>
+            <div class="rep" data-step>
+              <span class="rep__b">✓</span>
               <span><b data-i18n="home.dopa.result">분석 완료 · 자극 추구형</b><small data-i18n="home.dopa.resultSub">AI 심리 리포트 생성됨</small></span>
             </div>
           </div>
         </div>
-
-        <div class="tile__foot">
-          <a class="tile__more" href="dopamine.html"><span data-i18n="home.more">자세히 보기</span><span class="arw">→</span></a>
-          <span class="tile__micro">dodae.me</span>
-        </div>
       </article>
     </div>
-  </div>
-</section>
+  </section>
+
+  <!-- STUDIO -->
+  <section class="studio" id="studio">
+    <div class="wrap studio__grid">
+      <div>
+        <div class="head" style="margin-bottom:18px"><h2 data-i18n="home.studio.title">우리 둘</h2></div>
+        <p class="studio__lead"><span data-i18n="home.studio.lead1">큰 팀이 할 일을</span> <em data-i18n="home.studio.lead2">작은 팀이 끝까지</em> <span data-i18n="home.studio.lead3">해내는 걸 좋아해요.</span></p>
+      </div>
+      <div class="studio__body">
+        <p data-i18n="home.studio.p1">게임 클라이언트 개발자와 AI 엔지니어, 둘이서 기획부터 개발·디자인·운영까지 나눠 맡아요. 만들고 싶은 게 생기면 바로 만들어보고, 별로면 빠르게 접고, 괜찮으면 오래 다듬어요.</p>
+        <p data-i18n="home.studio.p2">게임이든 AI든 결은 달라도 목표는 같아요. 사람들이 즐겁게 쓰는 것.</p>
+        <div class="roles">
+          <div class="role"><b data-i18n="home.role1.n">클라이언트 · 게임</b><span data-i18n="home.role1.d">기획 · 게임 개발 · 디자인 · 운영</span></div>
+          <div class="role"><b data-i18n="home.role2.n">AI · 서버</b><span data-i18n="home.role2.d">AI · 풀스택 · 빌드/배포 · QA 자동화</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
-<!-- ============ FOOTER ============ -->
 <footer class="foot" id="footer">
-  <div class="wrap foot__in">
-    <img class="foot__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans">
-    <ul class="foot__links">
-      <li><a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a></li>
-      <li><a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a></li>
-      <li><a href="https://dodae.me/" target="_blank" rel="noopener">dodae.me</a></li>
-    </ul>
-    <p class="foot__meta">© 2026 NewMeans · <span data-i18n="home.seoul">서울</span></p>
+  <div class="wrap foot__grid">
+    <div class="foot__brand">
+      <img class="foot__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans">
+      <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오. 만들고 싶은 걸 만들어요.</p>
+    </div>
+    <div class="foot__col">
+      <h4 data-i18n="foot.products">제품</h4>
+      <a href="typer.html">Typer</a>
+      <a href="dopamine.html" data-i18n="foot.dopa">도파민대학교</a>
+    </div>
+    <div class="foot__col">
+      <h4 data-i18n="foot.contact">연락</h4>
+      <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
+      <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://dodae.me/" target="_blank" rel="noopener">dodae.me</a>
+    </div>
+  </div>
+  <div class="wrap foot__base">
+    <span>© 2026 NewMeans</span>
+    <span data-i18n="foot.madeby">둘이서 만들었어요</span>
   </div>
 </footer>
 
@@ -241,75 +226,43 @@
 <script>
 (function(){
   "use strict";
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  /* ---------- entrance ---------- */
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
 
-  /* ---------- rich H1 (colored words survive language switch) ---------- */
-  var H1 = {
-    ko:'<span class="line l1"><span>감각적이고 <em>재밌는</em></span></span><span class="line l2"><span><span class="mint">디지털</span> 경험</span></span>',
-    en:'<span class="line l1"><span>Sensory, <em>playful</em></span></span><span class="line l2"><span><span class="mint">digital</span> experiences</span></span>'
-  };
-  function paintH1(lang){ var h1=document.getElementById('h1'); if(h1) h1.innerHTML = H1[lang] || H1.ko; }
-  window.addEventListener('nm:langchange', function(e){ paintH1(e.detail.lang); });
-  // i18n.js applies on init before this listener attaches; paint once from current lang.
-  paintH1(document.documentElement.getAttribute('lang') || 'ko');
-
-  /* ---------- WebAudio: keycap thock ---------- */
-  var actx=null, soundOn=false;
-  var sndBtn = document.getElementById('snd');
-  function ensure(){ if(!actx){ try{ actx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
-  sndBtn.addEventListener('click', function(){
-    soundOn=!soundOn; sndBtn.setAttribute('aria-pressed', soundOn);
-    if(soundOn){ ensure(); thock(); }
-  });
+  /* WebAudio thock for the keyboard demo */
+  var actx=null, on=false, sndBtn=document.getElementById('snd');
+  function ensure(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
+  sndBtn.addEventListener('click', function(){ on=!on; sndBtn.setAttribute('aria-pressed',on); if(on){ ensure(); thock(); } });
   function thock(){
-    if(!soundOn||!actx) return;
-    var t = actx.currentTime;
-    var dur=0.05, buf=actx.createBuffer(1, actx.sampleRate*dur, actx.sampleRate);
-    var d=buf.getChannelData(0);
-    for(var i=0;i<d.length;i++){ d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2); }
-    var src=actx.createBufferSource(); src.buffer=buf;
-    var bp=actx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1000+Math.random()*350; bp.Q.value=0.8;
-    var g=actx.createGain(); g.gain.setValueAtTime(0.35,t); g.gain.exponentialRampToValueAtTime(0.001,t+dur);
-    src.connect(bp); bp.connect(g); g.connect(actx.destination); src.start(t);
-    var o=actx.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(185,t); o.frequency.exponentialRampToValueAtTime(90,t+0.06);
-    var g2=actx.createGain(); g2.gain.setValueAtTime(0.25,t); g2.gain.exponentialRampToValueAtTime(0.001,t+0.08);
-    o.connect(g2); g2.connect(actx.destination); o.start(t); o.stop(t+0.09);
+    if(!on||!actx) return; var t=actx.currentTime, dur=0.05;
+    var buf=actx.createBuffer(1,actx.sampleRate*dur,actx.sampleRate), d=buf.getChannelData(0);
+    for(var i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);
+    var s=actx.createBufferSource(); s.buffer=buf;
+    var bp=actx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1000+Math.random()*350; bp.Q.value=.8;
+    var g=actx.createGain(); g.gain.setValueAtTime(.35,t); g.gain.exponentialRampToValueAtTime(.001,t+dur);
+    s.connect(bp); bp.connect(g); g.connect(actx.destination); s.start(t);
+    var o=actx.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(185,t); o.frequency.exponentialRampToValueAtTime(90,t+.06);
+    var g2=actx.createGain(); g2.gain.setValueAtTime(.25,t); g2.gain.exponentialRampToValueAtTime(.001,t+.08);
+    o.connect(g2); g2.connect(actx.destination); o.start(t); o.stop(t+.09);
   }
-  // keyboard.js auto-mounts the keycaps; we add sound on top of its own press animation.
   window.addEventListener('DOMContentLoaded', function(){
-    var kb = document.querySelector('[data-typer-keyboard]');
+    var kb=document.querySelector('[data-typer-keyboard]');
     if(kb) kb.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-key]')) thock(); });
   });
 
-  /* ---------- scroll reveal ---------- */
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
-  }, {threshold:.18});
+  /* reveal */
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});
   document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
 
-  /* ---------- Dopamine AI analysis demo ---------- */
-  var chat = document.getElementById('chat');
+  /* chat demo */
+  var chat=document.getElementById('chat');
   if(chat){
-    var steps = Array.prototype.slice.call(chat.querySelectorAll('[data-step]'));
-    var running=false, loopTimer;
-    function runChat(){
-      if(running) return; running=true;
-      steps.forEach(function(s){ s.classList.remove('show'); });
-      [[0,220],[1,900],[2,900]].forEach(function(p){ setTimeout(function(){ steps[p[0]].classList.add('show'); }, p[1]); });
-      setTimeout(function(){ steps[2].classList.remove('show'); steps[3].classList.add('show'); running=false; }, 2600);
-    }
-    if(reduce){ steps.forEach(function(s){ s.classList.add('show'); }); steps[2].classList.remove('show'); }
-    else {
-      var cio = new IntersectionObserver(function(en){
-        if(en[0].isIntersecting){ runChat(); loopTimer = setInterval(runChat, 5200); }
-        else { clearInterval(loopTimer); }
-      }, {threshold:.4});
-      cio.observe(chat);
-      chat.closest('.tile').addEventListener('mouseenter', function(){ clearInterval(loopTimer); runChat(); loopTimer=setInterval(runChat,5200); });
-    }
+    var steps=[].slice.call(chat.querySelectorAll('[data-step]')), running=false, loop;
+    function run(){ if(running) return; running=true; steps.forEach(function(s){ s.classList.remove('show'); });
+      [[0,220],[1,900]].forEach(function(p){ setTimeout(function(){ steps[p[0]].classList.add('show'); }, p[1]); });
+      setTimeout(function(){ steps[2].classList.add('show'); running=false; }, 1700); }
+    if(reduce){ steps.forEach(function(s){ s.classList.add('show'); }); }
+    else { var cio=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ run(); loop=setInterval(run,5200); } else clearInterval(loop); },{threshold:.4}); cio.observe(chat); }
   }
 })();
 </script>
