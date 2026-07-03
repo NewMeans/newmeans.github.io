@@ -1,234 +1,108 @@
-/* Typer product page — the in-game desk (monitor + keycap keyboard) rebuilt
- * from the real game assets, plus product sections.
- * Geometry mirrors the game: keycap_0 = 281x281, keycap_1 = 461x281,
- * 10px gaps, 3 rows of (5 normal + 1 wide). See assets/desk. */
+/* Typer product page. Shared system in base.css; this file adds the page's
+ * own layout, the interactive desk (monitor + keycap keyboard), and the
+ * playable game section. Accent = mint over a warm desk palette.
+ * Desk geometry mirrors the real assets (keycap_0 281x281, keycap_1 461x281). */
 
-/* ---------- Typer hero ---------- */
-.tp-hero { border-bottom: 1px solid var(--line); }
-.tp-hero__inner {
-  max-width: var(--wrap);
-  margin: 0 auto;
-  padding: clamp(40px, 6vw, 80px) var(--pad) clamp(44px, 6vw, 80px);
-  display: grid;
-  grid-template-columns: 0.82fr 1.18fr;
-  gap: clamp(32px, 5vw, 64px);
-  align-items: center;
-}
-.tp-hero__copy { max-width: 34ch; }
-.tp-hero__title {
-  margin: 18px 0 0;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(2.2rem, 4.4vw, 3.6rem);
-  line-height: 1.08;
-  letter-spacing: -0.02em;
-  word-break: keep-all;
-}
-.tp-hero__lead {
-  margin: 20px 0 0;
-  color: var(--ink-soft);
-  font-size: 1.08rem;
-  word-break: keep-all;
-}
-.tp-hero__cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
-.tp-hint { margin: 16px 0 0; font-size: 0.9rem; color: var(--ink-mute); word-break: keep-all; }
+.tp{ --screen-ink:#7FD9B8; }
 
-/* filled store buttons for the product hero */
-.store--fill {
-  border-color: transparent;
-  background: var(--ink);
-  color: var(--bg);
+/* ---------- HERO ---------- */
+.tp-hero{border-bottom:1px solid var(--line)}
+.tp-hero__inner{
+  display:grid; grid-template-columns:0.86fr 1.14fr; gap:clamp(32px,5vw,64px); align-items:center;
+  padding-top:clamp(40px,6vw,84px); padding-bottom:clamp(44px,6vw,84px);
 }
-.store--fill:hover { background: #000; color: var(--bg); }
+.tp-hero__copy{max-width:34ch}
+.tp-wordmark{margin:18px 0 0; height:clamp(46px,7vw,78px); width:auto}
+.tp-hero__title{margin:20px 0 0; font-family:var(--display); font-weight:700;
+  font-size:clamp(1.9rem,3.6vw,2.9rem); line-height:1.1; letter-spacing:-.02em}
+.tp-hero__lead{margin:16px 0 0; color:var(--ink-soft); font-size:1.06rem}
+.tp-hero__cta{margin-top:26px; display:flex; flex-wrap:wrap; gap:12px}
+.tp-hint{margin:16px 0 0; font-family:var(--mono); font-size:.8rem; letter-spacing:.04em; color:var(--ink-soft)}
 
 /* ---------- the desk ---------- */
-.desk {
-  position: relative;
-  width: min(100%, 560px);
-  margin: 0 auto;
-  justify-self: center;
-}
+.desk{position:relative; width:min(100%,560px); margin:0 auto; justify-self:center}
+.monitor{position:relative; width:84%; margin:0 auto; aspect-ratio:1354/1222; z-index:2;
+  filter:drop-shadow(0 14px 20px rgba(22,19,15,.16))}
+.monitor__img{width:100%; height:100%; display:block}
+.monitor__screen{position:absolute; left:7.2%; right:7.2%; top:8.5%; bottom:23.5%;
+  overflow:hidden; display:flex; flex-direction:column; padding:3% 4%}
+.monitor__out{display:grid; align-content:start; gap:2px; font-family:var(--mono);
+  font-size:clamp(.6rem,1.15vw,.82rem); line-height:1.35}
+.screen__line{margin:0; color:var(--screen-ink); white-space:pre-wrap; word-break:break-word}
+.screen__caret{display:inline-block; width:.55em; height:1em; background:var(--screen-ink);
+  vertical-align:-2px; margin-left:1px; animation:tp-caret 1s steps(1) infinite}
+@keyframes tp-caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
+.desk__cactus{position:absolute; left:-3%; bottom:-7%; width:22%; z-index:4; pointer-events:none;
+  filter:drop-shadow(0 6px 8px rgba(22,19,15,.12))}
+.desk__cable{position:absolute; left:92%; top:49%; width:62%; z-index:4; pointer-events:none}
 
-/* monitor: moniter.png defines the box; terminal text overlays the dark screen */
-.monitor {
-  position: relative;
-  width: 84%;
-  margin: 0 auto;
-  aspect-ratio: 1354 / 1222;
-  z-index: 2;
-  filter: drop-shadow(0 14px 20px rgba(22, 19, 15, 0.16));
-}
-.monitor__img { width: 100%; height: 100%; display: block; }
-.monitor__screen {
-  position: absolute;
-  left: 7.2%;
-  right: 7.2%;
-  top: 8.5%;
-  bottom: 23.5%;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  padding: 3% 4%;
-}
-.monitor__out {
-  display: grid;
-  align-content: start;
-  gap: 2px;
-  font-family: var(--font-mono);
-  font-size: clamp(0.6rem, 1.15vw, 0.82rem);
-  line-height: 1.35;
-}
-.screen__line {
-  margin: 0;
-  color: var(--screen-ink);
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-.screen__caret {
-  display: inline-block;
-  width: 0.55em;
-  height: 1em;
-  background: var(--screen-ink);
-  vertical-align: -2px;
-  margin-left: 1px;
-  animation: caret 1s steps(1) infinite;
-}
-.desk__cactus {
-  position: absolute;
-  left: -3%;
-  bottom: -7%;
-  width: 22%;
-  z-index: 4;
-  pointer-events: none;
-  filter: drop-shadow(0 6px 8px rgba(22, 19, 15, 0.12));
-}
+.keyboard{position:relative; width:100%; margin:-1% auto 0; aspect-ratio:2125/1131; z-index:3}
+.keyboard__frame{position:relative; width:100%; height:100%; display:block; z-index:0}
+.keyboard::after{content:""; position:absolute; left:3.6%; right:3.6%; top:10.6%; bottom:6.4%;
+  background:#2a2320; border-radius:1.6%/3%; z-index:1}
+.keys{position:absolute; left:50%; top:15%; transform:translateX(-50%); width:89%;
+  display:flex; flex-direction:column; align-items:center; z-index:2}
+.kbrow{display:flex; justify-content:center; width:100%}
+.kbrow:not(:last-child){margin-bottom:1.2%}
+.kcap{flex:0 0 auto; width:14.1%; aspect-ratio:1/1; padding:0; border:0; background:none; cursor:pointer;
+  position:relative; transform-origin:center bottom; transition:transform 90ms ease}
+.kcap:not(:last-child){margin-right:1.2%}
+.kcap--wide{width:23.1%; aspect-ratio:461/281}
+.kcap__img{width:100%; height:100%; object-fit:fill; display:block; user-select:none; -webkit-user-drag:none}
+.kcap.is-active{transform:scale(.9)}
 
-/* cable: USB head plugs into the keyboard frame's top-right; the long tail
-   runs off to the right and gets clipped at the screen edge */
-.desk__cable {
-  position: absolute;
-  left: 92%;
-  top: 49%;
-  width: 62%;
-  z-index: 4;
-  pointer-events: none;
-}
+/* ---------- PLAY: the game (signature) ---------- */
+.tp-play{padding:clamp(56px,8vw,104px) 0}
+.tp-play__inner{display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(32px,5vw,60px); align-items:center}
+.tp-play__copy{max-width:32ch}
+.tp-play h2{font-family:var(--kr); font-weight:700; font-size:clamp(24px,3.2vw,36px); line-height:1.12; letter-spacing:-.01em; margin:14px 0 0}
+.tp-play p{margin:16px 0 0; color:var(--ink-soft); font-size:1.04rem}
+.tp-play__rules{margin:22px 0 0; list-style:none; display:grid; gap:10px}
+.tp-play__rules li{display:flex; gap:12px; align-items:baseline; font-size:.98rem}
+.tp-play__rules b{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--mint-deep); flex:none; width:2.4em}
+.tp-game-frame{justify-self:center; width:min(100%,380px);
+  border:1px solid var(--line); border-radius:20px; padding:14px; background:var(--cream);
+  box-shadow:0 22px 46px rgba(22,19,15,.10)}
 
-/* keyboard: frame.png bed with keycap images arranged on top */
-.keyboard {
-  position: relative;
-  width: 100%;
-  margin: -1% auto 0;
-  aspect-ratio: 2125 / 1131;
-  z-index: 3;
-}
-.keyboard__frame { position: relative; width: 100%; height: 100%; display: block; z-index: 0; }
-/* dark bed behind the keycaps (inside the frame, never larger than it) */
-.keyboard::after {
-  content: "";
-  position: absolute;
-  left: 3.6%;
-  right: 3.6%;
-  top: 10.6%;
-  bottom: 6.4%;
-  background: #2a2320;
-  border-radius: 1.6% / 3%;
-  z-index: 1;
-}
-/* keycap bundle: sized by keycap width so gaps + ratios stay exact.
-   Percent margins are width-relative in CSS, so horizontal and vertical
-   gaps are equal in px; aspect-ratio keeps each keycap undistorted. */
-.keys {
-  position: absolute;
-  left: 50%;
-  top: 15%;
-  transform: translateX(-50%);
-  width: 89%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  z-index: 2;
-}
-.kbrow {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-.kbrow:not(:last-child) { margin-bottom: 1.2%; }
-.kcap {
-  flex: 0 0 auto;
-  width: 14.1%;
-  aspect-ratio: 1 / 1;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-  position: relative;
-  transform-origin: center bottom;
-  transition: transform 90ms ease, filter 90ms ease;
-}
-.kcap:not(:last-child) { margin-right: 1.2%; }
-.kcap--wide { width: 23.1%; aspect-ratio: 461 / 281; }
-.kcap__img { width: 100%; height: 100%; object-fit: fill; display: block; user-select: none; -webkit-user-drag: none; }
-.kcap:hover { filter: brightness(1.03); }
-.kcap.is-active { transform: translateY(6%); filter: brightness(0.95); }
+/* ---------- STATS (editorial) ---------- */
+.tp-stats{border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--cream)}
+.tp-stats__inner{padding:clamp(40px,5vw,64px) 0}
+.tp-stats__cap{font-family:var(--mono); letter-spacing:.1em; text-transform:uppercase; font-size:12px; color:var(--mint-deep)}
+.tp-stats__row{margin-top:22px; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(18px,3vw,40px)}
+.tp-stat b{display:block; font-family:var(--display); font-weight:700; font-size:clamp(2rem,4vw,3rem); line-height:1; letter-spacing:-.02em}
+.tp-stat span{display:block; margin-top:8px; color:var(--ink-soft); font-size:.9rem}
 
-/* ---------- pillars (부수고 / 듣고 / 꾸미고) ---------- */
-.pillars {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--line-strong);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg-panel);
-}
-.pillar { padding: clamp(24px, 2.8vw, 34px); }
-.pillar + .pillar { border-left: 1px solid var(--line); }
-.pillar__n {
-  font-family: var(--font-display);
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  color: var(--mint-ink);
-}
-.pillar__k {
-  margin: 12px 0 8px;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.3rem, 2vw, 1.7rem);
-  letter-spacing: -0.01em;
-}
-.pillar__d { margin: 0; color: var(--ink-soft); font-size: 0.98rem; word-break: keep-all; }
+/* ---------- PILLARS (flat editorial) ---------- */
+.tp-pillars{padding:clamp(56px,8vw,104px) 0}
+.pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px); margin-top:8px}
+.pillar{padding-top:20px; border-top:2px solid var(--ink)}
+.pillar__n{font-family:var(--mono); font-size:12px; letter-spacing:.12em; color:var(--mint-deep)}
+.pillar__k{margin:14px 0 8px; font-family:var(--kr); font-weight:700; font-size:clamp(1.3rem,2vw,1.6rem); letter-spacing:-.01em}
+.pillar__d{margin:0; color:var(--ink-soft); font-size:1rem}
 
-/* ---------- gallery ---------- */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: clamp(14px, 1.8vw, 22px);
-}
-.shot {
-  margin: 0;
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  overflow: hidden;
-  background: #efe9df;
-  aspect-ratio: 1170 / 2532;
-}
-.shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* ---------- GALLERY ---------- */
+.tp-gallery{padding:0 0 clamp(56px,8vw,104px)}
+.gallery{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(14px,1.8vw,22px)}
+.shot{margin:0; border:1px solid var(--line); border-radius:22px; overflow:hidden; background:#efe9df; aspect-ratio:1170/2532}
+.shot img{width:100%; height:100%; object-fit:cover; display:block}
 
-/* ---------- foot cta ---------- */
-.tp-cta { text-align: center; }
-.tp-cta .band__title { margin: 0 auto 26px; max-width: 22ch; }
-.tp-cta__row { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+/* ---------- FOOT CTA ---------- */
+.tp-cta{border-top:1px solid var(--line); text-align:center; padding:clamp(52px,7vw,96px) 0}
+.tp-cta h2{font-family:var(--kr); font-weight:700; font-size:clamp(1.6rem,3vw,2.4rem); letter-spacing:-.01em; max-width:22ch; margin:0 auto 26px}
+.tp-cta__row{display:flex; flex-wrap:wrap; justify-content:center; gap:12px}
 
-@media (max-width: 1024px) {
-  .tp-hero__inner { grid-template-columns: 1fr; gap: 34px; }
-  .tp-hero__copy { order: 1; max-width: none; }
-  .tp-hero__stage { order: 2; }
-  .desk { max-width: 460px; }
-  .gallery { grid-template-columns: repeat(2, 1fr); }
+/* ---------- RESPONSIVE ---------- */
+@media (max-width:1024px){
+  .tp-hero__inner{grid-template-columns:1fr; gap:34px}
+  .tp-hero__copy{order:1; max-width:none}
+  .tp-hero__stage{order:2}
+  .desk{max-width:460px}
+  .tp-play__inner{grid-template-columns:1fr; gap:34px}
+  .tp-play__copy{order:1; max-width:none}
+  .tp-play__stage{order:2}
+  .gallery{grid-template-columns:repeat(2,1fr)}
 }
-
-@media (max-width: 520px) {
-  .pillars { grid-template-columns: 1fr; }
-  .pillar + .pillar { border-left: 0; border-top: 1px solid var(--line); }
+@media (max-width:640px){
+  .tp-stats__row{grid-template-columns:repeat(2,1fr); gap:26px}
+  .pillars{grid-template-columns:1fr; gap:24px}
 }

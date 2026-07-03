@@ -6,34 +6,34 @@
   <title data-i18n="typer.meta.title">Typer — NewMeans</title>
   <meta name="description" data-i18n-attr="content" data-i18n="typer.meta.description"
         content="Typer는 기계식 키보드 소리를 중심에 둔 감각형 캐주얼 게임입니다. NewMeans 제작.">
-  <meta name="theme-color" content="#faf8f3">
+  <meta name="theme-color" content="#FAF8F3">
   <link rel="icon" type="image/png" href="assets/brand/typer-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="typer.css">
 </head>
-<body>
+<body class="tp">
   <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
 
-  <header class="site-nav">
-    <div class="site-nav__inner">
-      <a class="brand" href="index.html" data-i18n="nav.backHome" aria-label="NewMeans home">← NewMeans</a>
-      <nav class="site-nav__links" aria-label="Breadcrumb">
-        <span aria-current="page">Typer</span>
-      </nav>
-      <div class="site-nav__tools">
-        <div class="lang-toggle" role="group" aria-label="Language">
-          <button type="button" data-lang-set="ko" class="lang-toggle__btn">KO</button>
-          <span class="lang-toggle__sep" aria-hidden="true">/</span>
-          <button type="button" data-lang-set="en" class="lang-toggle__btn">EN</button>
+  <header class="nav">
+    <div class="wrap nav__in">
+      <a class="nav__brand" href="index.html" aria-label="NewMeans home">
+        <img class="nav__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans">
+      </a>
+      <span class="nav__here">Typer</span>
+      <div class="nav__spacer"></div>
+      <div class="nav__tools">
+        <div class="toggle" role="group" aria-label="Language">
+          <button type="button" data-lang-set="ko">KO</button>
+          <button type="button" data-lang-set="en">EN</button>
         </div>
-        <button class="sound-toggle" type="button" data-sound-toggle aria-pressed="false"
-                data-i18n-attr="aria-label" data-i18n="sound.enable" aria-label="소리 켜기">
-          <svg class="sound-toggle__icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M5 14H8.5L13 18V6L8.5 10H5V14Z" fill="currentColor"></path>
-            <path d="M16 9C17.3 10.1 18 11.5 18 13C18 14.5 17.3 15.9 16 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"></path>
+        <button class="snd" type="button" data-sound-toggle aria-pressed="false"
+                data-i18n-attr="aria-label" data-i18n="sound.enable" aria-label="소리 켜기" title="Sound">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 9v6h4l5 4V5L8 9H4z"></path>
+            <path class="wave" d="M16 8.5a4 4 0 0 1 0 7"></path>
           </svg>
         </button>
       </div>
@@ -41,16 +41,17 @@
   </header>
 
   <main id="main">
-    <!-- HERO with the interactive desk -->
+    <!-- HERO: the interactive desk -->
     <section class="tp-hero" id="top">
-      <div class="tp-hero__inner">
+      <div class="wrap tp-hero__inner">
         <div class="tp-hero__copy" data-reveal>
           <p class="eyebrow" data-i18n="typer.eyebrow">게임 · iOS / Android</p>
+          <img class="tp-wordmark pixel" src="assets/brand/typer-logo.png" alt="Typer">
           <h1 class="tp-hero__title" data-i18n="typer.tagline">부수고, 듣고, 꾸미는 재미.</h1>
           <p class="tp-hero__lead" data-i18n="typer.lead">기계식 키보드 소리를 중심에 둔 감각형 캐주얼 게임. 화면 속 키보드를 눌러보세요.</p>
           <div class="tp-hero__cta">
-            <a class="store store--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-            <a class="store" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+            <a class="btn btn--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+            <a class="btn btn--ghost" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
           </div>
           <p class="tp-hint" data-i18n="typer.hint">키보드를 눌러보세요. 오른쪽 위에서 소리를 켤 수 있어요.</p>
         </div>
@@ -74,27 +75,45 @@
       </div>
     </section>
 
-    <!-- METRICS -->
-    <section class="band" id="numbers">
-      <div class="band__inner">
-        <div class="metrics" data-reveal>
-          <p class="metrics__cap" data-i18n="typer.metricsCap">유료 마케팅 없이</p>
-          <ul class="metrics__list">
-            <li><b>30,000+</b><span data-i18n="typer.m1">오가닉 다운로드</span></li>
-            <li><b>4.74★</b><span data-i18n="typer.m2">평균 평점</span></li>
-            <li><b>177</b><span data-i18n="typer.m3">출시 국가</span></li>
-            <li><b>15</b><span data-i18n="typer.m4">리뷰 언어권</span></li>
+    <!-- PLAY: the playable core loop (signature) -->
+    <section class="tp-play" id="play">
+      <div class="wrap tp-play__inner">
+        <div class="tp-play__copy" data-reveal>
+          <p class="eyebrow" data-i18n="typer.play.kicker">직접 해보기</p>
+          <h2 data-i18n="typer.play.title">브라우저에서 바로 플레이</h2>
+          <p data-i18n="typer.play.lead">숫자 블록을 공으로 부수는 Typer의 코어 루프. 드래그해서 조준하고, 손을 놓으면 공이 발사됩니다.</p>
+          <ul class="tp-play__rules">
+            <li><b>AIM</b><span data-i18n="typer.play.r1">드래그해서 각도를 잡습니다.</span></li>
+            <li><b>FIRE</b><span data-i18n="typer.play.r2">손을 놓으면 공이 우르르 발사됩니다.</span></li>
+            <li><b>CLEAR</b><span data-i18n="typer.play.r3">블록이 바닥에 닿기 전에 모두 부수세요.</span></li>
           </ul>
+        </div>
+        <div class="tp-play__stage" data-reveal style="--reveal-delay:120ms">
+          <div class="tp-game-frame">
+            <div data-typer-game data-base="assets/"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="tp-stats" id="numbers">
+      <div class="wrap tp-stats__inner" data-reveal>
+        <p class="tp-stats__cap" data-i18n="typer.metricsCap">유료 마케팅 없이</p>
+        <div class="tp-stats__row">
+          <div class="tp-stat"><b>30,000+</b><span data-i18n="typer.m1">오가닉 다운로드</span></div>
+          <div class="tp-stat"><b>4.74★</b><span data-i18n="typer.m2">평균 평점</span></div>
+          <div class="tp-stat"><b>177</b><span data-i18n="typer.m3">출시 국가</span></div>
+          <div class="tp-stat"><b>15</b><span data-i18n="typer.m4">리뷰 언어권</span></div>
         </div>
       </div>
     </section>
 
     <!-- PILLARS -->
-    <section class="band" id="how">
-      <div class="band__inner">
-        <div class="band__head band__head--row" data-reveal>
-          <p class="kicker" data-i18n="crumb.works">제품</p>
-          <h2 class="band__title" data-i18n="typer.pillars.title">부수고, 듣고, 꾸미고</h2>
+    <section class="tp-pillars" id="how">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <h2 data-i18n="typer.pillars.title">부수고, 듣고, 꾸미고</h2>
         </div>
         <div class="pillars" data-reveal>
           <article class="pillar">
@@ -117,11 +136,10 @@
     </section>
 
     <!-- GALLERY -->
-    <section class="band" id="gallery">
-      <div class="band__inner">
-        <div class="band__head" data-reveal>
-          <p class="kicker" data-i18n="crumb.works">제품</p>
-          <h2 class="band__title" data-i18n="typer.gallery.title">게임 속 풍경</h2>
+    <section class="tp-gallery" id="gallery">
+      <div class="wrap">
+        <div class="sec-head" data-reveal>
+          <h2 data-i18n="typer.gallery.title">게임 속 풍경</h2>
         </div>
         <div class="gallery" data-reveal>
           <figure class="shot"><img src="assets/screens/typer/IMG_7203.PNG" alt="Typer gameplay" loading="lazy" decoding="async"></figure>
@@ -133,33 +151,31 @@
     </section>
 
     <!-- FOOT CTA -->
-    <section class="band tp-cta" id="get">
-      <div class="band__inner" data-reveal>
-        <h2 class="band__title" data-i18n="typer.foot.title">설치하고, 스위치를 고르고, 나머지는 책상에 맡기세요.</h2>
+    <section class="tp-cta" id="get">
+      <div class="wrap" data-reveal>
+        <h2 data-i18n="typer.foot.title">설치하고, 스위치를 고르고, 나머지는 책상에 맡기세요.</h2>
         <div class="tp-cta__row">
-          <a class="store store--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
-          <a class="store" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
+          <a class="btn btn--fill" href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer">App Store</a>
+          <a class="btn btn--ghost" href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer&pcampaignid=web_share" target="_blank" rel="noopener noreferrer">Google Play</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-foot">
-    <div class="site-foot__inner">
-      <a class="foot__mark" href="index.html">New<span>Means</span></a>
+  <footer class="foot">
+    <div class="wrap foot__in">
+      <a href="index.html" aria-label="NewMeans home"><img class="foot__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans"></a>
       <ul class="foot__links">
         <li><a href="index.html" data-i18n="nav.backHome">← NewMeans</a></li>
         <li><a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
       </ul>
-      <div class="foot__meta">
-        <button class="foot__copy" type="button" data-copyright-trigger>© 2026 NewMeans</button>
-        <span class="foot__note" data-i18n="foot.note">Made in Seoul.</span>
-      </div>
+      <p class="foot__meta">© 2026 NewMeans</p>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/howler@2.2.4/dist/howler.min.js" defer></script>
   <script src="i18n.js" defer></script>
   <script src="main.js" defer></script>
+  <script src="game.js" defer></script>
 </body>
 </html>
