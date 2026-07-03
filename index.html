@@ -10,76 +10,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="base.css">
 <style>
-/* ============================================================
-   NewMeans — Home  ·  clean / modern / flat / crafted
-   Self-contained page styles. logo.js + keyboard.js inject their own CSS.
-   ============================================================ */
-:root{
-  --paper:#FAF8F3; --ink:#16130F; --ink-soft:#5a5248;
-  --mint:#2FA98A; --mint-deep:#1E7D66; --mint-tint:#DCF0E8;
-  --coral:#F76B6B; --coral-deep:#E4623F;
-  --cream:#FFFDF6;
-  --line:rgba(22,19,15,.12);
-  --display:'Space Grotesk',sans-serif;
-  --kr:'IBM Plex Sans KR',sans-serif;
-  --mono:'IBM Plex Mono',monospace;
-  --ease:cubic-bezier(.22,1,.36,1);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{
-  font-family:var(--kr); color:var(--ink); background:var(--paper);
-  line-height:1.55; overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-}
-:lang(ko),[lang="ko"]{word-break:keep-all}
-img{display:block; max-width:100%}
-a{color:inherit; text-decoration:none}
-button{font:inherit; color:inherit; background:none; border:none; cursor:pointer}
-::selection{background:var(--mint); color:var(--cream)}
-
-.skip-link{position:absolute; left:-9999px; top:0; z-index:100; background:var(--ink); color:var(--cream); padding:10px 16px; border-radius:8px}
-.skip-link:focus{left:12px; top:12px}
-.wrap{max-width:1240px; margin:0 auto; padding:0 clamp(20px,4vw,52px)}
-.mono{font-family:var(--mono); letter-spacing:.16em; text-transform:uppercase; font-size:12px}
-.pixel{image-rendering:pixelated; image-rendering:-moz-crisp-edges;}
-
-/* ---------- NAV ---------- */
-.nav{
-  position:sticky; top:0; z-index:60;
-  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
-  background:rgba(250,248,243,.82);
-  border-bottom:1px solid var(--line);
-}
-.nav__in{display:flex; align-items:center; gap:18px; height:78px}
-.nav__logo{height:40px; width:auto; flex:none; transition:opacity .25s}
-.nav__brand:hover .nav__logo{opacity:.75}
-.nav__spacer{flex:1}
-.nav__links{display:flex; gap:28px}
-.nav__links a{position:relative; font-size:15px; font-weight:500; padding:6px 0; color:var(--ink)}
-.nav__links a::after{
-  content:""; position:absolute; left:0; right:100%; bottom:0; height:2px;
-  background:var(--mint); transition:right .3s var(--ease);
-}
-.nav__links a:hover::after{right:0}
-.nav__tools{display:flex; align-items:center; gap:12px}
-.toggle{
-  display:inline-flex; align-items:center; gap:2px;
-  border:1.5px solid var(--line); border-radius:999px; padding:4px; background:var(--cream);
-}
-.toggle button{padding:4px 10px; border-radius:999px; font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-soft); transition:.2s}
-.toggle button.is-active{background:var(--ink); color:var(--cream)}
-.snd{
-  width:40px; height:40px; border-radius:50%; border:1.5px solid var(--line);
-  background:var(--cream); display:grid; place-items:center; transition:.2s;
-}
-.snd:hover{border-color:var(--mint)}
-.snd svg{width:18px; height:18px}
-.snd .wave{opacity:0; transition:.2s}
-.snd[aria-pressed="true"]{background:var(--mint); border-color:var(--mint)}
-.snd[aria-pressed="true"] svg{color:var(--cream)}
-.snd[aria-pressed="true"] .wave{opacity:1}
+/* Home-specific styles. Shared system lives in base.css.
+   logo.js + keyboard.js inject their own CSS. */
 
 /* ---------- HERO ---------- */
 .hero{position:relative; padding:clamp(44px,7vw,96px) 0 clamp(52px,7vw,100px); border-bottom:1px solid var(--line)}
@@ -99,13 +33,6 @@ button{font:inherit; color:inherit; background:none; border:none; cursor:pointer
 .loaded .studio-tag{opacity:1; transform:none}
 .cta{display:flex; flex-wrap:wrap; gap:14px; margin-top:32px; opacity:0; transform:translateY(12px); transition:.7s var(--ease) .52s}
 .loaded .cta{opacity:1; transform:none}
-.btn{display:inline-flex; align-items:center; gap:9px; padding:14px 24px; border-radius:10px; font-weight:600; font-size:15px; transition:transform .2s var(--ease), background .2s, border-color .2s, color .2s}
-.btn--fill{background:var(--ink); color:var(--cream)}
-.btn--fill:hover{background:var(--mint-deep)}
-.btn--fill .arw{transition:transform .2s var(--ease)}
-.btn--fill:hover .arw{transform:translateX(3px)}
-.btn--ghost{border:1.5px solid var(--line)}
-.btn--ghost:hover{border-color:var(--ink); color:var(--ink)}
 
 /* ------- interactive logo signature (logo.js mounts here) ------- */
 .hero__sig{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(10px,1.6vw,20px);
@@ -115,17 +42,10 @@ button{font:inherit; color:inherit; background:none; border:none; cursor:pointer
 
 /* ---------- WORKS ---------- */
 .works{padding:clamp(56px,8vw,110px) 0 clamp(48px,7vw,96px)}
-.sec-head{margin-bottom:clamp(28px,4vw,48px); padding-bottom:16px; border-bottom:1px solid var(--line);
-  display:flex; align-items:baseline; gap:14px}
-.sec-head h2{font-family:var(--kr); font-weight:700; font-size:clamp(26px,3.6vw,40px); line-height:1; letter-spacing:-.01em}
-.sec-head .n{font-family:var(--mono); color:var(--ink-soft); font-size:13px}
-
 .tiles{display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,32px)}
 .tile{position:relative; border-radius:22px; overflow:hidden; min-height:clamp(420px,48vw,540px);
   border:1px solid var(--line); background:transparent; display:flex; flex-direction:column;
   transition:transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s}
-[data-reveal]{opacity:0; transform:translateY(34px); transition:opacity .7s var(--ease), transform .7s var(--ease)}
-[data-reveal].in{opacity:1; transform:none}
 .tile:hover{transform:translateY(-6px); box-shadow:0 20px 44px rgba(22,19,15,.09)}
 .tile--typer{border-color:rgba(47,169,138,.4)}
 .tile--typer:hover{border-color:rgba(47,169,138,.7)}
@@ -133,12 +53,6 @@ button{font:inherit; color:inherit; background:none; border:none; cursor:pointer
 .tile--dopa:hover{border-color:rgba(247,107,107,.75)}
 
 .tile__head{position:relative; padding:clamp(24px,3vw,34px) clamp(24px,3vw,36px) 0; z-index:3}
-.chip{display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
-  padding:7px 13px; border-radius:999px; border:1.5px solid}
-.chip.m{color:var(--mint-deep); border-color:rgba(47,169,138,.4)}
-.chip.c{color:var(--coral-deep); border-color:rgba(228,98,63,.4)}
-.chip .d{width:7px; height:7px; border-radius:50%}
-.chip.m .d{background:var(--mint)} .chip.c .d{background:var(--coral)}
 .tile__wordmark{margin-top:20px; height:clamp(30px,4vw,42px); width:auto}
 .tile--dopa .tile__wordmark{height:clamp(42px,6vw,64px)}
 .tile__tag{margin-top:14px; font-size:clamp(14px,1.6vw,17px); max-width:24em; color:var(--ink)}
@@ -181,14 +95,6 @@ button{font:inherit; color:inherit; background:none; border:none; cursor:pointer
 .result .badge{width:30px; height:30px; border-radius:50%; background:var(--mint); color:#fff; display:grid; place-items:center; flex:none; font-size:16px; font-weight:700}
 .result b{color:var(--mint-deep); font-size:14px} .result small{display:block; color:var(--ink-soft); font-size:11px; font-family:var(--mono); margin-top:2px}
 
-/* ---------- FOOTER ---------- */
-.foot{border-top:1px solid var(--line); padding:clamp(36px,5vw,56px) 0 40px}
-.foot__in{display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap}
-.foot__logo{height:34px; width:auto}
-.foot__links{display:flex; gap:24px; flex-wrap:wrap; font-size:14px; list-style:none}
-.foot__links a:hover{color:var(--mint-deep)}
-.foot__meta{font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-soft); text-transform:uppercase}
-
 /* ---------- RESPONSIVE ---------- */
 @media (max-width:900px){
   .hero__grid{grid-template-columns:1fr; text-align:left}
@@ -197,16 +103,11 @@ button{font:inherit; color:inherit; background:none; border:none; cursor:pointer
   .tiles{grid-template-columns:1fr}
 }
 @media (max-width:620px){
-  .nav__links{display:none}
-  .nav__in{height:66px}
-  .nav__logo{height:34px}
   .h1{font-size:clamp(36px,10.5vw,54px)}
 }
 @media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important}
   .h1 .line > span{transform:none}
   .studio-tag,.cta,.hero__sig{opacity:1; transform:none}
-  [data-reveal]{opacity:1; transform:none}
 }
 </style>
 </head>
