@@ -3,14 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n="dopa.meta.title">도파민대학교 — NewMeans</title>
+  <title data-i18n="dopa.meta.title">도파민대학교 — 대화를 분석하는 AI 심리테스트</title>
   <meta name="description" data-i18n-attr="content" data-i18n="dopa.meta.description"
-        content="도파민대학교는 대화를 분석해 연구 보고서를 써주는 AI 심리테스트 플랫폼입니다. NewMeans 제작.">
-  <meta name="theme-color" content="#FAF8F3">
+        content="카카오톡 대화를 분석해 심리 리포트를 써주는 AI 심리테스트 플랫폼. NewMeans 제작.">
+  <meta name="theme-color" content="#FCFBF7">
   <link rel="icon" type="image/png" href="assets/brand/dopamine-symbol.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="base.css">
   <link rel="stylesheet" href="dopamine.css">
 </head>
@@ -20,37 +19,35 @@
   <header class="nav">
     <div class="wrap nav__in">
       <a class="nav__brand" href="index.html" aria-label="NewMeans home">
-        <img class="nav__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans">
+        <img class="nav__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans">
       </a>
-      <span class="nav__here">도파민대학교</span>
+      <span class="nav__here" data-i18n="dopa.here">도파민대학교</span>
       <div class="nav__spacer"></div>
       <div class="nav__tools">
-        <div class="toggle" role="group" aria-label="Language">
-          <button type="button" data-lang-set="ko">KO</button>
-          <button type="button" data-lang-set="en">EN</button>
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang-set="ko">KO</button><span>·</span><button type="button" data-lang-set="en">EN</button>
         </div>
       </div>
     </div>
   </header>
 
   <main id="main">
-    <!-- HERO: chat → AI report -->
+    <!-- HERO -->
     <section class="dp-hero" id="top">
       <div class="wrap dp-hero__inner">
         <div class="dp-hero__copy" data-reveal>
           <img class="dp-logo" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
-          <p class="eyebrow" data-i18n="dopa.eyebrow">AI 심리테스트 · Web</p>
           <h1 class="dp-hero__title">
             <span data-i18n="dopa.hero.t1">대화를 넣으면,</span><br>
-            <em data-i18n="dopa.hero.t2">AI가 당신을 연구합니다.</em>
+            <em data-i18n="dopa.hero.t2">당신을 연구하는 AI.</em>
           </h1>
-          <p class="dp-hero__lead" data-i18n="dopa.lead">카카오톡 대화만 올리면 AI가 성향을 분석해 나만의 심리 리포트를 써주는 초개인화 심리테스트 플랫폼.</p>
+          <p class="dp-hero__lead" data-i18n="dopa.lead">카카오톡 대화를 분석해 나만의 심리 리포트를 써주는 초개인화 심리테스트 플랫폼.</p>
           <div class="dp-hero__cta">
-            <a class="btn btn--fill" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.cta">dodae.me에서 시작하기</span><span class="arw">→</span></a>
+            <a class="btn btn--solid" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.cta">dodae.me에서 시작하기</span><span class="arw">→</span></a>
           </div>
         </div>
 
-        <div class="dp-hero__stage" data-reveal style="--reveal-delay:120ms">
+        <div class="dp-hero__stage" data-reveal>
           <div class="dp-chat" id="chat">
             <div class="dp-chat__bar">
               <span class="dp-chat__ava"><img src="assets/brand/dopamine-symbol.png" alt=""></span>
@@ -80,15 +77,15 @@
       </div>
     </section>
 
-    <!-- WHAT: the egen-teto professors -->
+    <!-- 에겐-테토 -->
     <section class="dp-what" id="what">
       <div class="wrap">
-        <div class="sec-head" data-reveal>
-          <h2 data-i18n="dopa.what.title">무엇을 하나요</h2>
+        <div class="head" data-reveal>
+          <h2 data-i18n="dopa.what.title">에겐-테토 테스트</h2>
         </div>
         <div class="dp-what__grid" data-reveal>
           <article class="dp-prof">
-            <span class="dp-prof__label"><span class="d" style="width:7px;height:7px;border-radius:50%;background:var(--coral)"></span><span data-i18n="dopa.prof.teto.label">테토 · TETO</span></span>
+            <span class="dp-prof__label" data-i18n="dopa.prof.teto.label">테토 · TETO</span>
             <img class="dp-prof__img" src="assets/screens/dopamine/DrTeto.png" alt="테토 교수" loading="lazy" decoding="async">
             <div class="dp-prof__cap">
               <p class="dp-prof__name" data-i18n="dopa.prof.teto.name">테토 교수</p>
@@ -96,7 +93,7 @@
             </div>
           </article>
           <article class="dp-prof">
-            <span class="dp-prof__label"><span class="d" style="width:7px;height:7px;border-radius:50%;background:var(--coral)"></span><span data-i18n="dopa.prof.egen.label">에겐 · EGEN</span></span>
+            <span class="dp-prof__label" data-i18n="dopa.prof.egen.label">에겐 · EGEN</span>
             <img class="dp-prof__img" src="assets/screens/dopamine/AsEgen.png" alt="에겐 교수" loading="lazy" decoding="async">
             <div class="dp-prof__cap">
               <p class="dp-prof__name" data-i18n="dopa.prof.egen.name">에겐 교수</p>
@@ -104,17 +101,16 @@
             </div>
           </article>
         </div>
-        <p class="dp-what__note" data-reveal data-i18n="dopa.what.note">대표 콘텐츠는 에겐-테토 테스트. 카카오톡 대화를 올리면 AI가 참여자 각자의 성향을 분석해 웃긴 연구 보고서를 만들어 줍니다. MBTI처럼 정해진 유형이 아니라, 참여한 사람 수만큼 다른 결과가 나옵니다 — 2,000명이 하면 2,000개의 결과.</p>
+        <p class="dp-what__note" data-reveal data-i18n="dopa.what.note">카카오톡 대화를 올리면 참여자별 성향을 분석해 만드는 연구 보고서. MBTI 같은 고정 유형 없이, 2,000명이면 2,000개의 결과.</p>
       </div>
     </section>
 
-    <!-- MINI TEST -->
+    <!-- 미니 테스트 -->
     <section class="dp-test" id="test">
       <div class="wrap dp-test__inner">
         <div class="dp-test__head" data-reveal>
-          <p class="eyebrow" data-i18n="dopa.test.kicker">미리 해보기</p>
           <h2 data-i18n="dopa.test.title">나는 에겐? 테토?</h2>
-          <p data-i18n="dopa.test.sub">3문항 미리보기. 정식 테스트에선 AI가 당신의 대화를 분석합니다.</p>
+          <p data-i18n="dopa.test.sub">3문항 미리보기. 정식 테스트는 AI가 대화를 직접 분석.</p>
         </div>
 
         <div class="quiz" id="quiz" data-reveal>
@@ -129,47 +125,59 @@
             <h3 id="quizTitle"></h3>
             <div class="quiz__spectrum">
               <div class="quiz__spectrum-bar"><i id="quizMarker"></i></div>
-              <div class="quiz__spectrum-ends"><span>에겐 · EGEN</span><span>테토 · TETO</span></div>
+              <div class="quiz__spectrum-ends"><span>EGEN</span><span>TETO</span></div>
             </div>
-            <p id="quizTeaser" data-i18n="dopa.test.resultTeaser">미리보기 결과예요. 정식 리포트는 AI가 당신의 대화를 읽고 훨씬 자세히 써줍니다.</p>
+            <p data-i18n="dopa.test.resultTeaser">미리보기 결과. 정식 리포트는 AI가 대화를 읽고 훨씬 자세하게.</p>
             <div class="quiz__result-cta">
-              <a class="btn btn--fill" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.test.full">정식 테스트 하러 가기</span><span class="arw">→</span></a>
-              <button class="quiz__retry" type="button" id="quizRetry" data-i18n="dopa.test.retry">다시 해보기</button>
+              <a class="btn btn--solid" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.test.full">정식 테스트 하러 가기</span><span class="arw">→</span></a>
+              <button class="quiz__retry" type="button" id="quizRetry" data-i18n="dopa.test.retry">다시 하기</button>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PLATFORM framing -->
+    <!-- 플랫폼 -->
     <section class="dp-platform" id="platform">
       <div class="wrap" data-reveal>
         <h2 class="dp-platform__lead">
           <span data-i18n="dopa.platform.t1">하나의 테스트가 아니라,</span>
           <em data-i18n="dopa.platform.t2">계속 늘어나는 플랫폼.</em>
         </h2>
-        <p class="dp-platform__p" data-i18n="dopa.platform.p">에겐-테토를 시작으로, 좋아하는 만화 캐릭터가 되어보는 테스트처럼 다양한 테마의 캐릭터 심리테스트가 계속 추가됩니다. 전부 같은 AI 분석 엔진 위에서 돌아가요.</p>
+        <p class="dp-platform__p" data-i18n="dopa.platform.p">에겐-테토를 시작으로 계속 추가되는 테마별 캐릭터 심리테스트. 전부 같은 AI 분석 엔진 위에서 구동.</p>
       </div>
     </section>
 
-    <!-- FOOT CTA -->
-    <section class="dp-cta-sec" id="get">
+    <!-- CTA -->
+    <section class="dp-cta" id="get">
       <div class="wrap" data-reveal>
-        <h2 data-i18n="dopa.foot.title">당신에 대한 연구를 시작해 보세요.</h2>
-        <p data-i18n="dopa.foot.sub">대화만 넣으면, 나머지는 AI가 합니다.</p>
-        <a class="btn btn--fill" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.cta">dodae.me에서 시작하기</span><span class="arw">→</span></a>
+        <h2 data-i18n="dopa.foot.title">당신에 대한 연구, 지금 시작.</h2>
+        <p data-i18n="dopa.foot.sub">대화 업로드 후 나머지는 AI의 몫.</p>
+        <a class="btn btn--solid" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.cta">dodae.me에서 시작하기</span><span class="arw">→</span></a>
       </div>
     </section>
   </main>
 
   <footer class="foot">
-    <div class="wrap foot__in">
-      <a href="index.html" aria-label="NewMeans home"><img class="foot__logo pixel" src="assets/brand/newmeans-logo.png" alt="NewMeans"></a>
-      <ul class="foot__links">
-        <li><a href="index.html" data-i18n="nav.backHome">← NewMeans</a></li>
-        <li><a href="https://dodae.me/" target="_blank" rel="noopener noreferrer">dodae.me</a></li>
-      </ul>
-      <p class="foot__meta">© 2026 NewMeans</p>
+    <div class="wrap foot__grid">
+      <div class="foot__brand">
+        <a href="index.html" aria-label="NewMeans home"><img class="foot__logo" src="assets/brand/newmeans-wordmark.png" alt="NewMeans"></a>
+        <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오</p>
+      </div>
+      <div class="foot__col">
+        <h4 data-i18n="foot.products">제품</h4>
+        <a href="typer.html">Typer</a>
+        <a href="dopamine.html" data-i18n="foot.dopa">도파민대학교</a>
+      </div>
+      <div class="foot__col">
+        <h4 data-i18n="foot.contact">연락</h4>
+        <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
+        <a href="https://dodae.me/" target="_blank" rel="noopener">dodae.me</a>
+      </div>
+    </div>
+    <div class="wrap foot__base">
+      <span>© 2026 NewMeans</span>
+      <span>Typer · Dopamine University</span>
     </div>
   </footer>
 
@@ -179,17 +187,14 @@
     "use strict";
     var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ---------- reveal (this page has no main.js) ---------- */
-    var io = new IntersectionObserver(function(es){
-      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, {threshold:.16});
+    /* 리빌 */
+    var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.14});
     document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
 
-    /* ---------- chat → report demo ---------- */
-    var chat = document.getElementById('chat');
+    /* 채팅 → 리포트 데모 */
+    var chat=document.getElementById('chat');
     if(chat){
-      var steps = Array.prototype.slice.call(chat.querySelectorAll('[data-step]'));
-      var running=false, loop;
+      var steps=[].slice.call(chat.querySelectorAll('[data-step]')), running=false, loop;
       function run(){
         if(running) return; running=true;
         steps.forEach(function(s){ s.classList.remove('show'); });
@@ -198,15 +203,15 @@
       }
       if(reduce){ steps.forEach(function(s){ s.classList.add('show'); }); steps[3].classList.remove('show'); }
       else{
-        var cio = new IntersectionObserver(function(en){
-          if(en[0].isIntersecting){ run(); loop=setInterval(run, 5600); } else { clearInterval(loop); }
-        }, {threshold:.4});
+        var cio=new IntersectionObserver(function(en){
+          if(en[0].isIntersecting){ run(); loop=setInterval(run, 5600); } else clearInterval(loop);
+        },{threshold:.4});
         cio.observe(chat);
       }
     }
 
-    /* ---------- mini test ---------- */
-    var QUIZ = {
+    /* 미니 테스트 */
+    var QUIZ={
       ko:[
         {q:"주말 저녁, 갑자기 번개 약속이 잡혔다.", a:[["좋아 바로 나가!","teto"],["음… 오늘은 집이 최고인데","egen"]]},
         {q:"단톡방에서 나는", a:[["드립과 짤로 분위기를 주도한다","teto"],["조용히 읽고 하트만 누른다","egen"]]},
@@ -218,39 +223,37 @@
         {q:"Facing something new,", a:[["I just dive in","teto"],["I test every stepping stone first","egen"]]}
       ]
     };
-    var RESULT = {
-      ko:{teto:["당신은 <em>테토</em> 성향","테토 교수"], egen:["당신은 <em>에겐</em> 성향","에겐 교수"], step:"문항"},
-      en:{teto:["You lean <em>Teto</em>","Prof. Teto"], egen:["You lean <em>Egen</em>","Prof. Egen"], step:"Question"}
+    var RESULT={
+      ko:{teto:"당신은 <em>테토</em> 성향", egen:"당신은 <em>에겐</em> 성향", step:"문항"},
+      en:{teto:"You lean <em>Teto</em>", egen:"You lean <em>Egen</em>", step:"Question"}
     };
     var play=document.getElementById('quizPlay'), result=document.getElementById('quizResult');
     var qEl=document.getElementById('quizQ'), optsEl=document.getElementById('quizOpts'), stepEl=document.getElementById('quizStep'), barEl=document.getElementById('quizBar');
     var titleEl=document.getElementById('quizTitle'), imgEl=document.getElementById('quizImg'), markerEl=document.getElementById('quizMarker');
     var i=0, teto=0;
-    function lang(){ return (window.i18n && window.i18n.lang && window.i18n.lang()) || document.documentElement.lang || 'ko'; }
+    function lang(){ return (window.i18n&&window.i18n.lang&&window.i18n.lang())||document.documentElement.lang||'ko'; }
     function render(){
       var L=lang(), set=QUIZ[L]||QUIZ.ko, item=set[i];
-      barEl.style.width = ((i)/set.length*100)+'%';
-      qEl.textContent = item.q;
-      stepEl.textContent = (RESULT[L]||RESULT.ko).step + ' ' + (i+1) + ' / ' + set.length;
+      barEl.style.width=((i)/set.length*100)+'%';
+      qEl.textContent=item.q;
+      stepEl.textContent=(RESULT[L]||RESULT.ko).step+' '+(i+1)+' / '+set.length;
       optsEl.innerHTML='';
       item.a.forEach(function(opt){
         var b=document.createElement('button'); b.type='button'; b.className='quiz__opt'; b.textContent=opt[0];
         b.addEventListener('click', function(){
           if(opt[1]==='teto') teto++;
-          i++;
-          if(i>=set.length) finish(); else render();
+          i++; if(i>=set.length) finish(); else render();
         });
         optsEl.appendChild(b);
       });
     }
     function finish(){
       var L=lang(), set=QUIZ[L]||QUIZ.ko, pct=Math.round(teto/set.length*100);
-      var lean = pct>=50 ? 'teto' : 'egen';
-      var r=(RESULT[L]||RESULT.ko)[lean];
-      titleEl.innerHTML = r[0];
-      imgEl.src = lean==='teto' ? 'assets/screens/dopamine/DrTeto.png' : 'assets/screens/dopamine/AsEgen.png';
-      imgEl.alt = r[1];
-      markerEl.style.left = pct + '%';
+      var lean=pct>=50?'teto':'egen';
+      titleEl.innerHTML=(RESULT[L]||RESULT.ko)[lean];
+      imgEl.src=lean==='teto'?'assets/screens/dopamine/DrTeto.png':'assets/screens/dopamine/AsEgen.png';
+      imgEl.alt=lean;
+      markerEl.style.left=pct+'%';
       play.style.display='none'; result.classList.add('show');
     }
     document.getElementById('quizRetry').addEventListener('click', function(){
