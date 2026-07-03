@@ -1,7 +1,7 @@
 /* Typer product page — the in-game desk (monitor + keycap keyboard) rebuilt
  * from the real game assets, plus product sections.
  * Geometry mirrors the game: keycap_0 = 281x281, keycap_1 = 461x281,
- * 10px gaps, 3 rows of (5 normal + 1 wide). See NewMeans Web Assets/DeskImages. */
+ * 10px gaps, 3 rows of (5 normal + 1 wide). See assets/desk. */
 
 /* ---------- Typer hero ---------- */
 .tp-hero { border-bottom: 1px solid var(--line); }

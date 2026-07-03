@@ -3,3 +3,10 @@
 .cursor
 .codex
 .gstack/
+
+# Only optimized, in-use assets under assets/ are tracked. Keep the original
+# source dump (spaces in path, hi-res originals, unused media) and the external
+# Dopamine Univ source folder out of this public repo.
+NewMeans Web Assets/
+Dopamine Univ/
+package-lock.json

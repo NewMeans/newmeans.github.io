@@ -6,7 +6,7 @@
 (function () {
   "use strict";
 
-  // In-game keyboard layout (see NewMeans Web Assets/Screenshots/IMG_3496).
+  // In-game keyboard layout (see design reference IMG_3496).
   // Each row is 5 normal keycaps + 1 wide keycap; wide side alternates.
   var DESK_ROWS = [
     ["Q", "W", "E", "R", "T", { v: "Backspace", wide: true }],
@@ -15,11 +15,11 @@
   ];
 
   var ASSET = {
-    keyNormal: "NewMeans Web Assets/DeskImages/keycap_0.png",
-    keyWide: "NewMeans Web Assets/DeskImages/keycap_1.png",
-    bgm: "NewMeans Web Assets/BGMs/Vintage Needle.mp3",
+    keyNormal: "assets/desk/keycap_0.png",
+    keyWide: "assets/desk/keycap_1.png",
+    bgm: "assets/audio/Vintage Needle.mp3",
     keySounds: Array.from({ length: 10 }, function (_, i) {
-      return "NewMeans Web Assets/KeySounds/" + i + ".wav";
+      return "assets/audio/keysounds/" + i + ".wav";
     })
   };
 
