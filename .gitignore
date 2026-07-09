@@ -10,3 +10,7 @@
 NewMeans Web Assets/
 Dopamine Univ/
 package-lock.json
+
+# Local-only dev helpers (local server launcher / commands) — not for the public repo.
+로컬서버.command
+.claude/commands/
