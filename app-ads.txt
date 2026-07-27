@@ -169,3 +169,4 @@ xandr.com, 15840, RESELLER
 xandr.com, 17779, RESELLER
 zetaglobal.net, 630, RESELLER
 zmaticoo.com, 5135195, RESELLER
+vungle.com, 6a66c27a8f31b57d3a2fbc8d, DIRECT, c107d686becd2d77
