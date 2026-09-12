@@ -17,7 +17,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
   <link rel="stylesheet" href="base.css">
-  <link rel="stylesheet" href="dopamine.css">
+  <link rel="stylesheet" href="dopamine.css?v=20260912-2">
 </head>
 <body class="dp">
   <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
@@ -44,41 +44,17 @@
         <div class="dp-hero__copy" data-reveal>
           <img class="dp-logo" src="assets/brand/dopamine-logo.png" alt="Dopamine University">
           <h1 class="dp-hero__title">
-            <span data-i18n="dopa.hero.t1">대화를 넣으면,</span><br>
-            <em data-i18n="dopa.hero.t2">당신을 연구하는 AI.</em>
+            <span data-i18n="dopa.hero.t1">카카오톡 대화로</span><br>
+            <em data-i18n="dopa.hero.t2">알아보는 내 성향.</em>
           </h1>
-          <p class="dp-hero__lead" data-i18n="dopa.lead">카카오톡 대화를 분석해 나만의 심리 리포트를 써주는 초개인화 심리테스트 플랫폼.</p>
+          <p class="dp-hero__lead" data-i18n="dopa.lead">대화 파일을 올리면 AI가 참여자별 성향을 분석해 리포트로 정리합니다.</p>
           <div class="dp-hero__cta">
             <a class="btn btn--solid" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.cta">dodae.me에서 시작하기</span><span class="arw">→</span></a>
           </div>
         </div>
 
         <div class="dp-hero__stage" data-reveal>
-          <div class="dp-chat" id="chat">
-            <div class="dp-chat__bar">
-              <span class="dp-chat__ava"><img src="assets/brand/dopamine-symbol.png" alt=""></span>
-              <span class="dp-chat__who" data-i18n="dopa.chat.who">카카오톡 대화</span>
-              <span class="dp-chat__tag" data-i18n="dopa.chat.tag">AI 분석 중</span>
-            </div>
-            <div class="bub bub--in" data-step data-i18n="dopa.chat.m1">나 사실 요즘 좀 지쳤어</div>
-            <div class="bub bub--out" data-step data-i18n="dopa.chat.m2">헐 무슨 일 있어?? 😥</div>
-            <div class="bub bub--in" data-step data-i18n="dopa.chat.m3">아니 그냥… 다 귀찮아 ㅎㅎ</div>
-            <div class="typing" data-step><i></i><i></i><i></i></div>
-            <div class="report" data-step>
-              <div class="report__top">
-                <span class="report__badge">✓</span>
-                <span>
-                  <span class="report__title" data-i18n="dopa.report.title">분석 완료 · 에겐 성향</span>
-                  <span class="report__sub" data-i18n="dopa.report.sub">AI 심리 리포트 생성됨</span>
-                </span>
-              </div>
-              <div class="report__bar"><div class="report__fill"></div></div>
-              <div class="report__meta">
-                <span data-i18n="dopa.report.left">에겐 74%</span>
-                <span data-i18n="dopa.report.right">테토 26%</span>
-              </div>
-            </div>
-          </div>
+          <img class="dp-sticker" src="assets/brand/dopamine-sticker.png" alt="Dopamine University">
         </div>
       </div>
     </section>
@@ -107,7 +83,7 @@
             </div>
           </article>
         </div>
-        <p class="dp-what__note" data-reveal data-i18n="dopa.what.note">카카오톡 대화를 올리면 참여자별 성향을 분석해 만드는 연구 보고서. MBTI 같은 고정 유형 없이, 2,000명이면 2,000개의 결과.</p>
+        <p class="dp-what__note" data-reveal data-i18n="dopa.what.note">에겐·테토 성향을 카카오톡 대화로 알아보는 테스트. 참여자마다 다른 리포트를 제공합니다.</p>
       </div>
     </section>
 
@@ -116,7 +92,7 @@
       <div class="wrap dp-test__inner">
         <div class="dp-test__head" data-reveal>
           <h2 data-i18n="dopa.test.title">나는 에겐? 테토?</h2>
-          <p data-i18n="dopa.test.sub">3문항 미리보기. 정식 테스트는 AI가 대화를 직접 분석.</p>
+          <p data-i18n="dopa.test.sub">세 질문에 답하는 짧은 체험입니다. 대화 파일을 분석하는 정식 테스트와는 다릅니다.</p>
         </div>
 
         <div class="quiz" id="quiz" data-reveal>
@@ -133,7 +109,7 @@
               <div class="quiz__spectrum-bar"><i id="quizMarker"></i></div>
               <div class="quiz__spectrum-ends"><span>EGEN</span><span>TETO</span></div>
             </div>
-            <p data-i18n="dopa.test.resultTeaser">미리보기 결과. 정식 리포트는 AI가 대화를 읽고 훨씬 자세하게.</p>
+            <p data-i18n="dopa.test.resultTeaser">선택한 답변으로 계산한 체험 결과입니다. 정식 테스트는 카카오톡 대화를 분석합니다.</p>
             <div class="quiz__result-cta">
               <a class="btn btn--solid" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.test.full">정식 테스트 하러 가기</span><span class="arw">→</span></a>
               <button class="quiz__retry" type="button" id="quizRetry" data-i18n="dopa.test.retry">다시 하기</button>
@@ -143,22 +119,11 @@
       </div>
     </section>
 
-    <!-- 플랫폼 -->
-    <section class="dp-platform" id="platform">
-      <div class="wrap" data-reveal>
-        <h2 class="dp-platform__lead">
-          <span data-i18n="dopa.platform.t1">하나의 테스트가 아니라,</span>
-          <em data-i18n="dopa.platform.t2">계속 늘어나는 플랫폼.</em>
-        </h2>
-        <p class="dp-platform__p" data-i18n="dopa.platform.p">에겐-테토를 시작으로 계속 추가되는 테마별 캐릭터 심리테스트. 전부 같은 AI 분석 엔진 위에서 구동.</p>
-      </div>
-    </section>
-
     <!-- CTA -->
     <section class="dp-cta" id="get">
       <div class="wrap" data-reveal>
-        <h2 data-i18n="dopa.foot.title">당신에 대한 연구, 지금 시작.</h2>
-        <p data-i18n="dopa.foot.sub">대화 업로드 후 나머지는 AI의 몫.</p>
+        <h2 data-i18n="dopa.foot.title">내 대화로 테스트하기</h2>
+        <p data-i18n="dopa.foot.sub">카카오톡 대화 파일을 준비해주세요.</p>
         <a class="btn btn--solid" href="https://dodae.me/" target="_blank" rel="noopener noreferrer"><span data-i18n="dopa.cta">dodae.me에서 시작하기</span><span class="arw">→</span></a>
       </div>
     </section>
@@ -187,34 +152,14 @@
     </div>
   </footer>
 
-  <script src="i18n.js" defer></script>
+  <script src="i18n.js?v=20260912-1" defer></script>
   <script>
   (function(){
     "use strict";
-    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     /* 리빌 */
     var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.14});
     document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
-
-    /* 채팅 → 리포트 데모 */
-    var chat=document.getElementById('chat');
-    if(chat){
-      var steps=[].slice.call(chat.querySelectorAll('[data-step]')), running=false, loop;
-      function run(){
-        if(running) return; running=true;
-        steps.forEach(function(s){ s.classList.remove('show'); });
-        [[0,220],[1,780],[2,1340],[3,1900]].forEach(function(p){ setTimeout(function(){ steps[p[0]].classList.add('show'); }, p[1]); });
-        setTimeout(function(){ steps[3].classList.remove('show'); steps[4].classList.add('show'); running=false; }, 2900);
-      }
-      if(reduce){ steps.forEach(function(s){ s.classList.add('show'); }); steps[3].classList.remove('show'); }
-      else{
-        var cio=new IntersectionObserver(function(en){
-          if(en[0].isIntersecting){ run(); loop=setInterval(run, 5600); } else clearInterval(loop);
-        },{threshold:.4});
-        cio.observe(chat);
-      }
-    }
 
     /* 미니 테스트 */
     var QUIZ={

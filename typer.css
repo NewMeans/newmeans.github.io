@@ -1,124 +1,69 @@
-/* Typer 페이지 — v3 시스템 위. 데스크(모니터+keyboard.js 키보드+케이블),
- * 실물 웹 게임(game.js), 커스터마이저(스위치/키캡/프레임/모니터).
- * 픽셀 텍스트는 --pixel(DNF BitBit), 크롬은 --font. */
-
-@font-face{
-  font-family:'DNFBitBit';
-  src:url('assets/fonts/DNFBitBitv2.ttf') format('truetype');
-  font-display:swap;
-}
-
-.tp{ --screen-ink:#65CDA7; }   /* 레트로 모니터 실제 fg */
-
-/* ---------- HERO ---------- */
+/* Typer: actual game screens, then a compact keyboard tryout. */
+@font-face{font-family:'DNFBitBit';src:url('assets/fonts/DNFBitBitv2.ttf') format('truetype');font-display:swap}
+.tp section[id]{scroll-margin-top:80px}
+.tp .nav__here{white-space:nowrap}
 .tp-hero{border-bottom:1px solid var(--line)}
-.tp-hero__inner{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(30px,5vw,60px); align-items:center;
-  padding-top:clamp(36px,6vw,72px); padding-bottom:clamp(40px,6vw,76px)}
-.tp-wordmark{height:clamp(44px,6.4vw,66px); width:auto; image-rendering:pixelated}
-.tp-hero__title{margin:20px 0 0; font-size:clamp(1.7rem,3.2vw,2.5rem); line-height:1.14; cursor:default}
-/* 키캡 타이포 — 누르면 실제 스위치 타건음 */
-.tp-hero__title .k{display:inline-block; transition:transform .14s var(--ease)}
-.tp-hero__title .k:hover{transform:translateY(.07em)}
-.tp-hero__title .k.on{transform:translateY(.11em) scale(.97)}
-@media (prefers-reduced-motion:reduce){.tp-hero__title .k{transition:none}}
-.tp-hero__lead{margin:14px 0 0; color:var(--ink-2); max-width:30ch}
-.tp-hero__proof{margin:14px 0 0; font-size:13.5px; font-weight:600; color:var(--mint-text)}
-.tp-hero__cta{margin-top:24px; display:flex; flex-wrap:wrap; gap:12px}
-.tp-hint{margin:14px 0 0; font-size:13px; color:var(--ink-3)}
-
-/* ---------- 데스크 (모니터 + 키보드 모듈 + 케이블) ---------- */
-.desk{position:relative; width:min(100%,540px); margin:0 auto; justify-self:center}
-.monitor{position:relative; width:78%; margin:0 auto; aspect-ratio:1354/1222; z-index:2;
-  filter:drop-shadow(0 14px 20px rgba(27,24,21,.15))}
-.monitor__img{width:100%; height:100%; display:block}
-.monitor__screen{position:absolute; left:7.2%; right:7.2%; top:8.5%; bottom:23.5%;
-  overflow:hidden; display:flex; flex-direction:column; padding:4% 5%}
-.monitor__out{display:grid; align-content:start; gap:2px; font-family:var(--pixel);
-  font-size:clamp(.56rem,1.05vw,.78rem); line-height:1.45; letter-spacing:.02em}
-.screen__line{margin:0; color:var(--screen-ink); white-space:pre-wrap; word-break:break-all}
-.screen__caret{display:inline-block; width:.55em; height:1em; background:var(--screen-ink);
-  vertical-align:-2px; margin-left:1px; animation:tp-caret 1s steps(1) infinite}
-@keyframes tp-caret{0%,50%{opacity:1}50.01%,100%{opacity:0}}
-/* 부트 스크린 (모니터별 인셋/색상은 JS) — 월페이퍼의 부팅 화면 재현 */
-.monitor__boot{position:absolute; overflow:hidden; display:flex; flex-direction:column; justify-content:center;
-  gap:.35em; font-family:var(--pixel); font-size:clamp(.5rem,1vw,.72rem); line-height:1.4; letter-spacing:.02em; pointer-events:none}
-.monitor__boot[hidden]{display:none}
-.monitor__boot b{font-weight:400; font-size:1.7em}
-.monitor__boot .bar{display:flex; align-items:center; gap:.6em; margin-top:.4em}
-.monitor__boot .bar i{flex:1; height:.85em; border:2px solid currentColor; border-radius:2px; position:relative}
-.monitor__boot .bar i::before{content:""; position:absolute; inset:2px; background:currentColor}
-.desk__cactus{position:absolute; left:-4%; bottom:-6%; width:20%; z-index:4; pointer-events:none;
-  filter:drop-shadow(0 6px 8px rgba(27,24,21,.12))}
-/* 키보드 랩: 케이블은 프레임 우상단 포트에 꽂혀 위·오른쪽으로 — 위치/크기는 프레임별 JS 설정.
-   정렬: 모니터(2) < 케이블(2, DOM 후순) < 키보드(3) — 인게임과 동일 */
-.desk__kbwrap{position:relative; width:100%; margin-top:-2%}
-.desk__cable{position:absolute; left:82%; top:-27%; width:72%; max-width:none; z-index:2; pointer-events:none}
-.desk__kb{position:relative; z-index:3}
-
-/* ---------- PLAY ---------- */
-.tp-play{padding:clamp(48px,7vw,88px) 0; border-bottom:1px solid var(--line)}
-.tp-play__inner{display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,5vw,60px); align-items:center}
-.tp-play__copy h2{font-size:clamp(24px,3.2vw,34px)}
-.tp-play__copy p{margin:14px 0 0; color:var(--ink-2); max-width:30ch}
-.tp-play__list{margin:20px 0 0; display:grid; gap:9px; list-style:none}
-.tp-play__list li{display:flex; gap:11px; align-items:baseline; font-size:.98rem; color:var(--ink-2)}
-.tp-play__list b{font-family:var(--pixel); font-weight:400; font-size:12px; color:var(--mint-text); flex:none; width:3.4em}
-.tp-game-frame{justify-self:center; width:min(100%,360px)}
-
-/* ---------- CUSTOMIZE : 피커 스트립 (미리보기는 위 히어로 데스크) ---------- */
-.tp-custom{padding:clamp(36px,5vw,60px) 0; border-bottom:1px solid var(--line)}
-.tp-custom__head{display:flex; align-items:baseline; gap:18px; flex-wrap:wrap; margin-bottom:clamp(18px,3vw,26px)}
-.tp-custom__head h2{font-size:clamp(22px,2.8vw,30px)}
-.tp-custom__head p{color:var(--ink-2); font-size:.98rem}
-.tp-custom__pickers{display:grid; grid-template-columns:repeat(2,1fr); gap:clamp(18px,3vw,28px) clamp(24px,4vw,48px)}
-.picker{margin:0}
-.picker__label{display:flex; align-items:baseline; gap:10px; margin-bottom:9px}
-.picker__label b{font-weight:600; font-size:14px}
-.picker__label span{font-size:12.5px; color:var(--ink-3)}
-.picker__row{display:flex; flex-wrap:wrap; gap:10px}
-.pick{width:62px; height:62px; border-radius:13px; border:1.5px solid var(--line); background:var(--card);
-  display:grid; place-items:center; padding:8px; transition:border-color .15s, transform .15s var(--ease)}
-.pick img{max-width:100%; max-height:100%; object-fit:contain}
-.pick:hover{transform:translateY(-2px)}
-.pick.is-on{border-color:var(--mint-text); box-shadow:0 0 0 1px var(--mint-text)}
-.pick--swatch img{border-radius:6px}
-
-/* ---------- STATS ---------- */
-.tp-stats{border-bottom:1px solid var(--line); background:var(--card)}
-.tp-stats__inner{padding:clamp(34px,5vw,56px) 0; display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(18px,3vw,40px)}
-.tp-stat b{display:block; font-family:var(--pixel); font-weight:400; font-size:clamp(1.7rem,3.4vw,2.5rem); line-height:1; color:var(--ink)}
-.tp-stat span{display:block; margin-top:8px; color:var(--ink-2); font-size:.9rem}
-
-/* ---------- THREE ---------- */
-.tp-three{padding:clamp(48px,7vw,88px) 0}
-.three{display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,40px); margin-top:8px}
-.third{padding-top:18px; border-top:2px solid var(--ink)}
-.third h3{font-size:clamp(1.2rem,1.9vw,1.5rem)}
-.third p{margin:10px 0 0; color:var(--ink-2); font-size:.98rem}
-
-/* ---------- GALLERY ---------- */
-.tp-gallery{padding:0 0 clamp(48px,7vw,88px)}
-.gallery{display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(12px,1.8vw,20px)}
-.shot{margin:0; border:1px solid var(--line); border-radius:18px; overflow:hidden; background:#efe9df; aspect-ratio:1170/2532}
-.shot img{width:100%; height:100%; object-fit:cover; display:block}
-
-/* ---------- DOWNLOAD CTA ---------- */
-.tp-cta{border-top:1px solid var(--line); text-align:center; padding:clamp(46px,7vw,84px) 0}
-.tp-cta h2{font-size:clamp(1.5rem,2.8vw,2.1rem); max-width:24ch; margin:0 auto 10px}
-.tp-cta p{color:var(--ink-2); margin:0 auto 24px}
-.tp-cta__row{display:flex; flex-wrap:wrap; justify-content:center; gap:12px}
-
-/* ---------- RESPONSIVE ---------- */
-@media (max-width:1024px){
-  .tp-hero__inner{grid-template-columns:1fr; gap:30px}
-  .tp-hero__copy{order:1} .tp-hero__stage{order:2}
-  .desk{max-width:440px}
-  .tp-play__inner{grid-template-columns:1fr; gap:30px}
-  .tp-play__copy{order:1} .tp-play__stage{order:2; justify-self:center}
-  .tp-custom__pickers{grid-template-columns:1fr}
-  .gallery{grid-template-columns:repeat(2,1fr)}
+.tp-hero__inner{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,80px);align-items:center;padding-top:48px;padding-bottom:56px}
+.tp-wordmark{width:220px;height:auto}
+.tp-hero__title{margin-top:24px;font-size:clamp(28px,3.2vw,40px);line-height:1.2}
+.tp-hero__lead{margin-top:18px;color:var(--ink-2);max-width:32ch}
+.tp-hero__cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.tp-try{margin-top:24px}
+.tp-hero__stage{justify-self:center;text-align:center}
+.tp-game-shot{width:auto;height:auto;max-height:560px;border-radius:12px}
+.tp-hero__stage figcaption{font-size:13px;color:var(--ink-2);margin-top:10px}
+.tp-custom{padding:56px 0;border-bottom:1px solid var(--line)}
+.tp-custom__head{margin-bottom:32px}
+.tp-custom__head h2{font-size:28px}
+.tp-custom__head p{margin-top:12px;color:var(--ink-2)}
+.tp-custom__layout{display:grid;grid-template-columns:1.15fr 1fr;gap:36px;align-items:start}
+.tp-custom__preview{position:sticky;top:90px;background:var(--paper);padding:16px 0;z-index:3;overflow:hidden}
+.desk{position:relative;width:100%;max-width:360px;margin:0 auto}
+.monitor{position:relative;width:78%;margin:0 auto;aspect-ratio:1354/1222;z-index:1}
+.monitor__img{width:100%;height:100%;object-fit:contain}
+.monitor__screen{position:absolute;inset:9.8% 30% 21% 9.5%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;font-family:var(--pixel);font-size:clamp(12px,1.4vw,18px);overflow:hidden}
+.monitor__screen span+span{font-size:.65em}
+.desk__cactus{position:absolute;left:-4%;bottom:-6%;width:20%;z-index:4;pointer-events:none}
+.desk__kbwrap{position:relative;width:100%;margin-top:-2%}
+/* The connector center sits at 88% of the board. Anchor to the bottom of the plastic housing so the metal connector
+   is concealed behind the board. The trailing cord continues outside the preview. */
+.desk__cable{position:absolute;left:88%;top:3%;width:90%;max-width:none;transform:translate(-4%,calc(-1 * var(--plug-y,86%)));z-index:2;pointer-events:none}
+.desk__cable[hidden]{display:none}
+.desk__kb{position:relative;z-index:3}
+.tp-sound{display:flex;gap:12px;align-items:center;min-height:44px;margin-top:16px;font-size:14px}
+#soundStatus{color:var(--coral-text);font-size:13px}
+.tp-custom__controls{display:grid;gap:24px}
+.picker__label{font-size:14px;font-weight:600;margin-bottom:10px}
+.picker__row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pick{min-width:0;padding:12px 6px;border:1px solid var(--line);border-radius:8px;background:var(--card);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;line-height:1.3}
+.pick img{width:64px;height:48px;object-fit:contain}
+.pick[aria-pressed="true"]{border-color:var(--mint-text);box-shadow:inset 0 0 0 1px var(--mint-text)}
+.pick:hover{background:var(--mint-bg)}
+.tp-details{border-top:1px solid var(--line);padding-top:16px}
+.tp-details summary{cursor:pointer;font-size:14px;font-weight:600;padding:4px 0}
+.tp-selects{display:grid;gap:12px;margin-top:16px}
+.tp-selects label{display:grid;grid-template-columns:80px 1fr;gap:12px;align-items:center;font-size:14px}
+.tp-selects select{width:100%;min-width:0;min-height:44px;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:8px}
+.tp-gallery{padding:56px 0}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;max-width:860px}
+.gallery img{width:100%;height:auto;border-radius:8px}
+.tp-cta{border-top:1px solid var(--line);text-align:center;padding:48px 0}
+.tp-cta h2{font-size:clamp(24px,3vw,32px);line-height:1.2}
+.tp-cta p{color:var(--ink-2);margin:12px 0 24px}
+.tp-cta__row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+@media(max-width:760px){
+ .tp-hero__inner{grid-template-columns:1fr;padding-top:32px;gap:32px}
+ .tp-game-shot{max-height:500px}
+ .tp-custom__layout{grid-template-columns:1fr;gap:16px}
+ .tp-custom__preview{top:58px;padding:12px 0;border-bottom:1px solid var(--line-2)}
+ .desk{max-width:240px}
+ .tp-sound{margin-top:8px;min-height:36px}
+ .tp-custom__head{margin-bottom:16px}
+ .tp-custom{padding:36px 0}
+ .gallery{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory}
+ .gallery figure{flex:0 0 64%;scroll-snap-align:start}
+ .tp .nav__in{gap:10px}
+ .tp .nav__logo{max-width:126px;height:auto}
 }
-@media (max-width:640px){
-  .tp-stats__inner{grid-template-columns:repeat(2,1fr); gap:24px}
-  .three{grid-template-columns:1fr; gap:22px}
-}
+@media(max-width:380px){.tp .nav__here{display:none}.desk{max-width:240px}}
+@media(max-height:650px) and (max-width:760px){.tp-custom__preview{position:relative;top:auto}}

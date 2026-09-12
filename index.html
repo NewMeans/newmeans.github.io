@@ -22,9 +22,10 @@
    제품은 풀블리드 컬러 밴드(민트 세계 / 코랄 세계). */
 
 /* ---------- HERO : 토끼가 곧 헤드라인 ---------- */
-.hero{padding:clamp(36px,6vw,68px) 0 clamp(44px,7vw,84px)}
+.hero{padding:clamp(24px,4vw,44px) 0 clamp(32px,5vw,56px)}
 .hero__in{display:flex; flex-direction:column; align-items:center; text-align:center}
 .sig-logo{width:min(92%,560px)}
+.hero__hint{font-size:13px;color:var(--ink-2);margin-top:10px}
 .hero__tag{margin-top:clamp(18px,3vw,28px); font-size:clamp(17px,2vw,22px); font-weight:600; letter-spacing:-.015em}
 .hero__cta{margin-top:26px; display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:center}
 .loaded .hero__in > *{animation:rise .7s var(--ease) both}
@@ -50,23 +51,11 @@
 .band--dopa .link:hover{color:var(--coral-text); text-decoration-color:var(--coral-text)}
 
 .kbd-mount{width:min(100%,400px)}
-.chat{width:min(100%,370px); background:var(--card); border-radius:18px;
-  padding:clamp(15px,2vw,19px); box-shadow:0 18px 40px rgba(198,66,55,.14)}
-.chat__bar{display:flex; align-items:center; gap:7px; margin-bottom:13px; padding-bottom:11px; border-bottom:1px solid var(--line-2)}
-.chat__ava{width:25px; height:25px; border-radius:8px; background:var(--coral); display:grid; place-items:center; flex:none}
-.chat__ava img{width:16px; height:16px}
-.chat__who{font-weight:600; font-size:13px}
-.chat__tag{margin-left:auto; font-size:11.5px; color:var(--coral-text); font-weight:600}
-.bub{max-width:82%; padding:10px 13px; border-radius:14px; font-size:13.5px; margin-bottom:8px; line-height:1.45;
-  opacity:0; transform:translateY(8px); transition:.35s var(--ease)}
-.bub.show{opacity:1; transform:none}
-.bub--in{background:var(--paper); border:1px solid var(--line-2); border-bottom-left-radius:5px}
-.bub--out{background:var(--coral); color:#fff; margin-left:auto; border-bottom-right-radius:5px}
-.rep{margin-top:4px; display:flex; align-items:center; gap:10px; padding:11px 13px; border-radius:13px;
-  background:var(--mint-bg); opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
-.rep.show{opacity:1; transform:none}
-.rep__b{width:26px; height:26px; border-radius:50%; background:var(--mint-text); color:#fff; display:grid; place-items:center; flex:none; font-weight:700; font-size:14px}
-.rep b{color:var(--mint-text); font-size:13px} .rep small{display:block; color:var(--ink-3); font-size:11px; margin-top:1px}
+.kbd-demo{width:min(100%,400px)}
+.kbd-demo__hint{font-size:13px;color:var(--ink-2);margin:16px 0 6px}
+#homeSound{font-size:14px;min-height:44px}
+#homeSoundStatus{font-size:13px;color:var(--coral-text)}
+.dopa-sticker{width:min(100%,350px)}
 
 /* ---------- STUDIO ---------- */
 .studio{padding:clamp(52px,8vw,96px) 0 0}
@@ -102,11 +91,6 @@
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang-set="ko">KO</button><span>·</span><button type="button" data-lang-set="en">EN</button>
       </div>
-      <button class="snd" id="snd" aria-pressed="false" aria-label="Toggle sound" title="Sound">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 8.5a4 4 0 0 1 0 7"/>
-        </svg>
-      </button>
     </div>
   </div>
 </header>
@@ -116,6 +100,7 @@
   <section class="hero">
     <div class="wrap hero__in">
       <div class="sig-logo" data-newmeans-logo></div>
+      <p class="hero__hint" data-i18n="home.rabbit.hint">글자를 끌거나 토끼를 눌러보세요.</p>
       <h1 class="hero__tag" data-i18n="home.tag">게임과 AI를 만드는 2인 스튜디오</h1>
       <div class="hero__cta">
         <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보기</span><span class="arw">→</span></a>
@@ -130,12 +115,16 @@
       <div class="band__text" data-reveal>
         <a class="work__wordmark-link" href="typer.html"><img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer"></a>
         <p class="work__kind" data-i18n="home.typer.kind">게임 · iOS / Android</p>
-        <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 타건음 아케이드. 공으로 키캡 블록을 부수고, 스위치로 소리를 바꾸고, 코인으로 책상을 꾸미는 게임.</p>
-        <p class="work__proof" data-i18n="home.typer.proof">다운로드 30,000+ · 평점 4.74 · 유료 마케팅 없이</p>
+        <p class="work__desc" data-i18n="home.typer.desc">키캡을 부수며 타건음을 듣는 벽돌깨기 게임. 모은 코인으로 키보드와 책상을 꾸밀 수 있습니다.</p>
         <p class="work__more"><a class="link" href="typer.html"><span data-i18n="home.typer.more">Typer 보기</span><span class="arw">→</span></a></p>
       </div>
       <div class="band__demo" data-reveal>
-        <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
+        <div class="kbd-demo">
+          <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
+          <p class="kbd-demo__hint" data-i18n="home.keyboard.hint">키를 눌러 Blue 스위치 소리를 들어보세요.</p>
+          <button class="link" id="homeSound" type="button" aria-pressed="false" data-i18n="sound.listen">소리 듣기</button>
+          <p id="homeSoundStatus" role="status"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -144,24 +133,12 @@
   <section class="band band--dopa" id="dopa">
     <div class="wrap band__grid">
       <div class="band__demo" data-reveal>
-        <div class="chat" id="chat">
-          <div class="chat__bar">
-            <span class="chat__ava"><img src="assets/brand/dopamine-symbol.png" alt=""></span>
-            <span class="chat__who" data-i18n="home.dopa.who">카카오톡 대화</span>
-            <span class="chat__tag" data-i18n="home.dopa.tag">AI 분석 중</span>
-          </div>
-          <div class="bub bub--in" data-step data-i18n="home.dopa.m1">나 요즘 자꾸 밤에 폰만 봐 ㅠ</div>
-          <div class="bub bub--out" data-step data-i18n="home.dopa.m2">오 그거 도파민 신호일지도?</div>
-          <div class="rep" data-step>
-            <span class="rep__b">✓</span>
-            <span><b data-i18n="home.dopa.result">분석 완료 · 자극 추구형</b><small data-i18n="home.dopa.resultSub">AI 심리 리포트 생성됨</small></span>
-          </div>
-        </div>
+        <img class="dopa-sticker" src="assets/brand/dopamine-sticker.png" alt="Dopamine University" loading="lazy">
       </div>
       <div class="band__text" data-reveal>
         <a class="work__wordmark-link" href="dopamine.html"><img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
         <p class="work__kind" data-i18n="home.dopa.kind">AI 심리테스트 · Web</p>
-        <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 분석해 심리 리포트를 써주는 AI. 정해진 유형 없이, 2,000명이면 2,000개의 결과.</p>
+        <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 바탕으로 참여자별 성향을 분석하는 심리테스트.</p>
         <p class="work__more"><a class="link" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
       </div>
     </div>
@@ -172,11 +149,11 @@
     <div class="wrap studio__grid">
       <div>
         <h2 data-i18n="home.studio.title">스튜디오</h2>
-        <p class="studio__lead" data-i18n="home.studio.lead">아이디어부터 운영까지, 두 사람.</p>
+        <p class="studio__lead" data-i18n="home.studio.lead">게임 개발자와 AI 엔지니어, 두 사람.</p>
       </div>
       <div class="studio__body">
-        <p data-i18n="home.studio.p1">게임 클라이언트 개발자와 AI 엔지니어의 조합. 기획·개발·디자인·운영 전부 내부 작업.</p>
-        <p data-i18n="home.studio.p2">Typer는 “벽돌깨기에 타건음을 입히면 어떨까”라는 아이디어에서 시작해, 지금은 177개국에 출시된 게임.</p>
+        <p data-i18n="home.studio.p1">기획부터 개발, 디자인, 운영까지 직접 합니다.</p>
+        <p data-i18n="home.studio.p2">Typer는 “벽돌깨기에 타건음을 입히면 어떨까”라는 아이디어에서 시작했습니다.</p>
         <div class="roles">
           <div class="role"><b data-i18n="home.role1.n">클라이언트 · 게임</b><span data-i18n="home.role1.d">기획 · 게임 개발 · 디자인 · 운영</span></div>
           <div class="role"><b data-i18n="home.role2.n">AI · 서버</b><span data-i18n="home.role2.d">AI · 풀스택 · 빌드/배포 · QA 자동화</span></div>
@@ -210,9 +187,9 @@
   </div>
 </footer>
 
-<script src="i18n.js" defer></script>
-<script src="logo.js" defer></script>
-<script src="keyboard.js" defer></script>
+<script src="i18n.js?v=20260912-1" defer></script>
+<script src="logo.js?v=20260912-1" defer></script>
+<script src="keyboard.js?v=20260912-1" defer></script>
 <script>
 (function(){
   "use strict";
@@ -227,43 +204,24 @@
     }, 1500);
   }
 
-  /* 키보드 데모 타건음 */
-  var actx=null, on=false, sndBtn=document.getElementById('snd');
-  function ensure(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
-  sndBtn.addEventListener('click', function(){ on=!on; sndBtn.setAttribute('aria-pressed',on); if(on){ ensure(); thock(); } });
-  function nudge(){ sndBtn.classList.remove('nudge'); void sndBtn.offsetWidth; sndBtn.classList.add('nudge'); }
-  function thock(){
-    if(!on){ nudge(); return; }
-    if(!actx) return; var t=actx.currentTime, dur=0.05;
-    var buf=actx.createBuffer(1,actx.sampleRate*dur,actx.sampleRate), d=buf.getChannelData(0);
-    for(var i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);
-    var s=actx.createBufferSource(); s.buffer=buf;
-    var bp=actx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1000+Math.random()*350; bp.Q.value=.8;
-    var g=actx.createGain(); g.gain.setValueAtTime(.35,t); g.gain.exponentialRampToValueAtTime(.001,t+dur);
-    s.connect(bp); bp.connect(g); g.connect(actx.destination); s.start(t);
-    var o=actx.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(185,t); o.frequency.exponentialRampToValueAtTime(90,t+.06);
-    var g2=actx.createGain(); g2.gain.setValueAtTime(.25,t); g2.gain.exponentialRampToValueAtTime(.001,t+.08);
-    o.connect(g2); g2.connect(actx.destination); o.start(t); o.stop(t+.09);
-  }
-  window.addEventListener('DOMContentLoaded', function(){
+  window.addEventListener('DOMContentLoaded',function(){
     var kb=document.querySelector('[data-typer-keyboard]');
-    if(kb) kb.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-key]')) thock(); });
+    TyperKeyboard.mount(kb);
+    var btn=document.getElementById('homeSound'), status=document.getElementById('homeSoundStatus'), error=false;
+    function label(){
+      var on=kb.dataset.soundState==='on'; btn.setAttribute('aria-pressed',on);
+      btn.textContent=i18n.t(on?'sound.disable':'sound.listen');
+      status.textContent=error?i18n.t('sound.error'):'';
+    }
+    kb.addEventListener('tp:soundstate',function(e){error=!!e.detail.error;label();});
+    btn.addEventListener('click',function(){TyperKeyboard.setSound(kb,kb.dataset.soundState!=='on');});
+    window.addEventListener('nm:langchange',label);label();
   });
 
   /* 리빌 */
   var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});
   document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
 
-  /* 채팅 데모 */
-  var chat=document.getElementById('chat');
-  if(chat){
-    var steps=[].slice.call(chat.querySelectorAll('[data-step]')), running=false, loop;
-    function run(){ if(running) return; running=true; steps.forEach(function(s){ s.classList.remove('show'); });
-      [[0,220],[1,900]].forEach(function(p){ setTimeout(function(){ steps[p[0]].classList.add('show'); }, p[1]); });
-      setTimeout(function(){ steps[2].classList.add('show'); running=false; }, 1700); }
-    if(reduce){ steps.forEach(function(s){ s.classList.add('show'); }); }
-    else { var cio=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ run(); loop=setInterval(run,5200); } else clearInterval(loop); },{threshold:.4}); cio.observe(chat); }
-  }
 })();
 </script>
 </body>

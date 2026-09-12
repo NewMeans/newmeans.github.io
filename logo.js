@@ -33,9 +33,11 @@
   var TAILID = 16;
 
   var CSS =
-    ".nmlogo{position:relative;aspect-ratio:4268/2134;touch-action:none}" +
+    ".nmlogo{position:relative;aspect-ratio:4268/2134;touch-action:pan-y}" +
     ".nmlogo .pc{position:absolute;will-change:transform}" +
     ".nmlogo .pc.word{cursor:grab}.nmlogo .pc.word.drag{cursor:grabbing;z-index:6}" +
+    ".nmlogo .face-button{position:absolute;left:28%;top:14%;width:60%;height:43%;z-index:8;cursor:pointer;border:0;background:none}" +
+    ".nmlogo.is-reacting .pc .eye{opacity:1!important}.nmlogo.is-reacting .pc.has-eye img{opacity:0}" +
     ".nmlogo .pc img{width:100%;height:100%;display:block;pointer-events:none;-webkit-user-drag:none}" +
     ".nmlogo .pc .eye{position:absolute;left:50%;top:46%;width:126%;aspect-ratio:1;border-radius:50%;" +
     "background:transparent;border:clamp(2.6px,0.68vw,4.3px) solid #85C6A8;box-sizing:border-box;" +
@@ -70,7 +72,7 @@
       root.appendChild(el);
       if (FEET[p.id]) el.style.transformOrigin = "100% 50%";
       var eye = null;
-      if (EYE[p.id]) { eye = document.createElement("div"); eye.className = "eye"; el.appendChild(eye); }
+      if (EYE[p.id]) { el.classList.add('has-eye'); eye = document.createElement("div"); eye.className = "eye"; el.appendChild(eye); }
       return {
         el: el, eye: eye, img: img, id: p.id, i: i,
         hx: (p.x + p.w / 2) / W, hy: (p.y + p.h / 2) / H, phase: (i * 1.7) % 6.283,
@@ -79,7 +81,21 @@
         x: 0, y: 0, vx: 0, vy: 0, dragging: false, gx: 0, gy: 0
       };
     });
-    if (reduce) return;
+    var faceButton = document.createElement('button');
+    faceButton.type = 'button'; faceButton.className = 'face-button';
+    function labelFace() { faceButton.setAttribute('aria-label', window.i18n ? i18n.t('home.rabbit.action') : 'Make the rabbit react'); }
+    labelFace(); window.addEventListener('nm:langchange', labelFace);
+    faceButton.addEventListener('click', function() { root.__nmPoke(); });
+    root.appendChild(faceButton);
+    if (reduce) {
+      // Keep a static expression response when motion is reduced.
+      var expressionTimer;
+      root.__nmPoke = function() {
+        root.classList.add('is-reacting'); clearTimeout(expressionTimer);
+        expressionTimer = setTimeout(function() { root.classList.remove('is-reacting'); }, 700);
+      };
+      return;
+    }
 
     var rect, cx, cy, reach;
     function measure() { rect = root.getBoundingClientRect(); cx = rect.left + rect.width / 2; cy = rect.top + rect.height / 2; reach = Math.max(300, rect.width * 1.1); }
@@ -97,8 +113,11 @@
     pieces.forEach(function (p) {
       if (!p.word) return;
       p.el.addEventListener("pointerdown", function (e) {
-        e.preventDefault(); dragEl = p; away = p; p.dragging = true; p.el.classList.add("drag");
-        try { p.el.setPointerCapture(e.pointerId); } catch (_) {}
+        if (e.button !== 0 || !e.isPrimary) return;
+        if (e.pointerType === 'mouse') e.preventDefault();
+        measure(); pointerX = e.clientX; pointerY = e.clientY;
+        dragEl = p; away = p; p.dragging = true; p.el.classList.add("drag");
+        p.el.setPointerCapture(e.pointerId);
         var r = p.el.getBoundingClientRect(); p.gx = e.clientX - (r.left + r.width / 2); p.gy = e.clientY - (r.top + r.height / 2);
       });
       function up() { if (dragEl !== p) return; dragEl = null; p.dragging = false; p.el.classList.remove("drag"); }
