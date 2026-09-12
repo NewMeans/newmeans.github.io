@@ -5,14 +5,14 @@
    DNF BitBit(--pixel)은 Typer 게임 요소 전용.
    ============================================================ */
 :root{
-  --paper:#FCFBF7;         /* 거의 흰 웜화이트 */
+  --paper:#FAFAF7;         /* 거의 흰 웜화이트 */
   --ink:#1B1815;
   --ink-2:#6B655A;         /* 본문 보조 */
-  --ink-3:#A49D91;         /* 캡션 */
+  --ink-3:#827B70;         /* 캡션 */
   --mint:#85C6A8;          /* 로고 원색 — 그래픽용 */
   --mint-text:#20805C;     /* 로고와 같은 hue의 텍스트용 민트 */
   --mint-bg:#E9F3EC;
-  --coral:#F76B6B;         /* 도파민 살몬 원색 */
+  --coral:#FF6666;         /* 도파민 살몬 원색 */
   --coral-text:#C64237;    /* 같은 hue의 텍스트용 코랄 */
   --coral-bg:#FBEAE6;
   --card:#FFFFFF;
@@ -84,7 +84,7 @@ h1,h2,h3{font-weight:800; letter-spacing:-.03em; line-height:1.06}
 .link:hover{color:var(--mint-text); text-decoration-color:var(--mint-text)}
 .link .arw{transition:transform .18s var(--ease)}
 .link:hover .arw{transform:translateX(3px)}
-/* 키캡 버튼 — 바닥 림 + 물리적 눌림. 이 스튜디오의 버튼은 키캡. */
+/* Primary actions keep their hue across interaction states. */
 .btn{display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:6px; font-weight:600; font-size:15px;
   transition:background .2s, color .2s, border-color .2s, transform .07s ease, box-shadow .07s ease}
 .btn--solid{background:var(--ink); color:var(--paper); box-shadow:none}

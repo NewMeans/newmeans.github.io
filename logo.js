@@ -31,8 +31,9 @@
     if(root.__nmMounted)return;root.__nmMounted=true;
     if(!document.getElementById('nm-logo-css')){var style=document.createElement('style');style.id='nm-logo-css';style.textContent=CSS;document.head.appendChild(style);}
     root.classList.add('nmlogo');root.setAttribute('aria-label','NewMeans');
-    var faceOnly=root.hasAttribute('data-rabbit-only'),height=faceOnly?1300:H;
-    root.style.aspectRatio=W+'/'+height;
+    var faceOnly=root.hasAttribute('data-rabbit-only'),height=faceOnly?1000:H;
+    var width=faceOnly?2900:W,offsetX=faceOnly?880:0,offsetY=faceOnly?300:0;
+    root.style.aspectRatio=width+'/'+height;
     var base=root.getAttribute('data-base')||'assets/brand/logo-pieces/';
     PARTS.forEach(function(p){
       if(faceOnly&&p.id>=19)return;
@@ -40,11 +41,11 @@
       if([12,13,14].includes(p.id))el.classList.add('face');
       if([12,13].includes(p.id))el.classList.add('eye');
       if([1,2,4,5].includes(p.id))el.classList.add('ear');
-      el.style.left=p.x/W*100+'%';el.style.top=p.y/height*100+'%';el.style.width=p.w/W*100+'%';el.style.height=p.h/height*100+'%';
+      el.style.left=(p.x-offsetX)/width*100+'%';el.style.top=(p.y-offsetY)/height*100+'%';el.style.width=p.w/width*100+'%';el.style.height=p.h/height*100+'%';
       var img=new Image();img.src=base+'p'+p.id+'.png';img.alt='';el.appendChild(img);root.appendChild(el);
     });
     var button=document.createElement('button');button.type='button';button.className='face-button';
-    if(faceOnly){button.style.top='23%';button.style.height='70%';}
+    if(faceOnly){button.style.left='10%';button.style.top='3%';button.style.width='88%';button.style.height='92%';}
     function label(){button.setAttribute('aria-label',i18n.t('home.rabbit.action'));}
     label();window.addEventListener('nm:langchange',label);root.appendChild(button);
     var timer,frame,reduce=matchMedia('(prefers-reduced-motion: reduce)');

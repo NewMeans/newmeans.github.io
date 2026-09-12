@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-i18n="meta.title">NewMeans — 게임과 AI를 만드는 두 사람</title>
+<title data-i18n="meta.title">NewMeans — 독립 게임과 AI 서비스</title>
 <meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.">
 <meta name="theme-color" content="#FCFBF7">
 <meta property="og:type" content="website">
@@ -15,65 +15,61 @@
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="base.css?v=20260912-3">
+<link rel="stylesheet" href="base.css?v=20260912-7">
 <style>
-.home .wrap{max-width:1320px}
-.hero{position:relative;overflow:hidden;background:#f7f6f2}
-.hero__in{position:relative;min-height:clamp(520px,72svh,680px);display:flex;flex-direction:column;justify-content:flex-end;padding-top:80px;padding-bottom:70px}
-.hero .sig-logo{position:absolute;width:min(72vw,900px);right:-4%;bottom:260px;}
-.hero__wordmark{position:relative;width:min(75%,820px);margin:0;z-index:1}
+.home .wrap{max-width:1400px}
+.hero{background:var(--paper);overflow:hidden}
+.hero__in{display:grid;grid-template-columns:1.4fr 1fr;align-items:center;gap:28px 60px;padding-top:70px;padding-bottom:60px}
+.hero__wordmark{grid-column:1;grid-row:1;width:100%;margin:0}
 .hero__wordmark img{width:100%;height:auto}
-.hero__bottom{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-top:34px;position:relative;z-index:1}
-.hero__tag{font-size:20px;line-height:1.5;font-weight:500;letter-spacing:-.025em}
-.hero__next{border:1px solid #b8b6ae;border-radius:50%;width:54px;height:54px;display:grid;place-items:center;font-size:26px;flex:none;transition:translate .2s}
-.hero__next:hover{translate:0 3px}
-.band{padding:90px 0;overflow:hidden}
-.band--typer{background:#292a31;color:#f5f2e9}
-.band--typer .band__grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
-.band--typer .band__text{display:contents}
-.band--typer .work__wordmark-link{grid-column:1;align-self:end}
-.work__wordmark{width:300px;height:auto}
-.band--typer .work__desc{grid-column:2;grid-row:1;max-width:28ch;align-self:end;font-size:22px;line-height:1.55}
-.work__kind{display:none}
-.band--typer .work__more{grid-column:1;grid-row:2;align-self:start}
-.band--typer .band__demo{grid-column:1 / -1;grid-row:3}
-.kbd-demo{width:min(100%,900px);margin:0 auto;position:relative;padding:10px 0}
+.hero .sig-logo{grid-column:2;grid-row:1;width:100%}
+.hero__bottom{grid-column:1 / -1;display:flex;justify-content:space-between;align-items:center;gap:24px;padding-top:20px}
+.hero__tag{font-size:17px;font-weight:500;letter-spacing:-.02em}
+.hero__next{width:44px;height:44px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;font-size:24px;transition:transform .2s}
+.hero__next:hover{transform:translateY(3px)}
+.band{overflow:hidden;padding:88px 0}
+.band--typer{background:var(--paper);color:var(--ink);border-top:1px solid var(--line)}
+.band--typer .band__grid{display:grid;grid-template-columns: .8fr 1.2fr;align-items:center;gap:60px}
+.band__text{min-width:0}
+.work__wordmark{width:240px;height:auto}
+.work__kind{font-size:13px;margin-top:24px;opacity:.7}
+.work__desc{font-size:clamp(28px,3.3vw,46px);font-weight:650;line-height:1.28;letter-spacing:-.045em;white-space:pre-line;margin-top:18px}
+.work__more{margin-top:32px}
+.band .action{background:var(--ink);color:var(--paper);border-color:transparent;border-radius:4px}
+.kbd-demo{position:relative;width:100%;padding:48px 24px 26px;background:var(--mint);border-radius:8px}
 .kbd-mount{width:100%}
-#homeSound{display:block;margin:30px auto 0;min-height:44px;padding:11px 24px;border:1px solid #777984;border-radius:6px;color:#f5f2e9;font-size:14px}
-#homeSoundStatus{font-size:13px;color:#ffb3a8;text-align:center}
-.band--typer .action{color:#f5f2e9;border-color:#777984}
-.band--dopa{background:#eeeae3;padding:100px 0 120px}
-.band--dopa .band__grid{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
-.band--dopa .band__text{grid-row:1;grid-column:1 / -1;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:20px 40px}
-.work__wordmark--dopa{width:360px}
-.band--dopa .work__desc{font-size:22px;line-height:1.5;max-width:25ch}
-.band--dopa .work__more{grid-column:1 / -1;margin-top:8px}
-.band--dopa .band__demo{grid-column:1 / -1;grid-row:2;margin-top:34px}
-.platform-wall{display:grid;grid-template-columns:1.15fr .85fr;gap:30px;align-items:start}
-.platform-wall img{width:100%;height:auto;display:block}
-.platform-wall img:last-child{margin-top:100px}
-.studio{padding:80px 0}
-.studio__grid{display:flex;justify-content:space-between;gap:40px;align-items:baseline}
-.studio h2{font-size:28px;letter-spacing:-.03em}
-.studio__lead{font-size:18px;font-weight:400;margin-top:14px;line-height:1.5}
-.studio__body{max-width:36ch;font-size:16px;color:var(--ink-2)}
-.studio .roles{display:none}
+#homeSound{display:block;margin:26px auto 0;min-height:44px;padding:10px 20px;border:1px solid #1b181550;border-radius:4px;color:var(--ink);font-size:13px}
+#homeSoundStatus{font-size:13px;color:#812b22;text-align:center}
+.band--dopa{background:#fff;color:var(--ink)}
+.band--dopa .band__grid{display:grid;grid-template-columns:1.2fr 1fr;align-items:center;gap:70px}
+.band--dopa .band__text{grid-column:2;grid-row:1}
+.band--dopa .band__demo{grid-column:1;grid-row:1}
+.work__wordmark--dopa{width:330px}
+.band--dopa .action{background:var(--coral);color:var(--ink)}
+.platform-wall{position:relative;padding:24px 52px 90px 24px;background:var(--coral);border-radius:8px}
+.platform-wall img{width:90%;aspect-ratio:1.12;object-fit:cover;border-radius:4px}
+.platform-wall img:last-child{position:absolute;width:47%;right:0;bottom:0;aspect-ratio:1;border:6px solid var(--coral)}
+.studio{padding:60px 0;background:var(--paper)}
+.studio__grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end}
+.studio h2{font-size:14px;font-weight:500;color:var(--ink-2)}
+.studio__lead{font-size:clamp(24px,3vw,36px);font-weight:600;line-height:1.4;margin-top:18px;letter-spacing:-.035em;white-space:pre-line}
+.studio__body{max-width:35ch;color:var(--ink-2);font-size:17px}
 .home .foot{margin-top:0}
-@media(max-width:760px){
- .hero__in{min-height:clamp(420px,55svh,480px);padding-top:60px;padding-bottom:36px}
- .hero .sig-logo{width:110%;right:-10%;bottom:190px}
- .hero__wordmark{width:100%}.hero__tag{font-size:17px;max-width:20ch}.hero__bottom{margin-top:24px}
- .band{padding:58px 0}.band--typer .band__grid{grid-template-columns:1fr;gap:26px}
- .band--typer .work__desc{grid-column:1;grid-row:2;font-size:19px}
- .band--typer .work__more{grid-column:1;grid-row:3}
- .band--typer .band__demo{grid-row:4}
- .work__wordmark{width:230px}
- .band--dopa .band__text{grid-template-columns:1fr}.band--dopa .work__desc{font-size:19px}
- .work__wordmark--dopa{width:290px}.platform-wall{grid-template-columns:1fr;gap:24px}.platform-wall img:last-child{margin-top:0}
- .band--dopa{padding:60px 0}.band--dopa .band__demo{margin-top:10px}
- .studio{padding:50px 0}.studio__grid{display:block}.studio__body{margin-top:22px}
+@media(max-width:900px){
+ .hero__in{gap:24px;padding-top:48px;padding-bottom:36px}
+ .band{padding:64px 0}.band--typer .band__grid,.band--dopa .band__grid{gap:32px}
+ .work__wordmark{width:200px}.work__wordmark--dopa{width:280px}.work__desc{font-size:30px}
 }
-@media(prefers-reduced-motion:reduce){.hero__next{transition:none}.hero__next:hover{translate:none}}
+@media(max-width:640px){
+ .hero__in{grid-template-columns:1fr;gap:22px;padding-top:30px;padding-bottom:30px}
+ .hero .sig-logo{grid-column:1;grid-row:1;width:68%;justify-self:end}
+ .hero__wordmark{grid-row:2}.hero__bottom{grid-row:3;padding-top:0}.hero__tag{font-size:15px}
+ .band{padding:46px 0}.band--typer .band__grid,.band--dopa .band__grid{grid-template-columns:1fr;gap:34px}
+ .work__desc{font-size:32px;margin-top:14px}.work__kind{margin-top:18px}.work__more{margin-top:24px}
+ .kbd-demo{padding:32px 16px 22px}.band--dopa .band__text{grid-column:1;grid-row:1}.band--dopa .band__demo{grid-column:1;grid-row:2}
+ .platform-wall{padding:18px 32px 55px 18px}.studio{padding:42px 0}.studio__grid{grid-template-columns:1fr;gap:20px}
+}
+@media(prefers-reduced-motion:reduce){.hero__next{transition:none}.hero__next:hover{transform:none}}
 </style>
 </head>
 <body class="home">
@@ -101,7 +97,7 @@
       <div class="sig-logo" data-newmeans-logo data-rabbit-only></div>
       <h1 class="hero__wordmark"><img src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></h1>
       <div class="hero__bottom">
-        <p class="hero__tag" data-i18n="home.tag">게임과 AI를 만드는 두 사람</p>
+        <p class="hero__tag" data-i18n="home.tag">독립 게임과 AI 서비스</p>
         <a class="hero__next" href="#works" aria-label="제품 보기" data-i18n="home.cta1" data-i18n-attr="aria-label">↓</a>
       </div>
     </div>
@@ -113,8 +109,9 @@
       <div class="band__text" data-reveal>
         <a class="work__wordmark-link" href="typer.html"><img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer"></a>
         <p class="work__kind" data-i18n="home.typer.kind">게임 · iOS / Android</p>
-        <p class="work__desc" data-i18n="home.typer.desc">키보드 소리로 즐기는 벽돌깨기</p>
-        <p class="work__more"><a class="action" href="typer.html"><span data-i18n="home.typer.more">Typer 보기</span><span class="arw">→</span></a></p>
+        <p class="work__desc" data-i18n="home.typer.desc">키캡을 부수는
+손맛과 타건음</p>
+        <p class="work__more"><a class="action" href="typer.html"><span data-i18n="home.typer.more">키보드 골라보기</span><span class="arw">→</span></a></p>
       </div>
       <div class="band__demo" data-reveal>
         <div class="kbd-demo">
@@ -138,9 +135,10 @@
       </div>
       <div class="band__text" data-reveal>
         <a class="work__wordmark-link" href="dopamine.html"><img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
-        <p class="work__kind" data-i18n="home.dopa.kind">AI 심리테스트 · Web</p>
-        <p class="work__desc" data-i18n="home.dopa.desc">AI 심리테스트 플랫폼</p>
-        <p class="work__more"><a class="action" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
+        <p class="work__kind" data-i18n="home.dopa.kind">카카오톡 대화로 하는 AI 심리테스트</p>
+        <p class="work__desc" data-i18n="home.dopa.desc">내 카톡으로 보는
+나의 다른 모습</p>
+        <p class="work__more"><a class="action" href="dopamine.html"><span data-i18n="home.dopa.more">테스트 둘러보기</span><span class="arw">→</span></a></p>
       </div>
     </div>
   </section>
@@ -149,8 +147,9 @@
   <section class="studio" id="studio">
     <div class="wrap studio__grid">
       <div>
-        <h2 data-i18n="home.studio.title">스튜디오</h2>
-        <p class="studio__lead" data-i18n="home.studio.lead">게임 개발자와 AI 엔지니어, 두 사람.</p>
+        <h2 data-i18n="home.studio.title">만드는 사람들</h2>
+        <p class="studio__lead" data-i18n="home.studio.lead">게임 개발자 한 명.
+AI 엔지니어 한 명.</p>
       </div>
       <div class="studio__body">
         <p data-i18n="home.studio.p1">Typer와 도파민대학교를 만들고 있어요.</p>
@@ -164,7 +163,7 @@
   <div class="wrap foot__grid">
     <div class="foot__brand">
       <img class="foot__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
-      <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 두 사람</p>
+      <p class="foot__say" data-i18n="foot.say">독립 게임과 AI 서비스</p>
     </div>
     <div class="foot__col">
       <h4 data-i18n="foot.products">제품</h4>
@@ -184,8 +183,8 @@
   </div>
 </footer>
 
-<script src="i18n.js?v=20260912-4" defer></script>
-<script src="logo.js?v=20260912-3" defer></script>
+<script src="i18n.js?v=20260912-7" defer></script>
+<script src="logo.js?v=20260912-7" defer></script>
 <script src="experience.js?v=20260912-2" defer></script>
 <script src="keyboard.js?v=20260912-2" defer></script>
 <script>

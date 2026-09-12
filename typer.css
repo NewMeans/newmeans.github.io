@@ -1,22 +1,23 @@
-/* Product scenes: game footage, tactile keyboard, then an image spread. */
+/* Mint from the Typer artwork anchors the interactive desktop. */
 @font-face{font-family:'DNFBitBit';src:url('assets/fonts/DNFBitBitv2.ttf') format('truetype');font-display:swap}
-.tp{--scene-cream:#f7f6f2;--scene-ink:#242429;background:var(--scene-cream)}
+.tp{--scene-cream:#fafaf7;--scene-ink:#242429;background:var(--scene-cream)}
 .tp .wrap{max-width:1360px}
 .tp section[id]{scroll-margin-top:64px}
 .tp .nav__here{white-space:nowrap}
-.tp-hero__inner{padding-top:52px;padding-bottom:20px}
+.tp-hero{background:var(--paper);color:var(--ink)}
+.tp-hero__inner{padding-top:42px;padding-bottom:42px}
 .tp-hero__copy{display:grid;grid-template-columns:1fr auto;gap:14px 50px;align-items:center}
 .tp-wordmark{width:240px;height:auto}
-.tp-hero__title{grid-row:2;grid-column:1;font-size:22px;line-height:1.4;font-weight:500;letter-spacing:-.03em}
+.tp-hero__title{grid-row:2;grid-column:1;font-size:clamp(26px,3.2vw,42px);line-height:1.25;font-weight:650;letter-spacing:-.04em;white-space:pre-line}
 .tp-hero__cta{grid-column:2;grid-row:1 / 3;display:flex;gap:24px;align-items:center;flex-wrap:wrap;padding:12px 0}
 .store-badge{display:inline-flex;flex:none}
 .store-badge img{height:44px;width:auto;max-width:none}
 .store-badge:focus-visible{outline-offset:8px}
-.tp-custom{background:var(--scene-cream);padding:12px 0 70px;overflow:clip}
+.tp-custom{background:var(--scene-cream);padding:44px 0 64px;overflow:clip}
 .tp-custom__head{margin-bottom:42px}
 .tp-custom__head h2{font-size:clamp(34px,5vw,64px);font-weight:900;letter-spacing:-.055em;line-height:1.1}
-.tp-custom__layout{display:grid;grid-template-columns:1.35fr 1fr;gap:36px;align-items:center}
-.tp-custom__preview{position:relative;overflow:hidden;padding:28px 0 18px}
+.tp-custom__layout{display:grid;grid-template-columns:1.3fr 1fr;gap:52px;align-items:center}
+.tp-custom__preview{position:relative;overflow:hidden;padding:28px 0 18px;background:var(--mint);border-radius:8px}
 .desk{position:relative;width:100%;max-width:480px;margin:0 auto}
 .monitor{position:relative;width:78%;margin:0 auto;aspect-ratio:1354/1222;z-index:1;container-type:inline-size}
 .monitor__img{width:100%;height:100%;display:block}
@@ -40,9 +41,9 @@
 .desk__kb{position:relative;z-index:3}
 .tp-sound{display:flex;justify-content:center;gap:12px;align-items:center;min-height:44px;margin-top:26px;font-size:14px}
 .sound-button{border-radius:6px;padding:11px 22px;background:var(--ink);color:var(--paper);font-size:14px;font-weight:600;min-height:44px}
-.sound-button[aria-pressed="true"]{background:#44443e}
+.sound-button[aria-pressed="true"]{background:#35312c}
 #soundStatus{color:var(--coral-text);font-size:13px}
-.tp-custom__controls{align-self:center;padding:20px 0;min-width:0}
+.tp-custom__controls{align-self:center;padding:28px;background:#fff;border-radius:12px;min-width:0}
 .custom-tabs{display:flex;gap:4px;margin-bottom:26px;border-bottom:1px solid #d7d5ce;padding-bottom:12px}
 .custom-tabs button{flex:1;white-space:nowrap;font-size:13px;padding:12px 8px;border-radius:6px;min-height:44px;font-weight:600}
 .custom-tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
@@ -50,10 +51,10 @@
 .picker__row[hidden]{display:none}
 .pick{min-width:0;padding:18px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:14px;font-size:13px;line-height:1.35;border-radius:6px;border:1px solid transparent;transition:background .2s,transform .2s}
 .pick img{width:100%;height:80px;object-fit:contain;transition:transform .2s}
-.pick[aria-pressed="true"]{background:#eeede8;border-color:#9c9c93}
+.pick[aria-pressed="true"]{background:var(--mint-bg);border-color:var(--mint-text)}
 .pick:hover img{transform:translateY(-5px)}
 .pick:active img{transform:scale(.94)}
-.tp-gallery{position:relative;padding:100px 0 120px;background:#292a31;overflow:hidden}
+.tp-gallery{position:relative;padding:100px 0 120px;background:var(--mint);overflow:hidden}
 .gallery{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,5vw,64px);max-width:1000px!important;align-items:center}
 .gallery figure:first-child{padding-top:80px}
 .gallery figure:last-child{padding-top:150px}
@@ -61,13 +62,13 @@
 .gallery a:hover img{transform:translateY(-10px)}
 .tp .foot{margin-top:0}
 @media(max-width:900px){
- .tp-hero__inner{padding-top:32px;padding-bottom:8px}
+ .tp-hero__inner{padding-top:30px;padding-bottom:30px}
  .tp-hero__copy{grid-template-columns:1fr}.tp-hero__cta{grid-column:1;grid-row:3;margin-top:4px}
- .tp-hero__title{font-size:20px}.tp-wordmark{width:190px}
+ .tp-hero__title{font-size:28px}.tp-wordmark{width:190px}
  .tp-custom__layout{grid-template-columns:1fr;gap:0}
- .tp-custom__preview{position:sticky;top:58px;background:var(--scene-cream);z-index:4;padding:16px 0 10px}
+ .tp-custom__preview{position:sticky;top:58px;background:var(--mint);z-index:4;padding:16px 0 10px}
  .desk{max-width:260px}.tp-sound{margin-top:12px}
- .tp-custom__controls{padding-top:20px}.tp-custom{padding:12px 0 48px}
+ .tp-custom__controls{padding:20px 14px}.tp-custom{padding:12px 0 48px}
  .picker__row{gap:10px;max-width:540px;margin:0 auto}
  .pick{padding:12px 8px}.pick img{height:62px}
  .custom-tabs{max-width:540px;margin-left:auto;margin-right:auto}
@@ -75,7 +76,7 @@
 }
 @media(max-width:480px){
  .store-badge img{height:40px}.tp-hero__cta{gap:22px}
- .custom-tabs button{font-size:11px;padding:11px 5px}
+ .custom-tabs button{font-size:11px;padding:11px 3px}
  .desk{max-width:230px}
  .tp-gallery{padding:56px 0}.gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-top:20px;padding-bottom:20px;gap:24px}
  .gallery figure{flex:0 0 67%;scroll-snap-align:center;padding-top:0!important}
