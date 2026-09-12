@@ -162,6 +162,7 @@
       c.classList.add("is-active"); clearTimeout(c._t);
       c._t = setTimeout(function () { c.classList.remove("is-active"); }, 120);
       playSound();
+      root.dispatchEvent(new CustomEvent('tp:key',{bubbles:true,detail:{index:Number(c.dataset.idx)}}));
       if (onPress) onPress(c);
     });
   }
