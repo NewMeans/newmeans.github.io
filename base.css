@@ -1,130 +1,127 @@
 /* ============================================================
-   NewMeans — design system v3  ·  "one family, quiet chrome"
-   Wanted Sans Variable 단일 패밀리. 디스플레이 개성은 폰트가 아니라
-   픽셀 브랜드 마크(로고·워드마크)와 실제 제품 데모가 담당한다.
-   DNF BitBit(--pixel)은 Typer 게임 요소 전용.
+   NewMeans design system v1.1 (see DESIGN_SYSTEM.md)
+   One accent per page (mint here, coral on dopamine.html), neutrals
+   tinted with the ink hue, tokens only. Legacy aliases at the bottom keep
+   typer.css / dopamine.css working until they are rebuilt.
    ============================================================ */
+@import url("assets/fonts/bricolage.css");
+@font-face{font-family:"Wanted Sans Fixed";src:url("https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/woff2/WantedSansVariable.woff2") format("woff2-variations");font-weight:400 1000;font-display:swap;ascent-override:85.5%;descent-override:14.5%;line-gap-override:0%}
+@font-face{font-family:"DNFBitBit";src:url("assets/fonts/DNFBitBitv2.ttf") format("truetype");font-display:swap}
+
 :root{
-  --paper:#FAFAF7;         /* 거의 흰 웜화이트 */
-  --ink:#1B1815;
-  --ink-2:#6B655A;         /* 본문 보조 */
-  --ink-3:#827B70;         /* 캡션 */
-  --mint:#85C6A8;          /* 로고 원색 — 그래픽용 */
-  --mint-text:#20805C;     /* 로고와 같은 hue의 텍스트용 민트 */
-  --mint-bg:#E9F3EC;
-  --coral:#FF6666;         /* 도파민 살몬 원색 */
-  --coral-text:#C64237;    /* 같은 hue의 텍스트용 코랄 */
-  --coral-bg:#FBEAE6;
-  --card:#FFFFFF;
-  --line:rgba(27,24,21,.14);
-  --line-2:rgba(27,24,21,.07);
-  --font:'Wanted Sans Variable','Wanted Sans','Pretendard Variable','Pretendard',system-ui,'Apple SD Gothic Neo',sans-serif;
-  --pixel:'DNFBitBit','Wanted Sans Variable',sans-serif;
-  --ease:cubic-bezier(.2,.8,.2,1);
-  --accent:var(--mint-text); --accent-raw:var(--mint); --accent-bg:var(--mint-bg);
+  --n-50:#FCFBF7; --n-100:#F9F5F1; --n-200:#F1ECE6; --n-300:#DFDAD4; --n-400:#BCB6B0; --n-500:#97918A; --n-600:#706B64; --n-700:#514D48; --n-800:#3B3732; --n-900:#24211D;
+  --m-50:#E9FCF2; --m-100:#DAF7E8; --m-200:#C3EDD8; --m-300:#A8E0C5; --m-400:#85C6A8; --m-500:#6BAB8E; --m-600:#538F74; --m-700:#3E765E; --m-800:#305D4A; --m-900:#234234;
+  --c-50:#FEF4F3; --c-100:#FEE9E7; --c-200:#FFD6D3; --c-300:#FFBEBA; --c-400:#FF6666; --c-500:#F26A68; --c-600:#CE5151; --c-700:#AF3B3D; --c-800:#8B2E2F; --c-900:#622322;
 
-  /* 구버전 페이지 호환 별칭 (Typer/도파민 재구축 전까지) */
-  --display:var(--font); --sans:var(--font); --kr:var(--font); --mono:var(--font);
-  --ink-soft:var(--ink-2); --ink-faint:var(--ink-3);
-  --mint-deep:var(--mint-text); --mint-wash:var(--mint-bg); --mint-tint:var(--mint-bg);
-  --coral-deep:var(--coral-text); --coral-wash:var(--coral-bg); --coral-tint:var(--coral-bg);
-  --cream:var(--card); --line-soft:var(--line-2);
-  --accent-deep:var(--accent); --accent-wash:var(--accent-bg);
+  --bg:var(--n-50); --surface:var(--n-100); --surface-hover:var(--n-200);
+  --line:var(--n-200); --line-strong:var(--n-300);
+  --text-1:var(--n-800); --text-2:var(--n-600); --text-display:var(--n-700);
+  --accent:var(--m-700); --accent-strong:var(--m-800); --accent-soft:var(--m-100); --accent-soft-2:var(--m-200); --brand:var(--m-400); --focus:var(--m-600);
+  --btn-bg:var(--n-800); --btn-bg-hover:var(--n-900); --btn-text:var(--n-50);
+  --r-pill:999px; --r-tile:20px; --r-media:12px; --r-small:8px;
+  --ease:cubic-bezier(.16,1,.3,1); --dur:200ms;
+  --font-ui:"Wanted Sans Fixed","Wanted Sans Variable","Wanted Sans",system-ui,"Apple SD Gothic Neo",sans-serif;
+  --font-display:"Bricolage Grotesque",var(--font-ui);
+  --font-pixel:"DNFBitBit",monospace;
+
+  /* legacy aliases (typer.css, dopamine.css) */
+  --paper:var(--bg); --ink:var(--text-1); --ink-2:var(--text-2); --ink-3:var(--n-500);
+  --mint:var(--m-400); --mint-text:var(--m-700); --mint-bg:var(--m-100);
+  --coral:var(--c-400); --coral-text:var(--c-700); --coral-bg:var(--c-100);
+  --card:var(--surface); --line-2:var(--line);
+  --font:var(--font-ui); --pixel:var(--font-pixel);
+  --accent-raw:var(--brand); --accent-bg:var(--accent-soft);
+  --display:var(--font-display); --sans:var(--font-ui); --kr:var(--font-ui); --mono:ui-monospace,Menlo,monospace;
+  --ink-soft:var(--text-2); --ink-faint:var(--n-500);
+  --mint-deep:var(--m-700); --mint-wash:var(--m-100); --mint-tint:var(--m-100);
+  --coral-deep:var(--c-700); --coral-wash:var(--c-100); --coral-tint:var(--c-100);
+  --cream:var(--surface); --line-soft:var(--line);
+  --accent-deep:var(--accent); --accent-wash:var(--accent-soft);
 }
+body[data-accent="coral"]{--accent:var(--c-700); --accent-strong:var(--c-800); --accent-soft:var(--c-100); --accent-soft-2:var(--c-200); --brand:var(--c-400); --focus:var(--c-600)}
+
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%; overflow-x:clip}
-body{
-  font-family:var(--font); color:var(--ink); background:var(--paper);
-  line-height:1.62; font-size:16px; overflow-x:clip;
-  -webkit-font-smoothing:antialiased; letter-spacing:-.005em;
-}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;overflow-x:clip;scroll-behavior:smooth}
+body{font-family:var(--font-ui);color:var(--text-1);background:var(--bg);line-height:1.6;font-size:16px;overflow-x:clip;-webkit-font-smoothing:antialiased}
 :lang(ko),[lang="ko"]{word-break:keep-all}
-img{display:block; max-width:100%}
-a{color:inherit; text-decoration:none}
-button{font:inherit; color:inherit; background:none; border:none; cursor:pointer}
-::selection{background:var(--mint); color:var(--ink)}
-:focus-visible{outline:2px solid var(--mint-text); outline-offset:3px; border-radius:2px}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+::selection{background:var(--m-200);color:var(--text-1)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-.skip-link{position:absolute; left:-9999px; top:0; z-index:100; background:var(--ink); color:var(--paper); padding:10px 16px; border-radius:8px}
-.skip-link:focus{left:12px; top:12px}
-.wrap{max-width:1080px; margin:0 auto; padding:0 clamp(22px,5vw,44px)}
+.sr{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.skip-link{position:absolute;left:-9999px;top:0;z-index:100;background:var(--btn-bg);color:var(--btn-text);padding:10px 16px;border-radius:var(--r-small)}
+.skip-link:focus{left:12px;top:12px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(22px,4vw,40px)}
 
-h1,h2,h3{font-weight:800; letter-spacing:-.03em; line-height:1.06}
+h1,h2,h3{font-weight:600;letter-spacing:-.015em;line-height:1.2}
+.display{font-family:var(--font-display);font-weight:600;letter-spacing:-.03em;line-height:1.02;color:var(--text-display)}
+.h2{font-size:32px;line-height:1.25;font-weight:600;letter-spacing:-.015em;white-space:pre-line}
+.h3{font-size:24px;line-height:1.3;font-weight:600;letter-spacing:-.01em;white-space:pre-line}
+.body-s{font-size:14px;line-height:1.5;color:var(--text-2)}
 
-/* ---------- NAV : 솔리드, 헤어라인, 블러 없음 ---------- */
-.nav{position:sticky; top:0; z-index:60; background:var(--paper); border-bottom:1px solid var(--line-2)}
-.nav__in{display:flex; align-items:center; gap:16px; height:64px}
-.nav__logo{height:19px; width:auto; flex:none; transition:opacity .18s}
-.nav__brand:hover .nav__logo{opacity:.55}
-.nav__here{font-weight:600; font-size:15px; color:var(--ink-2)}
-.nav__here::before{content:"/ "; color:var(--ink-3); font-weight:400}
+/* ---------- nav ---------- */
+.nav{position:sticky;top:0;z-index:60;background:var(--bg)}
+.nav__in{display:flex;align-items:center;gap:16px;height:64px}
+.nav__brand{flex:none;display:flex}
+.nav__logo{height:16px;width:auto}
+.nav__here{font-weight:500;font-size:13px;color:var(--text-2);white-space:nowrap}
 .nav__spacer{flex:1}
-.nav__links{display:flex; gap:22px}
-.nav__links a{font-size:15px; font-weight:500; color:var(--ink-2); transition:color .18s}
-.nav__links a:hover{color:var(--ink)}
-.nav__tools{display:flex; align-items:center; gap:14px}
-.lang{display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:600}
-.lang button{color:var(--ink-3); transition:color .18s; padding:2px}
-.lang button.is-active{color:var(--ink)}
-.lang span{color:var(--line); font-weight:400}
-.snd{width:33px; height:33px; border-radius:50%; border:1px solid var(--line); display:grid; place-items:center; transition:.2s; color:var(--ink-2)}
-.snd:hover{border-color:var(--ink); color:var(--ink)}
-.snd svg{width:16px; height:16px}
-.snd .wave{opacity:0; transition:.2s}
-.snd[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
-.snd[aria-pressed="true"] .wave{opacity:1}
-/* 소리 꺼진 채 두드리면 토글이 살짝 나댐 */
-.snd.nudge{animation:snd-nudge .5s var(--ease) 2}
-@keyframes snd-nudge{40%{transform:scale(1.16); border-color:var(--accent); color:var(--accent)}}
+.nav__links{display:flex;gap:2px;background:var(--surface);border-radius:var(--r-pill);padding:3px}
+.nav__links a{padding:9px 14px 11px;border-radius:var(--r-pill);font-size:13px;line-height:1;font-weight:500;color:var(--text-2);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.nav__links a:hover{background:var(--surface-hover);color:var(--text-1)}
+.nav__links a.is-here{color:var(--text-1)}
+.nav__tools{display:flex;align-items:center;gap:10px}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-pill);padding:3px;font-size:13px;line-height:1;font-weight:500}
+.lang button{padding:7px 10px 9px;border-radius:var(--r-pill);color:var(--text-2);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.lang button.is-active{background:var(--btn-bg);color:var(--btn-text)}
+.lang span{display:none}
 
-/* ---------- 링크·버튼 ---------- */
-.link{display:inline-flex; align-items:center; gap:6px; font-weight:600; color:var(--ink);
-  text-decoration:underline; text-decoration-thickness:1.5px; text-underline-offset:4px;
-  text-decoration-color:var(--line); transition:text-decoration-color .2s, color .2s}
-.link:hover{color:var(--mint-text); text-decoration-color:var(--mint-text)}
-.link .arw{transition:transform .18s var(--ease)}
-.link:hover .arw{transform:translateX(3px)}
-/* Primary actions keep their hue across interaction states. */
-.btn{display:inline-flex; align-items:center; gap:9px; padding:13px 22px; border-radius:6px; font-weight:600; font-size:15px;
-  transition:background .2s, color .2s, border-color .2s, transform .07s ease, box-shadow .07s ease}
-.btn--solid{background:var(--ink); color:var(--paper); box-shadow:none}
-.btn--solid:hover{background:var(--ink);filter:brightness(1.25)}
-.btn--solid:active{transform:translateY(1px); box-shadow:none}
-.btn--solid .arw{transition:transform .18s var(--ease)}
-.btn--solid:hover .arw{transform:translateX(3px)}
-.btn--outline{border:1.5px solid var(--line); color:var(--ink); background:var(--card); box-shadow:none}
-.btn--outline:hover{border-color:var(--ink)}
-.btn--outline:active{transform:translateY(1px); box-shadow:none}
-@media (prefers-reduced-motion:reduce){.btn{transition:none}}
+/* ---------- buttons and links ---------- */
+.btn{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px 2px;border-radius:var(--r-pill);font-size:14px;line-height:1;font-weight:500;white-space:nowrap;transition:background var(--dur) var(--ease),color var(--dur) var(--ease),transform var(--dur) var(--ease)}
+.btn:active{transform:translateY(1px)}
+.btn--solid,.btn--primary{background:var(--btn-bg);color:var(--btn-text)}
+.btn--solid:hover,.btn--primary:hover{background:var(--btn-bg-hover)}
+.btn--tint,.btn--outline{background:var(--accent-soft-2);color:var(--accent-strong)}
+.btn--tint:hover,.btn--outline:hover{background:var(--accent-soft)}
+.btn--sm{height:36px;padding:0 14px 2px;font-size:13px}
+.btn .arw{transition:transform .18s var(--ease)}
+.btn:hover .arw{transform:translateX(3px)}
+.action{display:inline-flex;align-items:center;gap:10px;height:44px;padding:0 18px 2px;border-radius:var(--r-pill);font-size:14px;line-height:1;font-weight:500;background:var(--btn-bg);color:var(--btn-text)}
+.link{display:inline-flex;align-items:center;gap:6px;font-weight:500;font-size:14px;color:var(--accent);text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
+.link:hover{color:var(--accent-strong)}
+.snd{width:36px;height:36px;border-radius:var(--r-pill);display:grid;place-items:center;color:var(--text-2)}
+.snd:hover{background:var(--surface)}
+.snd[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-text)}
+.snd svg{width:16px;height:16px}
 
-/* ---------- 섹션 헤딩 ---------- */
-.head{margin-bottom:clamp(26px,4.5vw,44px)}
-.head h2{font-size:clamp(24px,3.2vw,34px)}
-.head__note{margin-top:12px; max-width:46ch; color:var(--ink-2)}
+/* ---------- section head, reveal ---------- */
+.head{margin-bottom:clamp(24px,4vw,40px)}
+.head h2{font-size:clamp(24px,3.2vw,32px)}
+.head__note{margin-top:12px;max-width:46ch;color:var(--text-2)}
+[data-reveal]{opacity:0;transform:translateY(12px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+[data-reveal].in,[data-reveal].is-visible{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}.btn{transition:none}}
 
-/* ---------- 리빌 ---------- */
-[data-reveal]{opacity:0; transform:translateY(14px); transition:opacity .55s var(--ease), transform .55s var(--ease)}
-[data-reveal].in,[data-reveal].is-visible{opacity:1; transform:none}
-@media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1; transform:none}}
-
-/* ---------- 푸터 ---------- */
-.foot{border-top:1px solid var(--line); margin-top:clamp(56px,9vw,110px); padding:clamp(36px,6vw,64px) 0 40px}
-.foot__grid{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:32px; align-items:start}
-.foot__logo{height:20px; width:auto; margin-bottom:14px}
-.foot__say{color:var(--ink-2); max-width:30ch; font-size:.96rem}
-.foot__col h4{font-size:13px; font-weight:600; color:var(--ink-3); margin-bottom:10px; letter-spacing:0}
-.foot__col a{display:block; padding:4px 0; color:var(--ink-2); font-size:.96rem; transition:color .18s}
-.foot__col a:hover{color:var(--ink)}
-.foot__base{margin-top:clamp(32px,5vw,56px); display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
-  font-size:13px; color:var(--ink-3)}
+/* ---------- footer (product pages keep the column layout for now) ---------- */
+.foot{border-top:1px solid var(--line);margin-top:clamp(56px,9vw,110px);padding:clamp(36px,6vw,64px) 0 40px}
+.foot__grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:32px;align-items:start}
+.foot__logo{height:14px;width:auto;margin-bottom:14px}
+.foot__say{color:var(--text-2);max-width:30ch;font-size:14px}
+.foot__col h4{font-size:13px;font-weight:600;color:var(--text-1);margin-bottom:10px}
+.foot__col a{display:block;padding:4px 0;color:var(--text-2);font-size:14px;transition:color .18s}
+.foot__col a:hover{color:var(--text-1)}
+.foot__base{margin-top:clamp(32px,5vw,56px);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-2)}
 
 @media (max-width:680px){
   .nav__links{display:none}
-  .nav__in{height:58px}
+  .nav__in{gap:10px}
+  .nav__tools{gap:8px}
+  .nav__tools .btn--tint span{display:none}
+  .nav__tools .btn--tint{padding:0 10px 2px}
   .foot__grid{grid-template-columns:1fr 1fr}
   .foot__brand{grid-column:1 / -1}
 }
-
-/* Navigation and actions share neutral, stable states across product worlds. */
-.action{display:inline-flex;align-items:center;justify-content:center;gap:16px;padding:13px 23px;min-height:48px;border:1px solid #aaa99f;border-radius:6px;font-size:14px;font-weight:600;transition:box-shadow .18s}
-.action:hover{box-shadow:inset 0 0 0 1px currentColor}
