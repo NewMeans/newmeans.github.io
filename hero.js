@@ -23,7 +23,7 @@
     { w: 'rhythmic', hue: 'sky', tier: 'uncommon', acc: ['headphones', 'notes', 'mp3'], product: 'typer', dot: '♪' },
     { w: 'aesthetic', hue: 'cocoa', tier: 'uncommon', acc: ['cactus', 'monitor'], product: 'typer' },
     { w: 'thoughtful', hue: 'indigo', tier: 'uncommon', acc: ['mirror', 'thought'], ears: 'droop', product: 'dopa', dot: '…' },
-    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['keycap', 'stars'], product: 'typer' },
+    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['ball', 'keycap2', 'keycap3', 'keycap4', 'stars'], product: 'typer' },
     { w: 'dramatic', hue: 'charcoal', tier: 'uncommon', acc: ['spotlight', 'tear'], product: 'dopa', dot: '!' },
     { w: 'connected', hue: 'rose', tier: 'uncommon', acc: ['friend', 'hearts'], product: 'dopa' },
     { w: 'exciting', hue: 'coral', tier: 'rare', acc: ['partyhat', 'popper', 'confetti'], eyes: 'round', ears: 'perk', dot: '!' },
@@ -31,13 +31,13 @@
     { w: 'insightful', hue: 'lavender', tier: 'rare', acc: ['gradcap', 'glasses', 'diploma'], product: 'dopa' },
     { w: 'dopamine', hue: 'magenta', tier: 'rare', acc: ['bolts', 'confetti'], eyes: 'round', ears: 'perk', product: 'dopa', dot: 'bolt' },
     { w: 'sparkly', hue: 'gold', tier: 'rare', acc: ['stars', 'stars2'], dot: 'star' },
-    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['ball', 'keycap', 'keycap2', 'confetti'], eyes: 'round', ears: 'perk', product: 'typer', dot: '!' },
+    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['hoop', 'ball', 'keycap1', 'keycap2', 'keycap3', 'keycap4', 'confetti'], eyes: 'round', ears: 'perk', product: 'typer', dot: '!' },
     { w: 'enlightened', hue: 'gold', tier: 'epic', acc: ['halo', 'stars', 'stars2', 'confetti'], eyes: 'closed', ears: 'droop', product: 'dopa', dot: 'star' },
-    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycap', 'keycap2', 'stars'], product: 'typer', dot: 'star' }
+    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycap3', 'keycap4', 'stars'], product: 'typer', dot: 'star' }
   ];
   var WEIGHT = { common: 10, uncommon: 6, rare: 3, epic: 1 };
   var PRODUCT = { typer: { key: 'home.typer.more', href: 'typer.html', icon: 'assets/brand/typer-icon.png', name: 'Typer' }, dopa: { key: 'home.dopa.more', href: 'dopamine.html', icon: 'assets/brand/dopamine-symbol.png', name: 'Dopamine University' } };
-  var FALLBACK = { 'home.typer.more': '키보드 골라보기', 'home.dopa.more': '테스트 둘러보기', 'home.rabbit.action': '토끼 쓰다듬기', 'home.letter.action': '글자 {n} 튀기기', 'home.status.word': '단어: {w}', 'home.status.grab': '글자 {n} 잡음', 'home.status.letter': '글자 {n}' };
+  var FALLBACK = { 'home.typer.more': '키보드 골라보기', 'home.dopa.more': '테스트 둘러보기', 'home.rabbit.action': '토끼 쓰다듬기', 'home.letter.action': '글자 {n} 튀기기', 'home.status.word': '단어: {w}', 'home.status.grab': '글자 {n} 잡음', 'home.status.letter': '글자 {n}', 'home.status.score': '골 {n}' };
   function t(key, vars) { var s = (window.i18n && window.i18n.t(key)) || FALLBACK[key] || key; if (s === key && FALLBACK[key]) s = FALLBACK[key]; return s.replace(/\{(\w+)\}/g, function (_, k) { return vars && vars[k] != null ? vars[k] : ''; }); }
 
   var X0 = 467, Y0 = 357, BW = 3334, BH = 1370;
@@ -54,6 +54,13 @@
   function img(name, x, y, w, h, src, rot, hit) {
     return '<img class="ac' + (hit ? ' hit' : '') + '" data-prop="' + name + '" alt="" src="' + src + '" style="left:' + ((x - X0) / BW * 100) + '%;top:' + ((y - Y0) / BH * 100) + '%;width:' + (w / BW * 100) + '%;height:' + (h / BH * 100) + '%;' + (rot ? 'transform:rotate(' + rot + 'deg)' : '') + '">';
   }
+  var narrowMQ = matchMedia('(max-width: 720px)');
+  function fk() { return narrowMQ.matches ? 0.6 : 1; }     // floor positions shrink on narrow screens
+  function fs() { return narrowMQ.matches ? 0.75 : 1; }    // and so do the props standing there
+  function floor(name, bx, w, h, inner, z, hit) { var k = fk(), q = fs(); return svg(name, X0 + bx * k, Y0 + BH - h * q, w * q, h * q, inner, z, hit); }
+  function floorImg(name, bx, w, h, src, rot) { var k = fk(), q = fs(); return img(name, X0 + bx * k, Y0 + BH - h * q, w * q, h * q, src, rot, true); }
+  var HOOP = { bx: -3000, w: 700, h: 1000, rim: [420, 330], rimR: 165, board: [40, 260, 40, 300] };   // rim centre and backboard in the hoop's own viewBox
+  var CAPS = [-1000, -1300, -1600, -1900];
   function star(cx, cy, r) { var p = []; for (var i = 0; i < 8; i++) { var a = Math.PI / 4 * i - Math.PI / 2, rr = i % 2 ? r * 0.42 : r; p.push((cx + Math.cos(a) * rr).toFixed(1) + ',' + (cy + Math.sin(a) * rr).toFixed(1)); } return '<polygon points="' + p.join(' ') + '" fill="' + TXT + '"/>'; }
   var ACC = {
     glasses: function () { return svg('glasses', 1380, 780, 760, 250, '<g fill="none" stroke="' + TXT + '" stroke-width="22"><circle cx="150" cy="125" r="112"/><circle cx="610" cy="125" r="112"/><path d="M262 118 Q380 70 498 118"/></g>', 5); },
@@ -61,25 +68,28 @@
     shades: function () { return svg('shades', 1370, 800, 780, 210, '<g fill="' + INK + '"><rect x="0" y="20" width="330" height="170" rx="60"/><rect x="450" y="20" width="330" height="170" rx="60"/><rect x="320" y="60" width="140" height="26" rx="13"/></g><g fill="#fff" opacity=".35"><rect x="40" y="50" width="90" height="26" rx="13"/><rect x="490" y="50" width="90" height="26" rx="13"/></g>', 5); },
     headphones: function () { return svg('headphones', 1180, 600, 1220, 520, '<path d="M120 420 V330 a490 400 0 0 1 980 0 V420" fill="none" stroke="' + TXT + '" stroke-width="30" stroke-linecap="round"/><rect x="20" y="330" width="200" height="190" rx="60" fill="' + TXT + '"/><rect x="1000" y="330" width="200" height="190" rx="60" fill="' + TXT + '"/>', 5, true); },
     notes: function () { return svg('notes', 2520, 560, 360, 260, '<text class="note" x="0" y="200" font-size="230" font-family="ui-monospace,monospace" fill="' + TXT + '">♪</text><text class="note" x="180" y="150" font-size="170" font-family="ui-monospace,monospace" fill="' + TXT + '" style="animation-delay:.15s">♫</text>'); },
-    mp3: function () { return svg('mp3', 640, 720, 300, 380, '<rect x="20" y="20" width="260" height="340" rx="40" fill="' + TXT + '"/><rect x="60" y="60" width="180" height="110" rx="14" fill="' + PAPER + '" opacity=".9"/><circle cx="150" cy="260" r="62" fill="' + PAPER + '" opacity=".9"/><polygon class="play" points="135,232 135,288 185,260" fill="' + TXT + '"/>', 5, true); },
+    mp3: function () { return floor('mp3', -760, 300, 380, '<rect x="20" y="20" width="260" height="340" rx="40" fill="' + TXT + '"/><rect x="60" y="60" width="180" height="110" rx="14" fill="' + PAPER + '" opacity=".9"/><circle cx="150" cy="260" r="62" fill="' + PAPER + '" opacity=".9"/><polygon class="play" points="135,232 135,288 185,260" fill="' + TXT + '"/>', 5, true); },
     waves: function () { return svg('waves', 2900, 520, 420, 300, '<g fill="none" stroke="' + TXT + '" stroke-width="22" stroke-linecap="round"><path d="M40 150 q40 -60 80 0 t80 0"/><path d="M200 150 q60 -110 120 0 t120 0"/></g>'); },
     partyhat: function () { return svg('partyhat', 1810, 380, 320, 400, '<polygon points="150,20 290,390 10,390" fill="' + TXT + '"/><circle cx="150" cy="24" r="34" fill="' + RAB + '" stroke="' + TXT + '" stroke-width="12"/><g fill="' + RAB + '"><circle cx="150" cy="180" r="20"/><circle cx="110" cy="300" r="20"/><circle cx="200" cy="320" r="20"/></g>', 4); },
     popper: function () { return svg('popper', 2620, 400, 360, 360, '<polygon points="40,320 300,60 210,300" fill="' + TXT + '"/><g fill="' + RAB + '"><circle cx="150" cy="40" r="22"/><circle cx="330" cy="110" r="18"/><circle cx="60" cy="140" r="16"/></g>', 5, true); },
     gradcap: function () { return svg('gradcap', 1790, 540, 360, 240, '<polygon points="180,10 350,80 180,150 10,80" fill="' + INK + '"/><rect x="130" y="110" width="100" height="50" rx="10" fill="' + INK + '"/><path d="M338 86 v80" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"/><circle cx="338" cy="176" r="14" fill="' + TXT + '"/>', 4); },
     halo: function () { return svg('halo', 1660, 150, 380, 150, '<ellipse class="halo" cx="200" cy="80" rx="170" ry="52" fill="none" stroke="' + TXT + '" stroke-width="26" opacity=".85"/>', 4, true); },
-    coffee: function () { return svg('coffee', 900, 860, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
-    keycap: function () { return img('keycap', 2380, 990, 200, 200, 'assets/desk/keycap_0.png', -12, true); },
-    keycap2: function () { return img('keycap2', 2560, 1030, 170, 170, 'assets/desk/keycap_0.png', 14, true); },
-    ball: function () { return img('ball', 880, 1000, 190, 190, 'assets/game/ball.png', 0, true); },
-    hoop: function () { return svg('hoop', 2620, 260, 560, 560, '<rect x="380" y="20" width="160" height="200" rx="14" fill="none" stroke="' + TXT + '" stroke-width="20"/><rect x="380" y="220" width="20" height="300" fill="' + TXT + '"/><ellipse cx="300" cy="230" rx="130" ry="40" fill="none" stroke="' + TXT + '" stroke-width="22"/><path d="M180 240 l30 150 M420 240 l-30 150 M240 250 l20 140 M360 250 l-20 140 M210 390 h180" fill="none" stroke="' + TXT + '" stroke-width="10" opacity=".6"/>', 3); },
-    monitor: function () { return svg('monitor', 560, 640, 520, 470, '<image href="assets/shop/monitor/2000.png" width="520" height="469"/><text class="screen-text" x="115" y="240" font-size="68" font-family="DNFBitBit,monospace" fill="#65cda7" opacity="0">TYPER</text>', 4, true); },
-    cactus: function () { return img('cactus', 900, 420, 150, 240, 'assets/desk/sculpture.png', 0, true); },
+    coffee: function () { return floor('coffee', -440, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
+    keycap: function () { return floorImg('keycap', -640, 200, 200, 'assets/desk/keycap_0.png'); },
+    keycap1: function () { return floorImg('keycap1', CAPS[0], 200, 200, 'assets/desk/keycap_0.png'); },
+    keycap2: function () { return floorImg('keycap2', CAPS[1], 200, 200, 'assets/desk/keycap_1.png'); },
+    keycap3: function () { return floorImg('keycap3', CAPS[2], 200, 200, 'assets/desk/keycap_0.png'); },
+    keycap4: function () { return floorImg('keycap4', CAPS[3], 200, 200, 'assets/desk/keycap_1.png'); },
+    ball: function () { return floorImg('ball', -400, 190, 190, 'assets/game/ball.png'); },
+    hoop: function () { return floor('hoop', HOOP.bx, HOOP.w, HOOP.h, '<rect x="60" y="300" width="24" height="700" fill="' + TXT + '"/><rect x="0" y="970" width="190" height="30" rx="10" fill="' + TXT + '"/><rect x="40" y="40" width="220" height="260" rx="18" fill="none" stroke="' + TXT + '" stroke-width="22"/><rect x="250" y="320" width="30" height="24" fill="' + TXT + '"/><ellipse class="rim" cx="420" cy="330" rx="165" ry="44" fill="none" stroke="' + TXT + '" stroke-width="22"/><g class="net" fill="none" stroke="' + TXT + '" stroke-width="10" opacity=".55"><path d="M265 350 l45 170 M575 350 l-45 170 M340 368 l25 152 M500 368 l-25 152 M310 520 h220"/></g><text class="score" x="420" y="250" font-size="96" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '" opacity="0">+1</text>', 3); },
+    monitor: function () { return floor('monitor', -1100, 520, 470, '<image href="assets/shop/monitor/2000.png" width="520" height="469"/><text class="screen-text" x="115" y="240" font-size="68" font-family="DNFBitBit,monospace" fill="#65cda7" opacity="0">TYPER</text>', 4, true); },
+    cactus: function () { return floorImg('cactus', -1300, 150, 240, 'assets/desk/sculpture.png'); },
     bubble: function () { return svg('bubble', 2480, 380, 620, 420, '<path d="M60 40 h500 a50 50 0 0 1 50 50 v190 a50 50 0 0 1 -50 50 h-300 l-90 80 v-80 h-110 a50 50 0 0 1 -50 -50 v-190 a50 50 0 0 1 50 -50z" fill="' + TXT + '"/><text class="bubble-text" x="120" y="230" font-size="150" font-weight="700" font-family="ui-monospace,monospace" fill="' + RAB + '">ㅋㅋ</text>', 5, true); },
     thought: function () { return svg('thought', 2560, 330, 560, 420, '<circle cx="90" cy="380" r="22" fill="' + TXT + '"/><circle cx="150" cy="320" r="34" fill="' + TXT + '"/><path d="M200 90 a90 90 0 0 1 150 -40 a100 100 0 0 1 170 40 a80 80 0 0 1 10 150 a90 90 0 0 1 -150 60 a100 100 0 0 1 -170 -30 a80 80 0 0 1 -10 -180z" fill="' + TXT + '"/><text x="290" y="200" font-size="140" font-weight="700" font-family="ui-monospace,monospace" fill="' + RAB + '">…</text>', 5); },
     mirror: function () { return svg('mirror', 820, 780, 330, 420, '<ellipse cx="165" cy="150" rx="130" ry="130" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="24"/><rect x="150" y="270" width="30" height="130" rx="10" fill="' + TXT + '"/><text x="60" y="180" font-size="110" font-family="ui-monospace,monospace" fill="' + RAB + '" transform="scale(-1,1) translate(-330,0)">(´^`*)</text>', 5, true); },
-    friend: function () { return svg('friend', 300, 700, 640, 400, '<g font-family="ui-monospace,monospace" font-weight="700" fill="' + TXT + '"><text x="120" y="150" font-size="160">/) /)</text><text x="40" y="330" font-size="170">(´^`*)</text></g>', 5, true); },
-    hearts: function () { return svg('hearts', 960, 540, 300, 220, '<g fill="' + TXT + '"><path d="M60 80 a30 30 0 0 1 60 0 a30 30 0 0 1 60 0 q0 40 -60 90 q-60 -50 -60 -90z"/><path d="M180 30 a20 20 0 0 1 40 0 a20 20 0 0 1 40 0 q0 30 -40 60 q-40 -30 -40 -60z" opacity=".7"/></g>'); },
-    magnifier: function () { return svg('magnifier', 2380, 900, 340, 340, '<circle cx="120" cy="120" r="95" fill="none" stroke="' + TXT + '" stroke-width="22"/><path d="M190 190 L320 320" stroke="' + TXT + '" stroke-width="34" stroke-linecap="round"/>', 5, true); },
+    friend: function () { return floor('friend', -1160, 640, 400, '<g font-family="ui-monospace,monospace" font-weight="700" fill="' + TXT + '"><text x="120" y="150" font-size="160">/) /)</text><text x="40" y="330" font-size="170">(´^`*)</text></g>', 5, true); },
+    hearts: function () { return svg('hearts', 80, 900, 300, 220, '<g fill="' + TXT + '"><path d="M60 80 a30 30 0 0 1 60 0 a30 30 0 0 1 60 0 q0 40 -60 90 q-60 -50 -60 -90z"/><path d="M180 30 a20 20 0 0 1 40 0 a20 20 0 0 1 40 0 q0 30 -40 60 q-40 -30 -40 -60z" opacity=".7"/></g>'); },
+    magnifier: function () { return floor('magnifier', -520, 340, 340, '<circle cx="120" cy="120" r="95" fill="none" stroke="' + TXT + '" stroke-width="22"/><path d="M190 190 L320 320" stroke="' + TXT + '" stroke-width="34" stroke-linecap="round"/>', 5, true); },
     zzz: function () { return svg('zzz', 2560, 420, 420, 320, '<g fill="' + TXT + '" font-family="ui-monospace,monospace" font-weight="700"><text x="0" y="300" font-size="120">z</text><text x="120" y="210" font-size="150">z</text><text x="270" y="110" font-size="190">z</text></g>', 5, true); },
     sun: function () { return svg('sun', 2520, 380, 320, 320, '<circle cx="160" cy="160" r="70" fill="' + TXT + '"/><g class="rays" stroke="' + TXT + '" stroke-width="22" stroke-linecap="round">' + [0, 45, 90, 135, 180, 225, 270, 315].map(function (a) { var r = a * Math.PI / 180; return '<path d="M' + (160 + Math.cos(r) * 100) + ' ' + (160 + Math.sin(r) * 100) + ' L' + (160 + Math.cos(r) * 145) + ' ' + (160 + Math.sin(r) * 145) + '"/>'; }).join('') + '</g>', 5, true); },
     bang: function () { return svg('bang', 2520, 420, 200, 380, '<text x="0" y="330" font-size="380" font-weight="800" font-family="ui-monospace,monospace" fill="' + TXT + '">!</text>', 5, true); },
@@ -189,7 +199,8 @@
         var p = pieces[k], tx, ty, rot = 0;
         if (p.dragging) {
           tx = (pointerX - rect.left - p.gx) - p.hx * rect.width; ty = (pointerY - rect.top - p.gy) - p.hy * rect.height;
-          tx = Math.max(-rect.width * 0.75, Math.min(rect.width * 0.75, tx)); ty = Math.max(-rect.height * 1.1, Math.min(rect.height * 1.6, ty));
+          var hr = hero.getBoundingClientRect(), pw = p.el.offsetWidth, ph = p.el.offsetHeight, ox = rect.left + p.hx * rect.width, oy = rect.top + p.hy * rect.height;
+          tx = Math.max(hr.left - ox + pw * 0.2, Math.min(hr.right - ox - pw * 0.2, tx)); ty = Math.max(hr.top - oy + ph * 0.2, Math.min(hr.bottom - oy - ph * 0.2, ty));
         } else if (p.role === 'spark') {
           var live = (pointerActive || agitate > 0.02) ? 1 : 0;
           tx = nx * 0.6 * MAX * s + Math.sin(tm * 1.6 + p.phase) * MAX * 0.5 * s * live;
@@ -212,6 +223,7 @@
         if (p.ring) { var round = agitate > 0.45 || mood === 'round'; p.el.classList.toggle('is-round', round); if (mood === 'closed' && !round) eyeT = ' scaleY(.3)'; else if (p.big !== 1) eyeT = ' scale(' + p.big + ')'; }
         p.el.style.transform = 'translate(' + p.x.toFixed(2) + 'px,' + p.y.toFixed(2) + 'px)' + (Math.abs(p.rot) > 0.01 ? ' rotate(' + p.rot.toFixed(2) + 'deg)' : '') + eyeT;
       }
+      stepBall(Math.min(2, dt * 60)); if (ball && !ball.rest && !ball.drag) moving = true;
       var f = pieces[10]; accRoot.style.setProperty('--ax', f.x.toFixed(2) + 'px'); accRoot.style.setProperty('--ay', f.y.toFixed(2) + 'px');
       if (cur && curOn) { curX += (curTX - curX) * 0.35; curY += (curTY - curY) * 0.35; cur.style.transform = 'translate(' + curX.toFixed(1) + 'px,' + curY.toFixed(1) + 'px)'; if (Math.abs(curTX - curX) + Math.abs(curTY - curY) > 0.3) moving = true; }
       if (moving || dragEl || agitate > 0.01 || excite > 0 || pointerActive) raf = requestAnimationFrame(tick); else lastT = 0;
@@ -227,12 +239,120 @@
     measure();
     if (!reduce) setTimeout(function () { if (!interacted) poke(); }, 1800);   // self demo: a letter jumps once to show it is loose
 
+    // ---------- the ball: drag and let go to throw it. Score in the hoop, knock the keycaps over. ----------
+    var ball = null, scoreN = 0;                 // ball lives in box units (BW x BH); the ground is the wordmark baseline
+    function toBox(e) { var u = BW / rect.width; return [(e.clientX - rect.left) * u, (e.clientY - rect.top) * u]; }
+    var WALL = -20;                               // the ball stays left of the wordmark
+    function hoopGeo() { var k = fk(), q = fs(); return { rx: HOOP.bx * k + HOOP.rim[0] * q, ry: BH - HOOP.h * q + HOOP.rim[1] * q, rr: HOOP.rimR * q, bx0: HOOP.bx * k + HOOP.board[0] * q, bx1: HOOP.bx * k + HOOP.board[1] * q, by0: BH - HOOP.h * q + HOOP.board[2] * q, by1: BH - HOOP.h * q + HOOP.board[3] * q }; }
+    function setupBall() {
+      var el = accRoot.querySelector('[data-prop="ball"]'); ball = null; scoreN = 0; if (!el) return;
+      var r = 95 * fs();
+      ball = { el: el, x: -400 * fk() + r, y: BH - r, r: r, vx: 0, vy: 0, ang: 0, drag: false, rest: true, trail: [], threwAt: 0 };
+      el.addEventListener('pointerdown', function (e) {
+        e.preventDefault(); e.stopPropagation(); interacted = true; measure();
+        ball.drag = true; ball.rest = false; ball.vx = ball.vy = 0; ball.trail = []; cursorState('grab');
+        try { el.setPointerCapture(e.pointerId); } catch (_) { }
+        carry(e); wake();
+      });
+      el.addEventListener('pointermove', function (e) { if (ball.drag) { carry(e); wake(); } });
+      function carry(e) { var b = toBox(e); ball.x = Math.min(WALL - ball.r, b[0]); ball.y = b[1]; ball.trail.push([b[0], b[1], performance.now()]); if (ball.trail.length > 6) ball.trail.shift(); placeBall(); }
+      function up() {
+        if (!ball.drag) return; ball.drag = false; cursorState('');
+        var tr = ball.trail, n = tr.length;
+        if (n >= 2) {
+          var a = tr[0], b = tr[n - 1], dt = Math.max(16, b[2] - a[2]), sp = 16 * 0.6;
+          ball.vx = (b[0] - a[0]) / dt * sp; ball.vy = (b[1] - a[1]) / dt * sp;
+          var v = Math.hypot(ball.vx, ball.vy); if (v > 120) { ball.vx *= 120 / v; ball.vy *= 120 / v; }
+          if (v > 6) ball.threwAt = performance.now();
+        }
+        wake();
+      }
+      el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+      placeBall();
+    }
+    function placeBall() {
+      ball.el.style.left = (ball.x - ball.r) / BW * 100 + '%'; ball.el.style.top = (ball.y - ball.r) / BH * 100 + '%';
+      ball.el.style.transform = 'rotate(' + ball.ang.toFixed(1) + 'deg)';
+    }
+    function shootBall() {                        // a tap: a clean arc to the rim, with a little wobble so it can rim out
+      var hoop = accRoot.querySelector('[data-prop="hoop"]'); ball.rest = false;
+      if (hoop) {
+        var h = hoopGeo(), T = 46, g = 2.4, j = 1 + (Math.random() - 0.5) * 0.05;
+        if (ball.x < h.bx1 + ball.r) { ball.vx = 30 * fs(); ball.vy = -70 * fs(); }          // stuck behind the board: hop back over it first
+        else { ball.vx = (h.rx - ball.x) / T * j; ball.vy = ((h.ry - ball.y) - 0.5 * g * T * T) / T; }
+      } else { ball.vx = (-22 - Math.random() * 6) * fk(); ball.vy = -36 * fs(); }
+      mood('round', 1400); wake();
+    }
+    function stepBall(f) {
+      if (!ball || ball.drag || ball.rest) return;
+      var u = BW / rect.width, hr = hero.getBoundingClientRect(), r = ball.r;
+      var xmin = (hr.left - rect.left) * u + r, xmax = Math.min(WALL - r, (hr.right - rect.left) * u - r), ymin = (hr.top - rect.top) * u + r, ground = BH - r;
+      var px = ball.x, py = ball.y;
+      ball.vy += 2.4 * f; ball.x += ball.vx * f; ball.y += ball.vy * f;
+      if (ball.x < xmin) { ball.x = xmin; ball.vx = -ball.vx * 0.55; } else if (ball.x > xmax) { ball.x = xmax; ball.vx = -Math.abs(ball.vx) * 0.55; }
+      if (ball.y < ymin) { ball.y = ymin; ball.vy = -ball.vy * 0.5; }
+      var hoop = accRoot.querySelector('[data-prop="hoop"]');
+      if (hoop) {
+        var h = hoopGeo();
+        if (ball.vy > 0 && py <= h.ry && ball.y > h.ry && Math.abs(ball.x - h.rx) < h.rr - 25) score(hoop);
+        else [h.rx - h.rr, h.rx + h.rr].forEach(function (ex) {          // the two ends of the rim: a point the ball bounces off
+          var dx = ball.x - ex, dy = ball.y - h.ry, d = Math.hypot(dx, dy), rr = r * 0.75;
+          if (d < rr && d > 0) { var nx = dx / d, ny = dy / d, dot = ball.vx * nx + ball.vy * ny; if (dot < 0) { ball.vx -= 1.5 * dot * nx; ball.vy -= 1.5 * dot * ny; ball.vx *= 0.7; ball.vy *= 0.7; } ball.x = ex + nx * rr; ball.y = h.ry + ny * rr; }
+        });
+        if (ball.y > h.by0 - r && ball.x + r > h.bx0 && ball.x - r < h.bx1) {                // the board and the pole are a wall, whichever side the ball is on
+          if (px >= h.bx1) { ball.x = h.bx1 + r; ball.vx = Math.abs(ball.vx) * 0.5; } else if (px <= h.bx0) { ball.x = h.bx0 - r; ball.vx = -Math.abs(ball.vx) * 0.5; }
+        }
+      }
+      var caps = accRoot.querySelectorAll('[data-prop^="keycap"]'), left = 0;
+      caps.forEach(function (cap) {
+        if (cap.classList.contains('is-gone')) return; left++;
+        var cx0 = parseFloat(cap.style.left) / 100 * BW, cy0 = parseFloat(cap.style.top) / 100 * BH, cw = parseFloat(cap.style.width) / 100 * BW, ch = parseFloat(cap.style.height) / 100 * BH;
+        if (ball.x + r > cx0 && ball.x - r < cx0 + cw && ball.y + r > cy0 && ball.y - r < cy0 + ch) {
+          smash(cap); click(); left--; ball.vy = -Math.abs(ball.vy) * 0.5 - 5; ball.vx *= 0.85;
+          if (!left && caps.length > 1) { burst(20); hopAll(); }
+        }
+      });
+      if (ball.y > ground) { ball.y = ground; ball.vy = -ball.vy * 0.5; ball.vx *= 0.94; if (Math.abs(ball.vy) < 3) ball.vy = 0; }
+      ball.ang += ball.vx * f / r * 57.3;
+      if (ball.y >= ground - 0.5 && ball.vy === 0 && Math.abs(ball.vx) < 0.35) { ball.vx = 0; ball.rest = true; }
+      placeBall();
+    }
+    function score(hoop) {
+      scoreN++; var sc = hoop.querySelector('.score'); sc.textContent = '+' + scoreN;
+      hoop.classList.remove('is-scored'); void hoop.offsetWidth; hoop.classList.add('is-scored');
+      ball.vx *= 0.25; mood('round', 1000); hopAll(); if (scoreN % 3 === 0) burst(24); say(t('home.status.score', { n: scoreN }));
+    }
+    // things the rabbit can be fed: drag them to its mouth
+    function setupFeed() {
+      accRoot.querySelectorAll('[data-prop="coffee"],[data-prop="icecream"]').forEach(function (el) {
+        var home = [el.style.left, el.style.top], drag = false, gx = 0, gy = 0, moved = false; el.classList.add('carry');
+        el.addEventListener('pointerdown', function (e) {
+          e.preventDefault(); e.stopPropagation(); interacted = true; measure(); drag = true; moved = false; cursorState('grab');
+          try { el.setPointerCapture(e.pointerId); } catch (_) { }
+          var r = el.getBoundingClientRect(); gx = e.clientX - r.left; gy = e.clientY - r.top;
+        });
+        el.addEventListener('pointermove', function (e) {
+          if (!drag) return; if (!moved) { moved = true; el.classList.add('is-carried'); }
+          el.style.left = (e.clientX - gx - rect.left) / rect.width * 100 + '%'; el.style.top = (e.clientY - gy - rect.top) / rect.height * 100 + '%'; wake();
+        });
+        function up(e) {
+          if (!drag) return; drag = false; cursorState('');
+          if (moved) {
+            var mx = rect.left + rect.width * 0.386, my = rect.top + rect.height * 0.45;      // the mouth
+            if (Math.hypot(e.clientX - mx, e.clientY - my) < rect.width * 0.15) { REACT[el.getAttribute('data-prop')](el); hopAll(); }
+            el.classList.remove('is-carried'); el.style.left = home[0]; el.style.top = home[1]; el.__fed = true; wake();
+          }
+        }
+        el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+      });
+    }
+
     // ---------- props that react ----------
     var REACT = {
-      keycap: function (el) { el.classList.add('is-pressed'); setTimeout(function () { el.classList.remove('is-pressed'); }, 110); click(); if (current && current.w === 'satisfying') smash(el); },
-      keycap2: function (el) { REACT.keycap(el); },
-      ball: function (el) { var hoop = accRoot.querySelector('[data-prop="hoop"]'); if (hoop) shoot(el, hoop); else { var cap = accRoot.querySelector('[data-prop="keycap"]'); if (cap) { shoot(el, cap); setTimeout(function () { smash(cap); click(); }, 700); } } },
-      coffee: function (el) { el.classList.remove('is-steaming'); void el.offsetWidth; el.classList.add('is-steaming'); mood('closed', 700); },
+      keycap: function (el) { el.classList.add('is-pressed'); setTimeout(function () { el.classList.remove('is-pressed'); }, 110); click(); },
+      keycap1: function (el) { REACT.keycap(el); }, keycap2: function (el) { REACT.keycap(el); }, keycap3: function (el) { REACT.keycap(el); }, keycap4: function (el) { REACT.keycap(el); },
+      ball: function () { if (ball && performance.now() - ball.threwAt > 400 && (ball.rest || ball.y > BH - ball.r * 1.5)) shootBall(); },
+      coffee: function (el) { if (el.__fed) { el.__fed = false; return; } el.classList.remove('is-steaming'); void el.offsetWidth; el.classList.add('is-steaming'); mood('closed', 700); },
       mp3: function (el) { playRhythm(accRoot.querySelector('[data-prop="notes"]') || el); },
       headphones: function (el) { playRhythm(accRoot.querySelector('[data-prop="notes"]') || el); mood('closed', 2000); },
       monitor: function (el) { el.classList.remove('is-flickering'); void el.offsetWidth; el.classList.add('is-flickering'); click(); },
@@ -244,26 +364,23 @@
       sun: function (el) { el.classList.remove('is-spinning'); void el.offsetWidth; el.classList.add('is-spinning'); },
       monocle: function (el) { el.classList.remove('is-dropping'); void el.offsetWidth; el.classList.add('is-dropping'); mood('round', 900); },
       magnifier: function () { var e = byId[13]; e.big = e.big === 1 ? 1.7 : 1; e.el.classList.toggle('is-big', e.big !== 1); wake(); },
-      friend: function () { mood('closed', 450); },
+      friend: function (el) { mood('closed', 450); el.classList.remove('is-hopping'); void el.offsetWidth; el.classList.add('is-hopping'); var h = accRoot.querySelector('[data-prop="hearts"]'); if (h) { h.classList.remove('pop'); void h.offsetWidth; h.classList.add('pop'); } },
       mirror: function () { mood('closed', 900); },
       popper: function () { burst(28); hopAll(); },
       stars: function (el) { el.classList.remove('is-twinkling'); void el.offsetWidth; el.classList.add('is-twinkling'); },
       stars2: function (el) { REACT.stars(el); },
       diploma: function (el) { el.classList.remove('is-unrolling'); void el.offsetWidth; el.classList.add('is-unrolling'); },
       halo: function (el) { el.classList.remove('is-glowing'); void el.offsetWidth; el.classList.add('is-glowing'); },
-      icecream: function (el) { var b = (+el.getAttribute('data-bites') || 0) + 1; if (b > 3) { b = 0; } el.setAttribute('data-bites', b); mood('closed', 400); }
+      icecream: function (el) { if (el.__fed) { el.__fed = false; return; } var b = (+el.getAttribute('data-bites') || 0) + 1; if (b > 3) { b = 0; } el.setAttribute('data-bites', b); mood('closed', 400); }
     };
-    function shoot(ball, target) {
-      var b = ball.getBoundingClientRect(), tr = target.getBoundingClientRect();
-      ball.style.setProperty('--sx', (tr.left + tr.width * 0.5 - (b.left + b.width / 2)) + 'px'); ball.style.setProperty('--sy', (tr.top + tr.height * 0.4 - (b.top + b.height / 2)) + 'px');
-      ball.classList.remove('is-flying'); void ball.offsetWidth; ball.classList.add('is-flying'); mood('round', 1200);
-      setTimeout(function () { ball.classList.remove('is-flying'); ball.style.opacity = ''; }, 1400);
-    }
     function smash(cap) {
-      cap.style.visibility = 'hidden';
-      accRoot.insertAdjacentHTML('beforeend', svg('shards', 467, 357, 3334, 1370, '<g fill="' + TXT + '" opacity=".9"><polygon points="2200,1030 2260,1000 2250,1070"/><polygon points="2700,980 2760,1010 2710,1050"/><polygon points="2330,860 2380,850 2365,910"/><polygon points="2600,1150 2650,1120 2660,1180"/></g>', 6));
-      var sh = accRoot.querySelector('[data-prop="shards"]'); sh.classList.add('pop'); mood('round', 900); hopAll();
-      setTimeout(function () { sh.remove(); cap.style.visibility = ''; cap.classList.add('pop'); }, 1200);
+      if (cap.classList.contains('is-gone')) return;
+      cap.classList.add('is-gone'); cap.classList.remove('pop');
+      var x = parseFloat(cap.style.left) / 100 * BW + X0 - 80, y = parseFloat(cap.style.top) / 100 * BH + Y0 - 120;
+      accRoot.insertAdjacentHTML('beforeend', svg('shards', x, y, 360, 360, '<g class="shard" fill="' + TXT + '" opacity=".9"><polygon points="60,200 120,150 130,230"/><polygon points="250,120 310,160 260,210"/><polygon points="160,60 220,40 200,120"/><polygon points="220,260 280,230 290,300"/></g>', 6));
+      var sh = accRoot.lastElementChild; mood('round', 700);
+      setTimeout(function () { sh.remove(); }, 900);
+      setTimeout(function () { cap.classList.remove('is-gone'); cap.classList.add('pop'); }, 3200);
     }
     accRoot.addEventListener('click', function (e) { var el = e.target.closest('.ac.hit'); if (!el) return; interacted = true; var fn = REACT[el.getAttribute('data-prop')]; if (fn) fn(el); });
     accRoot.addEventListener('pointerover', function (e) { if (e.target.closest('.ac.hit')) cursorState('tap'); });
@@ -295,7 +412,7 @@
       if (rhythm) { clearInterval(rhythm); rhythm = 0; }
       accRoot.querySelectorAll('.ac').forEach(function (a) { a.remove(); });
       accRoot.insertAdjacentHTML('beforeend', entry.acc.map(function (k) { return ACC[k] ? ACC[k]() : ''; }).join(''));
-      accRoot.setAttribute('data-tier', entry.tier);
+      accRoot.setAttribute('data-tier', entry.tier); setupBall(); setupFeed();
       if (animate) accRoot.querySelectorAll('.ac').forEach(function (a, i) { a.style.animationDelay = (i * 60) + 'ms'; a.classList.add('pop'); });
       if (go) { var pr = PRODUCT[entry.product]; if (pr) { go.querySelector('.go__t').textContent = t(pr.key); go.querySelector('img').src = pr.icon; go.querySelector('img').alt = pr.name; go.href = pr.href; go.hidden = false; go.classList.remove('pop'); if (animate) { void go.offsetWidth; go.classList.add('pop'); } } else go.hidden = true; }
       try { sessionStorage.setItem('nm-word', entry.w); } catch (_) { }
@@ -358,6 +475,7 @@
       reel.textContent = ''; reel.appendChild(wordSpan(initial));
     }
     applyWord(initial, false);
+    if (narrowMQ.addEventListener) narrowMQ.addEventListener('change', function () { if (current) applyWord(current, false); });
 
     // keyboard access: hidden buttons for the rabbit and each letter
     var kb = document.getElementById('hero-keys');
@@ -370,6 +488,7 @@
     window.addEventListener('nm:langchange', function () { buildKeys(); if (current && go && !go.hidden) go.querySelector('.go__t').textContent = t(PRODUCT[current.product].key); });
 
     root.__nm = { spin: spin, poke: poke, words: WORDS, set: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) spin(e); }, setNow: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) { reel.textContent = ''; reel.appendChild(wordSpan(e)); applyWord(e, true); } },
+      throwBall: function (vx, vy) { if (ball) { ball.rest = false; ball.vx = vx; ball.vy = vy; wake(); } }, shoot: function () { if (ball) shootBall(); }, ball: function () { return ball ? { x: Math.round(ball.x), y: Math.round(ball.y), rest: ball.rest, score: scoreN } : null; },
       cursor: function (x, y, s) { curOn = true; cur && cur.classList.add('is-on'); curX = curTX = x; curY = curTY = y; cursorState(s || ''); wake(); },
       stats: function () { return { word: current && current.w, tier: current && current.tier, agitate: +agitate.toFixed(2), spinning: spinning, away: away ? NAME[away.id] : null, rendering: !!raf, go: go ? !go.hidden : null }; } };
     window.NewMeansHero = root.__nm;

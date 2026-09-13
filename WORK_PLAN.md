@@ -189,7 +189,8 @@ v4 · 2D 전환 (2026-09-13, 사용자 결정: 3D는 애니메이션과 겹치�
 - 단어 25개(제품 가치 기준): common joyful·calm·cozy·playful·clicky·curious·cheerful·chatty / uncommon witty·surprising·retro·rhythmic·aesthetic·thoughtful·satisfying·dramatic·connected / rare exciting·ASMR·insightful·dopamine·sparkly / epic smashing·enlightened·mint choco. 도파민대학교의 내면 성찰·관계는 thoughtful·connected·insightful·enlightened로 에둘러 표현.
 - 반응 소품: 키캡(진짜 타건음), 공→골대, mp3(타건음 리듬 재생), 커피 김, 모니터 깜빡임, 선인장 흔들림, 말풍선 순환, 느낌표·번개(토끼 점프), zzz(잠깐 깸), 해(광선 회전), 외알 안경 떨어짐, 돋보기(눈 확대), 친구·거울(눈 감기), 폭죽(색종이), 별 반짝임, 졸업장 펼침, 후광, 아이스크림 베어 먹기, satisfying·smashing 키캡 부서짐.
 - 검증: 홈·Typer·도파민·404 캡처에서 콘솔 오류 0. 정지 시 렌더 0.
-- 다듬기(2026-09-13): 소품은 토끼 몸을 가리지 않는 세 자리만 쓴다(얼굴 왼쪽 빈자리, 등 위, 귀 사이). 단어별 귀 자세(calm·ASMR·thoughtful·enlightened 처짐, surprising·exciting·dopamine·smashing 쫑긋). 제품 링크는 알약 대신 제품 아이콘 + 단어색 텍스트 링크. 상단바 `다시 뽑기` 제거(손잡이가 유일한 조작). 커서 48px로 확대, 그림자.
+- 다듬기(2026-09-13): 소품은 토끼 몸을 가리지 않는 세 자리만 쓴다(얼굴 왼쪽 빈자리, 등 위, 귀 사이). 단어별 귀 자세(calm·ASMR·thoughtful·enlightened 처짐, surprising·exciting·dopamine·smashing 쫑긋). 제품 링크는 알약 대신 제품 아이콘 + 단어색 텍스트 링크. 상단바 `다시 뽑기` 제거(손잡이가 유일한 조작). 
+- 바닥 배치와 미니게임(2026-09-13): 서 있는 소품(키캡·공·골대·모니터·선인장·mp3·커피·친구·돋보기)은 워드마크 기준선 위, 워드마크 왼쪽 빈 바닥에 선다. 카피 뒤 공간은 카피를 가리지 않는 한 모두 쓴다. 글자는 첫 화면 어디로든 끌고 갈 수 있다. 공은 끌어서 놓으면 던져지고(중력·바닥·벽·림 반동), 골대에 넣으면 점수와 토끼 점프, 키캡을 맞히면 부서진다(전부 부수면 색종이). 탭하면 자동으로 골대를 향해 던진다. 커피·아이스크림은 토끼 입으로 끌어다 주면 반응한다. 720px 이하에서는 바닥 소품 위치 0.6배·크기 0.75배, 로고 폭 66%.커서 48px로 확대, 그림자.
 
 목표: 합의된 한 방향만 사이트에 반영하고 §11로 검증한 뒤 PR.
 
