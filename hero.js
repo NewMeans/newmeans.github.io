@@ -10,7 +10,7 @@
   // seeing yourself and your friends a little differently, said sideways. weight: common 10 / uncommon 6 / rare 3 / epic 1
   var WORDS = [
     { w: 'joyful', hue: 'mint', tier: 'common', acc: [] },
-    { w: 'calm', hue: 'sage', tier: 'common', acc: ['zzz'], eyes: 'closed', dot: '…', product: 'typer' },
+    { w: 'calm', hue: 'sage', tier: 'common', acc: ['zzz'], eyes: 'closed', ears: 'droop', dot: '…', product: 'typer' },
     { w: 'cozy', hue: 'peach', tier: 'common', acc: ['coffee'], product: 'typer' },
     { w: 'playful', hue: 'coral', tier: 'common', acc: ['hoop', 'ball'], product: 'typer' },
     { w: 'clicky', hue: 'teal', tier: 'common', acc: ['keycap'], product: 'typer', dot: 'key' },
@@ -18,25 +18,25 @@
     { w: 'cheerful', hue: 'gold', tier: 'common', acc: ['sun'] },
     { w: 'chatty', hue: 'periwinkle', tier: 'common', acc: ['bubble'], product: 'dopa', dot: '…' },
     { w: 'witty', hue: 'plum', tier: 'uncommon', acc: ['monocle'], product: 'dopa' },
-    { w: 'surprising', hue: 'amber', tier: 'uncommon', acc: ['bang'], eyes: 'round', product: 'dopa', dot: '!' },
+    { w: 'surprising', hue: 'amber', tier: 'uncommon', acc: ['bang'], eyes: 'round', ears: 'perk', product: 'dopa', dot: '!' },
     { w: 'retro', hue: 'olive', tier: 'uncommon', acc: ['shades', 'monitor'], product: 'typer' },
     { w: 'rhythmic', hue: 'sky', tier: 'uncommon', acc: ['headphones', 'notes', 'mp3'], product: 'typer', dot: '♪' },
     { w: 'aesthetic', hue: 'cocoa', tier: 'uncommon', acc: ['cactus', 'monitor'], product: 'typer' },
-    { w: 'thoughtful', hue: 'indigo', tier: 'uncommon', acc: ['mirror', 'thought'], product: 'dopa', dot: '…' },
+    { w: 'thoughtful', hue: 'indigo', tier: 'uncommon', acc: ['mirror', 'thought'], ears: 'droop', product: 'dopa', dot: '…' },
     { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['keycap', 'stars'], product: 'typer' },
     { w: 'dramatic', hue: 'charcoal', tier: 'uncommon', acc: ['spotlight', 'tear'], product: 'dopa', dot: '!' },
     { w: 'connected', hue: 'rose', tier: 'uncommon', acc: ['friend', 'hearts'], product: 'dopa' },
-    { w: 'exciting', hue: 'coral', tier: 'rare', acc: ['partyhat', 'popper', 'confetti'], eyes: 'round', dot: '!' },
-    { w: 'ASMR', hue: 'teal', tier: 'rare', acc: ['headphones', 'waves'], eyes: 'closed', product: 'typer', dot: '~' },
+    { w: 'exciting', hue: 'coral', tier: 'rare', acc: ['partyhat', 'popper', 'confetti'], eyes: 'round', ears: 'perk', dot: '!' },
+    { w: 'ASMR', hue: 'teal', tier: 'rare', acc: ['headphones', 'waves'], eyes: 'closed', ears: 'droop', product: 'typer', dot: '~' },
     { w: 'insightful', hue: 'lavender', tier: 'rare', acc: ['gradcap', 'glasses', 'diploma'], product: 'dopa' },
-    { w: 'dopamine', hue: 'magenta', tier: 'rare', acc: ['bolts', 'confetti'], eyes: 'round', product: 'dopa', dot: 'bolt' },
+    { w: 'dopamine', hue: 'magenta', tier: 'rare', acc: ['bolts', 'confetti'], eyes: 'round', ears: 'perk', product: 'dopa', dot: 'bolt' },
     { w: 'sparkly', hue: 'gold', tier: 'rare', acc: ['stars', 'stars2'], dot: 'star' },
-    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['ball', 'keycap', 'keycap2', 'confetti'], eyes: 'round', product: 'typer', dot: '!' },
-    { w: 'enlightened', hue: 'gold', tier: 'epic', acc: ['halo', 'stars', 'stars2', 'confetti'], eyes: 'closed', product: 'dopa', dot: 'star' },
+    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['ball', 'keycap', 'keycap2', 'confetti'], eyes: 'round', ears: 'perk', product: 'typer', dot: '!' },
+    { w: 'enlightened', hue: 'gold', tier: 'epic', acc: ['halo', 'stars', 'stars2', 'confetti'], eyes: 'closed', ears: 'droop', product: 'dopa', dot: 'star' },
     { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycap', 'keycap2', 'stars'], product: 'typer', dot: 'star' }
   ];
   var WEIGHT = { common: 10, uncommon: 6, rare: 3, epic: 1 };
-  var PRODUCT = { typer: { key: 'home.typer.more', href: 'typer.html' }, dopa: { key: 'home.dopa.more', href: 'dopamine.html' } };
+  var PRODUCT = { typer: { key: 'home.typer.more', href: 'typer.html', icon: 'assets/brand/typer-icon.png', name: 'Typer' }, dopa: { key: 'home.dopa.more', href: 'dopamine.html', icon: 'assets/brand/dopamine-symbol.png', name: 'Dopamine University' } };
   var FALLBACK = { 'home.typer.more': '키보드 골라보기', 'home.dopa.more': '테스트 둘러보기', 'home.rabbit.action': '토끼 쓰다듬기', 'home.letter.action': '글자 {n} 튀기기', 'home.status.word': '단어: {w}', 'home.status.grab': '글자 {n} 잡음', 'home.status.letter': '글자 {n}' };
   function t(key, vars) { var s = (window.i18n && window.i18n.t(key)) || FALLBACK[key] || key; if (s === key && FALLBACK[key]) s = FALLBACK[key]; return s.replace(/\{(\w+)\}/g, function (_, k) { return vars && vars[k] != null ? vars[k] : ''; }); }
 
@@ -61,32 +61,32 @@
     shades: function () { return svg('shades', 1370, 800, 780, 210, '<g fill="' + INK + '"><rect x="0" y="20" width="330" height="170" rx="60"/><rect x="450" y="20" width="330" height="170" rx="60"/><rect x="320" y="60" width="140" height="26" rx="13"/></g><g fill="#fff" opacity=".35"><rect x="40" y="50" width="90" height="26" rx="13"/><rect x="490" y="50" width="90" height="26" rx="13"/></g>', 5); },
     headphones: function () { return svg('headphones', 1180, 600, 1220, 520, '<path d="M120 420 V330 a490 400 0 0 1 980 0 V420" fill="none" stroke="' + TXT + '" stroke-width="30" stroke-linecap="round"/><rect x="20" y="330" width="200" height="190" rx="60" fill="' + TXT + '"/><rect x="1000" y="330" width="200" height="190" rx="60" fill="' + TXT + '"/>', 5, true); },
     notes: function () { return svg('notes', 2520, 560, 360, 260, '<text class="note" x="0" y="200" font-size="230" font-family="ui-monospace,monospace" fill="' + TXT + '">♪</text><text class="note" x="180" y="150" font-size="170" font-family="ui-monospace,monospace" fill="' + TXT + '" style="animation-delay:.15s">♫</text>'); },
-    mp3: function () { return svg('mp3', 2440, 960, 300, 380, '<rect x="20" y="20" width="260" height="340" rx="40" fill="' + TXT + '"/><rect x="60" y="60" width="180" height="110" rx="14" fill="' + PAPER + '" opacity=".9"/><circle cx="150" cy="260" r="62" fill="' + PAPER + '" opacity=".9"/><polygon class="play" points="135,232 135,288 185,260" fill="' + TXT + '"/>', 5, true); },
-    waves: function () { return svg('waves', 2420, 760, 420, 300, '<g fill="none" stroke="' + TXT + '" stroke-width="22" stroke-linecap="round"><path d="M40 150 q40 -60 80 0 t80 0"/><path d="M200 150 q60 -110 120 0 t120 0"/></g>'); },
-    partyhat: function () { return svg('partyhat', 1580, 400, 300, 400, '<polygon points="150,20 290,390 10,390" fill="' + TXT + '"/><circle cx="150" cy="24" r="34" fill="' + RAB + '" stroke="' + TXT + '" stroke-width="12"/><g fill="' + RAB + '"><circle cx="150" cy="180" r="20"/><circle cx="110" cy="300" r="20"/><circle cx="200" cy="320" r="20"/></g>', 4); },
-    popper: function () { return svg('popper', 2500, 420, 360, 360, '<polygon points="40,320 300,60 210,300" fill="' + TXT + '"/><g fill="' + RAB + '"><circle cx="150" cy="40" r="22"/><circle cx="330" cy="110" r="18"/><circle cx="60" cy="140" r="16"/></g>', 5, true); },
-    gradcap: function () { return svg('gradcap', 1480, 600, 500, 260, '<polygon points="250,10 490,110 250,210 10,110" fill="' + INK + '"/><rect x="180" y="150" width="140" height="70" rx="12" fill="' + INK + '"/><path d="M470 118 v90" stroke="' + TXT + '" stroke-width="14" stroke-linecap="round"/><circle cx="470" cy="220" r="18" fill="' + TXT + '"/>', 4); },
-    halo: function () { return svg('halo', 1560, 300, 400, 160, '<ellipse class="halo" cx="200" cy="80" rx="170" ry="52" fill="none" stroke="' + TXT + '" stroke-width="26" opacity=".85"/>', 4, true); },
-    coffee: function () { return svg('coffee', 960, 940, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
+    mp3: function () { return svg('mp3', 640, 720, 300, 380, '<rect x="20" y="20" width="260" height="340" rx="40" fill="' + TXT + '"/><rect x="60" y="60" width="180" height="110" rx="14" fill="' + PAPER + '" opacity=".9"/><circle cx="150" cy="260" r="62" fill="' + PAPER + '" opacity=".9"/><polygon class="play" points="135,232 135,288 185,260" fill="' + TXT + '"/>', 5, true); },
+    waves: function () { return svg('waves', 2900, 520, 420, 300, '<g fill="none" stroke="' + TXT + '" stroke-width="22" stroke-linecap="round"><path d="M40 150 q40 -60 80 0 t80 0"/><path d="M200 150 q60 -110 120 0 t120 0"/></g>'); },
+    partyhat: function () { return svg('partyhat', 1810, 380, 320, 400, '<polygon points="150,20 290,390 10,390" fill="' + TXT + '"/><circle cx="150" cy="24" r="34" fill="' + RAB + '" stroke="' + TXT + '" stroke-width="12"/><g fill="' + RAB + '"><circle cx="150" cy="180" r="20"/><circle cx="110" cy="300" r="20"/><circle cx="200" cy="320" r="20"/></g>', 4); },
+    popper: function () { return svg('popper', 2620, 400, 360, 360, '<polygon points="40,320 300,60 210,300" fill="' + TXT + '"/><g fill="' + RAB + '"><circle cx="150" cy="40" r="22"/><circle cx="330" cy="110" r="18"/><circle cx="60" cy="140" r="16"/></g>', 5, true); },
+    gradcap: function () { return svg('gradcap', 1790, 540, 360, 240, '<polygon points="180,10 350,80 180,150 10,80" fill="' + INK + '"/><rect x="130" y="110" width="100" height="50" rx="10" fill="' + INK + '"/><path d="M338 86 v80" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"/><circle cx="338" cy="176" r="14" fill="' + TXT + '"/>', 4); },
+    halo: function () { return svg('halo', 1660, 150, 380, 150, '<ellipse class="halo" cx="200" cy="80" rx="170" ry="52" fill="none" stroke="' + TXT + '" stroke-width="26" opacity=".85"/>', 4, true); },
+    coffee: function () { return svg('coffee', 900, 860, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
     keycap: function () { return img('keycap', 2380, 990, 200, 200, 'assets/desk/keycap_0.png', -12, true); },
     keycap2: function () { return img('keycap2', 2560, 1030, 170, 170, 'assets/desk/keycap_0.png', 14, true); },
     ball: function () { return img('ball', 880, 1000, 190, 190, 'assets/game/ball.png', 0, true); },
-    hoop: function () { return svg('hoop', 2620, 330, 560, 560, '<rect x="380" y="20" width="160" height="200" rx="14" fill="none" stroke="' + TXT + '" stroke-width="20"/><rect x="380" y="220" width="20" height="300" fill="' + TXT + '"/><ellipse cx="300" cy="230" rx="130" ry="40" fill="none" stroke="' + TXT + '" stroke-width="22"/><path d="M180 240 l30 150 M420 240 l-30 150 M240 250 l20 140 M360 250 l-20 140 M210 390 h180" fill="none" stroke="' + TXT + '" stroke-width="10" opacity=".6"/>', 3); },
-    monitor: function () { return svg('monitor', 2560, 470, 540, 500, '<image href="assets/shop/monitor/2000.png" width="540" height="487"/><text class="screen-text" x="120" y="250" font-size="70" font-family="DNFBitBit,monospace" fill="#65cda7" opacity="0">TYPER</text>', 4, true); },
-    cactus: function () { return img('cactus', 2300, 900, 180, 320, 'assets/desk/sculpture.png', 0, true); },
+    hoop: function () { return svg('hoop', 2620, 260, 560, 560, '<rect x="380" y="20" width="160" height="200" rx="14" fill="none" stroke="' + TXT + '" stroke-width="20"/><rect x="380" y="220" width="20" height="300" fill="' + TXT + '"/><ellipse cx="300" cy="230" rx="130" ry="40" fill="none" stroke="' + TXT + '" stroke-width="22"/><path d="M180 240 l30 150 M420 240 l-30 150 M240 250 l20 140 M360 250 l-20 140 M210 390 h180" fill="none" stroke="' + TXT + '" stroke-width="10" opacity=".6"/>', 3); },
+    monitor: function () { return svg('monitor', 560, 640, 520, 470, '<image href="assets/shop/monitor/2000.png" width="520" height="469"/><text class="screen-text" x="115" y="240" font-size="68" font-family="DNFBitBit,monospace" fill="#65cda7" opacity="0">TYPER</text>', 4, true); },
+    cactus: function () { return img('cactus', 900, 420, 150, 240, 'assets/desk/sculpture.png', 0, true); },
     bubble: function () { return svg('bubble', 2480, 380, 620, 420, '<path d="M60 40 h500 a50 50 0 0 1 50 50 v190 a50 50 0 0 1 -50 50 h-300 l-90 80 v-80 h-110 a50 50 0 0 1 -50 -50 v-190 a50 50 0 0 1 50 -50z" fill="' + TXT + '"/><text class="bubble-text" x="120" y="230" font-size="150" font-weight="700" font-family="ui-monospace,monospace" fill="' + RAB + '">ㅋㅋ</text>', 5, true); },
     thought: function () { return svg('thought', 2560, 330, 560, 420, '<circle cx="90" cy="380" r="22" fill="' + TXT + '"/><circle cx="150" cy="320" r="34" fill="' + TXT + '"/><path d="M200 90 a90 90 0 0 1 150 -40 a100 100 0 0 1 170 40 a80 80 0 0 1 10 150 a90 90 0 0 1 -150 60 a100 100 0 0 1 -170 -30 a80 80 0 0 1 -10 -180z" fill="' + TXT + '"/><text x="290" y="200" font-size="140" font-weight="700" font-family="ui-monospace,monospace" fill="' + RAB + '">…</text>', 5); },
-    mirror: function () { return svg('mirror', 860, 860, 330, 420, '<ellipse cx="165" cy="150" rx="130" ry="130" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="24"/><rect x="150" y="270" width="30" height="130" rx="10" fill="' + TXT + '"/><text x="60" y="180" font-size="110" font-family="ui-monospace,monospace" fill="' + RAB + '" transform="scale(-1,1) translate(-330,0)">(´^`*)</text>', 5, true); },
-    friend: function () { return svg('friend', 2620, 720, 640, 400, '<g font-family="ui-monospace,monospace" font-weight="700" fill="' + TXT + '"><text x="120" y="150" font-size="160">/) /)</text><text x="40" y="330" font-size="170">(´^`*)</text></g>', 5, true); },
-    hearts: function () { return svg('hearts', 2420, 560, 300, 220, '<g fill="' + TXT + '"><path d="M60 80 a30 30 0 0 1 60 0 a30 30 0 0 1 60 0 q0 40 -60 90 q-60 -50 -60 -90z"/><path d="M180 30 a20 20 0 0 1 40 0 a20 20 0 0 1 40 0 q0 30 -40 60 q-40 -30 -40 -60z" opacity=".7"/></g>'); },
+    mirror: function () { return svg('mirror', 820, 780, 330, 420, '<ellipse cx="165" cy="150" rx="130" ry="130" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="24"/><rect x="150" y="270" width="30" height="130" rx="10" fill="' + TXT + '"/><text x="60" y="180" font-size="110" font-family="ui-monospace,monospace" fill="' + RAB + '" transform="scale(-1,1) translate(-330,0)">(´^`*)</text>', 5, true); },
+    friend: function () { return svg('friend', 300, 700, 640, 400, '<g font-family="ui-monospace,monospace" font-weight="700" fill="' + TXT + '"><text x="120" y="150" font-size="160">/) /)</text><text x="40" y="330" font-size="170">(´^`*)</text></g>', 5, true); },
+    hearts: function () { return svg('hearts', 960, 540, 300, 220, '<g fill="' + TXT + '"><path d="M60 80 a30 30 0 0 1 60 0 a30 30 0 0 1 60 0 q0 40 -60 90 q-60 -50 -60 -90z"/><path d="M180 30 a20 20 0 0 1 40 0 a20 20 0 0 1 40 0 q0 30 -40 60 q-40 -30 -40 -60z" opacity=".7"/></g>'); },
     magnifier: function () { return svg('magnifier', 2380, 900, 340, 340, '<circle cx="120" cy="120" r="95" fill="none" stroke="' + TXT + '" stroke-width="22"/><path d="M190 190 L320 320" stroke="' + TXT + '" stroke-width="34" stroke-linecap="round"/>', 5, true); },
     zzz: function () { return svg('zzz', 2560, 420, 420, 320, '<g fill="' + TXT + '" font-family="ui-monospace,monospace" font-weight="700"><text x="0" y="300" font-size="120">z</text><text x="120" y="210" font-size="150">z</text><text x="270" y="110" font-size="190">z</text></g>', 5, true); },
     sun: function () { return svg('sun', 2520, 380, 320, 320, '<circle cx="160" cy="160" r="70" fill="' + TXT + '"/><g class="rays" stroke="' + TXT + '" stroke-width="22" stroke-linecap="round">' + [0, 45, 90, 135, 180, 225, 270, 315].map(function (a) { var r = a * Math.PI / 180; return '<path d="M' + (160 + Math.cos(r) * 100) + ' ' + (160 + Math.sin(r) * 100) + ' L' + (160 + Math.cos(r) * 145) + ' ' + (160 + Math.sin(r) * 145) + '"/>'; }).join('') + '</g>', 5, true); },
     bang: function () { return svg('bang', 2520, 420, 200, 380, '<text x="0" y="330" font-size="380" font-weight="800" font-family="ui-monospace,monospace" fill="' + TXT + '">!</text>', 5, true); },
     stars: function () { return svg('stars', 700, 380, 2900, 1000, star(180, 250, 60) + star(1300, 120, 45) + star(2550, 250, 70) + star(2760, 820, 50) + star(150, 820, 40), 0, true); },
-    stars2: function () { return svg('stars2', 700, 380, 2900, 1000, star(600, 60, 36) + star(2050, 40, 40) + star(2880, 480, 44) + star(420, 560, 30) + star(1950, 660, 34), 0, true); },
+    stars2: function () { return svg('stars2', 700, 380, 2900, 1000, star(600, 60, 36) + star(2050, 40, 40) + star(2880, 480, 44) + star(420, 560, 30) + star(1950, 300, 34), 0, true); },
     confetti: function () { var s = '', cols = ['#FF6666', '#DAB249', '#79C0F1', '#C1A9EE', '#95C78A', '#EE95D1']; for (var i = 0; i < 26; i++) { var x = 60 + ((i * 631) % 3200), y = 40 + ((i * 397) % 1250), r = (i * 47) % 90; s += '<rect x="' + x + '" y="' + y + '" width="46" height="22" rx="6" fill="' + cols[i % cols.length] + '" transform="rotate(' + r + ' ' + (x + 23) + ' ' + (y + 11) + ')"/>'; } return svg('confetti', 467, 357, 3334, 1370, s, 6); },
-    bolts: function () { var b = function (x, y, s) { return '<polygon points="' + [60, 0, 20, 110, 55, 110, 30, 200, 100, 80, 62, 80, 90, 0].map(function (v, i) { return (i % 2 ? y + v * s : x + v * s).toFixed(0); }).join(',') + '" fill="' + TXT + '"/>'; }; return svg('bolts', 467, 357, 3334, 1370, b(650, 120, 1) + b(2000, 60, 0.8) + b(2900, 500, 0.7) + b(300, 600, 0.6), 0, true); },
+    bolts: function () { var b = function (x, y, s) { return '<polygon points="' + [60, 0, 20, 110, 55, 110, 30, 200, 100, 80, 62, 80, 90, 0].map(function (v, i) { return (i % 2 ? y + v * s : x + v * s).toFixed(0); }).join(',') + '" fill="' + TXT + '"/>'; }; return svg('bolts', 467, 357, 3334, 1370, b(650, 120, 1) + b(2000, 60, 0.8) + b(2300, 180, 0.7) + b(300, 600, 0.6), 0, true); },
     spotlight: function () { return svg('spotlight', 900, 0, 1700, 1400, '<polygon points="850,0 1700,1400 0,1400" fill="' + RAB + '" opacity=".22"/>', 0); },
     tear: function () { return svg('tear', 1980, 900, 120, 200, '<path d="M60 10 Q120 110 60 170 Q0 110 60 10z" fill="#79C0F1"/>', 5); },
     diploma: function () { return svg('diploma', 880, 1020, 300, 180, '<g class="scroll-body"><rect x="20" y="40" width="260" height="90" rx="45" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="14"/></g><rect x="120" y="30" width="60" height="110" rx="12" fill="' + TXT + '"/>', 5, true); },
@@ -112,6 +112,7 @@
       el.style.width = p[3] / BW * 100 + '%'; el.style.height = p[4] / BH * 100 + '%';
       el.style.setProperty('--m', 'url("' + base + 'p' + id + '.png")');
       if (r === 'feet') el.style.transformOrigin = '100% 50%';
+      if (r === 'ear') el.style.transformOrigin = '50% 100%';
       root.appendChild(el);
       var ring = null;
       if (id === 12 || id === 13) { ring = document.createElement('i'); ring.className = 'eye-ring'; el.appendChild(ring); }
@@ -148,7 +149,7 @@
     function measure() { rect = root.getBoundingClientRect(); cx = rect.left + rect.width / 2; cy = rect.top + rect.height / 2; reach = Math.max(300, rect.width * 1.1); MAX = rect.width * 0.03; }
     addEventListener('resize', measure); addEventListener('scroll', measure, { passive: true });
     var tnx = 0, tny = 0, nx = 0, ny = 0, pointerX = 0, pointerY = 0, dragEl = null, away = null, agitate = 0, excite = 0, lastSweat = 0, lastMove = 0, raf = 0, tm = 0, lastT = 0, interacted = false;
-    var eyeMood = null, moodOverride = null, hop = 0;
+    var eyeMood = null, moodOverride = null, earMood = null, hop = 0;
     addEventListener('pointermove', function (e) {
       if (!rect) return;
       pointerX = e.clientX; pointerY = e.clientY; lastMove = performance.now(); curTX = e.clientX; curTY = e.clientY;
@@ -196,6 +197,7 @@
         } else {
           var lean = LEAN[p.role] * s; tx = nx * lean * MAX; ty = ny * lean * MAX;
           if (p.hover) { ty -= rect.width * 0.02; rot = -3; }
+          if (p.role === 'ear' && earMood) { var left = p.id === 4 || p.id === 1; rot += earMood === 'droop' ? (left ? -14 : 14) : (left ? 5 : -5); }
           if (agitate > 0.02) {
             if (p.role === 'feet') rot = Math.abs(Math.sin(tm * 13 + (p.id === 17 ? 0 : Math.PI / 2))) * agitate * 32;
             else if (p.role === 'tail') rot = Math.sin(tm * 26) * agitate * 30;
@@ -289,13 +291,13 @@
       document.documentElement.style.setProperty('--word', c.text);
       document.documentElement.style.setProperty('--rabbit', c.rabbit);
       document.documentElement.style.setProperty('--slot-bg', tint(c.rabbit));
-      eyeMood = entry.eyes || null; byId[13].big = 1; byId[13].el.classList.remove('is-big');
+      eyeMood = entry.eyes || null; earMood = entry.ears || null; byId[13].big = 1; byId[13].el.classList.remove('is-big');
       if (rhythm) { clearInterval(rhythm); rhythm = 0; }
       accRoot.querySelectorAll('.ac').forEach(function (a) { a.remove(); });
       accRoot.insertAdjacentHTML('beforeend', entry.acc.map(function (k) { return ACC[k] ? ACC[k]() : ''; }).join(''));
       accRoot.setAttribute('data-tier', entry.tier);
       if (animate) accRoot.querySelectorAll('.ac').forEach(function (a, i) { a.style.animationDelay = (i * 60) + 'ms'; a.classList.add('pop'); });
-      if (go) { var pr = PRODUCT[entry.product]; if (pr) { go.textContent = t(pr.key); go.href = pr.href; go.hidden = false; go.classList.toggle('pop', !!animate); } else go.hidden = true; }
+      if (go) { var pr = PRODUCT[entry.product]; if (pr) { go.querySelector('.go__t').textContent = t(pr.key); go.querySelector('img').src = pr.icon; go.querySelector('img').alt = pr.name; go.href = pr.href; go.hidden = false; go.classList.remove('pop'); if (animate) { void go.offsetWidth; go.classList.add('pop'); } } else go.hidden = true; }
       try { sessionStorage.setItem('nm-word', entry.w); } catch (_) { }
       say(t('home.status.word', { w: entry.w + (entry.tier === 'common' ? '' : ' (' + entry.tier + ')') }));
       wake();
@@ -365,7 +367,7 @@
       letters.forEach(function (p) { var b = document.createElement('button'); b.type = 'button'; b.textContent = t('home.letter.action', { n: NAME[p.id] }); b.addEventListener('click', function () { poke(p); }); kb.appendChild(b); });
     }
     buildKeys();
-    window.addEventListener('nm:langchange', function () { buildKeys(); if (current && go && !go.hidden) go.textContent = t(PRODUCT[current.product].key); });
+    window.addEventListener('nm:langchange', function () { buildKeys(); if (current && go && !go.hidden) go.querySelector('.go__t').textContent = t(PRODUCT[current.product].key); });
 
     root.__nm = { spin: spin, poke: poke, words: WORDS, set: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) spin(e); }, setNow: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) { reel.textContent = ''; reel.appendChild(wordSpan(e)); applyWord(e, true); } },
       cursor: function (x, y, s) { curOn = true; cur && cur.classList.add('is-on'); curX = curTX = x; curY = curTY = y; cursorState(s || ''); wake(); },

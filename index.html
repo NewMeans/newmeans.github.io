@@ -33,7 +33,6 @@
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang-set="ko">KO</button><span>·</span><button type="button" data-lang-set="en">EN</button>
       </div>
-      <button type="button" class="btn btn--tint btn--sm" id="reroll"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="width:14px;height:14px"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M13.5 2.5v3h-3"/></svg><span data-i18n="home.reroll">다시 뽑기</span></button>
       <a class="btn btn--primary btn--sm" href="mailto:newmeans.dev@gmail.com" data-i18n="home.mail">메일 보내기</a>
     </div>
   </div>
@@ -44,7 +43,7 @@
     <div class="copy">
       <h1 class="headline display">Life, a little more<br><span class="nowrap"><span class="slot" id="slot"><span class="reel" id="reel"><span class="word"><span class="w">joyful</span><span class="dot">.</span></span></span></span><button type="button" class="lever" id="lever" data-i18n="home.lever" data-i18n-attr="aria-label" aria-label="단어 다시 뽑기"><svg viewBox="0 0 46 96" aria-hidden="true"><ellipse cx="23" cy="86" rx="16" ry="7" fill="#3B3732"/><rect x="17" y="74" width="12" height="12" rx="4" fill="#706B64"/><rect class="stick" x="20" y="14" width="6" height="64" rx="3" fill="#3B3732"/><circle class="knob" cx="23" cy="14" r="12" fill="var(--word)"/></svg></button></span></h1>
       <p class="sub">Games and AI services that make everyday life a little more joyful</p>
-      <a class="btn btn--tint btn--sm go" id="go" hidden></a>
+      <a class="go" id="go" hidden><img src="assets/brand/typer-icon.png" alt="" width="22" height="22"><span class="go__t"></span><span class="go__a" aria-hidden="true">→</span></a>
     </div>
     <div class="brandwrap">
       <div class="brandart" id="brandart" data-nm-hero data-acc="acc" role="img" aria-label="NewMeans"></div>
@@ -142,11 +141,11 @@
 </footer>
 
 <div class="cursor" id="cursor" data-state="" aria-hidden="true">
-  <svg class="c-spark" viewBox="0 0 32 32"><circle cx="9" cy="8" r="2.6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M20 12v14M13 19h14M15.5 14.5l9 9M24.5 14.5l-9 9" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
-  <svg class="c-hand" viewBox="0 0 32 32"><path d="M11 17V8.5a2 2 0 1 1 4 0V15m0-7.5a2 2 0 1 1 4 0V15m0-5.5a2 2 0 1 1 4 0V19c0 5-3 8-8 8s-8-3-8-8v-4a2 2 0 1 1 4 0" fill="#FCFBF7" stroke="#3B3732" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>
-  <svg class="c-grab" viewBox="0 0 32 32"><path d="M9 16v-2a2 2 0 1 1 4 0v-1a2 2 0 1 1 4 0v1a2 2 0 1 1 4 0v1a2 2 0 1 1 4 0v4c0 5-3 8-8 8s-8-3-8-8z" fill="#FCFBF7" stroke="#3B3732" stroke-width="1.8" stroke-linejoin="round"/></svg>
-  <svg class="c-pull" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#FCFBF7" stroke="#3B3732" stroke-width="1.8"/><path d="M16 9v13M11 17l5 5 5-5" fill="none" stroke="#3B3732" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  <svg class="c-tap" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#FCFBF7" stroke="#3B3732" stroke-width="1.8"/><circle cx="16" cy="16" r="4" fill="#3B3732"/></svg>
+  <svg class="c-spark" viewBox="0 0 48 48"><circle cx="12" cy="11" r="4" fill="none" stroke="currentColor" stroke-width="3.2"/><path d="M30 16v22M19 27h22M22.5 19.5l15 15M37.5 19.5l-15 15" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/></svg>
+  <svg class="c-hand" viewBox="0 0 48 48"><path d="M16 26V12a3 3 0 1 1 6 0v10m0-11a3 3 0 1 1 6 0v11m0-8a3 3 0 1 1 6 0v14c0 8-4.5 12-12 12s-12-4-12-12v-6a3 3 0 1 1 6 0" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+  <svg class="c-grab" viewBox="0 0 48 48"><path d="M13 25v-3a3 3 0 1 1 6 0v-2a3 3 0 1 1 6 0v2a3 3 0 1 1 6 0v1a3 3 0 1 1 6 0v6c0 8-4.5 12-12 12s-12-4-12-12z" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6" stroke-linejoin="round"/></svg>
+  <svg class="c-pull" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6"/><path d="M24 13v20M16 26l8 8 8-8" fill="none" stroke="#3B3732" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="c-tap" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6"/><circle cx="24" cy="24" r="7" fill="currentColor"/></svg>
 </div>
 
 <script src="i18n.js?v=20260913-1" defer></script>
