@@ -28,6 +28,20 @@
 .lever.is-pulled .knob{animation:pull-knob .7s var(--ease)}
 @keyframes pull-stick{0%{transform:scaleY(1)}30%{transform:scaleY(.22)}65%{transform:scaleY(1.06)}100%{transform:scaleY(1)}}
 @keyframes pull-knob{0%{transform:translateY(0) scale(1)}30%{transform:translateY(46px) scale(1.55)}65%{transform:translateY(-3px) scale(.98)}100%{transform:translateY(0) scale(1)}}
+/* the keycap keyring that hangs on the lever (clicky) */
+.lever .keyring{position:absolute;left:54%;top:.08em;width:.62em;height:.95em;overflow:visible;transform-origin:15% 9%;animation:swing 2.8s ease-in-out infinite;pointer-events:auto;cursor:pointer}
+.lever.is-pulled .keyring{animation:swing-hard 1s ease-out}
+.lever .keyring .cap{transition:transform .08s}.lever .keyring.is-pressed .cap{transform:translateY(14px)}
+@keyframes swing{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
+@keyframes swing-hard{0%{transform:rotate(0)}30%{transform:rotate(30deg)}60%{transform:rotate(-16deg)}100%{transform:rotate(0)}}
+/* rarity: a tag by the lever, a light sweeping across rare windows, a soft holographic wash on epic ones */
+.tier{display:inline-block;vertical-align:top;margin:.14em 0 0 .32em;font:600 11px/1 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--word);border:1.5px solid currentColor;border-radius:var(--r-pill);padding:5px 8px 6px}
+.tier[data-tier="epic"]{background:var(--word);color:var(--bg)}
+.slot[data-tier="rare"]::after,.slot[data-tier="epic"]::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%) no-repeat;background-size:250% 100%;animation:shimmer 3.4s ease-in-out infinite;pointer-events:none}
+@keyframes shimmer{0%{background-position:120% 0}60%,100%{background-position:-120% 0}}
+.slot[data-tier="epic"]{background-image:linear-gradient(120deg,var(--slot-bg),color-mix(in srgb,#ffd3e8 55%,var(--slot-bg)),color-mix(in srgb,#d3f0ff 55%,var(--slot-bg)),color-mix(in srgb,#fff2c9 55%,var(--slot-bg)),var(--slot-bg));background-size:300% 100%;animation:holo 7s linear infinite}
+@keyframes holo{to{background-position:300% 0}}
+:root[data-face="pixel"] .copy .display{font-family:var(--font-pixel);font-weight:400;letter-spacing:0;line-height:1.05}
 .go{display:inline-flex;align-items:center;gap:10px;margin-top:22px;font-size:15px;font-weight:500;color:var(--word);text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;transition:text-decoration-color var(--dur) var(--ease)}
 .go img{width:22px;height:22px;border-radius:6px}
 .go__a{transition:transform .18s var(--ease)}
@@ -36,15 +50,19 @@
 
 /* the rabbit and the wordmark, both painted with the word's colour */
 .brandwrap{position:absolute;right:7vw;bottom:14vh;width:min(45vw,700px);aspect-ratio:3334/1370;z-index:1}
-.brandart{position:absolute;inset:0;touch-action:none}
+.brandart{position:absolute;inset:0;touch-action:none;z-index:1}
 .pc{position:absolute;will-change:transform;background:var(--rabbit);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
 .pc.word{cursor:grab}.pc.word.drag{cursor:grabbing;z-index:6}
-.eye-ring{position:absolute;left:50%;top:46%;width:126%;aspect-ratio:1;border-radius:50%;border:clamp(2.6px,.45vw,4.3px) solid var(--rabbit);transform:translate(-50%,-50%);opacity:0;pointer-events:none}
-.pc.is-round{-webkit-mask:none;mask:none;background:none}.pc.is-round .eye-ring{opacity:1}
+/* eye shapes: an svg over each eye piece, in the rabbit colour, the logo's stroke weight */
+.eye-alt{position:absolute;left:50%;top:50%;width:250%;height:348%;transform:translate(-50%,-50%);overflow:visible;display:none;pointer-events:none}
+.pc.is-alt{-webkit-mask:none;mask:none;background:none}.pc.is-alt .eye-alt{display:block}
 .pc.is-big{transition:transform .2s var(--ease)}
-.acc{position:absolute;inset:0;pointer-events:none;transform:translate(var(--ax,0),var(--ay,0))}
+.acc{position:absolute;inset:0;pointer-events:none;transform:translate(var(--ax,0),var(--ay,0));z-index:2}
+.acc--back{z-index:0}
+.pts{position:absolute;inset:0;pointer-events:none;z-index:3}
+.pt{position:absolute;will-change:transform}.pt svg{display:block;width:100%;height:100%;overflow:visible}
 .acc .ac{position:absolute;display:block}
-.acc .ac.hit{pointer-events:auto;cursor:pointer}
+.acc .ac.hit{pointer-events:auto;cursor:pointer;touch-action:none}
 .acc .ac.pop{animation:pop .5s var(--ease) both}
 .acc svg.ac{overflow:visible}
 .acc .ac.carry{transition:left .5s var(--ease),top .5s var(--ease)}
@@ -84,6 +102,16 @@
 @keyframes flicker{0%,40%,80%{opacity:0}20%,60%,100%{opacity:1}}
 .ac.is-playing .note{animation:bob .5s ease-in-out infinite alternate}
 @keyframes bob{to{transform:translateY(-18px)}}
+.ac .tear{animation:teardrop 1.7s ease-in infinite}.ac .tear.t2{animation-delay:.8s}
+@keyframes teardrop{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(200px);opacity:0}}
+.ac.is-swinging .beam{animation:swing-beam 1.4s var(--ease)}.ac.is-swinging .beam polygon{animation:flicker .6s steps(4)}
+@keyframes swing-beam{25%{transform:rotate(-6deg)}60%{transform:rotate(5deg)}}
+.ac.is-spinning .prop,.ac.is-spinning .leaves{animation:rays .9s var(--ease)}
+.ac.is-tilting .ring-tilt{animation:tilt 1.2s var(--ease)}
+@keyframes tilt{50%{transform:scaleY(-.6)}}
+.ac .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flame .6s ease-in-out infinite alternate}.ac.is-out .flame{opacity:0}
+@keyframes flame{to{transform:scaleY(.86) scaleX(1.1)}}
+.ac .neon-text{filter:drop-shadow(0 0 6px #3AF0FF)}.ac .neon-frame{filter:drop-shadow(0 0 6px #FF3AD6)}.ac.is-off .neon-text,.ac.is-off .neon-frame{opacity:.25;filter:none}
 .ac .bite{opacity:0}.ac[data-bites="1"] .b1{opacity:1}.ac[data-bites="2"] .b1,.ac[data-bites="2"] .b2{opacity:1}.ac[data-bites="3"] .b1,.ac[data-bites="3"] .b2,.ac[data-bites="3"] .b3{opacity:1}
 
 /* the cursor: a brand sparkle that becomes a hand over the loose letters */
@@ -98,10 +126,36 @@
 .cursor[data-state="tap"] .c-spark{opacity:0}.cursor[data-state="tap"] .c-tap{opacity:1;transform:scale(1)}
 
 .corner{position:absolute;bottom:40px;font-size:13px;color:var(--text-2);z-index:2}
-.corner--left{left:40px}
+.corner--left{left:40px;display:flex;align-items:center;gap:18px}
+.wordsbtn{font:inherit;color:var(--text-2);text-decoration:underline;text-underline-offset:4px;text-decoration-color:transparent;transition:color var(--dur) var(--ease),text-decoration-color var(--dur) var(--ease)}
+.wordsbtn:hover{color:var(--text-1);text-decoration-color:currentColor}
 .corner--right{right:26px;width:44px;height:44px;display:grid;place-items:center;color:var(--text-1);border-radius:var(--r-pill);transition:background var(--dur) var(--ease)}
 .corner--right:hover{background:var(--surface)}
 .corner--right svg{width:16px;height:22px}
+
+/* ---------- the collection: words found so far, the rest as ??? ---------- */
+.words{margin:auto;border:none;border-radius:var(--r-tile);background:var(--bg);color:var(--text-1);padding:30px 34px 34px;width:min(92vw,640px);box-shadow:0 30px 80px rgba(36,33,29,.18)}
+.words::backdrop{background:rgba(36,33,29,.35);backdrop-filter:blur(4px)}
+.words__head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.words__head h2{font-family:var(--font-display);font-size:26px;font-weight:600;letter-spacing:-.02em}
+.words__head p{color:var(--text-2);font-size:14px}
+.words__close{margin-left:auto;width:36px;height:36px;border-radius:var(--r-pill);display:grid;place-items:center;color:var(--text-2);align-self:center}.words__close:hover{background:var(--surface);color:var(--text-1)}
+.words__row{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.words__tier{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--n-500);padding-top:7px}
+.words__list{list-style:none;display:flex;flex-wrap:wrap;gap:4px 20px}
+.wd{font-family:var(--font-display);font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.35}
+.wd--unknown{color:var(--n-400)}
+button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:5px;text-decoration-thickness:1.5px;transition:text-decoration-color var(--dur) var(--ease)}button.wd:hover,button.wd.is-now{text-decoration-color:currentColor}
+
+/* ---------- cyberpunk: the whole page goes dark and neon while the word is up ---------- */
+:root[data-theme="cyber"] body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:80;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 2px,transparent 2px 5px)}
+:root[data-theme="cyber"] .slot .word{text-shadow:0 0 12px color-mix(in srgb,var(--word) 55%,transparent)}
+:root[data-theme="cyber"] .brandart{filter:drop-shadow(0 0 10px rgba(58,240,255,.4))}
+:root[data-theme="cyber"] .cursor{filter:drop-shadow(0 0 6px currentColor)}
+:root[data-theme="cyber"] .lever ellipse,:root[data-theme="cyber"] .lever .stick{fill:#A9A3D6}
+:root[data-theme="cyber"] .words{box-shadow:0 30px 80px rgba(0,0,0,.5)}
+:root[data-theme="cyber"] .slot[data-tier="epic"]{background-image:linear-gradient(120deg,var(--slot-bg),color-mix(in srgb,#4a1a44 70%,var(--slot-bg)),color-mix(in srgb,#0f3d4d 70%,var(--slot-bg)),var(--slot-bg))}
+:root[data-theme="cyber"] .slot[data-tier="epic"]::after{background-image:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%)}
 
 /* ---------- product scenes ---------- */
 .scene{padding:96px 0;overflow:hidden}
@@ -152,5 +206,7 @@
   .scene{padding:64px 0}.scene__grid,.scene--dopa .scene__grid{grid-template-columns:1fr;gap:32px}
   .scene--dopa .scene__grid>*:first-child{order:2}
   .stack{height:300px}.studio{padding:56px 0}.foot--home .sleep{margin:0}
+  .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}.tier{display:block;width:max-content;margin:8px 0 0;font-size:10px;padding:4px 7px 5px}
+  :root[data-face="pixel"] .copy .display{font-size:clamp(30px,8.6vw,42px)}
 }
 @media (prefers-reduced-motion:reduce){.card,.lever .stick,.lever .knob,.slot,.cursor svg{transition:none;animation:none}.acc .ac.pop,.confetti,.go.pop{animation:none}}

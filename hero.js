@@ -1,43 +1,61 @@
 /* NewMeans home hero: the living kaomoji rabbit and the word slot machine.
  * The rabbit follows the cursor, frets when a letter is taken and calms when it springs home.
  * The slot draws a word that Typer or Dopamine University gives; each word has a colour, props
- * (some of them react to clicks), an eye mood, a rarity and, for product words, a way into the product.
- * Usage: <div data-nm-hero data-acc="acc-id"></div>. Pieces: assets/brand/logo-pieces/pN.png (masks). */
+ * (most of them react), floating particles you can stir with the cursor, an eye shape, an ear pose,
+ * a rarity and, for product words, a way into the product. Two epic words change the whole page.
+ * Usage: <div data-nm-hero data-acc="acc-id" data-back="acc-back-id" data-pts="pts-id"></div>.
+ * Pieces: assets/brand/logo-pieces/pN.png (masks). */
 (function () {
   'use strict';
-  var PAL = { mint: { rabbit: '#85C6A8', text: '#3E765E' }, coral: { rabbit: '#FF6666', text: '#984645' }, gold: { rabbit: '#DAB249', text: '#7C5F00' }, amber: { rabbit: '#E2AB70', text: '#885716' }, peach: { rabbit: '#ECA47F', text: '#90502C' }, rose: { rabbit: '#EB9DBB', text: '#8F4966' }, plum: { rabbit: '#DCA0D6', text: '#834D7E' }, lavender: { rabbit: '#C1A9EE', text: '#6C5594' }, periwinkle: { rabbit: '#A4B3F8', text: '#535D9C' }, sky: { rabbit: '#79C0F1', text: '#1F6A96' }, teal: { rabbit: '#5DCBD1', text: '#007276' }, sage: { rabbit: '#95C78A', text: '#427138' }, olive: { rabbit: '#B5BF73', text: '#62691B' }, cocoa: { rabbit: '#D0B198', text: '#795D46' }, indigo: { rabbit: '#AAB1F7', text: '#595C9B' }, magenta: { rabbit: '#EE95D1', text: '#8C4877' }, lime: { rabbit: '#A9C37B', text: '#566D27' }, charcoal: { rabbit: '#706B64', text: '#3B3732' } };
+  var PAL = {
+    mint: { rabbit: '#85C6A8', text: '#3E765E' }, coral: { rabbit: '#FF6666', text: '#984645' }, gold: { rabbit: '#DAB249', text: '#7C5F00' }, amber: { rabbit: '#E2AB70', text: '#885716' },
+    peach: { rabbit: '#ECA47F', text: '#90502C' }, rose: { rabbit: '#EB9DBB', text: '#8F4966' }, plum: { rabbit: '#DCA0D6', text: '#834D7E' }, lavender: { rabbit: '#C1A9EE', text: '#6C5594' },
+    periwinkle: { rabbit: '#A4B3F8', text: '#535D9C' }, sky: { rabbit: '#79C0F1', text: '#1F6A96' }, teal: { rabbit: '#5DCBD1', text: '#007276' }, sage: { rabbit: '#95C78A', text: '#427138' },
+    olive: { rabbit: '#B5BF73', text: '#62691B' }, cocoa: { rabbit: '#D0B198', text: '#795D46' }, indigo: { rabbit: '#AAB1F7', text: '#595C9B' }, magenta: { rabbit: '#EE95D1', text: '#8C4877' },
+    lime: { rabbit: '#A9C37B', text: '#566D27' }, charcoal: { rabbit: '#706B64', text: '#3B3732' },
+    apricot: { rabbit: '#F0B27A', text: '#8C5320' }, cherry: { rabbit: '#F08CA0', text: '#963B52' }, emerald: { rabbit: '#6FCB9C', text: '#2E7A50' }, violet: { rabbit: '#9B8CF0', text: '#4E43A8' },
+    tangerine: { rabbit: '#F2A65A', text: '#8A4E0E' }, neon: { rabbit: '#3AF0FF', text: '#FF3AD6' }
+  };
   // What the products give. Typer: keyboard sounds, a desk of your own, breaking bricks. Dopamine University:
   // seeing yourself and your friends a little differently, said sideways. weight: common 10 / uncommon 6 / rare 3 / epic 1
+  // acc: props. pt: particle sets. eyes/ears: the resting face. font/theme: page-wide changes.
   var WORDS = [
     { w: 'joyful', hue: 'mint', tier: 'common', acc: [] },
-    { w: 'calm', hue: 'sage', tier: 'common', acc: ['zzz'], eyes: 'closed', ears: 'droop', dot: '…', product: 'typer' },
+    { w: 'calm', hue: 'sage', tier: 'common', acc: [], pt: [{ k: 'zzz', n: 4 }], eyes: 'line', ears: 'droop', dot: '…', product: 'typer' },
     { w: 'cozy', hue: 'peach', tier: 'common', acc: ['coffee'], product: 'typer' },
     { w: 'playful', hue: 'coral', tier: 'common', acc: ['hoop', 'ball'], product: 'typer' },
-    { w: 'clicky', hue: 'teal', tier: 'common', acc: ['keycap'], product: 'typer', dot: 'key' },
+    { w: 'clicky', hue: 'teal', tier: 'common', acc: ['keyring'], product: 'typer', dot: 'key' },
     { w: 'curious', hue: 'lavender', tier: 'common', acc: ['magnifier'], product: 'dopa', dot: '?' },
-    { w: 'cheerful', hue: 'gold', tier: 'common', acc: ['sun'] },
+    { w: 'cheerful', hue: 'gold', tier: 'common', acc: ['sun'], pt: [{ k: 'sparks', n: 7 }], eyes: 'happy' },
     { w: 'chatty', hue: 'periwinkle', tier: 'common', acc: ['bubble'], product: 'dopa', dot: '…' },
-    { w: 'witty', hue: 'plum', tier: 'uncommon', acc: ['monocle'], product: 'dopa' },
+    { w: 'warm', hue: 'apricot', tier: 'common', acc: ['scarf', 'candle'], eyes: 'arc', product: 'dopa' },
+    { w: 'silly', hue: 'cherry', tier: 'common', acc: ['tongue', 'propeller'], eyes: 'squeeze', dot: '!' },
+    { w: 'witty', hue: 'plum', tier: 'uncommon', acc: ['monocle'], eyes: 'skeptic', product: 'dopa' },
     { w: 'surprising', hue: 'amber', tier: 'uncommon', acc: ['bang'], eyes: 'round', ears: 'perk', product: 'dopa', dot: '!' },
-    { w: 'retro', hue: 'olive', tier: 'uncommon', acc: ['shades', 'monitor'], product: 'typer' },
-    { w: 'rhythmic', hue: 'sky', tier: 'uncommon', acc: ['headphones', 'notes', 'mp3'], product: 'typer', dot: '♪' },
+    { w: 'retro', hue: 'olive', tier: 'uncommon', acc: ['shades', 'monitor'], font: 'pixel', product: 'typer' },
+    { w: 'rhythmic', hue: 'sky', tier: 'uncommon', acc: ['headphones', 'mp3'], pt: [{ k: 'notes', n: 6 }], eyes: 'happy', product: 'typer', dot: '♪' },
     { w: 'aesthetic', hue: 'cocoa', tier: 'uncommon', acc: ['cactus', 'monitor'], product: 'typer' },
     { w: 'thoughtful', hue: 'indigo', tier: 'uncommon', acc: ['mirror', 'thought'], ears: 'droop', product: 'dopa', dot: '…' },
-    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['ball', 'keycap2', 'keycap3', 'keycap4', 'stars'], product: 'typer' },
-    { w: 'dramatic', hue: 'charcoal', tier: 'uncommon', acc: ['spotlight', 'tear'], product: 'dopa', dot: '!' },
-    { w: 'connected', hue: 'rose', tier: 'uncommon', acc: ['friend', 'hearts'], product: 'dopa' },
-    { w: 'exciting', hue: 'coral', tier: 'rare', acc: ['partyhat', 'popper', 'confetti'], eyes: 'round', ears: 'perk', dot: '!' },
-    { w: 'ASMR', hue: 'teal', tier: 'rare', acc: ['headphones', 'waves'], eyes: 'closed', ears: 'droop', product: 'typer', dot: '~' },
+    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['ball', 'keycap2', 'keycap3', 'keycap4'], pt: [{ k: 'stars', n: 6 }], eyes: 'arc', product: 'typer' },
+    { w: 'dramatic', hue: 'charcoal', tier: 'uncommon', acc: ['stagelight', 'tears'], eyes: 'tear', product: 'dopa', dot: '!' },
+    { w: 'connected', hue: 'rose', tier: 'uncommon', acc: ['friend'], pt: [{ k: 'hearts', n: 6 }], product: 'dopa' },
+    { w: 'exciting', hue: 'coral', tier: 'rare', acc: ['partyhat', 'popper'], pt: [{ k: 'confetti', n: 18 }], eyes: 'round', ears: 'perk', dot: '!' },
+    { w: 'ASMR', hue: 'teal', tier: 'rare', acc: ['headphones', 'waves'], eyes: 'line', ears: 'droop', product: 'typer', dot: '~' },
     { w: 'insightful', hue: 'lavender', tier: 'rare', acc: ['gradcap', 'glasses', 'diploma'], product: 'dopa' },
-    { w: 'dopamine', hue: 'magenta', tier: 'rare', acc: ['bolts', 'confetti'], eyes: 'round', ears: 'perk', product: 'dopa', dot: 'bolt' },
-    { w: 'sparkly', hue: 'gold', tier: 'rare', acc: ['stars', 'stars2'], dot: 'star' },
-    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['hoop', 'ball', 'keycap1', 'keycap2', 'keycap3', 'keycap4', 'confetti'], eyes: 'round', ears: 'perk', product: 'typer', dot: '!' },
-    { w: 'enlightened', hue: 'gold', tier: 'epic', acc: ['halo', 'stars', 'stars2', 'confetti'], eyes: 'closed', ears: 'droop', product: 'dopa', dot: 'star' },
-    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycap3', 'keycap4', 'stars'], product: 'typer', dot: 'star' }
+    { w: 'dopamine', hue: 'magenta', tier: 'rare', acc: [], pt: [{ k: 'bolts', n: 10 }], eyes: 'round', ears: 'perk', product: 'dopa', dot: 'bolt' },
+    { w: 'sparkly', hue: 'gold', tier: 'rare', acc: [], pt: [{ k: 'stars', n: 12 }, { k: 'sparks', n: 8 }], eyes: 'star', dot: 'star' },
+    { w: 'lucky', hue: 'emerald', tier: 'rare', acc: ['clover'], pt: [{ k: 'coins', n: 8 }], eyes: 'dot', dot: '!' },
+    { w: 'cosmic', hue: 'violet', tier: 'rare', acc: ['saturn'], pt: [{ k: 'planets', n: 3 }, { k: 'stars', n: 8 }], eyes: 'dot', dot: 'star' },
+    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['hoop', 'ball', 'keycap1', 'keycap2', 'keycap3', 'keycap4'], pt: [{ k: 'confetti', n: 14 }], eyes: 'squeeze', ears: 'perk', product: 'typer', dot: '!' },
+    { w: 'enlightened', hue: 'gold', tier: 'epic', acc: ['halo'], pt: [{ k: 'stars', n: 10 }, { k: 'sparks', n: 8 }], eyes: 'happy', ears: 'droop', product: 'dopa', dot: 'star' },
+    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycap3', 'keycap4'], pt: [{ k: 'stars', n: 6 }], product: 'typer', dot: 'star' },
+    { w: 'arcade', hue: 'tangerine', tier: 'epic', acc: ['wall', 'ball'], eyes: 'round', ears: 'perk', font: 'pixel', product: 'typer', dot: '!' },
+    { w: 'cyberpunk', hue: 'neon', tier: 'epic', acc: ['visor', 'neonsign'], pt: [{ k: 'bits', n: 14 }], ears: 'perk', font: 'pixel', theme: 'cyber', dot: 'bolt' }
   ];
   var WEIGHT = { common: 10, uncommon: 6, rare: 3, epic: 1 };
+  var TIERS = ['common', 'uncommon', 'rare', 'epic'];
   var PRODUCT = { typer: { key: 'home.typer.more', href: 'typer.html', icon: 'assets/brand/typer-icon.png', name: 'Typer' }, dopa: { key: 'home.dopa.more', href: 'dopamine.html', icon: 'assets/brand/dopamine-symbol.png', name: 'Dopamine University' } };
-  var FALLBACK = { 'home.typer.more': '키보드 골라보기', 'home.dopa.more': '테스트 둘러보기', 'home.rabbit.action': '토끼 쓰다듬기', 'home.letter.action': '글자 {n} 튀기기', 'home.status.word': '단어: {w}', 'home.status.grab': '글자 {n} 잡음', 'home.status.letter': '글자 {n}', 'home.status.score': '골 {n}' };
+  var FALLBACK = { 'home.typer.more': '키보드 골라보기', 'home.dopa.more': '테스트 둘러보기', 'home.rabbit.action': '토끼 쓰다듬기', 'home.letter.action': '글자 {n} 튀기기', 'home.status.word': '단어: {w}', 'home.status.grab': '글자 {n} 잡음', 'home.status.letter': '글자 {n}', 'home.status.score': '골 {n}', 'home.status.clear': '키캡 전부 부숨', 'home.words': '단어 {n}/{t}', 'home.words.title': '모은 단어', 'home.words.close': '닫기' };
   function t(key, vars) { var s = (window.i18n && window.i18n.t(key)) || FALLBACK[key] || key; if (s === key && FALLBACK[key]) s = FALLBACK[key]; return s.replace(/\{(\w+)\}/g, function (_, k) { return vars && vars[k] != null ? vars[k] : ''; }); }
 
   var X0 = 467, Y0 = 357, BW = 3334, BH = 1370;
@@ -46,41 +64,56 @@
   function role(id) { return id >= 19 ? 'word' : (id === 12 || id === 13 || id === 14) ? 'face' : (id === 1 || id === 2 || id === 4 || id === 5) ? 'ear' : (id === 3 || id === 7) ? 'spark' : (id === 17 || id === 18) ? 'feet' : id === 16 ? 'tail' : 'body'; }
   var LEAN = { face: 1.3, ear: 0.6, body: 0.45, feet: 0.45, tail: 0.45, word: 0.12, spark: 0.6 };
 
-  // ---------- props, drawn in the logo box coordinate space (3334 x 1370) ----------
+  // ---------- props, drawn in the logo coordinate space (the box is 3334 x 1370 at 467,357) ----------
   var TXT = 'var(--word)', RAB = 'var(--rabbit)', INK = '#3B3732', PAPER = '#FCFBF7';
-  function svg(name, x, y, w, h, inner, z, hit) {
-    return '<svg class="ac' + (hit ? ' hit' : '') + '" data-prop="' + name + '" style="left:' + ((x - X0) / BW * 100) + '%;top:' + ((y - Y0) / BH * 100) + '%;width:' + (w / BW * 100) + '%;height:' + (h / BH * 100) + '%;' + (z ? 'z-index:' + z : '') + '" viewBox="0 0 ' + w + ' ' + h + '" aria-hidden="true">' + inner + '</svg>';
-  }
-  function img(name, x, y, w, h, src, rot, hit) {
-    return '<img class="ac' + (hit ? ' hit' : '') + '" data-prop="' + name + '" alt="" src="' + src + '" style="left:' + ((x - X0) / BW * 100) + '%;top:' + ((y - Y0) / BH * 100) + '%;width:' + (w / BW * 100) + '%;height:' + (h / BH * 100) + '%;' + (rot ? 'transform:rotate(' + rot + 'deg)' : '') + '">';
-  }
   var narrowMQ = matchMedia('(max-width: 720px)');
   function fk() { return narrowMQ.matches ? 0.6 : 1; }     // floor positions shrink on narrow screens
   function fs() { return narrowMQ.matches ? 0.75 : 1; }    // and so do the props standing there
+  function svg(name, x, y, w, h, inner, z, hit, back) {
+    return '<svg class="ac' + (hit ? ' hit' : '') + '" data-prop="' + name + '"' + (back ? ' data-back="1"' : '') + ' style="left:' + ((x - X0) / BW * 100) + '%;top:' + ((y - Y0) / BH * 100) + '%;width:' + (w / BW * 100) + '%;height:' + (h / BH * 100) + '%;' + (z ? 'z-index:' + z : '') + '" viewBox="0 0 ' + w + ' ' + h + '" aria-hidden="true">' + inner + '</svg>';
+  }
+  function img(name, x, y, w, h, src, rot, hit) {
+    return '<img class="ac' + (hit ? ' hit' : '') + '" data-prop="' + name + '" alt="" draggable="false" src="' + src + '" style="left:' + ((x - X0) / BW * 100) + '%;top:' + ((y - Y0) / BH * 100) + '%;width:' + (w / BW * 100) + '%;height:' + (h / BH * 100) + '%;' + (rot ? 'transform:rotate(' + rot + 'deg)' : '') + '">';
+  }
+  // things standing on the ground line (the wordmark baseline), bx measured leftwards from the N
   function floor(name, bx, w, h, inner, z, hit) { var k = fk(), q = fs(); return svg(name, X0 + bx * k, Y0 + BH - h * q, w * q, h * q, inner, z, hit); }
   function floorImg(name, bx, w, h, src, rot) { var k = fk(), q = fs(); return img(name, X0 + bx * k, Y0 + BH - h * q, w * q, h * q, src, rot, true); }
+  function star(cx, cy, r, fill) { var p = []; for (var i = 0; i < 8; i++) { var a = Math.PI / 4 * i - Math.PI / 2, rr = i % 2 ? r * 0.42 : r; p.push((cx + Math.cos(a) * rr).toFixed(1) + ',' + (cy + Math.sin(a) * rr).toFixed(1)); } return '<polygon points="' + p.join(' ') + '" fill="' + (fill || TXT) + '"/>'; }
+  // a keycap seen from a little above: the skirt in the word colour, the top in the rabbit colour, a pixel legend
+  function keycapInner(letter) { return '<g class="cap"><rect x="8" y="26" width="184" height="170" rx="28" fill="' + TXT + '"/><rect x="26" y="8" width="148" height="132" rx="22" fill="' + RAB + '"/><text x="100" y="100" font-size="84" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '">' + letter + '</text></g>'; }
+  function keycapAt(name, bx, letter) { return floor(name, bx, 200, 200, keycapInner(letter), 5, true); }
+  var BALL = '<circle cx="95" cy="95" r="90" fill="#E98A3C"/><g fill="none" stroke="#4A2C14" stroke-width="9" stroke-linecap="round"><circle cx="95" cy="95" r="90"/><path d="M95 5v180M5 95h180M32 32c26 26 26 100 0 126M158 32c-26 26-26 100 0 126"/></g>';
   var HOOP = { bx: -3000, w: 700, h: 1000, rim: [420, 330], rimR: 165, board: [40, 260, 40, 300] };   // rim centre and backboard in the hoop's own viewBox
-  var CAPS = [-1000, -1300, -1600, -1900];
-  function star(cx, cy, r) { var p = []; for (var i = 0; i < 8; i++) { var a = Math.PI / 4 * i - Math.PI / 2, rr = i % 2 ? r * 0.42 : r; p.push((cx + Math.cos(a) * rr).toFixed(1) + ',' + (cy + Math.sin(a) * rr).toFixed(1)); } return '<polygon points="' + p.join(' ') + '" fill="' + TXT + '"/>'; }
+  var CAPS = { keycap1: [-1000, 'E'], keycap2: [-1300, 'P'], keycap3: [-1600, 'Y'], keycap4: [-1900, 'T'] };
+  var WALL = { x: -2900, y: 300, step: 230, size: 180, rows: ['NEWMEANS', 'TYPER!?♪'] };
+  var LAMP = { x: 1700, y: -760, w: 2300, h: 2160 };
   var ACC = {
     glasses: function () { return svg('glasses', 1380, 780, 760, 250, '<g fill="none" stroke="' + TXT + '" stroke-width="22"><circle cx="150" cy="125" r="112"/><circle cx="610" cy="125" r="112"/><path d="M262 118 Q380 70 498 118"/></g>', 5); },
     monocle: function () { return svg('monocle', 1860, 780, 320, 420, '<g fill="none" stroke="' + TXT + '" stroke-width="22"><circle cx="150" cy="125" r="112"/><path d="M230 210 q60 90 30 190"/></g>', 5, true); },
     shades: function () { return svg('shades', 1370, 800, 780, 210, '<g fill="' + INK + '"><rect x="0" y="20" width="330" height="170" rx="60"/><rect x="450" y="20" width="330" height="170" rx="60"/><rect x="320" y="60" width="140" height="26" rx="13"/></g><g fill="#fff" opacity=".35"><rect x="40" y="50" width="90" height="26" rx="13"/><rect x="490" y="50" width="90" height="26" rx="13"/></g>', 5); },
+    visor: function () { return svg('visor', 1330, 790, 860, 230, '<path d="M0 40 h860 v100 q-430 100 -860 0z" fill="' + INK + '"/><rect x="50" y="86" width="760" height="26" rx="13" fill="#3AF0FF" opacity=".95"/><rect x="80" y="130" width="220" height="12" rx="6" fill="#FF3AD6" opacity=".8"/>', 5); },
     headphones: function () { return svg('headphones', 1180, 600, 1220, 520, '<path d="M120 420 V330 a490 400 0 0 1 980 0 V420" fill="none" stroke="' + TXT + '" stroke-width="30" stroke-linecap="round"/><rect x="20" y="330" width="200" height="190" rx="60" fill="' + TXT + '"/><rect x="1000" y="330" width="200" height="190" rx="60" fill="' + TXT + '"/>', 5, true); },
-    notes: function () { return svg('notes', 2520, 560, 360, 260, '<text class="note" x="0" y="200" font-size="230" font-family="ui-monospace,monospace" fill="' + TXT + '">♪</text><text class="note" x="180" y="150" font-size="170" font-family="ui-monospace,monospace" fill="' + TXT + '" style="animation-delay:.15s">♫</text>'); },
     mp3: function () { return floor('mp3', -760, 300, 380, '<rect x="20" y="20" width="260" height="340" rx="40" fill="' + TXT + '"/><rect x="60" y="60" width="180" height="110" rx="14" fill="' + PAPER + '" opacity=".9"/><circle cx="150" cy="260" r="62" fill="' + PAPER + '" opacity=".9"/><polygon class="play" points="135,232 135,288 185,260" fill="' + TXT + '"/>', 5, true); },
     waves: function () { return svg('waves', 2900, 520, 420, 300, '<g fill="none" stroke="' + TXT + '" stroke-width="22" stroke-linecap="round"><path d="M40 150 q40 -60 80 0 t80 0"/><path d="M200 150 q60 -110 120 0 t120 0"/></g>'); },
     partyhat: function () { return svg('partyhat', 1810, 380, 320, 400, '<polygon points="150,20 290,390 10,390" fill="' + TXT + '"/><circle cx="150" cy="24" r="34" fill="' + RAB + '" stroke="' + TXT + '" stroke-width="12"/><g fill="' + RAB + '"><circle cx="150" cy="180" r="20"/><circle cx="110" cy="300" r="20"/><circle cx="200" cy="320" r="20"/></g>', 4); },
+    propeller: function () { return svg('propeller', 1830, 330, 280, 340, '<path d="M20 340 a120 120 0 0 1 240 0z" fill="' + TXT + '"/><rect x="132" y="150" width="16" height="80" fill="' + TXT + '"/><g class="prop" style="transform-box:fill-box;transform-origin:center"><ellipse cx="70" cy="150" rx="70" ry="18" fill="' + RAB + '" stroke="' + TXT + '" stroke-width="8"/><ellipse cx="210" cy="150" rx="70" ry="18" fill="' + RAB + '" stroke="' + TXT + '" stroke-width="8"/><circle cx="140" cy="150" r="18" fill="' + TXT + '"/></g>', 4, true); },
     popper: function () { return svg('popper', 2620, 400, 360, 360, '<polygon points="40,320 300,60 210,300" fill="' + TXT + '"/><g fill="' + RAB + '"><circle cx="150" cy="40" r="22"/><circle cx="330" cy="110" r="18"/><circle cx="60" cy="140" r="16"/></g>', 5, true); },
     gradcap: function () { return svg('gradcap', 1790, 540, 360, 240, '<polygon points="180,10 350,80 180,150 10,80" fill="' + INK + '"/><rect x="130" y="110" width="100" height="50" rx="10" fill="' + INK + '"/><path d="M338 86 v80" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"/><circle cx="338" cy="176" r="14" fill="' + TXT + '"/>', 4); },
     halo: function () { return svg('halo', 1660, 150, 380, 150, '<ellipse class="halo" cx="200" cy="80" rx="170" ry="52" fill="none" stroke="' + TXT + '" stroke-width="26" opacity=".85"/>', 4, true); },
+    scarf: function () { return svg('scarf', 1380, 1030, 820, 260, '<path d="M20 30 q200 80 400 0 t400 0 v90 q-200 80 -400 0 t-400 0z" fill="' + TXT + '"/><path d="M90 110 l-40 130 h110 l0 -120z" fill="' + TXT + '"/><g stroke="' + RAB + '" stroke-width="10"><path d="M60 200 v40 M85 205 v40 M110 200 v40"/></g>', 6); },
+    candle: function () { return floor('candle', -520, 160, 330, '<ellipse class="flame" cx="80" cy="70" rx="26" ry="46" fill="#F5B54A"/><ellipse class="flame" cx="80" cy="84" rx="12" ry="24" fill="#FCE9B0"/><rect x="76" y="100" width="8" height="30" fill="' + INK + '"/><rect x="30" y="126" width="100" height="200" rx="14" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="14"/>', 5, true); },
+    tongue: function () { return svg('tongue', 1710, 1038, 90, 110, '<path d="M10 0 h70 v55 a35 35 0 0 1 -70 0z" fill="#F08CA0"/><path d="M45 18 v48" stroke="#D2607A" stroke-width="8" stroke-linecap="round"/>', 6); },
     coffee: function () { return floor('coffee', -440, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
-    keycap: function () { return floorImg('keycap', -640, 200, 200, 'assets/desk/keycap_0.png'); },
-    keycap1: function () { return floorImg('keycap1', CAPS[0], 200, 200, 'assets/desk/keycap_0.png'); },
-    keycap2: function () { return floorImg('keycap2', CAPS[1], 200, 200, 'assets/desk/keycap_1.png'); },
-    keycap3: function () { return floorImg('keycap3', CAPS[2], 200, 200, 'assets/desk/keycap_0.png'); },
-    keycap4: function () { return floorImg('keycap4', CAPS[3], 200, 200, 'assets/desk/keycap_1.png'); },
-    ball: function () { return floorImg('ball', -400, 190, 190, 'assets/game/ball.png'); },
+    keycap1: function () { return keycapAt('keycap1', CAPS.keycap1[0], CAPS.keycap1[1]); },
+    keycap2: function () { return keycapAt('keycap2', CAPS.keycap2[0], CAPS.keycap2[1]); },
+    keycap3: function () { return keycapAt('keycap3', CAPS.keycap3[0], CAPS.keycap3[1]); },
+    keycap4: function () { return keycapAt('keycap4', CAPS.keycap4[0], CAPS.keycap4[1]); },
+    wall: function () {
+      var s = '', k = fk(), q = fs();
+      WALL.rows.forEach(function (row, r) { for (var c = 0; c < row.length; c++) s += svg('brick', X0 + (WALL.x + c * WALL.step) * k, Y0 + (WALL.y + r * WALL.step) * k, WALL.size * q, WALL.size * q, keycapInner(row[c]), 5, true); });
+      return s;
+    },
+    ball: function () { return floor('ball', -400, 190, 190, BALL, 8, true); },
     hoop: function () { return floor('hoop', HOOP.bx, HOOP.w, HOOP.h, '<rect x="60" y="300" width="24" height="700" fill="' + TXT + '"/><rect x="0" y="970" width="190" height="30" rx="10" fill="' + TXT + '"/><rect x="40" y="40" width="220" height="260" rx="18" fill="none" stroke="' + TXT + '" stroke-width="22"/><rect x="250" y="320" width="30" height="24" fill="' + TXT + '"/><ellipse class="rim" cx="420" cy="330" rx="165" ry="44" fill="none" stroke="' + TXT + '" stroke-width="22"/><g class="net" fill="none" stroke="' + TXT + '" stroke-width="10" opacity=".55"><path d="M265 350 l45 170 M575 350 l-45 170 M340 368 l25 152 M500 368 l-25 152 M310 520 h220"/></g><text class="score" x="420" y="250" font-size="96" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '" opacity="0">+1</text>', 3); },
     monitor: function () { return floor('monitor', -1100, 520, 470, '<image href="assets/shop/monitor/2000.png" width="520" height="469"/><text class="screen-text" x="115" y="240" font-size="68" font-family="DNFBitBit,monospace" fill="#65cda7" opacity="0">TYPER</text>', 4, true); },
     cactus: function () { return floorImg('cactus', -1300, 150, 240, 'assets/desk/sculpture.png'); },
@@ -88,22 +121,65 @@
     thought: function () { return svg('thought', 2560, 330, 560, 420, '<circle cx="90" cy="380" r="22" fill="' + TXT + '"/><circle cx="150" cy="320" r="34" fill="' + TXT + '"/><path d="M200 90 a90 90 0 0 1 150 -40 a100 100 0 0 1 170 40 a80 80 0 0 1 10 150 a90 90 0 0 1 -150 60 a100 100 0 0 1 -170 -30 a80 80 0 0 1 -10 -180z" fill="' + TXT + '"/><text x="290" y="200" font-size="140" font-weight="700" font-family="ui-monospace,monospace" fill="' + RAB + '">…</text>', 5); },
     mirror: function () { return svg('mirror', 820, 780, 330, 420, '<ellipse cx="165" cy="150" rx="130" ry="130" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="24"/><rect x="150" y="270" width="30" height="130" rx="10" fill="' + TXT + '"/><text x="60" y="180" font-size="110" font-family="ui-monospace,monospace" fill="' + RAB + '" transform="scale(-1,1) translate(-330,0)">(´^`*)</text>', 5, true); },
     friend: function () { return floor('friend', -1160, 640, 400, '<g font-family="ui-monospace,monospace" font-weight="700" fill="' + TXT + '"><text x="120" y="150" font-size="160">/) /)</text><text x="40" y="330" font-size="170">(´^`*)</text></g>', 5, true); },
-    hearts: function () { return svg('hearts', 80, 900, 300, 220, '<g fill="' + TXT + '"><path d="M60 80 a30 30 0 0 1 60 0 a30 30 0 0 1 60 0 q0 40 -60 90 q-60 -50 -60 -90z"/><path d="M180 30 a20 20 0 0 1 40 0 a20 20 0 0 1 40 0 q0 30 -40 60 q-40 -30 -40 -60z" opacity=".7"/></g>'); },
     magnifier: function () { return floor('magnifier', -520, 340, 340, '<circle cx="120" cy="120" r="95" fill="none" stroke="' + TXT + '" stroke-width="22"/><path d="M190 190 L320 320" stroke="' + TXT + '" stroke-width="34" stroke-linecap="round"/>', 5, true); },
-    zzz: function () { return svg('zzz', 2560, 420, 420, 320, '<g fill="' + TXT + '" font-family="ui-monospace,monospace" font-weight="700"><text x="0" y="300" font-size="120">z</text><text x="120" y="210" font-size="150">z</text><text x="270" y="110" font-size="190">z</text></g>', 5, true); },
+    clover: function () { return floor('clover', -560, 320, 360, '<g class="leaves" style="transform-box:fill-box;transform-origin:center" fill="' + TXT + '"><circle cx="110" cy="90" r="62"/><circle cx="210" cy="90" r="62"/><circle cx="110" cy="190" r="62"/><circle cx="210" cy="190" r="62"/><circle cx="160" cy="140" r="30" fill="' + RAB + '"/></g><path d="M160 240 q-30 70 -60 110" fill="none" stroke="' + TXT + '" stroke-width="18" stroke-linecap="round"/>', 5, true); },
+    saturn: function () { return svg('saturn', 2450, -430, 520, 360, '<g class="ring-tilt" style="transform-box:fill-box;transform-origin:center"><ellipse cx="260" cy="180" rx="245" ry="62" fill="none" stroke="' + TXT + '" stroke-width="20" transform="rotate(-16 260 180)"/></g><circle cx="260" cy="180" r="105" fill="' + RAB + '" stroke="' + TXT + '" stroke-width="14"/><path d="M175 150 q85 40 170 0" fill="none" stroke="' + TXT + '" stroke-width="12" opacity=".6"/>', 5, true); },
     sun: function () { return svg('sun', 2520, 380, 320, 320, '<circle cx="160" cy="160" r="70" fill="' + TXT + '"/><g class="rays" stroke="' + TXT + '" stroke-width="22" stroke-linecap="round">' + [0, 45, 90, 135, 180, 225, 270, 315].map(function (a) { var r = a * Math.PI / 180; return '<path d="M' + (160 + Math.cos(r) * 100) + ' ' + (160 + Math.sin(r) * 100) + ' L' + (160 + Math.cos(r) * 145) + ' ' + (160 + Math.sin(r) * 145) + '"/>'; }).join('') + '</g>', 5, true); },
     bang: function () { return svg('bang', 2520, 420, 200, 380, '<text x="0" y="330" font-size="380" font-weight="800" font-family="ui-monospace,monospace" fill="' + TXT + '">!</text>', 5, true); },
-    stars: function () { return svg('stars', 700, 380, 2900, 1000, star(180, 250, 60) + star(1300, 120, 45) + star(2550, 250, 70) + star(2760, 820, 50) + star(150, 820, 40), 0, true); },
-    stars2: function () { return svg('stars2', 700, 380, 2900, 1000, star(600, 60, 36) + star(2050, 40, 40) + star(2880, 480, 44) + star(420, 560, 30) + star(1950, 300, 34), 0, true); },
-    confetti: function () { var s = '', cols = ['#FF6666', '#DAB249', '#79C0F1', '#C1A9EE', '#95C78A', '#EE95D1']; for (var i = 0; i < 26; i++) { var x = 60 + ((i * 631) % 3200), y = 40 + ((i * 397) % 1250), r = (i * 47) % 90; s += '<rect x="' + x + '" y="' + y + '" width="46" height="22" rx="6" fill="' + cols[i % cols.length] + '" transform="rotate(' + r + ' ' + (x + 23) + ' ' + (y + 11) + ')"/>'; } return svg('confetti', 467, 357, 3334, 1370, s, 6); },
-    bolts: function () { var b = function (x, y, s) { return '<polygon points="' + [60, 0, 20, 110, 55, 110, 30, 200, 100, 80, 62, 80, 90, 0].map(function (v, i) { return (i % 2 ? y + v * s : x + v * s).toFixed(0); }).join(',') + '" fill="' + TXT + '"/>'; }; return svg('bolts', 467, 357, 3334, 1370, b(650, 120, 1) + b(2000, 60, 0.8) + b(2300, 180, 0.7) + b(300, 600, 0.6), 0, true); },
-    spotlight: function () { return svg('spotlight', 900, 0, 1700, 1400, '<polygon points="850,0 1700,1400 0,1400" fill="' + RAB + '" opacity=".22"/>', 0); },
-    tear: function () { return svg('tear', 1980, 900, 120, 200, '<path d="M60 10 Q120 110 60 170 Q0 110 60 10z" fill="#79C0F1"/>', 5); },
+    // a stage lamp above the head and its warm cone, painted behind the rabbit
+    stagelight: function () { return svg('stagelight', LAMP.x - 1000, LAMP.y, LAMP.w, LAMP.h, '<g class="beam" style="transform-box:fill-box;transform-origin:1150px 250px"><polygon points="1010,270 1290,270 2300,2160 0,2160" fill="#F5D76E" opacity=".3"/><rect x="1060" y="0" width="180" height="60" rx="10" fill="' + INK + '"/><path d="M1040 60 h220 l40 170 h-300z" fill="' + INK + '"/><rect x="1000" y="230" width="300" height="44" rx="10" fill="#F5D76E"/></g>', 0, true, true); },
+    tears: function () { return svg('tears', 1440, 930, 700, 380, '<g transform="translate(10,0) scale(1.5)"><path class="tear" d="M30 0 C30 45 0 60 0 100 a30 30 0 0 0 60 0 C60 60 30 45 30 0z" fill="#79C0F1"/></g><g transform="translate(430,0) scale(1.5)"><path class="tear t2" d="M30 0 C30 45 0 60 0 100 a30 30 0 0 0 60 0 C60 60 30 45 30 0z" fill="#79C0F1"/></g>', 6); },
     diploma: function () { return svg('diploma', 880, 1020, 300, 180, '<g class="scroll-body"><rect x="20" y="40" width="260" height="90" rx="45" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="14"/></g><rect x="120" y="30" width="60" height="110" rx="12" fill="' + TXT + '"/>', 5, true); },
-    icecream: function () { return svg('icecream', 2380, 840, 260, 420, '<polygon points="130,410 30,180 230,180" fill="#E2AB70"/><path d="M50 180 l40 -90 l40 90 l40 -90 l40 90" fill="none" stroke="#C88B4A" stroke-width="8"/><circle cx="130" cy="130" r="105" fill="#A8E0C5"/><g fill="#5A3E2B"><circle cx="90" cy="110" r="14"/><circle cx="160" cy="80" r="12"/><circle cx="170" cy="150" r="13"/><circle cx="110" cy="170" r="10"/></g><g class="bite" fill="' + PAPER + '"><circle class="bite b1" cx="215" cy="70" r="46"/><circle class="bite b2" cx="60" cy="60" r="44"/><circle class="bite b3" cx="130" cy="30" r="46"/></g>', 5, true); }
+    icecream: function () { return svg('icecream', 2380, 840, 260, 420, '<polygon points="130,410 30,180 230,180" fill="#E2AB70"/><path d="M50 180 l40 -90 l40 90 l40 -90 l40 90" fill="none" stroke="#C88B4A" stroke-width="8"/><circle cx="130" cy="130" r="105" fill="#A8E0C5"/><g fill="#5A3E2B"><circle cx="90" cy="110" r="14"/><circle cx="160" cy="80" r="12"/><circle cx="170" cy="150" r="13"/><circle cx="110" cy="170" r="10"/></g><g class="bite" fill="' + PAPER + '"><circle class="bite b1" cx="215" cy="70" r="46"/><circle class="bite b2" cx="60" cy="60" r="44"/><circle class="bite b3" cx="130" cy="30" r="46"/></g>', 5, true); },
+    neonsign: function () { return floor('neonsign', -1000, 560, 430, '<rect x="20" y="20" width="520" height="220" rx="30" fill="none" stroke="#FF3AD6" stroke-width="12" class="neon-frame"/><text class="neon-text" x="280" y="165" font-size="104" text-anchor="middle" font-family="DNFBitBit,monospace" fill="#3AF0FF">ONLINE</text><rect x="250" y="240" width="60" height="150" fill="' + TXT + '"/><rect x="160" y="390" width="240" height="30" rx="10" fill="' + TXT + '"/>', 5, true); },
+    keyring: function () { return ''; }   // lives on the slot lever, see hangKeyring()
   };
+  // the keycap keyring that hangs on the lever: a ring, two chain links, the cap with a hole in its corner
+  var KEYRING = '<svg class="keyring" viewBox="0 0 130 200" aria-hidden="true"><g fill="none" stroke="#706B64" stroke-width="7"><circle cx="20" cy="18" r="13"/><circle cx="34" cy="44" r="8"/><circle cx="46" cy="64" r="8"/></g><g transform="translate(34,78) scale(.46)">' + keycapInner('N') + '</g><circle cx="52" cy="90" r="12" fill="none" stroke="#706B64" stroke-width="6"/></svg>';
+
+  // ---------- particles: small things that float around the rabbit and swirl when the cursor stirs them ----------
+  function heart(fill) { return '<path d="M50 88 L18 56 a20 20 0 0 1 32 -26 a20 20 0 0 1 32 26z" fill="' + fill + '"/>'; }
+  var PT = {
+    stars: { size: [40, 90], glyph: function () { return star(50, 50, 48); } },
+    sparks: { size: [26, 56], glyph: function () { return '<path d="M50 4 L58 42 L96 50 L58 58 L50 96 L42 58 L4 50 L42 42z" fill="' + TXT + '"/>'; } },
+    hearts: { size: [50, 90], glyph: function () { return heart(TXT); } },
+    notes: { size: [70, 120], glyph: function (i) { return '<text x="10" y="86" font-size="96" font-family="ui-monospace,monospace" fill="' + TXT + '">' + (i % 2 ? '♫' : '♪') + '</text>'; } },
+    zzz: { size: [90, 160], drift: -0.35, near: true, glyph: function () { return '<text x="14" y="84" font-size="92" font-weight="700" font-family="ui-monospace,monospace" fill="' + TXT + '">z</text>'; } },
+    bolts: { size: [50, 100], glyph: function () { return '<polygon points="58,2 22,54 46,54 36,98 80,42 56,42" fill="' + TXT + '"/>'; } },
+    confetti: { size: [28, 50], glyph: function (i) { var cols = ['#FF6666', '#DAB249', '#79C0F1', '#C1A9EE', '#95C78A', '#EE95D1']; return '<rect x="10" y="30" width="80" height="40" rx="10" fill="' + cols[i % 6] + '"/>'; } },
+    coins: { size: [70, 110], glyph: function () { return '<circle cx="50" cy="50" r="44" fill="#DAB249"/><circle cx="50" cy="50" r="30" fill="none" stroke="#7C5F00" stroke-width="7"/><rect x="45" y="32" width="10" height="36" fill="#7C5F00"/>'; } },
+    bits: { size: [22, 44], glyph: function (i) { return '<rect x="20" y="20" width="60" height="60" rx="8" fill="' + (i % 3 ? '#3AF0FF' : '#FF3AD6') + '" opacity=".9"/>'; } },
+    planets: { size: [90, 130], orbit: true, glyph: function (i) { var c = ['#F08CA0', '#79C0F1', '#DAB249'][i % 3]; return '<circle cx="50" cy="50" r="34" fill="' + c + '"/><path d="M22 42 q28 22 56 0" fill="none" stroke="#3B3732" stroke-width="5" opacity=".35"/>'; } }
+  };
+  // where particles may live: around the head and body, and the sky to the right of the copy
+  function ptSpot(i, def) {
+    if (def.near) return [1750 + Math.random() * 900, -320 + Math.random() * 520];
+    return i % 3 === 0 ? [1100 + Math.random() * 2200, -900 + Math.random() * 760] : [-100 + Math.random() * 3500, -120 + Math.random() * 980];
+  }
+
+  // ---------- eye shapes, drawn over the eye pieces in the rabbit colour (stroke 40 = the logo's stroke) ----------
+  var EYE = (function () {
+    var S = ' fill="none" stroke="' + RAB + '" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"';
+    var spiral = (function () { var d = 'M120 120'; for (var a = 0; a <= 4.2 * Math.PI; a += 0.3) { var r = 8 + a * 9; d += ' L' + (120 + Math.cos(a) * r).toFixed(1) + ' ' + (120 + Math.sin(a) * r).toFixed(1); } return d; })();
+    var one = function (s) { return [s, s]; };
+    return {
+      round: one('<circle cx="120" cy="120" r="56"' + S + '/>'),
+      line: one('<path d="M48 124 H192"' + S + '/>'),
+      happy: one('<path d="M50 152 L120 82 L190 152"' + S + '/>'),
+      arc: one('<path d="M50 92 Q120 186 190 92"' + S + '/>'),
+      squeeze: ['<path d="M62 62 L172 120 L62 178"' + S + '/>', '<path d="M178 62 L68 120 L178 178"' + S + '/>'],
+      star: one('<path d="M120 22 L142 88 L212 88 L156 130 L178 198 L120 156 L62 198 L84 130 L28 88 L98 88z" fill="' + RAB + '" transform="translate(120 120) scale(.8) translate(-120 -120)"/>'),
+      heart: one('<path d="M120 200 L44 124 a44 44 0 0 1 76 -62 a44 44 0 0 1 76 62z" fill="' + RAB + '"/>'),
+      spiral: one('<path d="' + spiral + '" fill="none" stroke="' + RAB + '" stroke-width="26" stroke-linecap="round"/>'),
+      tear: one('<path d="M46 62 H194 M120 62 V196"' + S + '/>'),
+      skeptic: one('<path d="M46 96 H194 V184"' + S + '/>'),
+      x: one('<path d="M56 56 L184 184 M184 56 L56 184"' + S + '/>'),
+      dot: one('<circle cx="120" cy="120" r="50" fill="' + RAB + '"/>')
+    };
+  })();
+  var REACTION_EYES = { dizzy: 'spiral', wave: 'round', flap: 'squeeze', hop: 'happy' };
   var DOTS = {
-    key: '<svg viewBox="0 0 40 40"><rect x="4" y="6" width="32" height="30" rx="7" fill="currentColor"/><rect x="10" y="10" width="20" height="14" rx="4" fill="#FCFBF7" opacity=".55"/></svg>',
+    key: '<svg viewBox="0 0 40 40"><rect x="4" y="6" width="32" height="30" rx="7" fill="currentColor"/><rect x="10" y="10" width="20" height="14" rx="4" fill="#FCFBF7" opacity=".85"/></svg>',
     star: '<svg viewBox="0 0 40 40"><polygon points="20,2 24,15 38,20 24,25 20,38 16,25 2,20 16,15" fill="currentColor"/></svg>',
     bolt: '<svg viewBox="0 0 40 40"><polygon points="24,2 8,22 19,22 14,38 32,16 21,16" fill="currentColor"/></svg>'
   };
@@ -112,6 +188,8 @@
     if (!root || root.__nm) return; root.__nm = true;
     var base = root.getAttribute('data-base') || 'assets/brand/logo-pieces/';
     var accRoot = document.getElementById(root.getAttribute('data-acc')) || root;
+    var backRoot = document.getElementById(root.getAttribute('data-back')) || accRoot;
+    var ptRoot = document.getElementById(root.getAttribute('data-pts')) || accRoot;
     var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
     var pieces = PARTS.map(function (p, i) {
@@ -124,12 +202,20 @@
       if (r === 'feet') el.style.transformOrigin = '100% 50%';
       if (r === 'ear') el.style.transformOrigin = '50% 100%';
       root.appendChild(el);
-      var ring = null;
-      if (id === 12 || id === 13) { ring = document.createElement('i'); ring.className = 'eye-ring'; el.appendChild(ring); }
-      return { el: el, ring: ring, id: id, role: r, hx: (p[1] + p[3] / 2 - X0) / BW, hy: (p[2] + p[4] / 2 - Y0) / BH, phase: (i * 1.7) % 6.283, x: 0, y: 0, vx: 0, vy: 0, rot: 0, dragging: false, hover: false, gx: 0, gy: 0, big: 1 };
+      var alt = null;
+      if (id === 12 || id === 13) { alt = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); alt.setAttribute('class', 'eye-alt'); alt.setAttribute('viewBox', '0 0 240 240'); el.appendChild(alt); }
+      return { el: el, alt: alt, id: id, role: r, hx: (p[1] + p[3] / 2 - X0) / BW, hy: (p[2] + p[4] / 2 - Y0) / BH, phase: (i * 1.7) % 6.283, x: 0, y: 0, vx: 0, vy: 0, rot: 0, dragging: false, hover: false, gx: 0, gy: 0, big: 1 };
     });
     var letters = pieces.filter(function (p) { return p.role === 'word'; }).sort(function (a, b) { return a.hx - b.hx; });
     var byId = {}; pieces.forEach(function (p) { byId[p.id] = p; });
+    var eyesNow = null;
+    function setEyes(kind) {
+      if (kind === eyesNow) return; eyesNow = kind;
+      [byId[12], byId[13]].forEach(function (p, i) {
+        if (!kind || !EYE[kind]) { p.el.classList.remove('is-alt'); return; }
+        p.alt.innerHTML = EYE[kind][i]; p.el.classList.add('is-alt');
+      });
+    }
 
     // ---------- the cursor ----------
     var cur = document.getElementById('cursor'), curX = 0, curY = 0, curTX = 0, curTY = 0, curOn = false;
@@ -140,6 +226,7 @@
       hero.addEventListener('pointerenter', function () { curOn = true; cur.classList.add('is-on'); });
       hero.addEventListener('pointerleave', function () { if (!dragEl) { curOn = false; cur.classList.remove('is-on'); } });
     }
+    hero.addEventListener('dragstart', function (e) { e.preventDefault(); });   // never let the browser start an image drag
 
     // ---------- sounds (real Typer switch clips, only after a click) ----------
     var clips = null, clipAt = 0;
@@ -149,19 +236,19 @@
     }
     var rhythm = 0;
     function playRhythm(el) {
-      if (rhythm) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); return; }
-      var pattern = [0, 1, 0, 2, 0, 1, 3, 2], i = 0; el.classList.add('is-playing');
-      rhythm = setInterval(function () { click(pattern[i % pattern.length]); i++; if (i >= 16) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); } }, 250);
+      if (rhythm) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); ptRoot.classList.remove('is-playing'); return; }
+      var pattern = [0, 1, 0, 2, 0, 1, 3, 2], i = 0; el.classList.add('is-playing'); ptRoot.classList.add('is-playing');
+      rhythm = setInterval(function () { click(pattern[i % pattern.length]); i++; if (i >= 16) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); ptRoot.classList.remove('is-playing'); } }, 250);
     }
 
     // ---------- simulation (main branch rules) ----------
     var rect, cx, cy, reach, MAX = 6;
     function measure() { rect = root.getBoundingClientRect(); cx = rect.left + rect.width / 2; cy = rect.top + rect.height / 2; reach = Math.max(300, rect.width * 1.1); MAX = rect.width * 0.03; }
     addEventListener('resize', measure); addEventListener('scroll', measure, { passive: true });
-    var tnx = 0, tny = 0, nx = 0, ny = 0, pointerX = 0, pointerY = 0, dragEl = null, away = null, agitate = 0, excite = 0, lastSweat = 0, lastMove = 0, raf = 0, tm = 0, lastT = 0, interacted = false;
-    var eyeMood = null, moodOverride = null, earMood = null, hop = 0;
-    addEventListener('pointermove', function (e) {
-      if (!rect) return;
+    var nx = 0, ny = 0, tnx = 0, tny = 0, tm = 0, lastT = 0, raf = 0, agitate = 0, lastSweat = -9, away = null, dragEl = null, interacted = false;
+    var pointerX = -9999, pointerY = -9999, lastMove = -9999, ppx = 0, ppy = 0, pvx = 0, pvy = 0;
+    var eyeMood = null, earMood = null, moodOverride = null, spinning = false, reaction = null, waveTimer = 0;
+    document.addEventListener('pointermove', function (e) {
       pointerX = e.clientX; pointerY = e.clientY; lastMove = performance.now(); curTX = e.clientX; curTY = e.clientY;
       tnx = Math.max(-1, Math.min(1, (e.clientX - cx) / reach)); tny = Math.max(-1, Math.min(1, (e.clientY - cy) / reach));
       if (dragEl) e.preventDefault();
@@ -177,8 +264,8 @@
         var r = p.el.getBoundingClientRect(); p.gx = e.clientX - (r.left + r.width / 2); p.gy = e.clientY - (r.top + r.height / 2);
         p.downAt = performance.now(); p.downX = e.clientX; p.downY = e.clientY; say(t('home.status.grab', { n: NAME[p.id] })); wake();
       });
-      function up(e) { if (dragEl !== p) return; dragEl = null; p.dragging = false; p.el.classList.remove('drag'); cursorState(p.hover ? 'hand' : ''); if (e && performance.now() - p.downAt < 220 && Math.hypot(e.clientX - p.downX, e.clientY - p.downY) < 6) poke(p); wake(); }
-      p.el.addEventListener('pointerup', up); p.el.addEventListener('pointercancel', up);
+      function up(e) { if (dragEl !== p) return; dragEl = null; p.dragging = false; p.el.classList.remove('drag'); cursorState(p.hover ? 'hand' : ''); if (e && e.type === 'pointerup' && performance.now() - p.downAt < 220 && Math.hypot(e.clientX - p.downX, e.clientY - p.downY) < 6) poke(p); wake(); }
+      p.el.addEventListener('pointerup', up); p.el.addEventListener('pointercancel', up); p.el.addEventListener('lostpointercapture', up);
     });
     function spawnSweat() {
       var s = document.createElement('div'); s.className = 'nm-sweat'; s.textContent = ';';
@@ -188,13 +275,14 @@
     function tick(now) {
       raf = 0;
       var dt = Math.min(0.05, lastT ? (now - lastT) / 1000 : 0.016); lastT = now; tm += dt;
+      var f = Math.min(2, dt * 60);
       nx += (tnx - nx) * 0.09; ny += (tny - ny) * 0.09;
-      if (dragEl || excite > 0) agitate += (1 - agitate) * 0.14;
+      if (dragEl) agitate += (1 - agitate) * 0.14;
       else if (away) { var d = Math.hypot(away.x, away.y); agitate += (Math.min(1, d / (rect.width * 0.14)) - agitate) * 0.1; if (d < rect.width * 0.008) away = null; }
       else agitate += (0 - agitate) * 0.08;
       if (!reduce && agitate > 0.35 && tm - lastSweat > 0.5) { spawnSweat(); lastSweat = tm; }
       var pointerActive = (now - lastMove) < 1200, moving = false, s = reduce ? 0.35 : 1;
-      var mood = moodOverride !== null ? moodOverride : eyeMood;
+      setEyes(moodOverride || (spinning && reaction && REACTION_EYES[reaction]) || (agitate > 0.45 ? 'round' : eyeMood));
       for (var k = 0; k < pieces.length; k++) {
         var p = pieces[k], tx, ty, rot = 0;
         if (p.dragging) {
@@ -202,52 +290,103 @@
           var hr = hero.getBoundingClientRect(), pw = p.el.offsetWidth, ph = p.el.offsetHeight, ox = rect.left + p.hx * rect.width, oy = rect.top + p.hy * rect.height;
           tx = Math.max(hr.left - ox + pw * 0.2, Math.min(hr.right - ox - pw * 0.2, tx)); ty = Math.max(hr.top - oy + ph * 0.2, Math.min(hr.bottom - oy - ph * 0.2, ty));
         } else if (p.role === 'spark') {
-          var live = (pointerActive || agitate > 0.02) ? 1 : 0;
+          var live = (pointerActive || agitate > 0.02 || spinning) ? 1 : 0;
           tx = nx * 0.6 * MAX * s + Math.sin(tm * 1.6 + p.phase) * MAX * 0.5 * s * live;
           ty = ny * 0.6 * MAX * s + Math.cos(tm * 1.3 + p.phase) * MAX * 0.6 * s * live;
+          if (spinning && reaction === 'hop') { tx = Math.cos(tm * 7 + p.phase) * MAX * 1.6; ty = Math.sin(tm * 7 + p.phase) * MAX * 1.6; }
         } else {
           var lean = LEAN[p.role] * s; tx = nx * lean * MAX; ty = ny * lean * MAX;
           if (p.hover) { ty -= rect.width * 0.02; rot = -3; }
-          if (p.role === 'ear' && earMood) { var left = p.id === 4 || p.id === 1; rot += earMood === 'droop' ? (left ? -14 : 14) : (left ? 5 : -5); }
+          var left = p.id === 4 || p.id === 1;
+          if (p.role === 'ear' && earMood) rot += earMood === 'droop' ? (left ? -14 : 14) : (left ? 5 : -5);
           if (agitate > 0.02) {
             if (p.role === 'feet') rot = Math.abs(Math.sin(tm * 13 + (p.id === 17 ? 0 : Math.PI / 2))) * agitate * 32;
             else if (p.role === 'tail') rot = Math.sin(tm * 26) * agitate * 30;
             else if (p.role === 'face') ty += Math.sin(tm * 5) * agitate * MAX * 0.25;
+          }
+          if (spinning && !reduce) {                                    // the reel is turning: one of four reactions
+            if (reaction === 'dizzy') { if (p.role === 'face') { ty += Math.sin(tm * 7 + p.phase) * MAX * 0.5; rot += Math.sin(tm * 9) * 6; } else if (p.role === 'ear') rot += left ? -12 : 12; }
+            else if (reaction === 'flap') { if (p.role === 'ear') rot += Math.sin(tm * 20) * 24 * (left ? 1 : -1); else if (p.role === 'feet') rot = Math.abs(Math.sin(tm * 13 + (p.id === 17 ? 0 : Math.PI / 2))) * 32; else if (p.role === 'tail') rot = Math.sin(tm * 26) * 30; }
+            else if (reaction === 'hop') { if (p.role !== 'word') ty -= Math.abs(Math.sin(tm * 8)) * MAX * 1.8; }
+            else if (reaction === 'wave') { if (p.role !== 'word') ty += Math.sin(tm * 6 + p.hx * 5) * MAX * 0.45; }
           }
         }
         var kk = p.dragging ? 0.35 : 0.16;
         p.vx += (tx - p.x) * kk; p.vy += (ty - p.y) * kk; p.vx *= 0.74; p.vy *= 0.74; p.x += p.vx; p.y += p.vy;
         if (Math.abs(p.vx) + Math.abs(p.vy) > 0.05 || Math.abs(rot - p.rot) > 0.01) moving = true;
         p.rot += (rot - p.rot) * (p.role === 'word' ? 0.2 : 1);
-        var eyeT = '';
-        if (p.ring) { var round = agitate > 0.45 || mood === 'round'; p.el.classList.toggle('is-round', round); if (mood === 'closed' && !round) eyeT = ' scaleY(.3)'; else if (p.big !== 1) eyeT = ' scale(' + p.big + ')'; }
+        var eyeT = p.alt && p.big !== 1 ? ' scale(' + p.big + ')' : '';
         p.el.style.transform = 'translate(' + p.x.toFixed(2) + 'px,' + p.y.toFixed(2) + 'px)' + (Math.abs(p.rot) > 0.01 ? ' rotate(' + p.rot.toFixed(2) + 'deg)' : '') + eyeT;
       }
-      stepBall(Math.min(2, dt * 60)); if (ball && !ball.rest && !ball.drag) moving = true;
-      var f = pieces[10]; accRoot.style.setProperty('--ax', f.x.toFixed(2) + 'px'); accRoot.style.setProperty('--ay', f.y.toFixed(2) + 'px');
+      stepBall(f); if (ball && !ball.rest && !ball.drag) moving = true;
+      if (stepParticles(f, now)) moving = true;
+      var fc = pieces[10]; accRoot.style.setProperty('--ax', fc.x.toFixed(2) + 'px'); accRoot.style.setProperty('--ay', fc.y.toFixed(2) + 'px');
       if (cur && curOn) { curX += (curTX - curX) * 0.35; curY += (curTY - curY) * 0.35; cur.style.transform = 'translate(' + curX.toFixed(1) + 'px,' + curY.toFixed(1) + 'px)'; if (Math.abs(curTX - curX) + Math.abs(curTY - curY) > 0.3) moving = true; }
-      if (moving || dragEl || agitate > 0.01 || excite > 0 || pointerActive) raf = requestAnimationFrame(tick); else lastT = 0;
+      if (moving || dragEl || agitate > 0.01 || spinning || pointerActive) raf = requestAnimationFrame(tick); else lastT = 0;
     }
-    function poke(p) {
+    function poke(p, soft) {
       if (!p) p = letters[(Math.random() * letters.length) | 0];
       measure(); var sc = rect.width / 560;
+      if (soft) { p.vy = -14 * sc; wake(); return; }
       p.vx = (Math.random() < 0.5 ? -1 : 1) * (9 + Math.random() * 5) * sc; p.vy = -(27 + Math.random() * 8) * sc; away = p;
       say(t('home.status.letter', { n: NAME[p.id] })); wake();
     }
     function hopAll() { measure(); var sc = rect.width / 560; pieces.forEach(function (p) { if (p.role !== 'word' && p.role !== 'spark') p.vy -= 9 * sc; }); wake(); }
-    function mood(m, ms) { moodOverride = m; wake(); setTimeout(function () { moodOverride = null; wake(); }, ms); }
+    var moodTimer = 0;
+    function mood(m, ms) { moodOverride = m; wake(); clearTimeout(moodTimer); moodTimer = setTimeout(function () { moodOverride = null; wake(); }, ms); }
     measure();
     if (!reduce) setTimeout(function () { if (!interacted) poke(); }, 1800);   // self demo: a letter jumps once to show it is loose
 
-    // ---------- the ball: drag and let go to throw it. Score in the hoop, knock the keycaps over. ----------
-    var ball = null, scoreN = 0;                 // ball lives in box units (BW x BH); the ground is the wordmark baseline
+    // ---------- particles ----------
+    var pts = [], ptUntil = 0;
+    function setupParticles(entry) {
+      ptRoot.textContent = ''; pts = [];
+      (entry.pt || []).forEach(function (spec) {
+        var def = PT[spec.k], n = spec.n || 6;
+        for (var i = 0; i < n; i++) {
+          var size = def.size[0] + Math.random() * (def.size[1] - def.size[0]);
+          var el = document.createElement('i'); el.className = 'pt pt--' + spec.k; el.style.width = size / BW * 100 + '%'; el.style.height = size / BH * 100 + '%';
+          el.innerHTML = '<svg viewBox="0 0 100 100">' + def.glyph(i) + '</svg>';
+          var pt = { el: el, x: 0, y: 0, vx: 0, vy: 0, rot: Math.random() * 40 - 20, phase: Math.random() * 6.28, size: size, drift: def.drift || 0, orbit: null, hx: 0, hy: 0 };
+          if (def.orbit) { pt.orbit = { cx: 1750, cy: 300, rx: 900 + i * 260, ry: 340 + i * 90, a: Math.random() * 6.28, w: 0.5 - i * 0.12 }; pt.hx = pt.orbit.cx; pt.hy = pt.orbit.cy; }
+          else { var sp = ptSpot(i, def); pt.hx = sp[0]; pt.hy = sp[1]; }
+          pt.x = pt.hx; pt.y = pt.hy;
+          el.style.left = (pt.hx - size / 2) / BW * 100 + '%'; el.style.top = (pt.hy - size / 2) / BH * 100 + '%';
+          ptRoot.appendChild(el); pts.push(pt);
+        }
+      });
+      ptUntil = performance.now() + 4000; wake();
+    }
+    function stepParticles(f, now) {
+      if (!pts.length) return false;
+      var u = BW / rect.width, px = (pointerX - rect.left) * u, py = (pointerY - rect.top) * u;
+      var live = now - lastMove < 1200 || now < ptUntil, R = 520, any = false;
+      pvx = px - ppx; pvy = py - ppy; ppx = px; ppy = py; if (Math.abs(pvx) + Math.abs(pvy) > 600) { pvx = 0; pvy = 0; }
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i], hx, hy;
+        if (p.orbit) { var o = p.orbit; o.a += o.w * f / 60; hx = o.cx + Math.cos(o.a) * o.rx; hy = o.cy + Math.sin(o.a) * o.ry; }
+        else { if (p.drift) { p.hy += p.drift * f; if (p.hy < -700) p.hy = 600; } hx = p.hx + Math.sin(tm * 0.9 + p.phase) * 34; hy = p.hy + Math.cos(tm * 0.7 + p.phase) * 44; }
+        p.vx += (hx - p.x) * 0.012 * f; p.vy += (hy - p.y) * 0.012 * f;
+        if (!reduce && live) {
+          var dx = p.x - px, dy = p.y - py, d = Math.hypot(dx, dy);
+          if (d < R && d > 1) { var k = (1 - d / R), nx1 = dx / d, ny1 = dy / d; p.vx += (nx1 * 10 - ny1 * 8) * k * f + pvx * 0.3 * k; p.vy += (ny1 * 10 + nx1 * 8) * k * f + pvy * 0.3 * k; }
+        }
+        p.vx *= 0.92; p.vy *= 0.92; p.x += p.vx * f; p.y += p.vy * f; p.rot += p.vx * 0.4 * f;
+        if (Math.abs(p.vx) + Math.abs(p.vy) > 0.15 || live) any = true;
+        var ox0 = p.orbit ? p.orbit.cx : p.hx, oy0 = p.orbit ? p.orbit.cy : p.hy;
+        p.el.style.transform = 'translate(' + ((p.x - ox0) / u).toFixed(1) + 'px,' + ((p.y - oy0) / u).toFixed(1) + 'px) rotate(' + p.rot.toFixed(1) + 'deg)';
+      }
+      return any;
+    }
+
+    // ---------- the ball: drag and let go to throw it. Score in the hoop, knock the keycaps over, clear the wall. ----------
+    var ball = null, scoreN = 0, WALLX = -20;      // ball lives in box units (BW x BH); the ground is the wordmark baseline; it stays left of the N
     function toBox(e) { var u = BW / rect.width; return [(e.clientX - rect.left) * u, (e.clientY - rect.top) * u]; }
-    var WALL = -20;                               // the ball stays left of the wordmark
     function hoopGeo() { var k = fk(), q = fs(); return { rx: HOOP.bx * k + HOOP.rim[0] * q, ry: BH - HOOP.h * q + HOOP.rim[1] * q, rr: HOOP.rimR * q, bx0: HOOP.bx * k + HOOP.board[0] * q, bx1: HOOP.bx * k + HOOP.board[1] * q, by0: BH - HOOP.h * q + HOOP.board[2] * q, by1: BH - HOOP.h * q + HOOP.board[3] * q }; }
     function setupBall() {
       var el = accRoot.querySelector('[data-prop="ball"]'); ball = null; scoreN = 0; if (!el) return;
       var r = 95 * fs();
-      ball = { el: el, x: -400 * fk() + r, y: BH - r, r: r, vx: 0, vy: 0, ang: 0, drag: false, rest: true, trail: [], threwAt: 0 };
+      ball = { el: el, x: -400 * fk() + r, y: BH - r, r: r, vx: 0, vy: 0, ang: 0, drag: false, rest: true, trail: [], threwAt: 0, mode: 'gravity', until: 0 };
       el.addEventListener('pointerdown', function (e) {
         e.preventDefault(); e.stopPropagation(); interacted = true; measure();
         ball.drag = true; ball.rest = false; ball.vx = ball.vy = 0; ball.trail = []; cursorState('grab');
@@ -255,72 +394,94 @@
         carry(e); wake();
       });
       el.addEventListener('pointermove', function (e) { if (ball.drag) { carry(e); wake(); } });
-      function carry(e) { var b = toBox(e); ball.x = Math.min(WALL - ball.r, b[0]); ball.y = b[1]; ball.trail.push([b[0], b[1], performance.now()]); if (ball.trail.length > 6) ball.trail.shift(); placeBall(); }
-      function up() {
+      function carry(e) { var b = toBox(e); ball.x = Math.min(WALLX - ball.r, b[0]); ball.y = b[1]; ball.trail.push([ball.x, ball.y, performance.now()]); if (ball.trail.length > 6) ball.trail.shift(); placeBall(); }
+      function up(e) {
         if (!ball.drag) return; ball.drag = false; cursorState('');
         var tr = ball.trail, n = tr.length;
-        if (n >= 2) {
+        if (e.type === 'pointerup' && n >= 2) {
           var a = tr[0], b = tr[n - 1], dt = Math.max(16, b[2] - a[2]), sp = 16 * 0.6;
           ball.vx = (b[0] - a[0]) / dt * sp; ball.vy = (b[1] - a[1]) / dt * sp;
           var v = Math.hypot(ball.vx, ball.vy); if (v > 120) { ball.vx *= 120 / v; ball.vy *= 120 / v; }
-          if (v > 6) ball.threwAt = performance.now();
+          if (v > 6) { ball.threwAt = performance.now(); if (wallLive()) arcadeOn(); }
         }
         wake();
       }
-      el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+      el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('lostpointercapture', up);
       placeBall();
     }
     function placeBall() {
       ball.el.style.left = (ball.x - ball.r) / BW * 100 + '%'; ball.el.style.top = (ball.y - ball.r) / BH * 100 + '%';
       ball.el.style.transform = 'rotate(' + ball.ang.toFixed(1) + 'deg)';
     }
-    function shootBall() {                        // a tap: a clean arc to the rim, with a little wobble so it can rim out
+    function wallLive() { return !!accRoot.querySelector('[data-prop="brick"]:not(.is-gone)'); }
+    function arcadeOn() { ball.mode = 'arcade'; ball.until = performance.now() + 22000; var v = Math.hypot(ball.vx, ball.vy) || 1, want = Math.max(40, Math.min(58, v)) * fs(); ball.vx *= want / v; ball.vy *= want / v; if (Math.abs(ball.vy) < 8 * fs()) ball.vy = -14 * fs(); mood('round', 1200); }
+    function shootBall() {                        // a tap: a clean arc to the rim (with a little wobble so it can rim out), or a serve at the wall
       var hoop = accRoot.querySelector('[data-prop="hoop"]'); ball.rest = false;
       if (hoop) {
         var h = hoopGeo(), T = 46, g = 2.4, j = 1 + (Math.random() - 0.5) * 0.05;
         if (ball.x < h.bx1 + ball.r) { ball.vx = 30 * fs(); ball.vy = -70 * fs(); }          // stuck behind the board: hop back over it first
         else { ball.vx = (h.rx - ball.x) / T * j; ball.vy = ((h.ry - ball.y) - 0.5 * g * T * T) / T; }
-      } else { ball.vx = (-22 - Math.random() * 6) * fk(); ball.vy = -36 * fs(); }
+      } else if (wallLive()) { ball.vx = -34 * fs(); ball.vy = -30 * fs(); arcadeOn(); }
+      else { ball.vx = (-22 - Math.random() * 6) * fk(); ball.vy = -36 * fs(); }
       mood('round', 1400); wake();
     }
     function stepBall(f) {
       if (!ball || ball.drag || ball.rest) return;
-      var u = BW / rect.width, hr = hero.getBoundingClientRect(), r = ball.r;
-      var xmin = (hr.left - rect.left) * u + r, xmax = Math.min(WALL - r, (hr.right - rect.left) * u - r), ymin = (hr.top - rect.top) * u + r, ground = BH - r;
+      var u = BW / rect.width, hr = hero.getBoundingClientRect(), r = ball.r, arcade = ball.mode === 'arcade';
+      var xmin = (hr.left - rect.left) * u + r, xmax = Math.min(WALLX - r, (hr.right - rect.left) * u - r), ymin = (hr.top - rect.top) * u + r, ground = BH - r;
+      if (arcade) ymin = Math.max(ymin, (WALL.y - 420) * fk());
       var px = ball.x, py = ball.y;
-      ball.vy += 2.4 * f; ball.x += ball.vx * f; ball.y += ball.vy * f;
-      if (ball.x < xmin) { ball.x = xmin; ball.vx = -ball.vx * 0.55; } else if (ball.x > xmax) { ball.x = xmax; ball.vx = -Math.abs(ball.vx) * 0.55; }
-      if (ball.y < ymin) { ball.y = ymin; ball.vy = -ball.vy * 0.5; }
+      if (arcade) {
+        if (performance.now() > ball.until || !wallLive()) { ball.mode = 'gravity'; arcade = false; }
+        else { var v = Math.hypot(ball.vx, ball.vy), want = 46 * fs(); if (v < want * 0.8 || v > want * 1.5) { ball.vx *= want / v; ball.vy *= want / v; } }
+      }
+      if (!arcade) ball.vy += 2.4 * f;
+      ball.x += ball.vx * f; ball.y += ball.vy * f;
+      var bounce = arcade ? 1 : 0.55;
+      if (ball.x < xmin) { ball.x = xmin; ball.vx = Math.abs(ball.vx) * bounce; } else if (ball.x > xmax) { ball.x = xmax; ball.vx = -Math.abs(ball.vx) * bounce; }
+      if (ball.y < ymin) { ball.y = ymin; ball.vy = Math.abs(ball.vy) * (arcade ? 1 : 0.5); }
       var hoop = accRoot.querySelector('[data-prop="hoop"]');
       if (hoop) {
         var h = hoopGeo();
         if (ball.vy > 0 && py <= h.ry && ball.y > h.ry && Math.abs(ball.x - h.rx) < h.rr - 25) score(hoop);
         else [h.rx - h.rr, h.rx + h.rr].forEach(function (ex) {          // the two ends of the rim: a point the ball bounces off
           var dx = ball.x - ex, dy = ball.y - h.ry, d = Math.hypot(dx, dy), rr = r * 0.75;
-          if (d < rr && d > 0) { var nx = dx / d, ny = dy / d, dot = ball.vx * nx + ball.vy * ny; if (dot < 0) { ball.vx -= 1.5 * dot * nx; ball.vy -= 1.5 * dot * ny; ball.vx *= 0.7; ball.vy *= 0.7; } ball.x = ex + nx * rr; ball.y = h.ry + ny * rr; }
+          if (d < rr && d > 0) { var nx1 = dx / d, ny1 = dy / d, dot = ball.vx * nx1 + ball.vy * ny1; if (dot < 0) { ball.vx -= 1.5 * dot * nx1; ball.vy -= 1.5 * dot * ny1; ball.vx *= 0.7; ball.vy *= 0.7; } ball.x = ex + nx1 * rr; ball.y = h.ry + ny1 * rr; }
         });
         if (ball.y > h.by0 - r && ball.x + r > h.bx0 && ball.x - r < h.bx1) {                // the board and the pole are a wall, whichever side the ball is on
           if (px >= h.bx1) { ball.x = h.bx1 + r; ball.vx = Math.abs(ball.vx) * 0.5; } else if (px <= h.bx0) { ball.x = h.bx0 - r; ball.vx = -Math.abs(ball.vx) * 0.5; }
         }
       }
-      var caps = accRoot.querySelectorAll('[data-prop^="keycap"]'), left = 0;
+      var caps = accRoot.querySelectorAll('[data-prop^="keycap"],[data-prop="brick"]'), left = 0, hit = false;
       caps.forEach(function (cap) {
         if (cap.classList.contains('is-gone')) return; left++;
+        if (hit) return;
         var cx0 = parseFloat(cap.style.left) / 100 * BW, cy0 = parseFloat(cap.style.top) / 100 * BH, cw = parseFloat(cap.style.width) / 100 * BW, ch = parseFloat(cap.style.height) / 100 * BH;
         if (ball.x + r > cx0 && ball.x - r < cx0 + cw && ball.y + r > cy0 && ball.y - r < cy0 + ch) {
-          smash(cap); click(); left--; ball.vy = -Math.abs(ball.vy) * 0.5 - 5; ball.vx *= 0.85;
-          if (!left && caps.length > 1) { burst(20); hopAll(); }
+          var brick = cap.getAttribute('data-prop') === 'brick';
+          smash(cap, brick); click(); left--; hit = true;
+          if (brick) {                                                    // reflect off the side that was hit
+            var ox = Math.min(ball.x + r - cx0, cx0 + cw - (ball.x - r)), oy = Math.min(ball.y + r - cy0, cy0 + ch - (ball.y - r));
+            if (ox < oy) { ball.vx = -ball.vx; ball.x += ball.vx > 0 ? ox : -ox; } else { ball.vy = -ball.vy; ball.y += ball.vy > 0 ? oy : -oy; }
+          } else { ball.vy = -Math.abs(ball.vy) * 0.5 - 5; ball.vx *= 0.85; }
+          if (!left && caps.length > 1) { burst(brick ? 40 : 20); hopAll(); if (brick) clearedWall(); }
         }
       });
-      if (ball.y > ground) { ball.y = ground; ball.vy = -ball.vy * 0.5; ball.vx *= 0.94; if (Math.abs(ball.vy) < 3) ball.vy = 0; }
+      if (ball.y > ground) { ball.y = ground; ball.vy = -Math.abs(ball.vy) * (arcade ? 1 : 0.5); if (!arcade) { ball.vx *= 0.94; if (Math.abs(ball.vy) < 3) ball.vy = 0; } }
       ball.ang += ball.vx * f / r * 57.3;
-      if (ball.y >= ground - 0.5 && ball.vy === 0 && Math.abs(ball.vx) < 0.35) { ball.vx = 0; ball.rest = true; }
+      if (!arcade && ball.y >= ground - 0.5 && ball.vy === 0 && Math.abs(ball.vx) < 0.35) { ball.vx = 0; ball.rest = true; }
       placeBall();
     }
     function score(hoop) {
       scoreN++; var sc = hoop.querySelector('.score'); sc.textContent = '+' + scoreN;
       hoop.classList.remove('is-scored'); void hoop.offsetWidth; hoop.classList.add('is-scored');
-      ball.vx *= 0.25; mood('round', 1000); hopAll(); if (scoreN % 3 === 0) burst(24); say(t('home.status.score', { n: scoreN }));
+      ball.vx *= 0.25; mood('star', 1000); hopAll(); if (scoreN % 3 === 0) burst(24); say(t('home.status.score', { n: scoreN }));
+    }
+    function clearedWall() {
+      ball.mode = 'gravity'; mood('star', 2000); say(t('home.status.clear'));
+      accRoot.insertAdjacentHTML('beforeend', svg('clear', X0 + WALL.x * fk() + 200, Y0 + (WALL.y + 80) * fk(), 1400 * fs(), 320 * fs(), '<text x="700" y="240" font-size="240" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '">CLEAR!</text>', 9));
+      var c = accRoot.lastElementChild; c.classList.add('pop');
+      setTimeout(function () { c.remove(); accRoot.querySelectorAll('[data-prop="brick"]').forEach(function (b, i) { setTimeout(function () { b.classList.remove('is-gone'); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }, i * 40); }); }, 2400);
     }
     // things the rabbit can be fed: drag them to its mouth
     function setupFeed() {
@@ -339,59 +500,64 @@
           if (!drag) return; drag = false; cursorState('');
           if (moved) {
             var mx = rect.left + rect.width * 0.386, my = rect.top + rect.height * 0.45;      // the mouth
-            if (Math.hypot(e.clientX - mx, e.clientY - my) < rect.width * 0.15) { REACT[el.getAttribute('data-prop')](el); hopAll(); }
+            if (e.type === 'pointerup' && Math.hypot(e.clientX - mx, e.clientY - my) < rect.width * 0.15) { REACT[el.getAttribute('data-prop')](el, true); hopAll(); }
             el.classList.remove('is-carried'); el.style.left = home[0]; el.style.top = home[1]; el.__fed = true; wake();
           }
         }
-        el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up);
+        el.addEventListener('pointerup', up); el.addEventListener('pointercancel', up); el.addEventListener('lostpointercapture', up);
       });
     }
 
     // ---------- props that react ----------
+    function replay(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
     var REACT = {
-      keycap: function (el) { el.classList.add('is-pressed'); setTimeout(function () { el.classList.remove('is-pressed'); }, 110); click(); },
-      keycap1: function (el) { REACT.keycap(el); }, keycap2: function (el) { REACT.keycap(el); }, keycap3: function (el) { REACT.keycap(el); }, keycap4: function (el) { REACT.keycap(el); },
+      keycap1: function (el) { replay(el, 'is-pressed'); click(); },
+      keycap2: function (el) { REACT.keycap1(el); }, keycap3: function (el) { REACT.keycap1(el); }, keycap4: function (el) { REACT.keycap1(el); }, brick: function (el) { REACT.keycap1(el); },
       ball: function () { if (ball && performance.now() - ball.threwAt > 400 && (ball.rest || ball.y > BH - ball.r * 1.5)) shootBall(); },
-      coffee: function (el) { if (el.__fed) { el.__fed = false; return; } el.classList.remove('is-steaming'); void el.offsetWidth; el.classList.add('is-steaming'); mood('closed', 700); },
-      mp3: function (el) { playRhythm(accRoot.querySelector('[data-prop="notes"]') || el); },
-      headphones: function (el) { playRhythm(accRoot.querySelector('[data-prop="notes"]') || el); mood('closed', 2000); },
-      monitor: function (el) { el.classList.remove('is-flickering'); void el.offsetWidth; el.classList.add('is-flickering'); click(); },
-      cactus: function (el) { el.classList.remove('is-swaying'); void el.offsetWidth; el.classList.add('is-swaying'); },
-      bubble: function (el) { var txt = el.querySelector('.bubble-text'), seq = ['ㅋㅋ', '??', '♥', 'ㅠㅠ', '!!']; txt.textContent = seq[(seq.indexOf(txt.textContent) + 1) % seq.length]; mood('round', 500); },
-      bang: function () { hopAll(); mood('round', 800); },
-      bolts: function (el) { hopAll(); el.classList.remove('is-twinkling'); void el.offsetWidth; el.classList.add('is-twinkling'); },
-      zzz: function () { mood(null, 900); hopAll(); },
-      sun: function (el) { el.classList.remove('is-spinning'); void el.offsetWidth; el.classList.add('is-spinning'); },
-      monocle: function (el) { el.classList.remove('is-dropping'); void el.offsetWidth; el.classList.add('is-dropping'); mood('round', 900); },
+      coffee: function (el, fed) { if (el.__fed && !fed) { el.__fed = false; return; } replay(el, 'is-steaming'); mood('arc', 900); },
+      mp3: function (el) { playRhythm(el); },
+      headphones: function (el) { playRhythm(accRoot.querySelector('[data-prop="mp3"]') || el); mood('happy', 2000); },
+      monitor: function (el) { replay(el, 'is-flickering'); click(); },
+      cactus: function (el) { replay(el, 'is-swaying'); },
+      bubble: function (el) { var tx = el.querySelector('.bubble-text'), words = ['ㅋㅋ', '헐', '진짜?', 'ㅇㅇ', '!!']; tx.textContent = words[(words.indexOf(tx.textContent) + 1) % words.length]; replay(el, 'pop'); },
+      bang: function () { hopAll(); mood('round', 700); },
+      sun: function (el) { replay(el, 'is-spinning'); mood('happy', 900); },
+      monocle: function (el) { replay(el, 'is-dropping'); mood('round', 900); },
       magnifier: function () { var e = byId[13]; e.big = e.big === 1 ? 1.7 : 1; e.el.classList.toggle('is-big', e.big !== 1); wake(); },
-      friend: function (el) { mood('closed', 450); el.classList.remove('is-hopping'); void el.offsetWidth; el.classList.add('is-hopping'); var h = accRoot.querySelector('[data-prop="hearts"]'); if (h) { h.classList.remove('pop'); void h.offsetWidth; h.classList.add('pop'); } },
-      mirror: function () { mood('closed', 900); },
-      popper: function () { burst(28); hopAll(); },
-      stars: function (el) { el.classList.remove('is-twinkling'); void el.offsetWidth; el.classList.add('is-twinkling'); },
-      stars2: function (el) { REACT.stars(el); },
-      diploma: function (el) { el.classList.remove('is-unrolling'); void el.offsetWidth; el.classList.add('is-unrolling'); },
-      halo: function (el) { el.classList.remove('is-glowing'); void el.offsetWidth; el.classList.add('is-glowing'); },
-      icecream: function (el) { if (el.__fed) { el.__fed = false; return; } var b = (+el.getAttribute('data-bites') || 0) + 1; if (b > 3) { b = 0; } el.setAttribute('data-bites', b); mood('closed', 400); }
+      friend: function (el) { mood('heart', 900); replay(el, 'is-hopping'); pts.forEach(function (p) { p.vy -= 12; }); wake(); },
+      mirror: function () { mood('arc', 900); },
+      popper: function (el) { replay(el, 'pop'); burst(28); hopAll(); pts.forEach(function (p) { p.vx += (Math.random() - 0.5) * 40; p.vy -= 20 + Math.random() * 20; }); wake(); },
+      diploma: function (el) { replay(el, 'is-unrolling'); },
+      halo: function (el) { replay(el, 'is-glowing'); mood('happy', 1200); },
+      icecream: function (el, fed) { if (el.__fed && !fed) { el.__fed = false; return; } var b = (+el.getAttribute('data-bites') || 0) + 1; if (b > 3) { b = 0; } el.setAttribute('data-bites', b); mood('happy', 600); },
+      candle: function (el) { el.classList.toggle('is-out'); mood(el.classList.contains('is-out') ? 'round' : 'arc', 800); },
+      propeller: function (el) { replay(el, 'is-spinning'); mood('squeeze', 900); hopAll(); },
+      clover: function (el) { replay(el, 'is-spinning'); mood('star', 900); pts.forEach(function (p) { p.vy -= 14; }); wake(); },
+      saturn: function (el) { replay(el, 'is-tilting'); pts.forEach(function (p) { if (p.orbit) p.orbit.w *= -1; }); wake(); },
+      stagelight: function (el) { replay(el, 'is-swinging'); mood('round', 800); },
+      neonsign: function (el) { el.classList.toggle('is-off'); click(); }
     };
-    function smash(cap) {
+    function smash(cap, keep) {
       if (cap.classList.contains('is-gone')) return;
       cap.classList.add('is-gone'); cap.classList.remove('pop');
       var x = parseFloat(cap.style.left) / 100 * BW + X0 - 80, y = parseFloat(cap.style.top) / 100 * BH + Y0 - 120;
       accRoot.insertAdjacentHTML('beforeend', svg('shards', x, y, 360, 360, '<g class="shard" fill="' + TXT + '" opacity=".9"><polygon points="60,200 120,150 130,230"/><polygon points="250,120 310,160 260,210"/><polygon points="160,60 220,40 200,120"/><polygon points="220,260 280,230 290,300"/></g>', 6));
-      var sh = accRoot.lastElementChild; mood('round', 700);
+      var sh = accRoot.lastElementChild; if (!keep) mood('round', 700);
       setTimeout(function () { sh.remove(); }, 900);
-      setTimeout(function () { cap.classList.remove('is-gone'); cap.classList.add('pop'); }, 3200);
+      if (!keep) setTimeout(function () { cap.classList.remove('is-gone'); replay(cap, 'pop'); }, 3200);
     }
-    accRoot.addEventListener('click', function (e) { var el = e.target.closest('.ac.hit'); if (!el) return; interacted = true; var fn = REACT[el.getAttribute('data-prop')]; if (fn) fn(el); });
-    accRoot.addEventListener('pointerover', function (e) { if (e.target.closest('.ac.hit')) cursorState('tap'); });
-    accRoot.addEventListener('pointerout', function (e) { if (e.target.closest('.ac.hit')) cursorState(''); });
+    [accRoot, backRoot].forEach(function (rt) {
+      rt.addEventListener('click', function (e) { var el = e.target.closest('.ac.hit'); if (!el) return; interacted = true; var fn = REACT[el.getAttribute('data-prop')]; if (fn) fn(el); });
+      rt.addEventListener('pointerover', function (e) { if (e.target.closest('.ac.hit')) cursorState('tap'); });
+      rt.addEventListener('pointerout', function (e) { if (e.target.closest('.ac.hit')) cursorState(''); });
+    });
 
     // ---------- the slot machine ----------
-    var slot = document.getElementById('slot'), reel = document.getElementById('reel'), lever = document.getElementById('lever');
+    var slot = document.getElementById('slot'), reel = document.getElementById('reel'), lever = document.getElementById('lever'), tierTag = document.getElementById('tier');
     var status = document.getElementById('hero-status'), go = document.getElementById('go');
-    var current = null, spinning = false;
+    var current = null, lastReaction = null;
     function say(m) { if (status) status.textContent = m; }
-    function tint(hex) { var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); var mix = function (c) { return Math.round(c * 0.14 + 250 * 0.86); }; return 'rgb(' + mix(r) + ',' + mix(g) + ',' + mix(b) + ')'; }
+    function tint(hex, dark) { var r = parseInt(hex.slice(1, 3), 16), g = parseInt(hex.slice(3, 5), 16), b = parseInt(hex.slice(5, 7), 16); var to = dark ? 24 : 250; var mix = function (c) { return Math.round(c * 0.14 + to * 0.86); }; return 'rgb(' + mix(r) + ',' + mix(g) + ',' + mix(b) + ')'; }
     function wordSpan(entry) {
       var c = PAL[entry.hue]; var sp = document.createElement('span'); sp.className = 'word'; sp.style.color = c.text;
       var w = document.createElement('span'); w.className = 'w'; w.textContent = entry.w; sp.appendChild(w);
@@ -399,25 +565,39 @@
       return sp;
     }
     function fixWidth() {
+      if (!slot) return;
       var probe = document.createElement('span'); probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:-9999px'; slot.appendChild(probe);
       var max = 0; WORDS.forEach(function (e) { var sp = wordSpan(e); probe.appendChild(sp); max = Math.max(max, sp.getBoundingClientRect().width); probe.removeChild(sp); });
       probe.remove(); slot.style.width = Math.ceil(max) + 'px';
     }
+    function hangKeyring(on) {
+      if (!lever) return; var k = lever.querySelector('.keyring'); if (k) k.remove();
+      if (!on) return;
+      lever.insertAdjacentHTML('beforeend', KEYRING); k = lever.querySelector('.keyring');
+      k.addEventListener('click', function (e) { e.stopPropagation(); click(); replay(k, 'is-pressed'); mood('happy', 500); });
+      k.addEventListener('pointerenter', function (e) { e.stopPropagation(); cursorState('tap'); }); k.addEventListener('pointerleave', function () { cursorState('pull'); });
+    }
     function applyWord(entry, animate) {
-      current = entry; var c = PAL[entry.hue];
-      document.documentElement.style.setProperty('--word', c.text);
-      document.documentElement.style.setProperty('--rabbit', c.rabbit);
-      document.documentElement.style.setProperty('--slot-bg', tint(c.rabbit));
+      current = entry; var c = PAL[entry.hue], dark = entry.theme === 'cyber';
+      var html = document.documentElement, faceWas = html.getAttribute('data-face') || '';
+      html.style.setProperty('--word', c.text); html.style.setProperty('--rabbit', c.rabbit); html.style.setProperty('--slot-bg', tint(c.rabbit, dark));
+      if (entry.theme) html.setAttribute('data-theme', entry.theme); else html.removeAttribute('data-theme');
+      if (entry.font) html.setAttribute('data-face', entry.font); else html.removeAttribute('data-face');
+      if ((entry.font || '') !== faceWas) fixWidth();
       eyeMood = entry.eyes || null; earMood = entry.ears || null; byId[13].big = 1; byId[13].el.classList.remove('is-big');
-      if (rhythm) { clearInterval(rhythm); rhythm = 0; }
-      accRoot.querySelectorAll('.ac').forEach(function (a) { a.remove(); });
+      if (rhythm) { clearInterval(rhythm); rhythm = 0; ptRoot.classList.remove('is-playing'); }
+      accRoot.querySelectorAll('.ac').forEach(function (a) { a.remove(); }); backRoot.querySelectorAll('.ac').forEach(function (a) { a.remove(); });
       accRoot.insertAdjacentHTML('beforeend', entry.acc.map(function (k) { return ACC[k] ? ACC[k]() : ''; }).join(''));
-      accRoot.setAttribute('data-tier', entry.tier); setupBall(); setupFeed();
-      if (animate) accRoot.querySelectorAll('.ac').forEach(function (a, i) { a.style.animationDelay = (i * 60) + 'ms'; a.classList.add('pop'); });
+      accRoot.querySelectorAll('[data-back]').forEach(function (a) { backRoot.appendChild(a); });
+      accRoot.setAttribute('data-tier', entry.tier); if (slot) slot.setAttribute('data-tier', entry.tier);
+      if (tierTag) { var rare = entry.tier === 'rare' || entry.tier === 'epic'; tierTag.hidden = !rare; tierTag.textContent = entry.tier; tierTag.setAttribute('data-tier', entry.tier); }
+      hangKeyring(entry.acc.indexOf('keyring') >= 0);
+      setupParticles(entry); setupBall(); setupFeed();
+      if (animate) { accRoot.querySelectorAll('.ac').forEach(function (a, i) { a.style.animationDelay = (i * 40) + 'ms'; a.classList.add('pop'); }); backRoot.querySelectorAll('.ac').forEach(function (a) { a.classList.add('pop'); }); }
       if (go) { var pr = PRODUCT[entry.product]; if (pr) { go.querySelector('.go__t').textContent = t(pr.key); go.querySelector('img').src = pr.icon; go.querySelector('img').alt = pr.name; go.href = pr.href; go.hidden = false; go.classList.remove('pop'); if (animate) { void go.offsetWidth; go.classList.add('pop'); } } else go.hidden = true; }
       try { sessionStorage.setItem('nm-word', entry.w); } catch (_) { }
-      say(t('home.status.word', { w: entry.w + (entry.tier === 'common' ? '' : ' (' + entry.tier + ')') }));
-      wake();
+      found(entry.w);
+      say(t('home.status.word', { w: entry.w })); wake();
     }
     function pick() {
       var pool = WORDS.filter(function (e) { return e !== current; }), total = 0;
@@ -430,9 +610,12 @@
       if (spinning) return; spinning = true; interacted = true;
       var next = forced || pick();
       lever.classList.remove('is-pulled'); void lever.offsetWidth; lever.classList.add('is-pulled');
-      excite = 1; wake();
+      var opts = ['dizzy', 'wave', 'flap', 'hop'].filter(function (r) { return r !== lastReaction; });
+      reaction = lastReaction = opts[(Math.random() * opts.length) | 0];
+      if (reaction === 'wave' && !reduce) { var i = 0; waveTimer = setInterval(function () { poke(letters[i++ % letters.length], true); }, 110); }
+      wake();
       var seq = [current || WORDS[0]]; var n = reduce ? 4 : 18;
-      for (var i = 0; i < n; i++) seq.push(WORDS[(Math.random() * WORDS.length) | 0]);
+      for (var j = 0; j < n; j++) seq.push(WORDS[(Math.random() * WORDS.length) | 0]);
       seq.push(next);
       reel.textContent = ''; seq.forEach(function (e) { reel.appendChild(wordSpan(e)); });
       var h = slot.getBoundingClientRect().height, total = (seq.length - 1) * h, dur = reduce ? 500 : 1700, t0 = performance.now();
@@ -447,10 +630,12 @@
     function land(next) {
       slot.classList.add('is-landed'); setTimeout(function () { slot.classList.remove('is-landed'); }, 500);
       reel.textContent = ''; reel.appendChild(wordSpan(next)); reel.style.transform = ''; reel.style.filter = '';
+      clearInterval(waveTimer); spinning = false; reaction = null;
       applyWord(next, true);
-      excite = 0; spinning = false;
-      if (next.tier === 'rare' || next.tier === 'epic') burst(next.tier === 'epic' ? 36 : 18);
-      poke();
+      if (next.tier === 'common') poke();
+      else if (next.tier === 'uncommon') { poke(); hopAll(); }
+      else if (next.tier === 'rare') { burst(18); hopAll(); mood('star', 1100); poke(); }
+      else { burst(40); hopAll(); mood('star', 1800); setTimeout(hopAll, 260); setTimeout(hopAll, 520); poke(); }
     }
     function burst(n) {
       var cols = ['#FF6666', '#DAB249', '#79C0F1', '#C1A9EE', '#95C78A', '#EE95D1'];
@@ -466,7 +651,35 @@
       lever.addEventListener('click', function () { spin(); });
       lever.addEventListener('pointerenter', function () { cursorState('pull'); }); lever.addEventListener('pointerleave', function () { cursorState(''); });
     }
-    var reroll = document.getElementById('reroll'); if (reroll) reroll.addEventListener('click', function () { spin(); });
+
+    // ---------- the collection: every word drawn so far, the rest as ??? ----------
+    var foundSet = {}; try { (JSON.parse(localStorage.getItem('nm-found') || '[]')).forEach(function (w) { foundSet[w] = 1; }); } catch (_) { }
+    var wordsBtn = document.getElementById('words-btn'), wordsDlg = document.getElementById('words'), wordsGrid = document.getElementById('words-grid'), wordsCount = document.getElementById('words-count');
+    function foundN() { return WORDS.filter(function (e) { return foundSet[e.w]; }).length; }
+    function found(w) { if (foundSet[w]) { renderWords(); return; } foundSet[w] = 1; try { localStorage.setItem('nm-found', JSON.stringify(Object.keys(foundSet))); } catch (_) { } renderWords(); }
+    function renderWords() {
+      var n = foundN();
+      if (wordsBtn) wordsBtn.textContent = t('home.words', { n: n, t: WORDS.length });
+      if (wordsCount) wordsCount.textContent = n + ' / ' + WORDS.length;
+      if (!wordsGrid) return; wordsGrid.textContent = '';
+      TIERS.forEach(function (tier) {
+        var row = document.createElement('div'); row.className = 'words__row'; row.setAttribute('data-tier', tier);
+        var h = document.createElement('p'); h.className = 'words__tier'; h.textContent = tier; row.appendChild(h);
+        var ul = document.createElement('ul'); ul.className = 'words__list';
+        WORDS.filter(function (e) { return e.tier === tier; }).forEach(function (e) {
+          var li = document.createElement('li');
+          if (foundSet[e.w]) { var b = document.createElement('button'); b.type = 'button'; b.className = 'wd' + (current === e ? ' is-now' : ''); b.style.color = PAL[e.hue].text; b.textContent = e.w; b.addEventListener('click', function () { wordsDlg.close(); if (current !== e) spin(e); }); li.appendChild(b); }
+          else { li.className = 'wd wd--unknown'; li.textContent = '???'; }
+          ul.appendChild(li);
+        });
+        row.appendChild(ul); wordsGrid.appendChild(row);
+      });
+    }
+    if (wordsBtn && wordsDlg) {
+      wordsBtn.addEventListener('click', function () { renderWords(); wordsDlg.showModal(); });
+      wordsDlg.addEventListener('click', function (e) { if (e.target === wordsDlg || e.target.closest('.words__close')) wordsDlg.close(); });
+    }
+
     var saved = null; try { saved = sessionStorage.getItem('nm-word'); } catch (_) { }
     var initial = WORDS.filter(function (e) { return e.w === saved; })[0] || WORDS[0];
     if (slot && reel) {
@@ -485,12 +698,13 @@
       letters.forEach(function (p) { var b = document.createElement('button'); b.type = 'button'; b.textContent = t('home.letter.action', { n: NAME[p.id] }); b.addEventListener('click', function () { poke(p); }); kb.appendChild(b); });
     }
     buildKeys();
-    window.addEventListener('nm:langchange', function () { buildKeys(); if (current && go && !go.hidden) go.querySelector('.go__t').textContent = t(PRODUCT[current.product].key); });
+    window.addEventListener('nm:langchange', function () { buildKeys(); renderWords(); if (current && go && !go.hidden) go.querySelector('.go__t').textContent = t(PRODUCT[current.product].key); });
 
     root.__nm = { spin: spin, poke: poke, words: WORDS, set: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) spin(e); }, setNow: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) { reel.textContent = ''; reel.appendChild(wordSpan(e)); applyWord(e, true); } },
-      throwBall: function (vx, vy) { if (ball) { ball.rest = false; ball.vx = vx; ball.vy = vy; wake(); } }, shoot: function () { if (ball) shootBall(); }, ball: function () { return ball ? { x: Math.round(ball.x), y: Math.round(ball.y), rest: ball.rest, score: scoreN } : null; },
+      throwBall: function (vx, vy) { if (ball) { ball.rest = false; ball.vx = vx; ball.vy = vy; if (wallLive()) arcadeOn(); wake(); } }, shoot: function () { if (ball) shootBall(); }, ball: function () { return ball ? { x: Math.round(ball.x), y: Math.round(ball.y), rest: ball.rest, score: scoreN, mode: ball.mode } : null; },
+      mood: mood, eyes: function () { return eyesNow; }, particles: function () { return pts.map(function (p) { return [Math.round(p.x), Math.round(p.y)]; }); },
       cursor: function (x, y, s) { curOn = true; cur && cur.classList.add('is-on'); curX = curTX = x; curY = curTY = y; cursorState(s || ''); wake(); },
-      stats: function () { return { word: current && current.w, tier: current && current.tier, agitate: +agitate.toFixed(2), spinning: spinning, away: away ? NAME[away.id] : null, rendering: !!raf, go: go ? !go.hidden : null }; } };
+      stats: function () { return { word: current && current.w, tier: current && current.tier, agitate: +agitate.toFixed(2), spinning: spinning, reaction: reaction, away: away ? NAME[away.id] : null, rendering: !!raf, go: go ? !go.hidden : null, found: foundN() }; } };
     window.NewMeansHero = root.__nm;
   }
   function auto() { document.querySelectorAll('[data-nm-hero]').forEach(mount); }
