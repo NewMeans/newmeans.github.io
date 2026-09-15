@@ -14,22 +14,18 @@
   <meta property="og:url" content="https://newmeans.github.io/typer.html">
   <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" href="assets/brand/typer-icon.png">
-  <link rel="stylesheet" href="base.css?v=20260915-1">
-  <link rel="stylesheet" href="product.css?v=20260915-1">
-  <link rel="stylesheet" href="typer.css?v=20260915-1">
+  <link rel="stylesheet" href="base.css?v=20260915-2">
+  <link rel="stylesheet" href="product.css?v=20260915-2">
+  <link rel="stylesheet" href="typer.css?v=20260915-2">
 </head>
 <body class="tp">
   <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
 
-  <header class="nav">
+  <header class="nav nav--wide">
     <div class="wrap nav__in">
       <a class="nav__brand" href="index.html" aria-label="NewMeans home"><img class="nav__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
       <span class="nav__here">Typer</span>
       <div class="nav__spacer"></div>
-      <nav class="nav__links" aria-label="Typer">
-        <a href="#loop" data-i18n="typer.loop.title">드래그로 조준, 손 떼면 발사</a>
-        <a href="#custom" data-i18n="typer.custom.title">키보드 바꿔보기</a>
-      </nav>
       <div class="nav__tools">
         <div class="lang" role="group" aria-label="Language">
           <button type="button" data-lang-set="ko">KO</button><span>·</span><button type="button" data-lang-set="en">EN</button>
@@ -38,207 +34,59 @@
     </div>
   </header>
 
-  <main id="main">
-    <!-- the stage: the page explains on the left, the desk stays on the right and plays along -->
-    <section class="tp-stage" id="top" data-typer-desk>
-      <div class="wrap tp-stage__grid">
-        <div class="tp-flow">
-          <header class="tp-head">
-            <img class="tp-wordmark" src="assets/brand/typer-logo.png" alt="Typer">
-            <h1 class="tp-title display" data-i18n="typer.tagline">키캡을 부수는
-손맛과 타건음</h1>
-            <p class="tp-lead" data-i18n="typer.lead">키캡에 부딪히는 공, 기계식 키보드 타건음. 모은 코인으로 바꾸는 스위치와 책상.</p>
-            <div class="badges">
-              <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
-              <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
-            </div>
-          </header>
+  <main id="main" class="one">
+    <header class="one__head">
+      <h1><img src="assets/brand/typer-logo.png" alt="Typer"></h1>
+      <p class="line" data-i18n="typer.tagline">키캡을 부수는
+손맛과 타건음</p>
+      <div class="actions badges">
+        <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
+        <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
+      </div>
+    </header>
 
-          <section class="tp-block" id="loop" aria-labelledby="loop-t">
-            <h2 class="h3" id="loop-t" data-i18n="typer.loop.title">드래그로 조준, 손 떼면 발사</h2>
-            <ol class="steps">
-              <li><b data-i18n="typer.loop.1">드래그로 조준</b><span data-i18n="typer.loop.1.d">손 떼면 공 발사</span></li>
-              <li><b data-i18n="typer.loop.2">키캡 파괴</b><span data-i18n="typer.loop.2.d">숫자만큼 맞히면 부서지고, 닿을 때마다 타건음</span></li>
-              <li><b data-i18n="typer.loop.3">한 칸씩 내려오는 줄</b><span data-i18n="typer.loop.3.d">턴이 끝나면 새 줄. 바닥선에 닿으면 게임오버</span></li>
-            </ol>
-          </section>
+    <!-- the game itself: drag to aim, release to fire, keys fire too, every hit plays the switch -->
+    <section class="one__block play" data-typer-play aria-label="Play">
+      <div class="play__screen"><div data-typer-board></div></div>
+      <div class="switches" data-switches role="group" data-i18n="typer.custom.switch" data-i18n-attr="aria-label" aria-label="스위치"></div>
+      <p class="play__status" data-play-status role="status"></p>
+    </section>
 
-          <section class="tp-block" id="items" aria-labelledby="items-t">
-            <h2 class="h3" id="items-t" data-i18n="typer.items.title">아이템 4종</h2>
-            <p class="body-s" data-i18n="typer.custom.sub">능력치가 아니라 감각을 바꾸는 아이템. 스위치마다 타건음이 다르다.</p>
-            <div class="items" data-items></div>
-          </section>
+    <p class="one__note" data-i18n="typer.kit">스위치 7종 · 키캡 8종 · 프레임 8종 · 모니터 4종</p>
 
-          <section class="tp-block" id="custom" aria-labelledby="custom-t">
-            <h2 class="h3" id="custom-t" data-i18n="typer.custom.title">키보드 바꿔보기</h2>
-            <div class="custom-tabs" role="tablist" aria-label="Keyboard customization">
-              <button role="tab" id="tab-theme" aria-controls="panel-theme" aria-selected="true" data-i18n="typer.custom.theme">조합</button>
-              <button role="tab" id="tab-keycap" aria-controls="panel-keycap" aria-selected="false" tabindex="-1" data-i18n="typer.custom.keycap">키캡</button>
-              <button role="tab" id="tab-frame" aria-controls="panel-frame" aria-selected="false" tabindex="-1" data-i18n="typer.custom.frame">프레임</button>
-              <button role="tab" id="tab-monitor" aria-controls="panel-monitor" aria-selected="false" tabindex="-1" data-i18n="typer.custom.monitor">모니터</button>
-            </div>
-            <div class="picker__row" id="panel-theme" role="tabpanel" aria-labelledby="tab-theme"></div>
-            <div class="picker__row" id="panel-keycap" role="tabpanel" aria-labelledby="tab-keycap" hidden></div>
-            <div class="picker__row" id="panel-frame" role="tabpanel" aria-labelledby="tab-frame" hidden></div>
-            <div class="picker__row" id="panel-monitor" role="tabpanel" aria-labelledby="tab-monitor" hidden></div>
-          </section>
-        </div>
-
-        <div class="tp-desk">
-          <div class="desk">
-            <div class="monitor">
-              <img class="monitor__img" data-monitor src="assets/shop/monitor/2000.png" alt="" decoding="async">
-              <div class="monitor__screen" data-screen>
-                <div class="screen-top"><span>TYPER</span><span data-switch-name>Blue</span></div>
-                <div class="screen-board" data-typer-board></div>
-                <div class="screen-bottom" data-screen-status></div>
-              </div>
-              <img class="desk__cactus" src="assets/desk/sculpture.png" alt="" decoding="async">
-            </div>
-            <div class="desk__kbwrap">
-              <img class="desk__cable" data-cable src="assets/shop/frame/3000_2.png" alt="" decoding="async">
-              <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
-            </div>
-          </div>
-          <div class="switches" data-switches role="group" data-i18n="typer.custom.switch" data-i18n-attr="aria-label" aria-label="스위치"></div>
-        </div>
+    <section class="one__block" aria-label="Screens">
+      <div class="shots">
+        <figure data-tilt><img src="assets/screens/typer/IMG_7203.PNG" width="1170" height="2532" alt="Typer: keycap break effects" loading="lazy"></figure>
+        <figure data-tilt><img src="assets/screens/typer/IMG_7204.PNG" width="1170" height="2532" alt="Typer: gameplay" loading="lazy"></figure>
+        <figure data-tilt><img src="assets/screens/typer/IMG_3497.PNG" width="1170" height="2532" alt="Typer: desk customization" loading="lazy"></figure>
       </div>
     </section>
 
-    <section class="tp-nums" aria-label="Typer in numbers">
-      <div class="wrap">
-        <div class="nums">
-          <div class="num"><b>30,000+</b><span data-i18n="typer.num.dl">다운로드</span></div>
-          <div class="num"><b>4.74★</b><span data-i18n="typer.num.rating">평균 평점</span></div>
-          <div class="num"><b>177</b><span data-i18n="typer.num.countries">출시 국가</span></div>
-          <div class="num"><b>15</b><span data-i18n="typer.num.langs">리뷰 언어</span></div>
-        </div>
-        <p class="note body-s" data-i18n="typer.num.note">전부 오가닉, 유료 마케팅 0원</p>
-      </div>
-    </section>
-
-    <section class="tp-gallery" id="gallery" aria-labelledby="gallery-t">
-      <div class="wrap">
-        <h2 class="h3 sr" id="gallery-t" data-i18n="typer.gallery.title">게임 화면</h2>
-        <div class="shots">
-          <figure data-tilt><img src="assets/screens/typer/IMG_7203.PNG" width="1170" height="2532" alt="Typer: keycap break effects" loading="lazy"></figure>
-          <figure data-tilt><img src="assets/screens/typer/IMG_7204.PNG" width="1170" height="2532" alt="Typer: gameplay" loading="lazy"></figure>
-          <figure data-tilt><img src="assets/screens/typer/IMG_3497.PNG" width="1170" height="2532" alt="Typer: desk customization" loading="lazy"></figure>
-        </div>
-      </div>
-    </section>
-
-    <section class="tp-cta" aria-label="Download">
-      <div class="wrap">
-        <h2 class="h2" data-i18n="typer.cta.title">App Store와 Google Play에서 무료</h2>
-        <p class="body-s" data-i18n="typer.cta.sub">iOS · Android · 4개 언어 지원</p>
-        <div class="badges">
-          <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
-          <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
-        </div>
-      </div>
+    <section class="one__nums" aria-label="Typer in numbers">
+      <div><b>30,000+</b><span data-i18n="typer.num.dl">다운로드</span></div>
+      <div><b>4.74★</b><span data-i18n="typer.num.rating">평균 평점</span></div>
+      <div><b>177</b><span data-i18n="typer.num.countries">출시 국가</span></div>
     </section>
   </main>
 
-  <footer class="foot">
-    <div class="wrap foot__grid">
-      <div class="foot__brand">
-        <a href="index.html" aria-label="NewMeans home"><img class="foot__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
-        <p class="foot__say" data-i18n="foot.say">독립 게임과 AI 서비스</p>
-      </div>
-      <div class="foot__col">
-        <h4 data-i18n="foot.products">제품</h4>
-        <a href="typer.html">Typer</a>
+  <footer class="end end--small">
+    <div class="wrap end__in">
+      <a class="end__mark" href="index.html" aria-label="NewMeans home">
+        <div class="sleep" data-sleep aria-hidden="true"></div>
+        <img class="end__wordmark" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
+      </a>
+      <div class="end__row">
+        <span>© 2026 NewMeans</span>
         <a href="dopamine.html" data-i18n="foot.dopa">도파민대학교</a>
-      </div>
-      <div class="foot__col">
-        <h4 data-i18n="foot.contact">연락</h4>
         <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
         <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
+        <a href="TyperHome/privacy.html" data-i18n="foot.privacy">개인정보 처리방침</a>
       </div>
-    </div>
-    <div class="wrap foot__base">
-      <span>© 2026 NewMeans</span>
-      <a href="TyperHome/privacy.html" data-i18n="foot.privacy">개인정보 처리방침</a>
     </div>
   </footer>
 
-  <script src="i18n.js?v=20260915-1" defer></script>
-  <script src="experience.js?v=20260915-1" defer></script>
-  <script src="keyboard.js?v=20260915-1" defer></script>
-  <script src="product.js?v=20260915-1" defer></script>
-  <script>
-  window.addEventListener('DOMContentLoaded', function () {
-    "use strict";
-    /* 키캡: 유니티 data.asset 실측 — slots = 18칸 위치별 스프라이트 번호, bed = 배경판 색 (와이드 슬롯: R1C5·R2C0·R3C5) */
-    var KEYCAPS = [
-      { id: '5000', n: 'Retro', bed: '#332B27', slots: [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] },
-      { id: '5001', n: 'Modern', bed: '#28282A', slots: [2, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 3] },
-      { id: '5002', n: 'Mocha Latte', bed: '#212424', slots: [2, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 4] },
-      { id: '5003', n: 'Lavender Sky', bed: '#1C1C22', slots: [2, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 4] },
-      { id: '5004', n: 'Sunset Breeze', bed: '#302D2C', slots: [2, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 4] },
-      { id: '5005', n: 'Mint Choco', bed: '#212424', slots: [2, 0, 0, 0, 0, 3, 3, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 3] },
-      { id: '5006', n: 'Midnight Edge', bed: '#1E1E1E', slots: [0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1] },
-      { id: '5007', n: 'Silver Paws', bed: '#1E1E1E', slots: [7, 10, 9, 8, 11, 12, 13, 10, 8, 7, 11, 9, 11, 7, 9, 8, 10, 13] }];
-    /* 프레임: 지오메트리 + 케이블 배치(프레임 우상단 포트에 플러그, % of 프레임) */
-    var FRAMES = [
-      { id: '3000', n: 'Retro', geo: 'retro', cable: { anchorY: 86 } },
-      { id: '3001', n: 'Modern', geo: 'modern', cable: { anchorY: 45 } },
-      { id: '3002', n: 'Mocha Latte', geo: 'modern', cable: { anchorY: 80 } },
-      { id: '3003', n: 'Lavender Sky', geo: 'modern', cable: { anchorY: 80 } },
-      { id: '3004', n: 'Sunset Breeze', geo: 'modern', cable: { anchorY: 80 } },
-      { id: '3005', n: 'Mint Choco', geo: 'modern', cable: { anchorY: 80 } },
-      { id: '3006', n: 'Midnight Edge', geo: 'modern' },
-      { id: '3007', n: 'Silver Paws', geo: 'modern', cable: { anchorY: 59 } }];
-    /* 모니터: 화면 색(fg) + 화면 인셋 — 유니티 MonitorData 실측 */
-    var MONITORS = [
-      { id: '2000', n: 'Retro', fg: '#65CDA7', inset: '11% 9% 22% 9%', aspect: '1354/1222' },
-      { id: '2001', n: 'Modern', fg: '#E2E2E2', inset: '4% 4% 24% 4%', aspect: '1380/1134' },
-      { id: '2002', n: 'Modern White', fg: '#FFAEEC', inset: '4% 4% 24% 4%', aspect: '1381/1134' },
-      { id: '2003', n: 'Studio PC', fg: '#73B77B', inset: '6% 6% 33% 6%', aspect: '1428/1208' }];
-    var THEMES = [
-      { id: 'retro', n: 'Retro', cap: '5000', fr: '3000', mon: '2000' },
-      { id: 'lavender', n: 'Lavender Sky', cap: '5003', fr: '3003', mon: '2002' },
-      { id: 'midnight', n: 'Midnight Edge', cap: '5006', fr: '3006', mon: '2001' },
-      { id: 'mint', n: 'Mint Choco', cap: '5005', fr: '3005', mon: '2003' }];
-
-    var stage = document.querySelector('[data-typer-desk]'), desk = stage && stage.__deskApi; if (!desk) return;
-    var keyboard = desk.keyboard, cable = document.querySelector('[data-cable]'), monitor = document.querySelector('[data-monitor]'), screen = document.querySelector('[data-screen]');
-    var cur = { cap: '5000', fr: '3000', mon: '2000' };
-    function item(items, id) { return items.filter(function (it) { return it.id === id; })[0]; }
-    function applyKeycap(it) { cur.cap = it.id; TyperKeyboard.setSkin(keyboard, { slots: it.slots.map(function (n) { return 'assets/shop/keycap/' + it.id + '_' + n + '.png'; }), bed: it.bed }); }
-    function applyFrame(it) {
-      cur.fr = it.id; TyperKeyboard.setSkin(keyboard, { geo: it.geo, frame: 'assets/shop/frame/' + it.id + '_1.png' });
-      cable.hidden = !it.cable; if (it.cable) { cable.src = 'assets/shop/frame/' + it.id + '_2.png'; cable.style.setProperty('--plug-y', it.cable.anchorY + '%'); }
-    }
-    function applyMonitor(it) { cur.mon = it.id; monitor.src = 'assets/shop/monitor/' + it.id + '.png'; screen.style.inset = it.inset; screen.style.color = it.fg; monitor.parentElement.style.aspectRatio = it.aspect; }
-    function sync() {
-      [['keycap', 'cap'], ['frame', 'fr'], ['monitor', 'mon']].forEach(function (k) { document.querySelectorAll('#panel-' + k[0] + ' button').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.id === cur[k[1]]); }); });
-      document.querySelectorAll('#panel-theme button').forEach(function (b) { var th = item(THEMES, b.dataset.id); b.setAttribute('aria-pressed', th.cap === cur.cap && th.fr === cur.fr && th.mon === cur.mon); });
-    }
-    function buttons(root, items, thumb, onPick) {
-      items.forEach(function (it) {
-        var b = document.createElement('button'); b.type = 'button'; b.className = 'pick'; b.dataset.id = it.id;
-        var im = new Image(); im.src = thumb(it); im.alt = ''; b.appendChild(im);
-        var label = document.createElement('span'); label.textContent = it.n; b.appendChild(label);
-        b.addEventListener('click', function () { onPick(it); sync(); }); root.appendChild(b);
-      });
-    }
-    buttons(document.getElementById('panel-theme'), THEMES, function (it) { return 'assets/shop/frame/' + it.fr + '_s.png'; }, function (it) { applyKeycap(item(KEYCAPS, it.cap)); applyFrame(item(FRAMES, it.fr)); applyMonitor(item(MONITORS, it.mon)); });
-    buttons(document.getElementById('panel-keycap'), KEYCAPS, function (it) { return 'assets/shop/keycap/' + it.id + '_s.png'; }, applyKeycap);
-    buttons(document.getElementById('panel-frame'), FRAMES, function (it) { return 'assets/shop/frame/' + it.id + '_s.png'; }, applyFrame);
-    buttons(document.getElementById('panel-monitor'), MONITORS, function (it) { return 'assets/shop/monitor/' + it.id + '.png'; }, applyMonitor);
-    var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
-    function activate(tab) { tabs.forEach(function (tb) { var on = tb === tab; tb.setAttribute('aria-selected', on); tb.tabIndex = on ? 0 : -1; document.getElementById(tb.getAttribute('aria-controls')).hidden = !on; }); }
-    tabs.forEach(function (tab, index) {
-      tab.addEventListener('click', function () { activate(tab); });
-      tab.addEventListener('keydown', function (e) {
-        var next; if (e.key === 'ArrowRight') next = (index + 1) % tabs.length; else if (e.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length; else if (e.key === 'Home') next = 0; else if (e.key === 'End') next = tabs.length - 1; else return;
-        e.preventDefault(); activate(tabs[next]); tabs[next].focus();
-      });
-    });
-    applyKeycap(KEYCAPS[0]); applyFrame(FRAMES[0]); applyMonitor(MONITORS[0]); sync();
-  });
-  </script>
+  <script src="i18n.js?v=20260915-2" defer></script>
+  <script src="experience.js?v=20260915-2" defer></script>
+  <script src="product.js?v=20260915-2" defer></script>
 </body>
 </html>

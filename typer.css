@@ -1,64 +1,6 @@
-/* Typer page: the desk stays on the right and plays along while the page explains on the left. Tokens from base.css. */
-.tp section[id]{scroll-margin-top:72px}
+/* Typer page: one column, the game up top. Shared frame in product.css, tokens in base.css. */
 .tp .nav__here{white-space:nowrap}
-
-/* ---------- the stage ---------- */
-.tp-stage{padding:40px 0 88px}
-.tp-stage__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(40px,6vw,88px);align-items:start}
-.tp-flow{display:flex;flex-direction:column;gap:clamp(48px,6vw,72px)}
-.tp-wordmark{width:190px;height:auto}
-.tp-title{margin-top:26px;font-size:clamp(40px,4.6vw,64px);white-space:pre-line}
-.tp-lead{margin-top:18px;font-size:17px;line-height:1.55;color:var(--text-2);max-width:40ch}
-.tp-head .badges{margin-top:26px}
-.tp-block .h3{margin-bottom:14px}
-.tp-block .body-s{margin-bottom:16px;max-width:40ch}
-.steps{list-style:none;display:flex;flex-direction:column;counter-reset:s}
-.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;column-gap:14px;align-items:baseline;padding:14px 0 15px;border-top:1px solid var(--line)}
-.steps li:last-child{border-bottom:1px solid var(--line)}
-.steps li::before{content:counter(s,decimal-leading-zero);grid-row:1 / 3;font-family:var(--font-pixel);font-size:14px;color:var(--accent)}
-.steps b{font-weight:600}
-.steps span{grid-column:2;margin-top:3px;font-size:14px;color:var(--text-2)}
-
-/* the desk stays put */
-.tp-desk{position:sticky;top:84px}
-.tp-desk .desk{width:100%;max-width:580px}
-.custom-tabs{display:flex;gap:2px;background:var(--surface);border-radius:var(--r-pill);padding:3px;margin-bottom:14px}
-.custom-tabs button{flex:1;padding:9px 10px 11px;border-radius:var(--r-pill);font:500 13px/1 var(--font-ui);color:var(--text-2);white-space:nowrap;transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
-.custom-tabs button:hover{color:var(--text-1)}
-.custom-tabs button[aria-selected="true"]{background:var(--btn-bg);color:var(--btn-text)}
-.picker__row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.picker__row[hidden]{display:none}
-.pick{display:flex;flex-direction:column;align-items:center;gap:8px;padding:12px 6px 10px;border-radius:var(--r-media);font-size:12px;line-height:1.3;text-align:center;color:var(--text-2);border:1.5px solid transparent;background:var(--surface);transition:background var(--dur) var(--ease),border-color var(--dur) var(--ease),color var(--dur) var(--ease)}
-.pick img{width:100%;height:52px;object-fit:contain;transition:transform .2s var(--ease)}
-.pick:hover{background:var(--surface-hover)}.pick:hover img{transform:translateY(-3px)}
-.pick[aria-pressed="true"]{border-color:var(--accent);color:var(--text-1);background:var(--accent-soft)}
-
-/* ---------- numbers, story ---------- */
-.tp-nums{padding:72px 0 80px;background:var(--accent-soft)}
-.tp-nums .note{margin-top:22px}
-.tp-story{margin-top:40px;max-width:30ch;font-family:var(--font-display);font-size:clamp(24px,2.6vw,34px);font-weight:600;letter-spacing:-.02em;line-height:1.25;color:var(--text-display)}
-
-/* ---------- screens ---------- */
-.tp-gallery{padding:96px 0 40px}
-.shots{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px);align-items:center;max-width:920px;margin:0 auto}
-.shots figure{border-radius:var(--r-media)}
-.shots figure:nth-child(2){margin-top:-48px}
-.shots img{width:100%;height:auto;display:block;border-radius:var(--r-media);box-shadow:0 24px 50px rgba(36,33,29,.14)}
-
-/* ---------- download ---------- */
-.tp-cta{padding:88px 0 40px;text-align:center}
-.tp-cta .h2{margin-bottom:10px}
-.tp-cta .badges{justify-content:center;margin-top:26px}
-
-@media (max-width:900px){
-  .tp-stage{padding-top:24px}
-  .tp-stage__grid{grid-template-columns:1fr;gap:40px}
-  .tp-desk{position:static;order:-1}
-  .tp-title{font-size:clamp(34px,8vw,44px)}
-  .picker__row{grid-template-columns:repeat(4,minmax(0,1fr))}
-  .shots{gap:12px}.shots figure:nth-child(2){margin-top:0}
-  .tp-gallery{padding:56px 0 20px}.tp-cta{padding:56px 0 20px}
-  .nav__links{display:none}
-}
-@media (max-width:480px){.picker__row{grid-template-columns:repeat(2,minmax(0,1fr))}.custom-tabs button{font-size:12px;padding:8px 6px 10px}}
-@media (prefers-reduced-motion:reduce){.pick img,.pick{transition:none}.pick:hover img{transform:none}}
+.tp .one__head .line{white-space:pre-line}
+.tp .play__screen{background:#24211D}
+.tp .shots figure:nth-child(2){transform:translateY(-14px)}
+@media (max-width:720px){.tp .shots figure:nth-child(2){transform:none}}

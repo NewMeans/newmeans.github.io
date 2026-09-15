@@ -14,9 +14,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
 <link rel="preload" href="assets/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="base.css?v=20260915-1">
-<link rel="stylesheet" href="product.css?v=20260915-1">
-<link rel="stylesheet" href="home.css?v=20260915-1">
+<link rel="stylesheet" href="base.css?v=20260915-2">
+<link rel="stylesheet" href="product.css?v=20260915-2">
+<link rel="stylesheet" href="home.css?v=20260915-2">
 </head>
 <body class="home">
 <a class="skip-link" href="#works" data-i18n="nav.skip">본문으로 건너뛰기</a>
@@ -60,17 +60,18 @@
     </div>
   </section>
 
-  <!-- TWO SCENES: each product as a pinned scroll sequence. Logo, one hint, one action. -->
-  <section class="scene scene--typer" id="works" data-scene aria-label="Typer">
+  <!-- TWO SCENES: each product as a pinned scroll sequence. A big logo, one object, one hint, one action. -->
+  <section class="scene scene--typer" id="works" data-scene="typer" aria-label="Typer">
     <div class="scene__pin"><div class="wrap scene__in">
       <a class="scene__logo" href="typer.html"><img src="assets/brand/typer-logo.png" alt="Typer"></a>
-      <div class="scene__stage" aria-hidden="true">
-        <img class="kc kc1" src="assets/shop/keycap/5003_0.png" alt="" draggable="false">
-        <img class="kc kc2" src="assets/shop/keycap/5000_0.png" alt="" draggable="false">
-        <img class="kc kc3" src="assets/shop/keycap/5005_0.png" alt="" draggable="false">
-        <img class="kc kc4" src="assets/shop/keycap/5002_0.png" alt="" draggable="false">
-        <img class="kc kc5" src="assets/shop/keycap/5006_0.png" alt="" draggable="false">
-        <i class="shard s1"></i><i class="shard s2"></i><i class="shard s3"></i><i class="shard s4"></i>
+      <div class="scene__stage stage--typer" aria-hidden="true">
+        <svg class="trail" viewBox="0 0 760 360"><defs><clipPath id="trail-clip"><rect x="-20" y="-80" width="0" height="520"/></clipPath></defs><path clip-path="url(#trail-clip)" d="M60 -40 L184 239 L308 110 L432 239 L494 166 L556 239 L820 -70"/></svg>
+        <div class="cap c1" style="--x:8"><b class="n">3</b></div>
+        <div class="cap c2" style="--x:132"><b class="n n--a">3</b><b class="n n--b">2</b></div>
+        <div class="cap c3" style="--x:256"><b class="n">1</b></div>
+        <div class="cap c4" style="--x:380"><b class="n n--a">2</b><b class="n n--b">1</b></div>
+        <div class="cap c5" style="--x:504"><b class="n n--a">1</b><b class="n n--b">0</b><i class="sh"></i><i class="sh"></i><i class="sh"></i><i class="sh"></i></div>
+        <div class="cap c6" style="--x:628"><b class="n">2</b></div>
         <span class="wave"><i></i><i></i><i></i><i></i></span>
         <img class="ball" src="assets/game/ball.png" alt="" draggable="false">
       </div>
@@ -85,20 +86,15 @@
     </div></div>
   </section>
 
-  <section class="scene scene--dopa" id="dopa" data-scene aria-label="Dopamine University">
+  <section class="scene scene--dopa" id="dopa" data-scene="dopa" aria-label="Dopamine University">
     <div class="scene__pin"><div class="wrap scene__in">
       <a class="scene__logo scene__logo--dopa" href="dopamine.html"><img src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
-      <div class="scene__stage scene__stage--chat" aria-hidden="true">
-        <div class="chat">
-          <div class="bub b1" data-tag="q"><span>오늘 뭐해?</span><b>질문</b></div>
-          <div class="bub bub--me b2" data-tag="lol"><span>나 지금 카페 ㅋㅋㅋ</span><b>ㅋㅋ</b></div>
-          <div class="bub b3" data-tag="teto"><span>바로 와 ㄱㄱ</span><b>직진</b></div>
-          <div class="bub bub--me b4" data-tag="egen"><span>괜찮아 천천히 와</span><b>공감</b></div>
-        </div>
-        <div class="meter">
-          <img class="meter__a" src="assets/screens/dopamine/DrTeto.png" alt="">
-          <i class="meter__track"><b class="meter__needle"></b></i>
-          <img class="meter__b" src="assets/screens/dopamine/AsEgen.png" alt="">
+      <div class="scene__stage stage--dopa" aria-hidden="true">
+        <div class="report" data-report>
+          <div class="report__head"><img src="assets/brand/dopamine-symbol.png" alt=""><span data-i18n="dopa.report">연구 보고서</span><em>dodae.me</em></div>
+          <div class="report__lines"><i style="--w:92%;--d:.3"></i><i style="--w:66%;--d:.36"></i><i style="--w:84%;--d:.42"></i><i style="--w:48%;--d:.48"></i><i style="--w:74%;--d:.54"></i></div>
+          <div class="report__axis"><span data-i18n="dopa.teto">테토</span><i class="report__track"><b class="report__needle"></b></i><span data-i18n="dopa.egen">에겐</span></div>
+          <div class="report__stamp"><img src="assets/brand/dopamine-symbol.png" alt=""></div>
         </div>
       </div>
       <p class="scene__hint" data-i18n="home.dopa.hint">내 카톡으로 보는 나의 다른 모습</p>
@@ -106,35 +102,24 @@
     </div></div>
   </section>
 
-  <!-- STUDIO: one line -->
-  <section class="studio" id="studio" aria-label="Studio">
-    <div class="wrap studio__row">
-      <p class="studio__line" data-i18n="home.studio.lead">게임 하나와 AI 서비스 하나를 직접 만들고 운영하는 2인 스튜디오</p>
-      <div class="studio__links">
-        <a class="link" href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
-        <a class="link" href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
-      </div>
-    </div>
-  </section>
 </main>
 
-<footer class="foot foot--home" id="footer">
-  <div class="wrap row">
-    <div class="brand"><img src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"><span>© 2026 NewMeans, Seoul</span></div>
-    <nav class="links" aria-label="Footer">
-      <a href="typer.html">Typer</a>
-      <a href="dopamine.html" data-i18n="foot.dopa">도파민대학교</a>
+<!-- END CARD: the mark, asleep, and the few links that matter -->
+<footer class="end" id="studio">
+  <div class="wrap end__in">
+    <div class="end__mark">
+      <div class="sleep" data-sleep aria-hidden="true"></div>
+      <img class="end__wordmark" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
+    </div>
+    <div class="end__row">
+      <span>© 2026 NewMeans</span>
+      <span>Seoul, Korea</span>
+      <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
       <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
       <a href="TyperHome/privacy.html" data-i18n="foot.privacy">개인정보 처리방침</a>
-    </nav>
-    <div class="sleep" id="sleep" role="img" data-i18n="foot.sleep" data-i18n-attr="aria-label" aria-label="잠든 토끼"></div>
+    </div>
   </div>
 </footer>
-
-<dialog class="words" id="words" aria-labelledby="words-title">
-  <div class="words__head"><h2 id="words-title" data-i18n="home.words.title">모은 단어</h2><p id="words-count"></p><button type="button" class="words__close" data-i18n="home.words.close" data-i18n-attr="aria-label" aria-label="닫기"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg></button></div>
-  <div id="words-grid"></div>
-</dialog>
 
 <div class="cursor" id="cursor" data-state="" aria-hidden="true">
   <svg class="c-spark" viewBox="0 0 48 48"><circle cx="12" cy="11" r="4" fill="none" stroke="currentColor" stroke-width="3.2"/><path d="M30 16v22M19 27h22M22.5 19.5l15 15M37.5 19.5l-15 15" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/></svg>
@@ -144,22 +129,10 @@
   <svg class="c-tap" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6"/><circle cx="24" cy="24" r="7" fill="currentColor"/></svg>
 </div>
 
-<script src="i18n.js?v=20260915-1" defer></script>
-<script src="experience.js?v=20260915-1" defer></script>
-<script src="keyboard.js?v=20260915-1" defer></script>
-<script src="product.js?v=20260915-1" defer></script>
-<script src="hero.js?v=20260915-1" defer></script>
-<script>
-(function(){
-  "use strict";
-  window.addEventListener('DOMContentLoaded',function(){
-    /* sleeping rabbit in the footer: the rabbit pieces only, eyes closed */
-    var P=[[1,1673,357,133,400],[2,2401,357,133,400],[3,3383,357,99,99],[4,1415,361,193,392],[5,2142,361,194,392],[7,3501,446,225,220],[8,2846,840,403,84],[9,1217,842,132,400],[10,2644,842,133,400],[11,3291,842,132,400],[12,1477,864,96,69],[13,1936,864,94,69],[14,1659,887,190,169],[15,2127,931,225,221],[16,3518,955,187,242],[17,923,1192,206,42],[18,2379,1192,205,42]];
-    var X0=880,Y0=300,W=2900,H=1000,box=document.getElementById('sleep');
-    P.forEach(function(p){var el=document.createElement('div');el.className='pc'+(p[0]===12||p[0]===13?' eye':'');el.style.left=(p[1]-X0)/W*100+'%';el.style.top=(p[2]-Y0)/H*100+'%';el.style.width=p[3]/W*100+'%';el.style.height=p[4]/H*100+'%';el.style.setProperty('--m','url(assets/brand/logo-pieces/p'+p[0]+'.png)');box.appendChild(el);});
-
-  });
-})();
-</script>
+<script src="i18n.js?v=20260915-2" defer></script>
+<script src="experience.js?v=20260915-2" defer></script>
+<script src="keyboard.js?v=20260915-2" defer></script>
+<script src="product.js?v=20260915-2" defer></script>
+<script src="hero.js?v=20260915-2" defer></script>
 </body>
 </html>
