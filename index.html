@@ -60,56 +60,50 @@
     </div>
   </section>
 
-  <!-- TWO PLATES: the products, one scene, swapped by scrolling -->
-  <section class="plates" id="works" aria-label="Products" data-plates>
-    <div class="plates__stage">
-      <div class="wrap plates__grid">
-        <div class="plates__copy">
-          <article class="plate plate--typer" data-plate="0">
-            <a href="typer.html"><img class="logo" src="assets/brand/typer-logo.png" alt="Typer"></a>
-            <h2 class="h2" data-i18n="home.typer.desc">키캡을 부수는
-손맛과 타건음</h2>
-            <p class="body-s" data-i18n="home.typer.sub">아무 키나 누르면 시작되는 한 판. 키캡이 부서질 때마다 타건음.</p>
-            <div class="actions">
-              <div class="badges">
-                <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
-                <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
-              </div>
-              <a class="link" href="typer.html" data-i18n="home.typer.more">키보드 골라보기</a>
-            </div>
-          </article>
-          <article class="plate plate--dopa" data-plate="1">
-            <a href="dopamine.html"><img class="logo logo--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
-            <h2 class="h2" data-i18n="home.dopa.desc">내 카톡으로 보는
-나의 다른 모습</h2>
-            <p class="body-s" data-i18n="home.dopa.sub">말풍선을 짚으면 읽히는 대화. 2,000명이 하면 2,000개의 결과.</p>
-            <div class="actions"><a class="btn btn--tint" href="dopamine.html" data-i18n="home.dopa.more">테스트 둘러보기</a></div>
-          </article>
+  <!-- TWO SCENES: each product as a pinned scroll sequence. Logo, one hint, one action. -->
+  <section class="scene scene--typer" id="works" data-scene aria-label="Typer">
+    <div class="scene__pin"><div class="wrap scene__in">
+      <a class="scene__logo" href="typer.html"><img src="assets/brand/typer-logo.png" alt="Typer"></a>
+      <div class="scene__stage" aria-hidden="true">
+        <img class="kc kc1" src="assets/shop/keycap/5003_0.png" alt="" draggable="false">
+        <img class="kc kc2" src="assets/shop/keycap/5000_0.png" alt="" draggable="false">
+        <img class="kc kc3" src="assets/shop/keycap/5005_0.png" alt="" draggable="false">
+        <img class="kc kc4" src="assets/shop/keycap/5002_0.png" alt="" draggable="false">
+        <img class="kc kc5" src="assets/shop/keycap/5006_0.png" alt="" draggable="false">
+        <i class="shard s1"></i><i class="shard s2"></i><i class="shard s3"></i><i class="shard s4"></i>
+        <span class="wave"><i></i><i></i><i></i><i></i></span>
+        <img class="ball" src="assets/game/ball.png" alt="" draggable="false">
+      </div>
+      <p class="scene__hint" data-i18n="home.typer.hint">키캡이 부서질 때마다 타건음</p>
+      <div class="scene__act">
+        <div class="badges">
+          <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
+          <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
         </div>
-        <div class="plates__obj">
-          <div class="obj obj--typer" data-plate="0">
-            <div class="desk-wrap" data-typer-desk>
-              <div class="desk">
-                <div class="monitor">
-                  <img class="monitor__img" src="assets/shop/monitor/2000.png" alt="" decoding="async">
-                  <div class="monitor__screen">
-                    <div class="screen-top"><span>TYPER</span><span data-switch-name>Blue</span></div>
-                    <div class="screen-board" data-typer-board></div>
-                    <div class="screen-bottom" data-screen-status></div>
-                  </div>
-                </div>
-                <div class="desk__kbwrap">
-                  <img class="desk__cable" src="assets/shop/frame/3000_2.png" alt="" decoding="async">
-                  <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="obj obj--dopa" data-plate="1"><div class="lab cl" data-chat-lab="compact"></div></div>
+        <a class="link" href="typer.html" data-i18n="home.typer.more">키보드 골라보기</a>
+      </div>
+    </div></div>
+  </section>
+
+  <section class="scene scene--dopa" id="dopa" data-scene aria-label="Dopamine University">
+    <div class="scene__pin"><div class="wrap scene__in">
+      <a class="scene__logo scene__logo--dopa" href="dopamine.html"><img src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
+      <div class="scene__stage scene__stage--chat" aria-hidden="true">
+        <div class="chat">
+          <div class="bub b1" data-tag="q"><span>오늘 뭐해?</span><b>질문</b></div>
+          <div class="bub bub--me b2" data-tag="lol"><span>나 지금 카페 ㅋㅋㅋ</span><b>ㅋㅋ</b></div>
+          <div class="bub b3" data-tag="teto"><span>바로 와 ㄱㄱ</span><b>직진</b></div>
+          <div class="bub bub--me b4" data-tag="egen"><span>괜찮아 천천히 와</span><b>공감</b></div>
+        </div>
+        <div class="meter">
+          <img class="meter__a" src="assets/screens/dopamine/DrTeto.png" alt="">
+          <i class="meter__track"><b class="meter__needle"></b></i>
+          <img class="meter__b" src="assets/screens/dopamine/AsEgen.png" alt="">
         </div>
       </div>
-      <ol class="plates__dots" aria-hidden="true"><li data-go="0" class="is-on"></li><li data-go="1"></li></ol>
-    </div>
+      <p class="scene__hint" data-i18n="home.dopa.hint">내 카톡으로 보는 나의 다른 모습</p>
+      <div class="scene__act"><a class="btn btn--tint" href="dopamine.html" data-i18n="home.dopa.more">테스트 둘러보기</a></div>
+    </div></div>
   </section>
 
   <!-- STUDIO: one line -->

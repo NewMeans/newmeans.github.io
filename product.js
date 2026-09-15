@@ -3,7 +3,7 @@
  *   every keycap the ball hits plays the switch you chose, rows come down each turn.
  * ChatLab: how Dopamine University reads a chat. Point at a line and the report changes; write your own.
  * Tilt: cards that lean toward the cursor. UniqueField: 2,000 shapes, no two alike, stirred by the cursor.
- * Plates: the home's two product plates in one fixed scene, swapped by scrolling. */
+ * Scenes: the home's two product scenes, pinned, choreographed by scroll progress. */
 (function () {
   'use strict';
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -341,44 +341,50 @@
   }
 
   // ======================================================================
-  // Two plates: one fixed scene, the product swaps as you scroll through it
+  // Scenes: a pinned viewport per product. Scroll progress becomes one number (--p) and CSS does the choreography.
   // ======================================================================
-  function lerpColor(a, b, t) { return 'rgb(' + a.map(function (v, i) { return Math.round(v + (b[i] - v) * t); }).join(',') + ')'; }
-  function mountPlates(root) {
-    if (!root || root.__plates) return; root.__plates = true;
-    var stage = root.querySelector('.plates__stage'), plates = root.querySelectorAll('.plate'), objs = root.querySelectorAll('.obj'), dots = root.querySelectorAll('.plates__dots li');
-    var narrow = matchMedia('(max-width: 720px)');
-    function isStatic() { return reduce || narrow.matches; }
-    var C0 = [0xDA, 0xF7, 0xE8], C1 = [0xFE, 0xE9, 0xE7], raf = 0, seen = true, last = -1;   // m-100 to c-100
+  function mountScene(root) {
+    if (!root || root.__scene) return; root.__scene = true;
+    var pin = root.querySelector('.scene__pin'), narrow = matchMedia('(max-width: 720px)'), raf = 0, seen = true, last = -1;
     function update() {
       raf = 0;
-      if (isStatic()) { root.classList.add('is-static'); root.style.removeProperty('--plate-bg'); return; }
+      if (reduce || narrow.matches) { root.classList.add('is-static'); root.style.removeProperty('--p'); return; }
       root.classList.remove('is-static');
-      var r = root.getBoundingClientRect(), total = root.offsetHeight - stage.offsetHeight, p = total > 0 ? Math.min(1, Math.max(0, (64 - r.top) / total)) : 0;
-      var t = Math.min(1, Math.max(0, (p - 0.36) / 0.28)); t = t * t * (3 - 2 * t);
-      if (t === last) return; last = t;
-      var c = function (v) { return Math.min(1, Math.max(0, v)); };
-      // the outgoing copy is gone before the incoming copy arrives; the objects cross in the middle
-      var sets = [[plates[0], 1 - c(t / 0.45), -14 * t], [plates[1], c((t - 0.55) / 0.45), 14 * (1 - t)], [objs[0], 1 - c((t - 0.3) / 0.4), -10 * t], [objs[1], c((t - 0.3) / 0.4), 10 * (1 - t)]];
-      sets.forEach(function (s) { s[0].style.setProperty('--o', s[1].toFixed(3)); s[0].style.setProperty('--y', s[2].toFixed(1) + 'px'); s[0].style.setProperty('--v', s[1] < 0.02 ? 'hidden' : 'visible'); });
-      root.style.setProperty('--plate-bg', lerpColor(C0, C1, t));
-      dots.forEach(function (d, i) { d.classList.toggle('is-on', i === (t < 0.5 ? 0 : 1)); });
+      var r = root.getBoundingClientRect(), total = root.offsetHeight - pin.offsetHeight, p = total > 0 ? Math.min(1, Math.max(0, (64 - r.top) / total)) : 1;
+      p = Math.round(p * 500) / 500; if (p === last) return; last = p;
+      root.style.setProperty('--p', p);
     }
     function ask() { if (!raf && seen) raf = requestAnimationFrame(update); }
     addEventListener('scroll', ask, { passive: true }); addEventListener('resize', ask);
     if (narrow.addEventListener) narrow.addEventListener('change', ask);
-    if (window.IntersectionObserver) new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; if (seen) ask(); }); }, { rootMargin: '20% 0px' }).observe(root);
-    dots.forEach(function (d, i) { d.addEventListener('click', function () { var total = root.offsetHeight - stage.offsetHeight; window.scrollTo({ top: root.offsetTop - 64 + (i ? total : 0), behavior: reduce ? 'auto' : 'smooth' }); }); });
+    if (window.IntersectionObserver) new IntersectionObserver(function (es) { es.forEach(function (e) { seen = e.isIntersecting; if (seen) ask(); }); }, { rootMargin: '30% 0px' }).observe(root);
+    // the pointer: keycaps press and play the switch, chat lines flip their tag
+    var kbEl = null;
+    root.querySelectorAll('.kc').forEach(function (k) {
+      k.addEventListener('pointerenter', function () { k.classList.add('is-down'); });
+      k.addEventListener('pointerleave', function () { k.classList.remove('is-down'); });
+      k.addEventListener('click', function () { if (!kbEl) kbEl = document.querySelector('[data-typer-keyboard]'); if (kbEl && window.TyperKeyboard) TyperKeyboard.play(kbEl); else { try { new Audio('assets/audio/switch/4000/' + ((Math.random() * 4) | 0) + '.m4a').play(); } catch (_) { } } });
+    });
+    var TAGS = { q: ['질문', 'question'], lol: ['ㅋㅋ', 'lol'], teto: ['직진', 'direct'], egen: ['공감', 'empathy'] }, order = ['q', 'lol', 'teto', 'egen'];
+    root.querySelectorAll('.bub').forEach(function (bb) {
+      bb.addEventListener('click', function () {
+        var next = order[(order.indexOf(bb.getAttribute('data-tag')) + 1) % order.length]; bb.setAttribute('data-tag', next); bb.classList.add('is-read');
+        bb.querySelector('b').textContent = TAGS[next][lang() === 'ko' ? 0 : 1];
+        var n = root.querySelector('.meter__needle'), te = root.querySelectorAll('.bub[data-tag="teto"]').length, eg = root.querySelectorAll('.bub[data-tag="egen"]').length;
+        if (n) n.style.left = (50 + (eg - te) * 12) + '%';
+        var a = root.querySelector('.meter__a'), b2 = root.querySelector('.meter__b'); if (a) a.style.transform = te > eg ? 'translateY(-5px) scale(1.1)' : ''; if (b2) b2.style.transform = eg > te ? 'translateY(-5px) scale(1.1)' : '';
+      });
+    });
     update();
   }
 
   function auto() {
-    document.querySelectorAll('[data-plates]').forEach(mountPlates);
+    document.querySelectorAll('[data-scene]').forEach(mountScene);
     document.querySelectorAll('[data-typer-desk]').forEach(mountDesk);
     document.querySelectorAll('[data-chat-lab]').forEach(mountChat);
     document.querySelectorAll('[data-tilt]').forEach(mountTilt);
     document.querySelectorAll('[data-unique-field]').forEach(mountField);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', auto); else auto();
-  window.NewMeansProduct = { board: mountBoard, desk: mountDesk, chat: mountChat, tilt: mountTilt, field: mountField, plates: mountPlates, switches: SWITCHES };
+  window.NewMeansProduct = { board: mountBoard, desk: mountDesk, chat: mountChat, tilt: mountTilt, field: mountField, scene: mountScene, switches: SWITCHES };
 })();
