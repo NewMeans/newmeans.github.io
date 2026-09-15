@@ -195,9 +195,27 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .card img{width:100%;height:100%;object-fit:cover}
 .card--a{transform:translate(-64%,-52%) rotate(-6deg)}.card--b{transform:translate(-36%,-46%) rotate(5deg)}
 .card:hover{transform:translate(-50%,-52%) rotate(0deg) scale(1.03);z-index:2;box-shadow:0 28px 60px rgba(59,55,50,.16)}
-.studio{padding:80px 0}
-.studio .row{display:flex;justify-content:space-between;align-items:center;gap:40px;flex-wrap:wrap}
-.studio .meta{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.studio{padding:96px 0 72px}
+.studio__grid{display:grid;grid-template-columns:5fr 7fr;gap:56px;align-items:center}
+.studio__copy .h2{max-width:14ch}
+.studio__lines{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:8px;color:var(--text-2);font-size:15px}
+.studio__links{display:flex;gap:22px;margin-top:26px;flex-wrap:wrap}
+.studio__scene{position:relative;aspect-ratio:2.2;min-height:200px}
+.sr-rabbit{position:absolute;bottom:22%;width:46%;aspect-ratio:2782/885;--fx:0px;--fy:0px;--ex:0deg}
+.sr-rabbit--a{left:0}.sr-rabbit--b{right:0;transform:scaleX(-1)}
+.sr-rabbit .pc{background:var(--rab);transition:transform .25s var(--ease)}
+.sr-rabbit .pc[data-role="face"]{transform:translate(var(--fx),var(--fy))}
+.sr-rabbit .pc[data-role="ear"]{transform:rotate(var(--ex))}
+.sr-rabbit.is-busy .pc[data-role="paw"]{animation:sr-tap .22s ease-in-out infinite alternate}
+@keyframes sr-tap{to{transform:rotate(14deg)}}
+.sr-kb{position:absolute;left:8%;bottom:4%;width:26%;cursor:pointer}.sr-kb svg{display:block;width:100%;height:auto}
+.sr-cap{transition:transform .08s}.sr-cap.is-down{transform:translate(var(--tx,0),4px)}
+.sr-kb .sr-cap{transform-box:fill-box}.sr-cap.is-down rect:last-child{transform:translateY(4px)}
+.sr-phone{position:absolute;right:23%;bottom:0;width:8.5%;cursor:pointer}.sr-phone svg{display:block;width:100%;height:auto}
+.sr-bubble{position:absolute;right:26%;bottom:50%;padding:8px 14px 9px;border-radius:14px 14px 14px 3px;background:var(--n-800);color:var(--n-50);font:600 14px/1 var(--font-ui);opacity:0;transform:translateY(6px) scale(.9);transition:opacity .2s,transform .3s var(--ease);pointer-events:none}
+.sr-bubble.is-on{opacity:1;transform:none}
+.sr-rabbit .pc{cursor:pointer}
+@media (max-width:720px){.studio{padding:56px 0 40px}.studio__grid{grid-template-columns:1fr;gap:28px}.studio__scene{aspect-ratio:2;order:-1}}
 
 /* ---------- home footer: one row and a sleeping rabbit ---------- */
 .foot--home{margin-top:0;padding:28px 0 32px}

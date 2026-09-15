@@ -339,12 +339,73 @@
     return root.__deskApi;
   }
 
+  // ======================================================================
+  // The studio scene: two rabbits, one at a keyboard, one at a phone. Faces follow the cursor; click and they work.
+  // ======================================================================
+  var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
+  var RX0 = 923, RY0 = 357, RW = 2782, RH2 = 885;
+  var SEYE = (function () {
+    var S = ' fill="none" stroke="var(--rab)" stroke-width="40" stroke-linecap="round" stroke-linejoin="round"';
+    return { happy: '<path d="M50 152 L120 82 L190 152"' + S + '/>', round: '<circle cx="120" cy="120" r="56"' + S + '/>', dot: '<circle cx="120" cy="120" r="50" fill="var(--rab)"/>', line: '<path d="M48 124 H192"' + S + '/>', arc: '<path d="M50 92 Q120 186 190 92"' + S + '/>' };
+  })();
+  function rabbitEl(color, base) {
+    var el = h('div', 'sr-rabbit'); el.style.setProperty('--rab', color); var eyes = [];
+    RP.forEach(function (p) {
+      var d = h('div', 'pc', el); d.style.left = (p[1] - RX0) / RW * 100 + '%'; d.style.top = (p[2] - RY0) / RH2 * 100 + '%'; d.style.width = p[3] / RW * 100 + '%'; d.style.height = p[4] / RH2 * 100 + '%';
+      d.style.setProperty('--m', 'url("' + base + 'p' + p[0] + '.png")'); d.setAttribute('data-role', p[0] === 12 || p[0] === 13 || p[0] === 14 ? 'face' : (p[0] === 1 || p[0] === 2 || p[0] === 4 || p[0] === 5) ? 'ear' : (p[0] === 17 || p[0] === 18) ? 'paw' : 'body');
+      if (p[0] === 1 || p[0] === 2 || p[0] === 4 || p[0] === 5) d.style.transformOrigin = '50% 100%';
+      if (p[0] === 17 || p[0] === 18) d.style.transformOrigin = '100% 50%';
+      if (p[0] === 12 || p[0] === 13) { var alt = mk('svg', { class: 'eye-alt', viewBox: '0 0 240 240' }, d); eyes.push({ el: d, alt: alt }); }
+    });
+    el.__eyes = function (kind) { eyes.forEach(function (e) { if (!kind) e.el.classList.remove('is-alt'); else { e.alt.innerHTML = SEYE[kind]; e.el.classList.add('is-alt'); } }); };
+    return el;
+  }
+  function mountStudio(scene) {
+    if (!scene || scene.__st) return; scene.__st = true;
+    var base = scene.getAttribute('data-base') || 'assets/brand/logo-pieces/';
+    var A = rabbitEl('#85C6A8', base), B = rabbitEl('#FF6666', base); A.classList.add('sr-rabbit--a'); B.classList.add('sr-rabbit--b');
+    var kb = h('div', 'sr-kb'), ph = h('div', 'sr-phone'), bubble = h('div', 'sr-bubble');
+    var caps = ''; for (var r = 0; r < 2; r++) for (var c = 0; c < 4; c++) caps += '<g class="sr-cap" transform="translate(' + (c * 96 + 8) + ',' + (r * 62 + 8) + ')"><rect x="0" y="6" width="86" height="54" rx="10" fill="#3E765E"/><rect x="6" y="0" width="74" height="46" rx="8" fill="#85C6A8"/></g>';
+    kb.innerHTML = '<svg viewBox="0 0 392 132" aria-hidden="true">' + caps + '</svg>';
+    ph.innerHTML = '<svg viewBox="0 0 150 250" aria-hidden="true"><rect x="4" y="4" width="142" height="242" rx="26" fill="#3B3732"/><rect x="14" y="20" width="122" height="210" rx="16" fill="#FCFBF7"/><rect x="26" y="40" width="70" height="26" rx="13" fill="#F1ECE6"/><rect x="54" y="80" width="70" height="26" rx="13" fill="#FF6666"/><rect x="26" y="120" width="60" height="26" rx="13" fill="#F1ECE6"/><rect x="44" y="160" width="80" height="26" rx="13" fill="#FF6666"/></svg>';
+    scene.appendChild(A); scene.appendChild(B); scene.appendChild(kb); scene.appendChild(ph); scene.appendChild(bubble);
+    // faces follow the cursor
+    scene.addEventListener('pointermove', function (e) {
+      var r = scene.getBoundingClientRect();
+      [A, B].forEach(function (rb, i) {
+        var rr = rb.getBoundingClientRect(), cx = rr.left + rr.width * 0.28, cy = rr.top + rr.height * 0.55;
+        var dx = Math.max(-1, Math.min(1, (e.clientX - cx) / (r.width * 0.5))), dy = Math.max(-1, Math.min(1, (e.clientY - cy) / (r.height * 0.6)));
+        if (i === 1) dx = -dx;
+        rb.style.setProperty('--fx', (dx * 6).toFixed(1) + 'px'); rb.style.setProperty('--fy', (dy * 4).toFixed(1) + 'px'); rb.style.setProperty('--ex', (dx * 4).toFixed(1) + 'deg');
+      });
+    });
+    scene.addEventListener('pointerleave', function () { [A, B].forEach(function (rb) { rb.style.setProperty('--fx', '0px'); rb.style.setProperty('--fy', '0px'); rb.style.setProperty('--ex', '0deg'); }); });
+    // A types: keycaps press one after another with the switch sound; B chats: a bubble pops over the phone
+    var kbEl = null, typing = 0, chatT = 0;
+    function play() { if (!kbEl) kbEl = document.querySelector('[data-typer-keyboard]'); if (kbEl && window.TyperKeyboard) TyperKeyboard.play(kbEl); }
+    var touched = false; scene.addEventListener('pointerdown', function () { touched = true; }, { once: true });
+    function type() {
+      if (typing) return; typing = 1; A.__eyes('happy'); A.classList.add('is-busy');
+      var capsEl = kb.querySelectorAll('.sr-cap'), i = 0;
+      (function next() { if (i >= 6) { typing = 0; A.classList.remove('is-busy'); setTimeout(function () { A.__eyes(null); }, 400); return; } var c = capsEl[(i * 3 + 1) % capsEl.length]; c.classList.add('is-down'); if (touched) play(); setTimeout(function () { c.classList.remove('is-down'); }, 100); i++; setTimeout(next, 130); })();
+    }
+    var says = ['ㅋㅋ', '오', '?!', '…', 'ㅇㅇ'], si = 0;
+    function chat() {
+      bubble.textContent = says[si++ % says.length]; bubble.classList.remove('is-on'); void bubble.offsetWidth; bubble.classList.add('is-on');
+      B.__eyes(si % 2 ? 'dot' : 'arc'); B.classList.add('is-busy'); clearTimeout(chatT); chatT = setTimeout(function () { B.__eyes(null); B.classList.remove('is-busy'); }, 1100);
+    }
+    [A, kb].forEach(function (el) { el.addEventListener('click', type); el.addEventListener('pointerenter', function () { if (!typing) A.__eyes('dot'); }); el.addEventListener('pointerleave', function () { if (!typing) A.__eyes(null); }); });
+    [B, ph].forEach(function (el) { el.addEventListener('click', chat); el.addEventListener('pointerenter', function () { B.__eyes('dot'); }); el.addEventListener('pointerleave', function () { if (!B.classList.contains('is-busy')) B.__eyes(null); }); });
+    if (!reduce) setTimeout(function () { type(); setTimeout(chat, 900); }, 1200);
+  }
+
   function auto() {
+    document.querySelectorAll('[data-studio-scene]').forEach(mountStudio);
     document.querySelectorAll('[data-typer-desk]').forEach(mountDesk);
     document.querySelectorAll('[data-chat-lab]').forEach(mountChat);
     document.querySelectorAll('[data-tilt]').forEach(mountTilt);
     document.querySelectorAll('[data-unique-field]').forEach(mountField);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', auto); else auto();
-  window.NewMeansProduct = { board: mountBoard, desk: mountDesk, chat: mountChat, tilt: mountTilt, field: mountField, switches: SWITCHES };
+  window.NewMeansProduct = { board: mountBoard, desk: mountDesk, chat: mountChat, tilt: mountTilt, field: mountField, studio: mountStudio, switches: SWITCHES };
 })();
