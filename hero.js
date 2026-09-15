@@ -553,8 +553,8 @@
     }
 
     // ---------- props that react ----------
-    function replay(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
-    [accRoot, backRoot].forEach(function (rt) { rt.addEventListener('animationend', function (e) { if (e.animationName === 'pop') e.target.classList.remove('pop'); }); });
+    function replay(el, cls) { el.classList.remove(cls); if (cls === 'pop') el.style.animationDelay = ''; void el.offsetWidth; el.classList.add(cls); }
+    [accRoot, backRoot].forEach(function (rt) { rt.addEventListener('animationend', function (e) { if (e.animationName === 'pop') { e.target.classList.remove('pop'); e.target.style.animationDelay = ''; } }); });
     var REACT = {
       keycap: function (el) { replay(el, 'is-pressed'); click(); }, brick: function (el) { REACT.keycap(el); },
       ball: function () { if (ball && performance.now() - ball.threwAt > 400 && (ball.rest || ball.y > BH - ball.r * 1.5)) shootBall(); },
