@@ -36,7 +36,7 @@
     { w: 'rhythmic', hue: 'sky', tier: 'uncommon', acc: ['headphones', 'mp3'], pt: [{ k: 'notes', n: 6 }], eyes: 'happy', product: 'typer', dot: '♪' },
     { w: 'aesthetic', hue: 'cocoa', tier: 'uncommon', acc: ['cactus', 'monitor'], product: 'typer' },
     { w: 'thoughtful', hue: 'indigo', tier: 'uncommon', acc: ['mirror', 'thought'], ears: 'droop', product: 'dopa', dot: '…' },
-    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['ball', 'keycaps'], pt: [{ k: 'stars', n: 6 }], eyes: 'arc', product: 'typer' },
+    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['tennis', 'keycaps'], pt: [{ k: 'stars', n: 6 }], eyes: 'arc', product: 'typer' },
     { w: 'dramatic', hue: 'charcoal', tier: 'uncommon', acc: ['stagelight', 'tears'], eyes: 'tear', product: 'dopa', dot: '!' },
     { w: 'connected', hue: 'rose', tier: 'uncommon', acc: ['friend'], pt: [{ k: 'hearts', n: 6 }], product: 'dopa' },
     { w: 'exciting', hue: 'coral', tier: 'rare', acc: ['partyhat', 'popper'], pt: [{ k: 'confetti', n: 18 }], eyes: 'round', ears: 'perk', dot: '!' },
@@ -46,16 +46,16 @@
     { w: 'sparkly', hue: 'gold', tier: 'rare', acc: [], pt: [{ k: 'stars', n: 12 }, { k: 'sparks', n: 8 }], eyes: 'star', dot: 'star' },
     { w: 'lucky', hue: 'emerald', tier: 'rare', acc: ['clover'], pt: [{ k: 'coins', n: 8 }], eyes: 'dot', dot: '!' },
     { w: 'cosmic', hue: 'violet', tier: 'rare', acc: ['saturn'], pt: [{ k: 'planets', n: 3 }, { k: 'stars', n: 8 }], eyes: 'dot', dot: 'star' },
-    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['hoop', 'ball', 'keycaps'], pt: [{ k: 'confetti', n: 14 }], eyes: 'squeeze', ears: 'perk', product: 'typer', dot: '!' },
+    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['globe', 'keycaps'], pt: [{ k: 'confetti', n: 14 }], eyes: 'squeeze', ears: 'perk', product: 'typer', dot: '!' },
     { w: 'enlightened', hue: 'gold', tier: 'epic', acc: ['halo'], pt: [{ k: 'stars', n: 10 }, { k: 'sparks', n: 8 }], eyes: 'happy', ears: 'droop', product: 'dopa', dot: 'star' },
-    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycaps'], pt: [{ k: 'stars', n: 6 }], product: 'typer', dot: 'star' },
-    { w: 'arcade', hue: 'tangerine', tier: 'epic', acc: ['wall', 'ball'], eyes: 'round', ears: 'perk', font: 'pixel', product: 'typer', dot: '!' },
+    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'mintball', 'keycaps'], pt: [{ k: 'stars', n: 6 }], product: 'typer', dot: 'star' },
+    { w: 'arcade', hue: 'tangerine', tier: 'epic', acc: ['wall', 'goal', 'rubber'], eyes: 'round', ears: 'perk', font: 'pixel', product: 'typer', dot: '!' },
     { w: 'cyberpunk', hue: 'neon', tier: 'epic', acc: ['visor', 'neonsign'], pt: [{ k: 'bits', n: 14 }], ears: 'perk', font: 'pixel', theme: 'cyber', dot: 'bolt' }
   ];
   var WEIGHT = { common: 10, uncommon: 6, rare: 3, epic: 1 };
   var TIERS = ['common', 'uncommon', 'rare', 'epic'];
   var PRODUCT = { typer: { key: 'home.typer.more', href: 'typer.html', icon: 'assets/brand/typer-icon.png', name: 'Typer' }, dopa: { key: 'home.dopa.more', href: 'dopamine.html', icon: 'assets/brand/dopamine-symbol.png', name: 'Dopamine University' } };
-  var FALLBACK = { 'home.typer.more': '키보드 골라보기', 'home.dopa.more': '테스트 둘러보기', 'home.rabbit.action': '토끼 쓰다듬기', 'home.letter.action': '글자 {n} 튀기기', 'home.status.word': '단어: {w}', 'home.status.grab': '글자 {n} 잡음', 'home.status.letter': '글자 {n}', 'home.status.score': '골 {n}', 'home.status.clear': '키캡 전부 부숨', 'home.words': '단어 {n}/{t}', 'home.words.title': '모은 단어', 'home.words.close': '닫기' };
+  var FALLBACK = { 'home.typer.more': '키보드 골라보기', 'home.dopa.more': '테스트 둘러보기', 'home.rabbit.action': '토끼 쓰다듬기', 'home.letter.action': '글자 {n} 튀기기', 'home.status.word': '단어: {w}', 'home.status.grab': '글자 {n} 잡음', 'home.status.letter': '글자 {n}', 'home.status.score': '골 {n}', 'home.status.clear': '키캡 전부 부숨', 'home.status.left': '키캡 {n}개 남음', 'home.words': '단어 {n}/{t}', 'home.words.title': '모은 단어', 'home.words.close': '닫기' };
   function t(key, vars) { var s = (window.i18n && window.i18n.t(key)) || FALLBACK[key] || key; if (s === key && FALLBACK[key]) s = FALLBACK[key]; return s.replace(/\{(\w+)\}/g, function (_, k) { return vars && vars[k] != null ? vars[k] : ''; }); }
 
   var X0 = 467, Y0 = 357, BW = 3334, BH = 1370;
@@ -82,7 +82,14 @@
   // a keycap seen from a little above: the skirt in the word colour, the top in the rabbit colour, a pixel legend
   function keycapInner(letter) { return '<g class="cap"><rect x="8" y="26" width="184" height="170" rx="28" fill="' + TXT + '"/><rect x="26" y="8" width="148" height="132" rx="22" fill="' + RAB + '"/><text x="100" y="100" font-size="84" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '">' + letter + '</text></g>'; }
   function keycapAt(name, bx, letter) { return floor(name, bx, 200, 200, keycapInner(letter), 5, true); }
-  var BALL = '<g class="roll" style="transform-box:fill-box;transform-origin:center"><circle cx="95" cy="95" r="90" fill="#E98A3C"/><g fill="none" stroke="#4A2C14" stroke-width="9" stroke-linecap="round"><circle cx="95" cy="95" r="90"/><path d="M95 5v180M5 95h180M32 32c26 26 26 100 0 126M158 32c-26 26-26 100 0 126"/></g></g>';
+  function ballSvg(inner) { return '<g class="roll" style="transform-box:fill-box;transform-origin:center">' + inner + '</g>'; }
+  var BALLS = {
+    basket: ballSvg('<circle cx="95" cy="95" r="90" fill="#E98A3C"/><g fill="none" stroke="#4A2C14" stroke-width="9" stroke-linecap="round"><circle cx="95" cy="95" r="90"/><path d="M95 5v180M5 95h180M32 32c26 26 26 100 0 126M158 32c-26 26-26 100 0 126"/></g>'),
+    tennis: ballSvg('<circle cx="95" cy="95" r="90" fill="#D6E35A"/><g fill="none" stroke="#FCFBF7" stroke-width="10"><path d="M22 40c40 20 60 70 44 120M168 40c-40 20-60 70-44 120"/></g><circle cx="95" cy="95" r="90" fill="none" stroke="#9AA53A" stroke-width="6"/>'),
+    globe: ballSvg('<circle cx="95" cy="95" r="90" fill="#79C0F1"/><g fill="#95C78A"><path d="M40 60c20-16 50-14 62 4 8 14-6 28-24 30-20 2-38 14-46 4-6-10-2-28 8-38z"/><path d="M118 100c18-6 40 2 46 20 4 14-10 30-30 28-16-2-30-16-28-30 1-8 6-14 12-18z"/><path d="M62 128c10-4 24 2 26 12 2 10-10 20-22 16-10-4-14-22-4-28z"/></g><circle cx="95" cy="95" r="90" fill="none" stroke="#3B6E9B" stroke-width="6"/>'),
+    mint: ballSvg('<circle cx="95" cy="95" r="90" fill="#A8E0C5"/><g fill="#5A3E2B"><circle cx="66" cy="70" r="12"/><circle cx="120" cy="58" r="10"/><circle cx="132" cy="110" r="13"/><circle cx="84" cy="128" r="11"/><circle cx="110" cy="150" r="8"/></g><circle cx="95" cy="95" r="90" fill="none" stroke="#5FA98A" stroke-width="6"/>'),
+    rubber: ballSvg('<image href="assets/game/ball.png" width="190" height="190"/>')
+  };
   var HOOP = { bx: -3000, w: 700, h: 1000, rim: [420, 330], rimR: 165, board: [40, 260, 40, 300] };   // rim centre and backboard in the hoop's own viewBox
   var CAPS = 'TYPER';
   var WALL = { x: -2900, y: 300, step: 230, size: 180, rows: ['NEWMEANS', 'TYPER!?♪'] };
@@ -126,7 +133,12 @@
       WALL.rows.forEach(function (row, r) { for (var c = 0; c < row.length; c++) s += svg('brick', X0 + (WALL.x + c * WALL.step) * k, Y0 + (WALL.y + r * WALL.step) * k, WALL.size * q, WALL.size * q, keycapInner(row[c]), 5, true); });
       return s;
     },
-    ball: function () { return floor('ball', -400, 190, 190, BALL, 8, true); },
+    ball: function () { return floor('ball', -400, 190, 190, BALLS.basket, 8, true); },
+    tennis: function () { return floor('ball', -400, 190, 190, BALLS.tennis, 8, true); },
+    globe: function () { return floor('ball', -400, 190, 190, BALLS.globe, 8, true); },
+    mintball: function () { return floor('ball', -400, 190, 190, BALLS.mint, 8, true); },
+    rubber: function () { return floor('ball', -400, 190, 190, BALLS.rubber, 8, true); },
+    goal: function () { return svg('goal', X0 + WALL.x * fk(), Y0 + (WALL.y - 170) * fk(), 1900 * fs(), 130 * fs(), '<text class="goal" x="0" y="104" font-size="110" font-family="DNFBitBit,monospace" fill="' + TXT + '">16 LEFT</text>', 5); },
     hoop: function () { return floor('hoop', HOOP.bx, HOOP.w, HOOP.h, '<rect x="60" y="300" width="24" height="700" fill="' + TXT + '"/><rect x="0" y="970" width="190" height="30" rx="10" fill="' + TXT + '"/><rect x="40" y="40" width="220" height="260" rx="18" fill="none" stroke="' + TXT + '" stroke-width="22"/><rect x="250" y="320" width="30" height="24" fill="' + TXT + '"/><ellipse class="rim" cx="420" cy="330" rx="165" ry="44" fill="none" stroke="' + TXT + '" stroke-width="22"/><g class="net" fill="none" stroke="' + TXT + '" stroke-width="10" opacity=".55"><path d="M265 350 l45 170 M575 350 l-45 170 M340 368 l25 152 M500 368 l-25 152 M310 520 h220"/></g><text class="score" x="420" y="250" font-size="96" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '" opacity="0">+1</text>', 3); },
     monitor: function () { return floor('monitor', -1100, 520, 470, '<image href="assets/shop/monitor/2000.png" width="520" height="469"/><text class="screen-text" x="115" y="240" font-size="68" font-family="DNFBitBit,monospace" fill="#65cda7" opacity="0">TYPER</text>', 4, true); },
     cactus: function () { return floorImg('cactus', -1300, 150, 240, 'assets/desk/sculpture.png'); },
@@ -444,7 +456,7 @@
       ball.roll.style.transform = 'rotate(' + ball.ang.toFixed(1) + 'deg)';
     }
     function wallLive() { return !!accRoot.querySelector('[data-prop="brick"]:not(.is-gone)'); }
-    function arcadeOn() { ball.mode = 'arcade'; ball.until = performance.now() + 22000; var v = Math.hypot(ball.vx, ball.vy) || 1, want = Math.max(40, Math.min(58, v)) * fs(); ball.vx *= want / v; ball.vy *= want / v; if (Math.abs(ball.vy) < 8 * fs()) ball.vy = -14 * fs(); mood('round', 1200); }
+    function arcadeOn() { ball.mode = 'arcade'; var v = Math.hypot(ball.vx, ball.vy) || 1, want = Math.max(40, Math.min(58, v)) * fs(); ball.vx *= want / v; ball.vy *= want / v; if (Math.abs(ball.vy) < 8 * fs()) ball.vy = -14 * fs(); mood('round', 1200); }
     function shootBall() {                        // a tap: a clean arc to the rim (with a little wobble so it can rim out), or a serve at the wall
       var hoop = accRoot.querySelector('[data-prop="hoop"]'); ball.rest = false;
       if (hoop) {
@@ -462,7 +474,7 @@
       if (arcade) ymin = Math.max(ymin, (WALL.y - 420) * fk());
       var px = ball.x, py = ball.y;
       if (arcade) {
-        if (performance.now() > ball.until || !wallLive()) { ball.mode = 'gravity'; arcade = false; }
+        if (!wallLive()) { ball.mode = 'gravity'; arcade = false; }
         else { var v = Math.hypot(ball.vx, ball.vy), want = 46 * fs(); if (v < want * 0.8 || v > want * 1.5) { ball.vx *= want / v; ball.vy *= want / v; } }
       }
       if (!arcade) ball.vy += 2.4 * f;
@@ -470,6 +482,7 @@
       var bounce = arcade ? 1 : 0.55;
       if (ball.x < xmin) { ball.x = xmin; ball.vx = Math.abs(ball.vx) * bounce; } else if (ball.x > xmax) { ball.x = xmax; ball.vx = -Math.abs(ball.vx) * bounce; }
       if (ball.y < ymin) { ball.y = ymin; ball.vy = Math.abs(ball.vy) * (arcade ? 1 : 0.5); }
+      if (arcade && Math.abs(ball.vy) < 6 * fs()) ball.vy += (ball.vy < 0 ? -1 : 1) * 4;          // never a flat shuttle across the court
       var hoop = accRoot.querySelector('[data-prop="hoop"]');
       if (hoop) {
         var h = hoopGeo();
@@ -494,6 +507,8 @@
             var ox = Math.min(ball.x + r - cx0, cx0 + cw - (ball.x - r)), oy = Math.min(ball.y + r - cy0, cy0 + ch - (ball.y - r));
             if (ox < oy) { ball.vx = -ball.vx; ball.x += ball.vx > 0 ? ox : -ox; } else { ball.vy = -ball.vy; ball.y += ball.vy > 0 ? oy : -oy; }
           } else { ball.vy = -Math.abs(ball.vy) * 0.5 - 5; ball.vx *= 0.85; }
+          if (brick) goalText(left ? left + ' LEFT' : 'CLEAR!');
+          if (brick && left) say(t('home.status.left', { n: left }));
           if (!left && caps.length > 1) { burst(brick ? 40 : 20); hopAll(); if (brick) clearedWall(); }
         }
       });
@@ -507,11 +522,10 @@
       hoop.classList.remove('is-scored'); void hoop.offsetWidth; hoop.classList.add('is-scored');
       ball.vx *= 0.25; mood('star', 1000); hopAll(); if (scoreN % 3 === 0) burst(24); say(t('home.status.score', { n: scoreN }));
     }
+    function goalText(s) { var g = accRoot.querySelector('[data-prop="goal"] .goal'); if (g) { g.textContent = s; replay(g.parentNode, 'pop'); } }
     function clearedWall() {
       ball.mode = 'gravity'; mood('star', 2000); say(t('home.status.clear'));
-      accRoot.insertAdjacentHTML('beforeend', svg('clear', X0 + WALL.x * fk() + 200, Y0 + (WALL.y + 80) * fk(), 1400 * fs(), 320 * fs(), '<text x="700" y="240" font-size="240" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '">CLEAR!</text>', 9));
-      var c = accRoot.lastElementChild; c.classList.add('pop');
-      setTimeout(function () { c.remove(); accRoot.querySelectorAll('[data-prop="brick"]').forEach(function (b, i) { setTimeout(function () { b.classList.remove('is-gone'); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }, i * 40); }); }, 2400);
+      setTimeout(function () { var bricks = accRoot.querySelectorAll('[data-prop="brick"]'); bricks.forEach(function (b, i) { setTimeout(function () { b.classList.remove('is-gone'); b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); }, i * 40); }); goalText(bricks.length + ' LEFT'); }, 2400);
     }
     // things the rabbit can be fed: drag them to its mouth
     function setupFeed() {

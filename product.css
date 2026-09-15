@@ -82,6 +82,14 @@
 .cl__report.is-updated .cl__lean{animation:cl-pop .35s var(--ease)}
 @keyframes cl-pop{40%{transform:scale(1.04)}}
 
+/* compact: the phone with a slim result bar, for the home */
+.cl--compact{grid-template-columns:1fr;max-width:400px;margin:0 auto;gap:12px}
+.cl--compact .cl__phone{min-height:400px}
+.cl--compact .cl__report{flex-direction:row;align-items:center;gap:16px;padding:14px 18px}
+.cl--compact .cl__title,.cl--compact .cl__tags,.cl--compact .cl__count{display:none}
+.cl--compact .cl__meter{flex:1;gap:10px}.cl--compact .cl__prof img{width:40px;height:40px}.cl--compact .cl__prof figcaption{display:none}
+.cl--compact .cl__lean{font-size:18px;min-width:5.5em;text-align:right}
+
 /* ---------- tilt cards ---------- */
 [data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s var(--ease);position:relative}
 [data-tilt]::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.3),transparent 55%);opacity:0;transition:opacity .25s;pointer-events:none}

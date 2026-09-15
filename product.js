@@ -177,7 +177,8 @@
   function mountChat(root) {
     if (!root || root.__cl) return;
     root.__cl = true;
-    var L = CHAT[lang()] || CHAT.en, counts, readN, interacted = false, timers = [];
+    var L = CHAT[lang()] || CHAT.en, counts, readN, interacted = false, timers = [], compact = root.getAttribute('data-chat-lab') === 'compact';
+    if (compact) root.classList.add('cl--compact');
     function build() {
       timers.forEach(clearTimeout); timers = []; root.textContent = ''; counts = { teto: 0, egen: 0, lol: 0, q: 0 }; readN = 0;
       L = CHAT[lang()] || CHAT.en;
