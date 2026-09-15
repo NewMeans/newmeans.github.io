@@ -105,7 +105,18 @@
     popper: function () { return svg('popper', 2620, 400, 360, 360, '<polygon points="40,320 300,60 210,300" fill="' + TXT + '"/><g fill="' + RAB + '"><circle cx="150" cy="40" r="22"/><circle cx="330" cy="110" r="18"/><circle cx="60" cy="140" r="16"/></g>', 5, true); },
     gradcap: function () { return svg('gradcap', 1790, 540, 360, 240, '<polygon points="180,10 350,80 180,150 10,80" fill="' + INK + '"/><rect x="130" y="110" width="100" height="50" rx="10" fill="' + INK + '"/><path d="M338 86 v80" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"/><circle cx="338" cy="176" r="14" fill="' + TXT + '"/>', 4); },
     halo: function () { return svg('halo', 1660, 150, 380, 150, '<ellipse class="halo" cx="200" cy="80" rx="170" ry="52" fill="none" stroke="' + TXT + '" stroke-width="26" opacity=".85"/>', 4, true); },
-    scarf: function () { return svg('scarf', 1380, 1030, 820, 260, '<path d="M20 30 q200 80 400 0 t400 0 v90 q-200 80 -400 0 t-400 0z" fill="' + TXT + '"/><path d="M90 110 l-40 130 h110 l0 -120z" fill="' + TXT + '"/><g stroke="' + RAB + '" stroke-width="10"><path d="M60 200 v40 M85 205 v40 M110 200 v40"/></g>', 6); },
+    scarf: function () {                 // a striped knit scarf around the neck, painted behind the face so a paw rests on it
+      var band = 'M20 50 Q630 190 1240 50 L1240 150 Q630 290 20 150z', stripes = '', ribs = '';
+      for (var x = 150; x < 1240; x += 200) stripes += '<rect x="' + x + '" y="0" width="76" height="340" fill="' + RAB + '" transform="skewX(-14)"/>';
+      for (var r = 40; r < 1220; r += 34) { var u = r / 1260; ribs += '<path d="M' + r + ' ' + (66 + 280 * u * (1 - u)).toFixed(0) + ' l9 24 l9 -24" fill="none" stroke="' + PAPER + '" stroke-width="4" opacity=".45"/>'; }
+      var tail = 'M30 130 l-6 150 l118 6 l6 -140z';
+      return svg('scarf', 1360, 1010, 1260, 340,
+        '<clipPath id="scarf-band"><path d="' + band + '"/></clipPath><clipPath id="scarf-tail"><path d="' + tail + '"/></clipPath>' +
+        '<path d="' + band + '" fill="' + TXT + '"/><g clip-path="url(#scarf-band)">' + stripes + '</g>' + ribs +
+        '<path d="' + tail + '" fill="' + TXT + '"/><g clip-path="url(#scarf-tail)"><rect x="10" y="160" width="140" height="32" fill="' + RAB + '"/><rect x="10" y="232" width="140" height="32" fill="' + RAB + '"/></g>' +
+        '<g stroke="' + TXT + '" stroke-width="9" stroke-linecap="round"><path d="M34 284 v28 M58 285 v28 M82 286 v28 M106 287 v28 M130 288 v28"/></g>' +
+        '<ellipse cx="82" cy="128" rx="80" ry="42" fill="' + TXT + '"/><path d="M22 120 q60 -24 120 0" fill="none" stroke="' + PAPER + '" stroke-width="5" opacity=".45"/>', 0, false, true);
+    },
     candle: function () { return floor('candle', -520, 160, 330, '<ellipse class="flame" cx="80" cy="70" rx="26" ry="46" fill="#F5B54A"/><ellipse class="flame" cx="80" cy="84" rx="12" ry="24" fill="#FCE9B0"/><rect x="76" y="100" width="8" height="30" fill="' + INK + '"/><rect x="30" y="126" width="100" height="200" rx="14" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="14"/>', 5, true); },
     tongue: function () { return svg('tongue', 1710, 1038, 90, 110, '<path d="M10 0 h70 v55 a35 35 0 0 1 -70 0z" fill="#F08CA0"/><path d="M45 18 v48" stroke="#D2607A" stroke-width="8" stroke-linecap="round"/>', 6); },
     coffee: function () { return floor('coffee', -440, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
