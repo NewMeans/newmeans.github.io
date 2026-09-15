@@ -142,6 +142,8 @@
         soundState = 'ready'; soundChanged(error);
       });
     }
+    root.__tpPlay = playSound;
+    root.__tpPress = function(idx) { caps[((idx % caps.length) + caps.length) % caps.length].click(); };
     root.__tpSwitch = function(id) {
       if (!clipCounts[id]) throw new Error('TyperKeyboard: unknown switch '+id);
       switchId = id;
@@ -178,6 +180,8 @@
     mount: mount,
     setSkin: function (el, skin) { if (el && el.__tpSkin) el.__tpSkin(skin); },
     setSwitch: function (el, id) { el.__tpSwitch(id); },
+    play: function (el) { if (el && el.__tpPlay) el.__tpPlay(); },
+    press: function (el, idx) { if (el && el.__tpPress) el.__tpPress(idx); },
     setSound: function (el, enabled) { el.__tpSound(enabled); }
   };
 })();

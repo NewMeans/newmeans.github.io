@@ -3,9 +3,10 @@
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:calc(100dvh - 64px);overflow:hidden}
+.nav--wide .wrap{max-width:none;padding:0 6vw}
 .copy{position:absolute;left:6vw;top:12vh;max-width:min(56vw,860px);z-index:2}
 .copy .display{font-size:clamp(56px,5.6vw,88px)}
-.copy .sub{margin-top:22px;font-size:16px;color:var(--text-2);max-width:44ch}
+.copy .sub{margin-top:22px;font-size:16px;color:var(--text-2);max-width:52ch;white-space:nowrap}
 .nowrap{white-space:nowrap}
 
 /* the slot window: always there, tinted by the word, fixed to the longest word */
@@ -29,7 +30,8 @@
 @keyframes pull-stick{0%{transform:scaleY(1)}30%{transform:scaleY(.22)}65%{transform:scaleY(1.06)}100%{transform:scaleY(1)}}
 @keyframes pull-knob{0%{transform:translateY(0) scale(1)}30%{transform:translateY(46px) scale(1.55)}65%{transform:translateY(-3px) scale(.98)}100%{transform:translateY(0) scale(1)}}
 /* the keycap keyring that hangs on the lever (clicky) */
-.lever .keyring{position:absolute;left:54%;top:.08em;width:.62em;height:.95em;overflow:visible;transform-origin:15% 9%;animation:swing 2.8s ease-in-out infinite;pointer-events:auto;cursor:pointer}
+.lever .keyring{position:absolute;left:26%;top:96%;width:.62em;height:.95em;overflow:visible;transform-origin:15% 9%;animation:swing 2.8s ease-in-out infinite;pointer-events:auto;cursor:pointer}
+.copy .sub{transition:margin-top .4s var(--ease)}.copy.has-keyring .sub{margin-top:calc(22px + .8em)}
 .lever.is-pulled .keyring{animation:swing-hard 1s ease-out}
 .lever .keyring .cap{transition:transform .08s}.lever .keyring.is-pressed .cap{transform:translateY(14px)}
 @keyframes swing{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
@@ -49,7 +51,7 @@
 .go.pop{animation:pop .5s var(--ease) both}
 
 /* the rabbit and the wordmark, both painted with the word's colour */
-.brandwrap{position:absolute;right:7vw;bottom:14vh;width:min(45vw,700px);aspect-ratio:3334/1370;z-index:1}
+.brandwrap{position:absolute;right:6vw;bottom:14vh;width:min(45vw,700px);aspect-ratio:3334/1370;z-index:1}
 .brandart{position:absolute;inset:0;touch-action:none;z-index:1}
 .pc{position:absolute;will-change:transform;background:var(--rabbit);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
 .pc.word{cursor:grab}.pc.word.drag{cursor:grabbing;z-index:6}
@@ -126,10 +128,10 @@
 .cursor[data-state="tap"] .c-spark{opacity:0}.cursor[data-state="tap"] .c-tap{opacity:1;transform:scale(1)}
 
 .corner{position:absolute;bottom:40px;font-size:13px;color:var(--text-2);z-index:2}
-.corner--left{left:40px;display:flex;align-items:center;gap:18px}
+.corner--left{left:6vw;display:flex;align-items:center;gap:18px}
 .wordsbtn{font:inherit;color:var(--text-2);text-decoration:underline;text-underline-offset:4px;text-decoration-color:transparent;transition:color var(--dur) var(--ease),text-decoration-color var(--dur) var(--ease)}
 .wordsbtn:hover{color:var(--text-1);text-decoration-color:currentColor}
-.corner--right{right:26px;width:44px;height:44px;display:grid;place-items:center;color:var(--text-1);border-radius:var(--r-pill);transition:background var(--dur) var(--ease)}
+.corner--right{right:calc(6vw - 14px);width:44px;height:44px;display:grid;place-items:center;color:var(--text-1);border-radius:var(--r-pill);transition:background var(--dur) var(--ease)}
 .corner--right:hover{background:var(--surface)}
 .corner--right svg{width:16px;height:22px}
 
@@ -164,23 +166,15 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .scene--dopa .scene__grid{grid-template-columns:7fr 5fr}
 .scene .logo{height:30px;width:auto}.scene .logo--dopa{height:42px}
 .scene .lbl{font-size:14px;color:var(--accent);font-weight:500;margin-top:16px}
-.scene .h2{margin-top:10px}.scene .body-s{margin-top:14px;max-width:38ch}
+.scene .h2{margin-top:10px}.scene .body-s{margin-top:14px;max-width:40ch}
+.scene .hint{color:var(--accent);margin-top:18px}
+.scene .desk-wrap{width:100%}
+.scene .lab{width:100%}
+.tests{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px;max-width:520px}
+.test{display:block;border-radius:var(--r-media);overflow:hidden;background:var(--bg);box-shadow:0 10px 30px rgba(36,33,29,.08)}
+.test img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}
+.test span{display:block;padding:11px 14px 13px;font-size:13px;font-weight:500;color:var(--text-1)}
 .scene .actions{display:flex;align-items:center;gap:18px;margin-top:26px;flex-wrap:wrap}
-.badges{display:flex;gap:12px;align-items:center}.badges img{height:40px;width:auto}
-.desk{position:relative;width:min(100%,460px);margin:0 auto}
-.monitor{position:relative;width:74%;margin:0 auto;aspect-ratio:1354/1222;z-index:1;container-type:inline-size}
-.monitor__img{width:100%;height:100%}
-.monitor__screen{position:absolute;inset:11% 9% 22%;padding:6%;display:flex;flex-direction:column;justify-content:space-between;font-family:var(--font-pixel);color:#65cda7;overflow:hidden}
-.screen-top{font-size:3.4cqw;opacity:.7;letter-spacing:.04em}
-.screen-switch small{display:block;font-size:3.2cqw;opacity:.65;font-family:var(--font-ui)}
-.screen-switch strong{display:block;font:400 10cqw/1.1 var(--font-pixel);letter-spacing:-.03em}
-.screen-bottom{font-size:2.8cqw;opacity:.7}
-.desk__kbwrap{position:relative;width:100%;margin-top:-2%}
-.desk__cable{position:absolute;left:88%;top:3%;width:90%;max-width:none;transform:translate(-4%,-86%);z-index:2;pointer-events:none}
-.desk__kb{position:relative;z-index:3}
-.switches{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:22px}
-.switches button{height:36px;padding:0 14px 2px;border-radius:var(--r-pill);background:var(--bg);color:var(--text-2);font:500 13px/1 var(--font-ui)}
-.switches button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-text)}
 .stack{position:relative;height:420px;width:100%;max-width:520px;justify-self:center}
 .card{position:absolute;left:50%;top:50%;width:62%;aspect-ratio:1;border-radius:var(--r-media);overflow:hidden;box-shadow:0 18px 40px rgba(59,55,50,.10);transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
 .card img{width:100%;height:100%;object-fit:cover}
@@ -200,11 +194,12 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 
 @media (max-width:720px){
   .hero{min-height:100dvh;display:flex;flex-direction:column;padding:6vh 22px 22px}
-  .copy{position:static;max-width:none}.copy .display{font-size:clamp(40px,11vw,50px)}
+  .copy{position:static;max-width:none}.copy .display{font-size:clamp(40px,11vw,50px)}.copy .sub{white-space:normal}
+  .nav--wide .wrap{padding:0 22px}
   .brandwrap{position:relative;right:auto;bottom:auto;width:66%;margin:auto 0 0 auto}
   .bottom{display:flex;justify-content:space-between;align-items:end;padding-top:48px}.corner{position:static}
   .scene{padding:64px 0}.scene__grid,.scene--dopa .scene__grid{grid-template-columns:1fr;gap:32px}
-  .scene--dopa .scene__grid>*:first-child{order:2}
+  .scene--dopa .scene__grid>*:first-child{order:2}.tests{grid-template-columns:1fr 1fr;max-width:none}
   .stack{height:300px}.studio{padding:56px 0}.foot--home .sleep{margin:0}
   .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}.tier{display:block;width:max-content;margin:8px 0 0;font-size:10px;padding:4px 7px 5px}
   :root[data-face="pixel"] .copy .display{font-size:clamp(30px,8.6vw,42px)}

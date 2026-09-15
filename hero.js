@@ -36,7 +36,7 @@
     { w: 'rhythmic', hue: 'sky', tier: 'uncommon', acc: ['headphones', 'mp3'], pt: [{ k: 'notes', n: 6 }], eyes: 'happy', product: 'typer', dot: '♪' },
     { w: 'aesthetic', hue: 'cocoa', tier: 'uncommon', acc: ['cactus', 'monitor'], product: 'typer' },
     { w: 'thoughtful', hue: 'indigo', tier: 'uncommon', acc: ['mirror', 'thought'], ears: 'droop', product: 'dopa', dot: '…' },
-    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['ball', 'keycap2', 'keycap3', 'keycap4'], pt: [{ k: 'stars', n: 6 }], eyes: 'arc', product: 'typer' },
+    { w: 'satisfying', hue: 'lime', tier: 'uncommon', acc: ['ball', 'keycaps'], pt: [{ k: 'stars', n: 6 }], eyes: 'arc', product: 'typer' },
     { w: 'dramatic', hue: 'charcoal', tier: 'uncommon', acc: ['stagelight', 'tears'], eyes: 'tear', product: 'dopa', dot: '!' },
     { w: 'connected', hue: 'rose', tier: 'uncommon', acc: ['friend'], pt: [{ k: 'hearts', n: 6 }], product: 'dopa' },
     { w: 'exciting', hue: 'coral', tier: 'rare', acc: ['partyhat', 'popper'], pt: [{ k: 'confetti', n: 18 }], eyes: 'round', ears: 'perk', dot: '!' },
@@ -46,9 +46,9 @@
     { w: 'sparkly', hue: 'gold', tier: 'rare', acc: [], pt: [{ k: 'stars', n: 12 }, { k: 'sparks', n: 8 }], eyes: 'star', dot: 'star' },
     { w: 'lucky', hue: 'emerald', tier: 'rare', acc: ['clover'], pt: [{ k: 'coins', n: 8 }], eyes: 'dot', dot: '!' },
     { w: 'cosmic', hue: 'violet', tier: 'rare', acc: ['saturn'], pt: [{ k: 'planets', n: 3 }, { k: 'stars', n: 8 }], eyes: 'dot', dot: 'star' },
-    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['hoop', 'ball', 'keycap1', 'keycap2', 'keycap3', 'keycap4'], pt: [{ k: 'confetti', n: 14 }], eyes: 'squeeze', ears: 'perk', product: 'typer', dot: '!' },
+    { w: 'smashing', hue: 'coral', tier: 'epic', acc: ['hoop', 'ball', 'keycaps'], pt: [{ k: 'confetti', n: 14 }], eyes: 'squeeze', ears: 'perk', product: 'typer', dot: '!' },
     { w: 'enlightened', hue: 'gold', tier: 'epic', acc: ['halo'], pt: [{ k: 'stars', n: 10 }, { k: 'sparks', n: 8 }], eyes: 'happy', ears: 'droop', product: 'dopa', dot: 'star' },
-    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycap3', 'keycap4'], pt: [{ k: 'stars', n: 6 }], product: 'typer', dot: 'star' },
+    { w: 'mint choco', hue: 'mint', tier: 'epic', acc: ['icecream', 'keycaps'], pt: [{ k: 'stars', n: 6 }], product: 'typer', dot: 'star' },
     { w: 'arcade', hue: 'tangerine', tier: 'epic', acc: ['wall', 'ball'], eyes: 'round', ears: 'perk', font: 'pixel', product: 'typer', dot: '!' },
     { w: 'cyberpunk', hue: 'neon', tier: 'epic', acc: ['visor', 'neonsign'], pt: [{ k: 'bits', n: 14 }], ears: 'perk', font: 'pixel', theme: 'cyber', dot: 'bolt' }
   ];
@@ -82,9 +82,9 @@
   // a keycap seen from a little above: the skirt in the word colour, the top in the rabbit colour, a pixel legend
   function keycapInner(letter) { return '<g class="cap"><rect x="8" y="26" width="184" height="170" rx="28" fill="' + TXT + '"/><rect x="26" y="8" width="148" height="132" rx="22" fill="' + RAB + '"/><text x="100" y="100" font-size="84" text-anchor="middle" font-family="DNFBitBit,monospace" fill="' + TXT + '">' + letter + '</text></g>'; }
   function keycapAt(name, bx, letter) { return floor(name, bx, 200, 200, keycapInner(letter), 5, true); }
-  var BALL = '<circle cx="95" cy="95" r="90" fill="#E98A3C"/><g fill="none" stroke="#4A2C14" stroke-width="9" stroke-linecap="round"><circle cx="95" cy="95" r="90"/><path d="M95 5v180M5 95h180M32 32c26 26 26 100 0 126M158 32c-26 26-26 100 0 126"/></g>';
+  var BALL = '<g class="roll" style="transform-box:fill-box;transform-origin:center"><circle cx="95" cy="95" r="90" fill="#E98A3C"/><g fill="none" stroke="#4A2C14" stroke-width="9" stroke-linecap="round"><circle cx="95" cy="95" r="90"/><path d="M95 5v180M5 95h180M32 32c26 26 26 100 0 126M158 32c-26 26-26 100 0 126"/></g></g>';
   var HOOP = { bx: -3000, w: 700, h: 1000, rim: [420, 330], rimR: 165, board: [40, 260, 40, 300] };   // rim centre and backboard in the hoop's own viewBox
-  var CAPS = { keycap1: [-1000, 'E'], keycap2: [-1300, 'P'], keycap3: [-1600, 'Y'], keycap4: [-1900, 'T'] };
+  var CAPS = 'TYPER';
   var WALL = { x: -2900, y: 300, step: 230, size: 180, rows: ['NEWMEANS', 'TYPER!?♪'] };
   var LAMP = { x: 1700, y: -760, w: 2300, h: 2160 };
   var ACC = {
@@ -104,10 +104,7 @@
     candle: function () { return floor('candle', -520, 160, 330, '<ellipse class="flame" cx="80" cy="70" rx="26" ry="46" fill="#F5B54A"/><ellipse class="flame" cx="80" cy="84" rx="12" ry="24" fill="#FCE9B0"/><rect x="76" y="100" width="8" height="30" fill="' + INK + '"/><rect x="30" y="126" width="100" height="200" rx="14" fill="' + PAPER + '" stroke="' + TXT + '" stroke-width="14"/>', 5, true); },
     tongue: function () { return svg('tongue', 1710, 1038, 90, 110, '<path d="M10 0 h70 v55 a35 35 0 0 1 -70 0z" fill="#F08CA0"/><path d="M45 18 v48" stroke="#D2607A" stroke-width="8" stroke-linecap="round"/>', 6); },
     coffee: function () { return floor('coffee', -440, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
-    keycap1: function () { return keycapAt('keycap1', CAPS.keycap1[0], CAPS.keycap1[1]); },
-    keycap2: function () { return keycapAt('keycap2', CAPS.keycap2[0], CAPS.keycap2[1]); },
-    keycap3: function () { return keycapAt('keycap3', CAPS.keycap3[0], CAPS.keycap3[1]); },
-    keycap4: function () { return keycapAt('keycap4', CAPS.keycap4[0], CAPS.keycap4[1]); },
+    keycaps: function () { var s = ''; for (var i = 0; i < CAPS.length; i++) s += keycapAt('keycap' + i, -2200 + i * 300, CAPS[i]); return s; },
     wall: function () {
       var s = '', k = fk(), q = fs();
       WALL.rows.forEach(function (row, r) { for (var c = 0; c < row.length; c++) s += svg('brick', X0 + (WALL.x + c * WALL.step) * k, Y0 + (WALL.y + r * WALL.step) * k, WALL.size * q, WALL.size * q, keycapInner(row[c]), 5, true); });
@@ -386,7 +383,7 @@
     function setupBall() {
       var el = accRoot.querySelector('[data-prop="ball"]'); ball = null; scoreN = 0; if (!el) return;
       var r = 95 * fs();
-      ball = { el: el, x: -400 * fk() + r, y: BH - r, r: r, vx: 0, vy: 0, ang: 0, drag: false, rest: true, trail: [], threwAt: 0, mode: 'gravity', until: 0 };
+      ball = { el: el, roll: el.querySelector('.roll'), x: -400 * fk() + r, y: BH - r, r: r, vx: 0, vy: 0, ang: 0, drag: false, rest: true, trail: [], threwAt: 0, mode: 'gravity', until: 0 };
       el.addEventListener('pointerdown', function (e) {
         e.preventDefault(); e.stopPropagation(); interacted = true; measure();
         ball.drag = true; ball.rest = false; ball.vx = ball.vy = 0; ball.trail = []; cursorState('grab');
@@ -411,7 +408,7 @@
     }
     function placeBall() {
       ball.el.style.left = (ball.x - ball.r) / BW * 100 + '%'; ball.el.style.top = (ball.y - ball.r) / BH * 100 + '%';
-      ball.el.style.transform = 'rotate(' + ball.ang.toFixed(1) + 'deg)';
+      ball.roll.style.transform = 'rotate(' + ball.ang.toFixed(1) + 'deg)';
     }
     function wallLive() { return !!accRoot.querySelector('[data-prop="brick"]:not(.is-gone)'); }
     function arcadeOn() { ball.mode = 'arcade'; ball.until = performance.now() + 22000; var v = Math.hypot(ball.vx, ball.vy) || 1, want = Math.max(40, Math.min(58, v)) * fs(); ball.vx *= want / v; ball.vy *= want / v; if (Math.abs(ball.vy) < 8 * fs()) ball.vy = -14 * fs(); mood('round', 1200); }
@@ -510,9 +507,9 @@
 
     // ---------- props that react ----------
     function replay(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+    [accRoot, backRoot].forEach(function (rt) { rt.addEventListener('animationend', function (e) { if (e.animationName === 'pop') e.target.classList.remove('pop'); }); });
     var REACT = {
-      keycap1: function (el) { replay(el, 'is-pressed'); click(); },
-      keycap2: function (el) { REACT.keycap1(el); }, keycap3: function (el) { REACT.keycap1(el); }, keycap4: function (el) { REACT.keycap1(el); }, brick: function (el) { REACT.keycap1(el); },
+      keycap: function (el) { replay(el, 'is-pressed'); click(); }, brick: function (el) { REACT.keycap(el); },
       ball: function () { if (ball && performance.now() - ball.threwAt > 400 && (ball.rest || ball.y > BH - ball.r * 1.5)) shootBall(); },
       coffee: function (el, fed) { if (el.__fed && !fed) { el.__fed = false; return; } replay(el, 'is-steaming'); mood('arc', 900); },
       mp3: function (el) { playRhythm(el); },
@@ -547,7 +544,7 @@
       if (!keep) setTimeout(function () { cap.classList.remove('is-gone'); replay(cap, 'pop'); }, 3200);
     }
     [accRoot, backRoot].forEach(function (rt) {
-      rt.addEventListener('click', function (e) { var el = e.target.closest('.ac.hit'); if (!el) return; interacted = true; var fn = REACT[el.getAttribute('data-prop')]; if (fn) fn(el); });
+      rt.addEventListener('click', function (e) { var el = e.target.closest('.ac.hit'); if (!el) return; interacted = true; var name = el.getAttribute('data-prop'), fn = REACT[name] || (name.indexOf('keycap') === 0 && REACT.keycap); if (fn) fn(el); });
       rt.addEventListener('pointerover', function (e) { if (e.target.closest('.ac.hit')) cursorState('tap'); });
       rt.addEventListener('pointerout', function (e) { if (e.target.closest('.ac.hit')) cursorState(''); });
     });
@@ -572,6 +569,7 @@
     }
     function hangKeyring(on) {
       if (!lever) return; var k = lever.querySelector('.keyring'); if (k) k.remove();
+      var copy = lever.closest('.copy'); if (copy) copy.classList.toggle('has-keyring', !!on);
       if (!on) return;
       lever.insertAdjacentHTML('beforeend', KEYRING); k = lever.querySelector('.keyring');
       k.addEventListener('click', function (e) { e.stopPropagation(); click(); replay(k, 'is-pressed'); mood('happy', 500); });

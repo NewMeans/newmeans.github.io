@@ -1,25 +1,57 @@
-/* Platform overview and direct entry to the live tests. */
-.dp{--accent:var(--coral-text)}
-.dp .btn--solid{background:var(--coral);color:var(--ink)}
-.dp-kind{grid-column:1;grid-row:3;font-size:15px;color:var(--ink-2)}
-.dp .btn--solid:hover{background:var(--coral);filter:brightness(.96)}
-.dp .wrap{max-width:1320px}
-.dp{background:var(--paper)}
-.dp-hero__inner{padding-top:60px;padding-bottom:54px}
-.dp-hero__copy{display:grid;grid-template-columns:1fr auto;gap:22px 50px;align-items:center}
-.dp-logo{width:min(100%,440px);height:auto}
-.dp-hero__title{grid-column:1;grid-row:2;font-size:clamp(36px,4.5vw,64px);font-weight:650;letter-spacing:-.045em;line-height:1.17;white-space:pre-line}
-.dp-hero__cta{grid-column:2;grid-row:2 / 4}
-.dp-tests{padding:36px 0 80px;background:#fff0ed}
-.dp-tests__grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
-.test-cover{position:relative;display:block;aspect-ratio:1.1;overflow:hidden;border-radius:4px;color:#fff}
-.test-cover:nth-child(2){margin-top:60px}
-.test-cover img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.test-cover:hover img{transform:scale(1.04)}
-.test-cover::after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#111d)}
-.test-cover__name{position:absolute;left:32px;right:80px;bottom:32px;z-index:1;display:grid;gap:10px}
-.test-cover__name small{font-size:14px}.test-cover__name strong{font-size:clamp(24px,2.7vw,36px);line-height:1.2;letter-spacing:-.035em}
-.test-cover__arrow{position:absolute;bottom:32px;right:24px;z-index:1;border:1px solid #fffa;border-radius:50%;width:46px;height:46px;display:grid;place-items:center;font-size:24px}
-.dp .foot{margin-top:0}
-@media(max-width:760px){.dp-hero__inner{padding-top:42px;padding-bottom:32px}.dp-hero__copy{grid-template-columns:1fr}.dp-hero__cta{grid-column:1;grid-row:4}.dp-logo{width:300px}.dp-hero__title{font-size:38px}.dp-tests{padding-bottom:42px}.dp-tests__grid{grid-template-columns:1fr;gap:28px}.test-cover:nth-child(2){margin-top:0}.dp .nav__here{display:none}}
-@media(prefers-reduced-motion:reduce){.test-cover img{transition:none}.test-cover:hover img{transform:none}}
+/* Dopamine University page: coral accent (body[data-accent="coral"]), the chat lab up top. Tokens from base.css. */
+.dp section[id]{scroll-margin-top:72px}
+.dp .nav__here{white-space:nowrap}
+
+/* ---------- hero: copy + the lab ---------- */
+.dp-hero{padding:48px 0 80px}
+.dp-hero__grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(36px,5vw,72px);align-items:center}
+.dp-logo{width:min(100%,340px);height:auto}
+.dp-title{margin-top:26px;font-size:clamp(38px,4.4vw,60px);white-space:pre-line}
+.dp-kind{margin-top:16px;font-size:16px;color:var(--text-2)}
+.dp-hero .actions{margin-top:28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.dp-hint{font-size:13px;color:var(--accent)}
+
+/* ---------- how ---------- */
+.dp-how{padding:72px 0 80px;background:var(--accent-soft)}
+.how{list-style:none;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;counter-reset:h}
+.how li{counter-increment:h;position:relative;padding:26px 24px 24px;background:var(--bg);border-radius:var(--r-tile);display:flex;flex-direction:column;gap:10px;transition:transform .3s var(--ease)}
+.how li::after{content:counter(h,decimal-leading-zero);position:absolute;right:22px;top:22px;font-family:var(--font-pixel);font-size:13px;color:var(--accent)}
+.how svg{width:46px;height:46px;color:var(--accent);margin-bottom:6px;overflow:visible}
+.how b{font-weight:600;font-size:16px}.how span{font-size:14px;color:var(--text-2)}
+.how li:hover{transform:translateY(-4px)}
+.how .a-out,.how .a-up,.how .a-bar{transition:transform .45s var(--ease)}
+.how li:hover .a-out{transform:translate(4px,4px)}
+.how li:hover .a-up{transform:translateY(-6px)}
+.how .a-bar{transform-origin:50% 31px}
+.how li:hover .a-bar1{transform:scaleY(1.5)}.how li:hover .a-bar2{transform:scaleY(.6)}.how li:hover .a-bar3{transform:scaleY(2.4)}
+
+/* ---------- tests ---------- */
+.dp-tests{padding:88px 0 40px}
+.covers{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:28px}
+.cover{display:block;border-radius:var(--r-tile);overflow:hidden;background:var(--surface);box-shadow:0 14px 40px rgba(36,33,29,.08)}
+.cover img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}
+.cover__name{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 20px 18px}
+.cover__name b{display:block;font-weight:600}
+.cover__name small{display:block;font-size:13px;color:var(--text-2);margin-top:3px}
+.cover .arw{width:40px;height:40px;border-radius:var(--r-pill);display:grid;place-items:center;background:var(--bg);color:var(--text-1);font-size:18px;flex:none;transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.cover:hover .arw{background:var(--btn-bg);color:var(--btn-text)}
+.dp-more{margin-top:22px;color:var(--text-2)}
+
+/* ---------- 2,000 results ---------- */
+.dp-unique{padding:72px 0 40px}
+.dp-unique .body-s{margin-top:10px;max-width:46ch}
+.field{position:relative;height:clamp(240px,38vw,400px);border-radius:var(--r-tile);overflow:hidden;background:var(--surface);margin-top:28px;cursor:crosshair}
+.field canvas{display:block}
+
+/* ---------- start ---------- */
+.dp-cta{padding:80px 0 40px;text-align:center}
+.dp-cta .body-s{margin-top:14px}
+
+@media (max-width:800px){
+  .dp-hero{padding:24px 0 56px}.dp-hero__grid{grid-template-columns:1fr;gap:32px}
+  .dp-title{font-size:clamp(32px,8vw,42px)}
+  .how{grid-template-columns:1fr}.covers{grid-template-columns:1fr}
+  .dp-how,.dp-tests,.dp-unique{padding:56px 0 24px}.dp-cta{padding:56px 0 24px}
+  .nav__links{display:none}
+}
+@media (prefers-reduced-motion:reduce){.how li,.how .a-out,.how .a-up,.how .a-bar{transition:none}.how li:hover{transform:none}}

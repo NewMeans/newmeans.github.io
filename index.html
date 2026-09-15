@@ -14,13 +14,14 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
 <link rel="preload" href="assets/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="base.css?v=20260914-1">
-<link rel="stylesheet" href="home.css?v=20260914-1">
+<link rel="stylesheet" href="base.css?v=20260915-1">
+<link rel="stylesheet" href="product.css?v=20260915-1">
+<link rel="stylesheet" href="home.css?v=20260915-1">
 </head>
 <body class="home">
 <a class="skip-link" href="#works" data-i18n="nav.skip">본문으로 건너뛰기</a>
 
-<header class="nav">
+<header class="nav nav--wide">
   <div class="wrap nav__in">
     <a class="nav__brand" href="#top" aria-label="NewMeans"><img class="nav__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
     <div class="nav__spacer"></div>
@@ -42,7 +43,7 @@
   <section class="hero" id="hero" aria-label="NewMeans">
     <div class="copy">
       <h1 class="headline display">Life, a little more<br><span class="nowrap"><span class="slot" id="slot"><span class="reel" id="reel"><span class="word"><span class="w">joyful</span><span class="dot">.</span></span></span></span><button type="button" class="lever" id="lever" data-i18n="home.lever" data-i18n-attr="aria-label" aria-label="단어 다시 뽑기"><svg viewBox="0 0 46 96" aria-hidden="true"><ellipse cx="23" cy="86" rx="16" ry="7" fill="#3B3732"/><rect x="17" y="74" width="12" height="12" rx="4" fill="#706B64"/><rect class="stick" x="20" y="14" width="6" height="64" rx="3" fill="#3B3732"/><circle class="knob" cx="23" cy="14" r="12" fill="var(--word)"/></svg></button><span class="tier" id="tier" hidden></span></span></h1>
-      <p class="sub">Games and AI services that make everyday life a little more joyful</p>
+      <p class="sub">Games and AI services for everyday joy</p>
       <a class="go" id="go" hidden><img src="assets/brand/typer-icon.png" alt="" width="22" height="22"><span class="go__t"></span><span class="go__a" aria-hidden="true">→</span></a>
     </div>
     <div class="brandwrap">
@@ -59,7 +60,7 @@
     </div>
   </section>
 
-  <!-- TYPER -->
+  <!-- TYPER: the game's loop, played with your keyboard -->
   <section class="scene scene--typer" id="works" aria-label="Typer">
     <div class="wrap scene__grid">
       <div>
@@ -67,7 +68,7 @@
         <p class="lbl" data-i18n="home.typer.kind">게임 · iOS / Android</p>
         <h2 class="h2" data-i18n="home.typer.desc">키캡을 부수는
 손맛과 타건음</h2>
-        <p class="body-s" data-i18n="home.typer.sub">공이 키캡을 부술 때마다 장착한 스위치의 타건음. 옆의 키보드를 눌러 스위치 7종을 들어볼 수 있다.</p>
+        <p class="body-s" data-i18n="home.typer.sub">키보드로 치는 한 판. 공이 키캡을 부술 때마다 고른 스위치의 타건음.</p>
         <div class="actions">
           <div class="badges">
             <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
@@ -76,14 +77,14 @@
           <a class="link" href="typer.html" data-i18n="home.typer.more">키보드 골라보기</a>
         </div>
       </div>
-      <div>
+      <div class="desk-wrap" data-typer-desk>
         <div class="desk">
           <div class="monitor">
             <img class="monitor__img" src="assets/shop/monitor/2000.png" alt="" decoding="async">
-            <div class="monitor__screen" aria-hidden="true">
-              <div class="screen-top">TYPER</div>
-              <div class="screen-switch"><small data-i18n="typer.custom.switch">스위치</small><strong id="swName">Blue</strong></div>
-              <div class="screen-bottom" id="swStatus" data-i18n="sound.ready">키를 눌러보세요</div>
+            <div class="monitor__screen">
+              <div class="screen-top"><span>TYPER</span><span data-switch-name>Blue</span></div>
+              <div class="screen-board" data-typer-board></div>
+              <div class="screen-bottom" data-screen-status></div>
             </div>
           </div>
           <div class="desk__kbwrap">
@@ -91,24 +92,26 @@
             <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
           </div>
         </div>
-        <div class="switches" id="switches" role="group" data-i18n="typer.custom.switch" data-i18n-attr="aria-label" aria-label="스위치"></div>
+        <div class="switches" data-switches role="group" data-i18n="typer.custom.switch" data-i18n-attr="aria-label" aria-label="스위치"></div>
       </div>
     </div>
   </section>
 
-  <!-- DOPAMINE UNIVERSITY -->
+  <!-- DOPAMINE UNIVERSITY: a chat that reads itself -->
   <section class="scene scene--dopa" id="dopa" aria-label="Dopamine University">
     <div class="wrap scene__grid">
-      <div class="stack">
-        <a class="card card--a" href="https://dodae.me/analyze/egen-teto" target="_blank" rel="noopener noreferrer"><img src="assets/screens/dopamine/egen-teto.jpg" data-i18n="dopa.test2.title" data-i18n-attr="alt" alt="AI 에겐 테토 테스트" loading="lazy"></a>
-        <a class="card card--b" href="https://dodae.me/t/devil-hunter/landing" target="_blank" rel="noopener noreferrer"><img src="assets/screens/dopamine/devil-hunter.webp" data-i18n="dopa.test1.label" data-i18n-attr="alt" alt="캠퍼스 리크루팅" loading="lazy"></a>
-      </div>
+      <div class="lab cl" data-chat-lab></div>
       <div>
         <a href="dopamine.html"><img class="logo logo--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
         <p class="lbl" data-i18n="home.dopa.kind">카카오톡 대화로 하는 AI 심리테스트</p>
         <h2 class="h2" data-i18n="home.dopa.desc">내 카톡으로 보는
 나의 다른 모습</h2>
         <p class="body-s" data-i18n="home.dopa.sub">정해진 유형이 없는 AI 분석. 2,000명이 하면 2,000개의 결과.</p>
+        <p class="body-s hint" data-i18n="home.dopa.lab">말풍선을 짚거나 한 줄 써보기</p>
+        <div class="tests">
+          <a class="test" data-tilt href="https://dodae.me/analyze/egen-teto" target="_blank" rel="noopener noreferrer"><img src="assets/screens/dopamine/egen-teto.jpg" alt="" loading="lazy"><span data-i18n="dopa.test2.title">AI 에겐 테토 테스트</span></a>
+          <a class="test" data-tilt href="https://dodae.me/t/devil-hunter/landing" target="_blank" rel="noopener noreferrer"><img src="assets/screens/dopamine/devil-hunter.webp" alt="" loading="lazy"><span data-i18n="dopa.test1.title">AI 캠퍼스 리크루팅 테스트</span></a>
+        </div>
         <div class="actions"><a class="btn btn--tint" href="dopamine.html" data-i18n="home.dopa.more">테스트 둘러보기</a></div>
       </div>
     </div>
@@ -155,10 +158,11 @@
   <svg class="c-tap" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6"/><circle cx="24" cy="24" r="7" fill="currentColor"/></svg>
 </div>
 
-<script src="i18n.js?v=20260914-1" defer></script>
-<script src="experience.js?v=20260913-1" defer></script>
-<script src="keyboard.js?v=20260913-1" defer></script>
-<script src="hero.js?v=20260914-1" defer></script>
+<script src="i18n.js?v=20260915-1" defer></script>
+<script src="experience.js?v=20260915-1" defer></script>
+<script src="keyboard.js?v=20260915-1" defer></script>
+<script src="product.js?v=20260915-1" defer></script>
+<script src="hero.js?v=20260915-1" defer></script>
 <script>
 (function(){
   "use strict";
@@ -167,19 +171,6 @@
     var P=[[1,1673,357,133,400],[2,2401,357,133,400],[3,3383,357,99,99],[4,1415,361,193,392],[5,2142,361,194,392],[7,3501,446,225,220],[8,2846,840,403,84],[9,1217,842,132,400],[10,2644,842,133,400],[11,3291,842,132,400],[12,1477,864,96,69],[13,1936,864,94,69],[14,1659,887,190,169],[15,2127,931,225,221],[16,3518,955,187,242],[17,923,1192,206,42],[18,2379,1192,205,42]];
     var X0=880,Y0=300,W=2900,H=1000,box=document.getElementById('sleep');
     P.forEach(function(p){var el=document.createElement('div');el.className='pc'+(p[0]===12||p[0]===13?' eye':'');el.style.left=(p[1]-X0)/W*100+'%';el.style.top=(p[2]-Y0)/H*100+'%';el.style.width=p[3]/W*100+'%';el.style.height=p[4]/H*100+'%';el.style.setProperty('--m','url(assets/brand/logo-pieces/p'+p[0]+'.png)');box.appendChild(el);});
-
-    /* playable desk: real switches, real sounds */
-    var kb=document.querySelector('[data-typer-keyboard]');
-    if(window.TyperKeyboard&&kb){
-      TyperKeyboard.mount(kb);
-      var SW=[['4000','Blue'],['4001','Brown'],['4002','Red'],['4003','Chocolate'],['4004','Capacitive'],['4005','Low Profile'],['4006','White']];
-      var row=document.getElementById('switches'),name=document.getElementById('swName'),st=document.getElementById('swStatus');
-      SW.forEach(function(s,i){var b=document.createElement('button');b.type='button';b.textContent=s[1];b.setAttribute('aria-pressed',i===0);b.addEventListener('click',function(){row.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');});b.setAttribute('aria-pressed','true');TyperKeyboard.setSwitch(kb,s[0]);name.textContent=s[1];});row.appendChild(b);});
-      var error=false;
-      function label(){st.textContent=i18n.t(error?'sound.error':(kb.dataset.soundState==='on'?'sound.on':'sound.ready'));}
-      kb.addEventListener('tp:soundstate',function(e){error=!!e.detail.error;label();});
-      window.addEventListener('nm:langchange',label);
-    }
 
   });
 })();

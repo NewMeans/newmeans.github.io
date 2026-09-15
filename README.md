@@ -12,6 +12,7 @@
 - `home.css` — 홈 전용 스타일
 - `hero.js` — 토끼(포인터 추종, 글자 끌기, 안절부절)와 단어 슬롯머신, 단어별 소품
 - `keyboard.js` — Typer 키보드 컴포넌트와 타건음
+- `product.js`, `product.css` — 제품 조각: 키보드로 치는 Typer 보드(모니터 화면의 벽돌깨기), 도파민대학교 채팅 실험실, 기울어지는 카드, 2,000개 도형 필드. 홈과 제품 페이지가 같이 쓴다
 - `i18n.js` — 한/영 문구 사전과 언어 토글 (localStorage 유지)
 - `experience.js` — 스토어 배지 언어 처리
 - `assets/brand/logo-pieces/` — 로고 조각 25개 (마스크로 칠해 어떤 색으로도 바뀜)
