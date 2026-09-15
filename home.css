@@ -113,6 +113,25 @@
 @keyframes tilt{50%{transform:scaleY(-.6)}}
 .ac .flame{transform-box:fill-box;transform-origin:50% 100%;animation:flame .6s ease-in-out infinite alternate}.ac.is-out .flame{opacity:0}
 @keyframes flame{to{transform:scaleY(.86) scaleX(1.1)}}
+.ac .fire{transition:transform .25s var(--ease)}.ac.is-stoked .fire{animation:stoke .7s var(--ease)}
+@keyframes stoke{35%{transform:scale(1.18,1.3)}}
+.ac.is-tugged{animation:tug .8s var(--ease)}
+@keyframes tug{30%{transform:translateY(-9%)}}
+.ac.is-sliding{animation:slide .7s var(--ease)}
+@keyframes slide{35%{transform:translateY(12%)}}
+.ac.is-lifting{transform-box:fill-box;transform-origin:50% 0;animation:lift .8s var(--ease)}
+@keyframes lift{35%{transform:translateY(-18%) rotate(-8deg)}}
+.ac.is-scanning rect:first-of-type{animation:flicker .6s steps(4)}
+.ac.is-bopping{transform-box:fill-box;transform-origin:50% 100%;animation:bop .7s var(--ease)}
+@keyframes bop{25%{transform:rotate(-12deg)}60%{transform:rotate(10deg)}}
+.ac.is-tipping{transform-box:fill-box;transform-origin:20% 60%;animation:tip .8s var(--ease)}.ac.is-tipping .tassel{animation:swing-hard .9s ease-out}
+@keyframes tip{35%{transform:rotate(-10deg) translateY(-4%)}}
+.ac.is-wiggling{transform-box:fill-box;transform-origin:50% 0;animation:wiggle .6s var(--ease)}
+@keyframes wiggle{25%{transform:scaleY(1.25) rotate(-6deg)}60%{transform:scaleY(1.1) rotate(6deg)}}
+.ac.is-sobbing .tear{animation-duration:.55s}
+.ac.is-rippling{animation:ripple .8s var(--ease)}
+@keyframes ripple{25%{transform:translateX(-4%)}60%{transform:translateX(4%)}}
+.acc--back .ac[data-prop="court"]{cursor:crosshair}
 .ac .neon-text{filter:drop-shadow(0 0 6px #3AF0FF)}.ac .neon-frame{filter:drop-shadow(0 0 6px #FF3AD6)}.ac.is-off .neon-text,.ac.is-off .neon-frame{opacity:.25;filter:none}
 .ac .bite{opacity:0}.ac[data-bites="1"] .b1{opacity:1}.ac[data-bites="2"] .b1,.ac[data-bites="2"] .b2{opacity:1}.ac[data-bites="3"] .b1,.ac[data-bites="3"] .b2,.ac[data-bites="3"] .b3{opacity:1}
 
