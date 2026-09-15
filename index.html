@@ -60,71 +60,66 @@
     </div>
   </section>
 
-  <!-- TYPER: the game's loop, played with your keyboard -->
-  <section class="scene scene--typer" id="works" aria-label="Typer">
-    <div class="wrap scene__grid">
-      <div>
-        <a href="typer.html"><img class="logo" src="assets/brand/typer-logo.png" alt="Typer"></a>
-        <h2 class="h2" data-i18n="home.typer.desc">키캡을 부수는
+  <!-- TWO PLATES: the products, one scene, swapped by scrolling -->
+  <section class="plates" id="works" aria-label="Products" data-plates>
+    <div class="plates__stage">
+      <div class="wrap plates__grid">
+        <div class="plates__copy">
+          <article class="plate plate--typer" data-plate="0">
+            <a href="typer.html"><img class="logo" src="assets/brand/typer-logo.png" alt="Typer"></a>
+            <h2 class="h2" data-i18n="home.typer.desc">키캡을 부수는
 손맛과 타건음</h2>
-        <p class="body-s" data-i18n="home.typer.sub">아무 키나 누르면 시작되는 한 판. 키캡이 부서질 때마다 타건음.</p>
-        <div class="actions">
-          <div class="badges">
-            <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
-            <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
-          </div>
-          <a class="link" href="typer.html" data-i18n="home.typer.more">키보드 골라보기</a>
+            <p class="body-s" data-i18n="home.typer.sub">아무 키나 누르면 시작되는 한 판. 키캡이 부서질 때마다 타건음.</p>
+            <div class="actions">
+              <div class="badges">
+                <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
+                <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
+              </div>
+              <a class="link" href="typer.html" data-i18n="home.typer.more">키보드 골라보기</a>
+            </div>
+          </article>
+          <article class="plate plate--dopa" data-plate="1">
+            <a href="dopamine.html"><img class="logo logo--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
+            <h2 class="h2" data-i18n="home.dopa.desc">내 카톡으로 보는
+나의 다른 모습</h2>
+            <p class="body-s" data-i18n="home.dopa.sub">말풍선을 짚으면 읽히는 대화. 2,000명이 하면 2,000개의 결과.</p>
+            <div class="actions"><a class="btn btn--tint" href="dopamine.html" data-i18n="home.dopa.more">테스트 둘러보기</a></div>
+          </article>
         </div>
-      </div>
-      <div class="desk-wrap" data-typer-desk>
-        <div class="desk">
-          <div class="monitor">
-            <img class="monitor__img" src="assets/shop/monitor/2000.png" alt="" decoding="async">
-            <div class="monitor__screen">
-              <div class="screen-top"><span>TYPER</span><span data-switch-name>Blue</span></div>
-              <div class="screen-board" data-typer-board></div>
-              <div class="screen-bottom" data-screen-status></div>
+        <div class="plates__obj">
+          <div class="obj obj--typer" data-plate="0">
+            <div class="desk-wrap" data-typer-desk>
+              <div class="desk">
+                <div class="monitor">
+                  <img class="monitor__img" src="assets/shop/monitor/2000.png" alt="" decoding="async">
+                  <div class="monitor__screen">
+                    <div class="screen-top"><span>TYPER</span><span data-switch-name>Blue</span></div>
+                    <div class="screen-board" data-typer-board></div>
+                    <div class="screen-bottom" data-screen-status></div>
+                  </div>
+                </div>
+                <div class="desk__kbwrap">
+                  <img class="desk__cable" src="assets/shop/frame/3000_2.png" alt="" decoding="async">
+                  <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="desk__kbwrap">
-            <img class="desk__cable" src="assets/shop/frame/3000_2.png" alt="" decoding="async">
-            <div class="desk__kb" data-typer-keyboard data-base="assets/desk/"></div>
-          </div>
+          <div class="obj obj--dopa" data-plate="1"><div class="lab cl" data-chat-lab="compact"></div></div>
         </div>
       </div>
+      <ol class="plates__dots" aria-hidden="true"><li data-go="0" class="is-on"></li><li data-go="1"></li></ol>
     </div>
   </section>
 
-  <!-- DOPAMINE UNIVERSITY: a chat that reads itself -->
-  <section class="scene scene--dopa" id="dopa" aria-label="Dopamine University">
-    <div class="wrap scene__grid">
-      <div class="lab cl" data-chat-lab="compact"></div>
-      <div>
-        <a href="dopamine.html"><img class="logo logo--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
-        <h2 class="h2" data-i18n="home.dopa.desc">내 카톡으로 보는
-나의 다른 모습</h2>
-        <p class="body-s" data-i18n="home.dopa.sub">말풍선을 짚으면 읽히는 대화. 2,000명이 하면 2,000개의 결과.</p>
-        <div class="actions"><a class="btn btn--tint" href="dopamine.html" data-i18n="home.dopa.more">테스트 둘러보기</a></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STUDIO -->
+  <!-- STUDIO: one line -->
   <section class="studio" id="studio" aria-label="Studio">
-    <div class="wrap studio__grid">
-      <div class="studio__copy">
-        <h2 class="h2" data-i18n="home.studio.lead">일상의 작은 즐거움을 만드는 스튜디오</h2>
-        <ul class="studio__lines">
-          <li data-i18n="home.studio.l1">게임이든 AI든, 감각적이고 재밌는 디지털 경험</li>
-          <li data-i18n="home.studio.l2">둘이서 기획부터 운영까지 전부</li>
-          <li data-i18n="home.studio.l3">작게 만들어 오래 다듬기</li>
-        </ul>
-        <div class="studio__links">
-          <a class="link" href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
-          <a class="link" href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
-        </div>
+    <div class="wrap studio__row">
+      <p class="studio__line" data-i18n="home.studio.lead">게임 하나와 AI 서비스 하나를 직접 만들고 운영하는 2인 스튜디오</p>
+      <div class="studio__links">
+        <a class="link" href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
+        <a class="link" href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
       </div>
-      <div class="studio__scene" data-studio-scene aria-hidden="true"></div>
     </div>
   </section>
 </main>
