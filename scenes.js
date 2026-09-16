@@ -36,7 +36,7 @@
       measure();
       var tl = G.timeline({ paused: true, defaults: { ease: 'none' } });
       var yRest = (U.CAPTOP - U.R) * s, rot = 0;
-      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: (U.IN.y - 4) * s, scale: .2, opacity: 0, rotation: 0 }, 0);
+      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: 12 * s, scale: 1, opacity: 1, rotation: 0 }, 0);
       tl.set(pIn.concat(pOut), { opacity: 0, scale: .4 }, 0);
       tl.set(letters, { opacity: 0 }, 0);
       tl.fromTo(logo, { scale: 1.08 }, { scale: 1, duration: dur * .08 }, 0);
@@ -44,7 +44,6 @@
       tl.fromTo(caps, { y: 60 * s, opacity: 0 }, { y: 0, opacity: 1, duration: dur * .06, stagger: dur * .012 }, 0);
       // the hole opens in the ceiling and the ball drops out of it: the near rim hides whatever is still inside
       tl.to(pIn, { opacity: 1, scale: 1, duration: dur * .06, ease: 'back.out(2)' }, dur * .06);
-      tl.to(ball, { scale: 1, opacity: 1, duration: dur * .05 }, dur * .12);
       rot += 30;
       tl.to(ball, { y: yRest, rotation: rot, duration: dur * .10, ease: 'power2.in' }, dur * .14);
       tl.to(pIn, { opacity: 0, scale: .5, duration: dur * .06 }, dur * .24);
@@ -66,9 +65,9 @@
       var t5 = dur * .72, d5 = dur * .14;
       rot += (U.OUT.x - U.CAPX[4]) * SPIN;
       tl.to(ball, { x: U.OUT.x * s, rotation: rot, duration: d5 }, t5);
-      tl.to(ball, { y: yRest - U.LAST * s, duration: d5 * .4, ease: 'power1.out' }, t5).to(ball, { y: (U.OUT.y + 6) * s, duration: d5 * .6, ease: 'power1.in' }, t5 + d5 * .4);
+      tl.to(ball, { y: yRest - U.LAST * s, duration: d5 * .4, ease: 'power1.out' }, t5).to(ball, { y: U.OUT.y * s, duration: d5 * .6, ease: 'power1.in' }, t5 + d5 * .4);
       tl.to(pOut, { opacity: 1, scale: 1, duration: dur * .05, ease: 'back.out(2)' }, dur * .74);
-      tl.to(ball, { scale: .18, opacity: 0, duration: dur * .05 }, dur * .82);
+      tl.to(ball, { y: (U.OUT.y + 36) * s, duration: dur * .06, ease: 'power1.in' }, dur * .86);   // same size, straight into the slot
       tl.to(pOut, { opacity: 0, scale: .5, duration: dur * .06 }, dur * .89);
       tl.fromTo(act, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: dur * .1 }, dur * .86);
       tl.fromTo(replayBtn, { opacity: 0 }, { opacity: 1, duration: dur * .06 }, dur * .94);

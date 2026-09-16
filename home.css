@@ -193,25 +193,30 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .scene--typer{height:220vh;background:var(--m-100)}
 .scene--typer .scene__pin{position:relative;height:calc(100vh - 64px);overflow:hidden}
 .scene--typer .scene__in{height:100%}
-.stage--typer{position:relative;width:min(100%,760px);aspect-ratio:760/360;margin:0 auto}
-.portal,.lip{position:absolute;width:calc(68 / 760 * 100%);aspect-ratio:68/24;transform:translate(-50%,-50%);opacity:0}
+.stage--typer{position:relative;width:min(100%,760px);aspect-ratio:760/360;margin:0 auto;overflow:hidden}
+.portal,.lip{position:absolute;width:calc(68 / 760 * 100%);aspect-ratio:68/24;transform:translate(-50%,-50%);opacity:0;border-radius:50%;overflow:hidden}
 .portal{z-index:2}
 .lip{z-index:5}
-.portal__wall,.portal__void{position:absolute;border-radius:50%}
-/* the rim is the cut edge of the floor: a lit top lip, a shaded wall, then the dark inside */
-.portal__wall{inset:0;background:linear-gradient(180deg,#fff 0 6%,var(--n-400) 6%,var(--n-600) 46%,var(--n-800));box-shadow:0 2px 3px rgba(36,33,29,.16)}
-.portal__void{inset:34% 8% 7% 8%;background:linear-gradient(180deg,var(--n-900),#100E0C 70%)}
-/* the ceiling hole is seen from below, so its lit cut edge and its shaft are mirrored */
-.portal--in .portal__wall,.lip--in .portal__wall{background:linear-gradient(0deg,#fff 0 6%,var(--n-400) 6%,var(--n-600) 46%,var(--n-800))}
-.portal--in .portal__void,.lip--in .portal__void{inset:7% 8% 34% 8%;background:linear-gradient(0deg,var(--n-900),#100E0C 70%)}
-.lip--in{clip-path:inset(0 0 48% 0)}
-.lip--out{clip-path:inset(48% 0 0 0)}
+/* two flat colours. The shaft is the same ellipse as the opening, shifted by the floor's
+   thickness, so the wall reads as a crescent on the far side - not a cone bored at an angle */
+.portal__wall,.portal__void{position:absolute;inset:0;border-radius:50%}
+.portal__wall{background:var(--n-600)}
+.portal__void{background:var(--n-900);transform:translateY(30%)}
+.portal--in .portal__void,.lip--in .portal__void{transform:translateY(-30%)}   /* seen from below */
+.lip--in{clip-path:inset(0 0 50% 0)}
+.lip--out{clip-path:inset(50% 0 0 0)}
+/* the slot line of a piggy bank. The ball is clipped, not covered: a notch bitten out of the
+   top edge over the ceiling hole and out of the bottom edge over the floor one, so the ball is
+   only ever drawn on the near side of each hole's middle. */
+.ballclip{position:absolute;inset:0;z-index:3;pointer-events:none;
+  clip-path:polygon(0% 0%, 7.105% 0%, 7.105% 9.444%, 17.105% 9.444%, 17.105% 0%, 100% 0%,
+    100% 100%, 97.105% 100%, 97.105% 92.222%, 87.105% 92.222%, 87.105% 100%, 0% 100%)}
 .portal--in,.lip--in{left:calc(92 / 760 * 100%);top:calc(34 / 360 * 100%)}
 .portal--out,.lip--out{left:calc(700 / 760 * 100%);top:calc(332 / 360 * 100%)}
 .stage--typer .cap{position:absolute;top:calc(226 / 360 * 100%);left:calc(var(--x) / 760 * 100%);width:calc(104 / 760 * 100%);aspect-ratio:1;margin-left:calc(-52 / 760 * 100%);background:url("assets/shop/keycap/5000_0.png") center/100% 100% no-repeat;z-index:2;display:grid;place-items:center;cursor:pointer;transition:filter .15s}
 .stage--typer .cap.is-down{filter:brightness(.96)}
 .stage--typer .cap b{font:400 clamp(20px,3.6vw,44px)/1 var(--font-pixel);color:#67544F;padding-bottom:12%;opacity:0}
-.stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;z-index:3;filter:drop-shadow(0 6px 10px rgba(35,66,52,.2));will-change:transform}
+.stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
 .scene--typer.is-static{height:auto}
 .scene--typer.is-static .scene__pin{height:auto;overflow:visible;padding:64px 0}
 .scene--typer.is-static .scene__in{height:auto}
