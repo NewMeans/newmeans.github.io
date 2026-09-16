@@ -6,7 +6,7 @@
  * Studio: two rabbits running while obstacles fly in from the right; scrolling speeds them up. */
 (function () {
   'use strict';
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, narrow = matchMedia('(max-width: 720px)');
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var P = window.NewMeansProduct, sound = P && P.sound, G = window.gsap, ST = window.ScrollTrigger;
   if (!G || !ST) return;
   G.registerPlugin(ST);
@@ -22,7 +22,7 @@
   };
   var SPIN = 360 / (2 * Math.PI * U.R);        // degrees per stage unit rolled
   function mountTyper(root) {
-    var pin = root.querySelector('.scene__pin'), stage = root.querySelector('.stage'), ball = stage.querySelector('.ball');
+    var stage = root.querySelector('.stage'), ball = stage.querySelector('.ball');
     var caps = [].slice.call(stage.querySelectorAll('.cap')), letters = caps.map(function (c) { return c.querySelector('b'); });
     var pIn = [stage.querySelector('.portal--in'), stage.querySelector('.lip--in')];
     var pOut = [stage.querySelector('.portal--out'), stage.querySelector('.lip--out')];
@@ -73,30 +73,28 @@
       tl.fromTo(replayBtn, { opacity: 0 }, { opacity: 1, duration: dur * .06 }, dur * .94);
       return tl;
     }
+    var playing = false, played = false;
+    function run(withSound) {                               // play it through once, at its own pace
+      if (rtl) { rtl.kill(); rtl = null; }
+      playing = true; played = true; replayBtn.disabled = true;
+      if (withSound) touched = true;
+      rtl = build(3.4, true);
+      rtl.eventCallback('onComplete', function () { playing = false; replayBtn.disabled = false; });
+      rtl.play(0);
+    }
     function setup() {
       if (rtl) { rtl.kill(); rtl = null; }
       if (st) { st.kill(); st = null; }
       if (tl) tl.kill();
-      var isStatic = reduce || narrow.matches;
-      root.classList.toggle('is-static', isStatic);
       tl = build(1, false);
-      if (isStatic) { tl.progress(1); return; }
-      st = ST.create({ trigger: root, start: 'top 64px', end: 'bottom bottom', pin: pin, pinSpacing: false, scrub: .6, animation: tl, invalidateOnRefresh: true });
+      if (reduce || played) { tl.progress(1); return; }     // after it has run, the stage just stays finished
+      tl.progress(0);
+      st = ST.create({ trigger: root, start: 'top 62%', once: true, onEnter: function () { run(false); } });
     }
-    var playing = false;
     function replay() {
-      if (playing && rtl) rtl.kill();
-      playing = true; replayBtn.disabled = true;
       var cur = ball.getAttribute('src'), pool = balls.filter(function (b) { return b !== cur; });
       ball.setAttribute('src', pool.length ? pool[(Math.random() * pool.length) | 0] : cur);
-      if (st) st.disable(false);
-      touched = true;
-      rtl = build(3.4, true);
-      rtl.eventCallback('onComplete', function () {
-        if (rtl) rtl.kill(); rtl = null; playing = false; replayBtn.disabled = false;
-        tl.progress(0).progress(1); if (st) st.enable();
-      });
-      rtl.play(0);
+      run(true);
     }
     replayBtn.addEventListener('click', replay);
     caps.forEach(function (k) {
@@ -106,66 +104,82 @@
     });
     setup();
     addEventListener('resize', debounce(function () { if (!playing) setup(); }, 200));
-    if (narrow.addEventListener) narrow.addEventListener('change', function () { if (!playing) setup(); });
   }
 
-  // ================================================================ Dopamine cards (home scene and dopamine.html hero)
-  function mountDopa(root) {
-    var cards = root.querySelector('[data-dopa-cards]'); if (!cards) return;
-    var c1 = cards.querySelector('.card--tests'), c2 = cards.querySelector('.card--report');
-    var tiles = [].slice.call(c1.querySelectorAll('.tile')), bean = c1.querySelector('.bean');
-    var lines = [].slice.call(c2.querySelectorAll('.ln')), track = c2.querySelector('.track'), needle = c2.querySelector('.needle'), stamp = c2.querySelector('.stamp');
-    var head = root.querySelector('.scene__head'), act = root.querySelector('.scene__act');
-    var hops = [0, 1, 2, 4], BR = 14;
-    function spot(i) { var b = tiles[i].getBoundingClientRect(), c = c1.getBoundingClientRect(); return { x: b.left - c.left + b.width / 2, y: b.top - c.top - BR + 4 }; }
-    function pick(i) { tiles.forEach(function (t, k) { t.classList.toggle('is-picked', k === i); }); }
-    function beanTL() {
-      var tl = G.timeline({ paused: true, defaults: { ease: 'none' } });
-      var start = { x: -26, y: -30 }, apex = [120, 96, 78], prev = start, seg = 1 / (hops.length - .2);
-      tl.set(bean, { xPercent: -50, yPercent: -50, x: start.x, y: start.y, opacity: 0, rotation: 0 }, 0);
-      tl.set(bean, { opacity: 1 }, .02);
-      tl.set(tiles, { y: 0 }, 0);
-      tl.call(function () { tiles.forEach(function (t) { t.classList.remove('is-hit', 'is-picked'); }); }, null, 0);
-      hops.forEach(function (ti, k) {
-        var p = spot(ti), t0 = seg * k, d = seg, last = k === hops.length - 1;
-        tl.to(bean, { x: p.x, rotation: 90 * (k + 1), duration: d }, t0);
-        tl.to(bean, { y: Math.min(prev.y, p.y) - (apex[k] || 60), duration: d / 2, ease: 'power1.out' }, t0).to(bean, { y: p.y, duration: d / 2, ease: 'power1.in' }, t0 + d / 2);
-        var th = t0 + d;
-        tl.to(tiles[ti], { y: 3, duration: .03 }, th).to(tiles[ti], { y: 0, duration: .05 }, th + .03);
-        tl.call(function (el, isLast, idx) {
-          if (isLast) pick(idx); else { el.classList.add('is-hit'); setTimeout(function () { el.classList.remove('is-hit'); }, 420); }
-        }, [tiles[ti], last, ti], th);
-        prev = p;
-      });
-      return tl;
+  // ================================================================ Dopamine: shapes crowding a centre
+  // Four to seven at a time. Each one arrives, is pulled toward the middle, shoulders the others
+  // aside, then goes. No two are the same shape or the same colour for long.
+  var DOPA = ['#FF6568', '#FF8B1A', '#FAC800', '#05DF72', '#54A2FF', '#A882FF', '#FF5FA2', '#FF7849'];
+  function mountBlobs(root) {
+    var host = root.querySelector('[data-dopa-blobs]'); if (!host || host.__blobs) return; host.__blobs = true;
+    var canvas = document.createElement('canvas'); host.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var w = 0, h = 0, dpr = 1, shapes = [], want = 6, raf = 0, last = 0, seen = false, nextAt = 0;
+    function layout() {
+      var r = host.getBoundingClientRect(); w = r.width; h = r.height; if (!w || !h) return;
+      dpr = Math.min(2, devicePixelRatio || 1);
+      canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      draw();
     }
-    function repTL() {
-      var tl = G.timeline({ paused: true });
-      tl.fromTo(lines, { scaleX: 0 }, { scaleX: 1, duration: .5, stagger: .1, ease: 'power2.out' }, 0);
-      var tw = track ? track.clientWidth : 200;
-      tl.fromTo(needle, { xPercent: -50, yPercent: -50, x: 0 }, { x: -tw * .18, duration: .5, ease: 'power2.inOut' }, .45);
-      tl.fromTo(stamp, { opacity: 0, scale: 1.8, rotation: -14 }, { opacity: .95, scale: 1, rotation: -14, duration: .3, ease: 'power3.out' }, .75);
-      return tl;
-    }
-    var btl = beanTL(), rp = repTL();
-    if (reduce) { btl.progress(1); rp.progress(1); return; }
-    G.set([c1, c2], { opacity: 0, y: 40 }); G.set(act, { opacity: 0, y: 12 }); if (head) G.set(head, { opacity: 0, y: 8 });
-    var c2shown = false;
-    function showC2() { if (c2shown) return; c2shown = true; G.to(c2, { opacity: 1, y: 0, duration: .7, ease: 'power2.out' }); G.to(act, { opacity: 1, y: 0, duration: .6, delay: .3 }); }
-    if (head) ST.create({ trigger: root, start: 'top 75%', once: true, onEnter: function () { G.to(head, { opacity: 1, y: 0, duration: .6 }); } });
-    ST.create({ trigger: c1, start: 'top 78%', once: true, onEnter: function () { G.to(c1, { opacity: 1, y: 0, duration: .7, ease: 'power2.out' }); } });
-    var bp = 0, rpp = 0;
-    ST.create({ trigger: c1, start: 'top 78%', end: 'top 28%', onUpdate: function (self) { bp = Math.max(bp, self.progress); btl.progress(bp); if (bp > .999) showC2(); } });
-    ST.create({ trigger: c2, start: 'top 82%', end: 'top 32%', onUpdate: function (self) { rpp = Math.max(rpp, self.progress); rp.progress(rpp); } });
-    tiles.forEach(function (t, i) {
-      t.addEventListener('click', function () {
-        if (bp < .999) return;
-        var p = spot(i); G.to(bean, { x: p.x, y: p.y, rotation: '+=180', duration: .45, ease: 'power2.out' });
-        pick(i);
-        var tw = track ? track.clientWidth : 200; G.to(needle, { x: (i / (tiles.length - 1) - .5) * tw * .7, duration: .5, ease: 'power2.inOut' });
+    function spawn(born) {
+      var R = Math.min(w, h), a = Math.random() * 6.283, d = R * (.30 + Math.random() * .16);
+      var taken = shapes.map(function (o) { return o.col; }), free = DOPA.filter(function (c) { return taken.indexOf(c) < 0; });
+      var col = (free.length ? free : DOPA)[(Math.random() * (free.length || DOPA.length)) | 0];
+      var sides = shapes.map(function (o) { return o.n; }), n = 3 + ((Math.random() * 6) | 0), guard = 0;
+      while (sides.indexOf(n) >= 0 && guard++ < 8) n = 3 + ((Math.random() * 6) | 0);   // no twins on screen
+      shapes.push({
+        n: n, col: col, r: R * (.135 + Math.random() * .095),
+        x: w / 2 + Math.cos(a) * d, y: h / 2 + Math.sin(a) * d * .8, vx: 0, vy: 0,
+        rot: Math.random() * 6.283, spin: (Math.random() - .5) * .7,
+        age: born ? .45 + Math.random() * 2.4 : 0, life: 4.2 + Math.random() * 3.4
       });
-    });
-    addEventListener('resize', debounce(function () { var p = bp; btl.kill(); btl = beanTL(); btl.progress(p); }, 200));
+    }
+    function step(dt) {
+      var cx = w / 2, cy = h / 2, i, j, o, p;
+      for (i = shapes.length - 1; i >= 0; i--) {
+        o = shapes[i]; o.age += dt;
+        if (o.age >= o.life) { shapes.splice(i, 1); continue; }
+        o.k = Math.min(1, o.age / .55) * Math.min(1, (o.life - o.age) / .7);   // in, then out
+        o.vx += (cx - o.x) * 2.4 * dt; o.vy += (cy - o.y) * 2.4 * dt;          // drawn to the middle
+      }
+      for (i = 0; i < shapes.length; i++) for (j = i + 1; j < shapes.length; j++) {   // but never on top of each other
+        o = shapes[i]; p = shapes[j];
+        var dx = p.x - o.x, dy = p.y - o.y, dd = Math.hypot(dx, dy) || .01, gap = (o.r * o.k + p.r * p.k) * .98;
+        if (dd < gap) { var push = (gap - dd) / dd * 9 * dt; o.vx -= dx * push; o.vy -= dy * push; p.vx += dx * push; p.vy += dy * push; }
+      }
+      for (i = 0; i < shapes.length; i++) {
+        o = shapes[i]; o.vx *= .9; o.vy *= .9; o.x += o.vx * dt * 60 * .06; o.y += o.vy * dt * 60 * .06; o.rot += o.spin * dt;
+      }
+      if (shapes.length < want && performance.now() > nextAt) { spawn(false); nextAt = performance.now() + 260 + Math.random() * 520; if (shapes.length >= want) want = 4 + ((Math.random() * 4) | 0); }
+    }
+    function draw() {
+      if (!w || !h) return;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, h);
+      ctx.lineJoin = 'round';
+      for (var i = 0; i < shapes.length; i++) {
+        var o = shapes[i], r = o.r * (o.k == null ? 1 : o.k); if (r < .6) continue;
+        var round = Math.min(r * .34, 14);                               // fat round joins, like fruit
+        ctx.beginPath();
+        for (var k = 0; k < o.n; k++) { var a = o.rot + k / o.n * 6.283 - 1.5708, X = o.x + Math.cos(a) * (r - round), Y = o.y + Math.sin(a) * (r - round); if (k) ctx.lineTo(X, Y); else ctx.moveTo(X, Y); }
+        ctx.closePath();
+        ctx.fillStyle = o.col; ctx.strokeStyle = o.col; ctx.lineWidth = round * 2; ctx.stroke(); ctx.fill();
+      }
+    }
+    function tick(now) {
+      raf = 0; var dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+      step(dt); draw();
+      if (seen) raf = requestAnimationFrame(tick); else last = 0;
+    }
+    layout();
+    if (reduce) { for (var z = 0; z < 6; z++) spawn(true); shapes.forEach(function (o) { o.k = 1; }); for (var q = 0; q < 90; q++) step(.05); draw(); return; }
+    for (var z2 = 0; z2 < 5; z2++) spawn(true);
+    ST.create({ trigger: host, start: 'top bottom', end: 'bottom top',
+      onToggle: function (self) { seen = self.isActive; if (seen && !raf) { last = 0; raf = requestAnimationFrame(tick); } } });
+    var head = root.querySelector('.scene__head'), line = root.querySelector('.dopa-line'), act = root.querySelector('.scene__act'), sec = root.querySelector('.sec');
+    var intro = [sec, head, host, line, act].filter(Boolean);
+    G.set(intro, { opacity: 0, y: 18 });
+    ST.create({ trigger: root, start: 'top 72%', once: true, onEnter: function () { G.to(intro, { opacity: 1, y: 0, duration: .7, stagger: .1, ease: 'power2.out' }); } });
+    if (window.ResizeObserver) new ResizeObserver(debounce(layout, 120)).observe(host); else addEventListener('resize', debounce(layout, 200));
   }
 
   // ================================================================ the studio: two rabbits running
@@ -173,14 +187,24 @@
   var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
   var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
   var GROUND_OBS = [
-    '<svg viewBox="0 0 40 40"><polygon points="4,36 10,15 23,7 35,17 34,36"/></svg>',                         // rock
-    '<svg viewBox="0 0 40 40"><polygon points="20,3 33,36 7,36"/></svg>',                                     // spike
-    '<svg viewBox="0 0 40 40"><rect x="6" y="24" width="28" height="12" rx="2"/><rect x="11" y="10" width="18" height="11" rx="2"/></svg>', // bricks
-    '<svg viewBox="0 0 40 40"><rect x="6" y="14" width="28" height="7" rx="3"/><rect x="7" y="18" width="6" height="18" rx="2"/><rect x="27" y="18" width="6" height="18" rx="2"/></svg>' // hurdle
+    // a boulder with a chipped face
+    '<svg viewBox="0 0 40 40"><path d="M3 37 L7 18 L16 8 L28 9 L36 19 L35 37z"/><path d="M16 8 L19 20 L35 19" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2.4"/></svg>',
+    // a cactus, the one everybody jumps
+    '<svg viewBox="0 0 40 40"><rect x="16" y="6" width="8" height="32" rx="4"/><path d="M10 18a4 4 0 0 1 4 4v5h-4a4 4 0 0 1-4-4v-1a4 4 0 0 1 4-4z"/><path d="M30 14a4 4 0 0 0-4 4v8h4a4 4 0 0 0 4-4v-4a4 4 0 0 0-4-4z"/></svg>',
+    // a stack of crates
+    '<svg viewBox="0 0 40 40"><rect x="4" y="23" width="32" height="15" rx="2"/><rect x="11" y="8" width="18" height="14" rx="2"/><path d="M4 30.5h32M20 23v7.5M11 15h18M20 8v7" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/></svg>',
+    // a hurdle
+    '<svg viewBox="0 0 40 40"><rect x="3" y="12" width="34" height="6" rx="3"/><rect x="3" y="22" width="34" height="4" rx="2"/><rect x="5" y="15" width="5" height="23" rx="2.5"/><rect x="30" y="15" width="5" height="23" rx="2.5"/></svg>',
+    // a milestone slab
+    '<svg viewBox="0 0 40 40"><path d="M8 38V14a12 12 0 0 1 24 0v24z"/><path d="M14 20h12M14 27h8" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2.6" stroke-linecap="round"/></svg>'
   ];
   var AIR_OBS = [
-    '<svg viewBox="0 0 40 40"><polygon points="24,3 9,23 18,23 15,37 32,16 22,16"/></svg>',                   // bolt
-    '<svg viewBox="0 0 40 40"><path d="M20 3c5 9 13 11 13 20a13 13 0 0 1-26 0c0-5 4-9 6-13 1 4 3 5 4 8 1-5 3-10 3-15z"/></svg>' // flame
+    // a bolt
+    '<svg viewBox="0 0 40 40"><path d="M25 2 8 23h9l-3 15 16-21h-9z"/></svg>',
+    // a flame
+    '<svg viewBox="0 0 40 40"><path d="M20 2c5 9 13 11 13 20a13 13 0 0 1-26 0c0-5 4-9 6-13 1 4 3 5 4 8 1-5 3-10 3-15z"/><path d="M20 20c2 4 5 5 5 9a5 5 0 0 1-10 0c0-3 3-5 5-9z" fill="#fff" fill-opacity=".35"/></svg>',
+    // a paper plane thrown across
+    '<svg viewBox="0 0 40 40"><path d="M38 6 2 20l13 4z"/><path d="M15 24l3 11 5-7z"/><path d="M38 6 18 28" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.8"/></svg>'
   ];
   function buildRabbit(box) {
     var X0 = 880, Y0 = 300, W0 = 2900, H0 = 1000, base = 'assets/brand/logo-pieces/';
@@ -220,15 +244,17 @@
     function swat(r) {
       if (r.__busy) return; r.__busy = true;
       G.timeline({ onComplete: function () { r.__busy = false; } })
-        .to(r, { rotation: 15, y: -10 * scale, duration: .12, ease: 'power3.out' })
+        .to(r, { rotation: -16, y: -10 * scale, duration: .12, ease: 'power3.out' })
         .to(r, { rotation: 0, y: 0, duration: .26, ease: 'power2.inOut' });
     }
-    // they swap places so each takes a turn out front
-    var swapAt = 0;
+    // they swap places so each takes a turn out front - obstacles stop coming first, and
+    // the ones already on screen are allowed to run past before anybody moves
+    var swapAt = 0, spawning = true, swapping = false;
     function swap(now) {
-      order.reverse();
+      swapping = true; order.reverse();
       order.forEach(function (ri, k) { G.to(rabbits[ri], { x: slot[k], duration: 1, ease: 'power2.inOut' }); });
-      swapAt = now + 5200 + Math.random() * 3600;
+      setTimeout(function () { swapping = false; spawning = true; }, 1100);
+      swapAt = now + 7000 + Math.random() * 4000;
     }
     // one world speed, like the dinosaur game: obstacles never overtake each other
     var SP = 340, AIR_Y = [58, 92], GROUND_SIZE = [28, 36, 50];
@@ -249,7 +275,8 @@
       raf = 0;
       var dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
       var speed = (1 + boost) * scale; boost *= .93;
-      if (!swapAt) swapAt = now + 4200; else if (now > swapAt) swap(now);
+      if (!swapAt) swapAt = now + 5000;
+      else if (!swapping && now > swapAt) { spawning = false; if (!items.length) swap(now); }
       var sp = SP * speed;
       for (var i = items.length - 1; i >= 0; i--) {
         var o = items[i];
@@ -272,7 +299,7 @@
         o.el.style.transform = 'translate(' + o.x.toFixed(1) + 'px,' + o.y.toFixed(1) + 'px) rotate(' + o.rot.toFixed(1) + 'deg)';
         if (o.x < -o.size - 40 || o.alpha <= 0) { o.el.remove(); items.splice(i, 1); }
       }
-      if (now > nextAt) spawn(now);
+      if (spawning && now > nextAt) spawn(now);
       if (seen) raf = requestAnimationFrame(tick); else last = 0;
     }
     addEventListener('resize', debounce(function () { measure(); order.forEach(function (ri, k) { G.set(rabbits[ri], { x: slot[k] }); }); }, 200));
@@ -285,9 +312,9 @@
 
   function auto() {
     document.querySelectorAll('[data-scene="typer"]').forEach(mountTyper);
-    document.querySelectorAll('[data-scene="dopa"]').forEach(mountDopa);
+    document.querySelectorAll('[data-scene="dopa"]').forEach(mountBlobs);
     document.querySelectorAll('[data-runner]').forEach(mountRunner);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', auto); else auto();
-  window.NewMeansScenes = { typer: mountTyper, dopa: mountDopa, runner: mountRunner };
+  window.NewMeansScenes = { typer: mountTyper, dopa: mountBlobs, runner: mountRunner };
 })();

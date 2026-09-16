@@ -27,7 +27,9 @@
       "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI 심리테스트", "tag.web": "Web",
       "cta.more": "자세히 보기", "cta.download": "다운로드", "cta.start": "테스트 시작하기", "cta.replay": "다시 보기",
       "scene.typer": "공이 키캡을 튀며 Typer를 친다",
-      "scene.dopa": "테스트 하나를 고르면 써지는 보고서",
+      "scene.dopa": "계속 새로 생겨나 모였다 사라지는 도형들",
+      "dopa.me": "16개 유형으로는 담을 수 없는 나.",
+      "sec.products": "제품", "sec.studio": "스튜디오", "studio.title": "만드는 사람들",
       
       "foot.privacy": "개인정보 처리방침",
 
@@ -85,7 +87,9 @@
       "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI personality test", "tag.web": "Web",
       "cta.more": "Learn more", "cta.download": "Download", "cta.start": "Start a test", "cta.replay": "Replay",
       "scene.typer": "A ball bounces across keycaps and types Typer",
-      "scene.dopa": "One test gets picked and a report writes itself",
+      "scene.dopa": "Shapes keep arriving, gathering, and going",
+      "dopa.me": "The me that sixteen types cannot hold.",
+      "sec.products": "Products", "sec.studio": "Studio", "studio.title": "The makers",
       
       "foot.privacy": "Privacy",
 

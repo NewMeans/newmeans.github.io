@@ -28,7 +28,7 @@
     { w: 'curious', hue: 'lavender', tier: 'common', acc: ['magnifier'], product: 'dopa', dot: '?' },
     { w: 'cheerful', hue: 'gold', tier: 'common', acc: ['sun', 'pompoms'], pt: [{ k: 'sparks', n: 7 }], eyes: 'happy', idle: 'cheer' },
     { w: 'chatty', hue: 'periwinkle', tier: 'common', acc: ['bubble'], product: 'dopa', dot: '…' },
-    { w: 'warm', hue: 'apricot', tier: 'rare', acc: ['scarf', 'blanket', 'campfire'], pt: [{ k: 'embers', n: 7 }], eyes: 'arc', product: 'dopa' },
+    { w: 'warm', hue: 'apricot', tier: 'rare', acc: ['scarf', 'campfire'], pt: [{ k: 'embers', n: 7 }], eyes: 'arc', product: 'dopa' },
     { w: 'silly', hue: 'cherry', tier: 'common', acc: ['tongue', 'propeller'], eyes: 'squeeze', dot: '!' },
     { w: 'witty', hue: 'plum', tier: 'uncommon', acc: ['monocle'], eyes: 'skeptic', product: 'dopa' },
     { w: 'surprising', hue: 'amber', tier: 'uncommon', acc: ['bang'], eyes: 'round', ears: 'perk', product: 'dopa', dot: '!' },
@@ -125,7 +125,6 @@
         '<ellipse cx="82" cy="128" rx="80" ry="42" fill="' + TXT + '"/><path d="M22 120 q60 -24 120 0" fill="none" stroke="' + PAPER + '" stroke-width="5" opacity=".45"/>', 0, false, true);
     },
     campfire: function () { return floor('campfire', -760, 460, 400, '<g class="fire" style="transform-box:fill-box;transform-origin:50% 100%"><path class="flame" d="M230 40 C300 130 330 190 320 250 C310 310 270 340 230 340 C190 340 150 310 140 250 C130 190 160 130 230 40z" fill="#F2A65A"/><path class="flame" d="M230 120 C275 190 290 230 285 270 C280 310 255 335 230 335 C205 335 180 310 175 270 C170 230 185 190 230 120z" fill="#F5C048"/><path class="flame" d="M230 200 C255 240 262 262 260 284 C258 312 246 330 230 330 C214 330 202 312 200 284 C198 262 205 240 230 200z" fill="#FCE9B0"/></g><g fill="#795D46"><rect x="40" y="318" width="380" height="46" rx="23" transform="rotate(-9 230 341)"/><rect x="40" y="318" width="380" height="46" rx="23" transform="rotate(9 230 341)"/></g>', 5, true); },
-    blanket: function () { return svg('blanket', 1180, 1118, 1700, 110, '<clipPath id="blanket-clip"><path d="M0 40 q60 -40 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 v70 h-1700z"/></clipPath><g clip-path="url(#blanket-clip)"><rect x="0" y="0" width="1700" height="110" fill="' + RAB + '"/><g stroke="' + TXT + '" stroke-width="14" opacity=".55"><path d="M85 0v110M255 0v110M425 0v110M595 0v110M765 0v110M935 0v110M1105 0v110M1275 0v110M1445 0v110M1615 0v110"/><path d="M0 62h1700"/></g><path d="M0 40 q60 -40 120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0 t120 0" fill="none" stroke="' + TXT + '" stroke-width="10"/></g>', 7, true); },
     tongue: function () { return svg('tongue', 1710, 1038, 90, 110, '<path d="M10 0 h70 v55 a35 35 0 0 1 -70 0z" fill="#F08CA0"/><path d="M45 18 v48" stroke="#D2607A" stroke-width="8" stroke-linecap="round"/>', 6, true); },
     coffee: function () { return floor('coffee', -440, 260, 320, '<g class="steam" fill="none" stroke="' + TXT + '" stroke-width="12" stroke-linecap="round"><path d="M70 100 q20 -30 0 -60"/><path d="M120 100 q20 -30 0 -60"/><path d="M170 100 q20 -30 0 -60"/></g><path d="M30 150 h170 v110 a70 70 0 0 1 -70 70 h-30 a70 70 0 0 1 -70 -70z" fill="' + TXT + '"/><path d="M200 170 h20 a45 45 0 0 1 0 90 h-20" fill="none" stroke="' + TXT + '" stroke-width="18"/>', 5, true); },
     keycaps: function () { var s = ''; for (var i = 0; i < CAPS.length; i++) s += keycapAt('keycap' + i, -2200 + i * 300, CAPS[i]); return s; },
@@ -588,7 +587,11 @@
     }
 
     // ---------- props that react ----------
-    function replay(el, cls) { el.classList.remove(cls); if (cls === 'pop') el.style.animationDelay = ''; void el.offsetWidth; el.classList.add(cls); }
+    function replay(el, cls) {
+      el.classList.remove(cls); if (cls === 'pop') el.style.animationDelay = ''; void el.offsetWidth; el.classList.add(cls);
+      clearTimeout(el.__replayT);                                   // drop it again afterwards, so the next poke starts clean
+      el.__replayT = setTimeout(function () { el.classList.remove(cls); }, 1600);
+    }
     [accRoot, backRoot].forEach(function (rt) { rt.addEventListener('animationend', function (e) { if (e.animationName === 'pop') { e.target.classList.remove('pop'); e.target.style.animationDelay = ''; } }); });
     var REACT = {
       keycap: function (el) { replay(el, 'is-pressed'); click(); }, brick: function (el) { REACT.keycap(el); },
@@ -620,7 +623,6 @@
       halo: function (el) { replay(el, 'is-glowing'); mood('happy', 1200); },
       icecream: function (el, fed) { if (!fed && performance.now() - (el.__skip || 0) < 400) return; var b = (+el.getAttribute('data-bites') || 0) + 1; if (b > 3) { b = 0; } el.setAttribute('data-bites', b); mood('happy', 600); },
       campfire: function (el) { replay(el, 'is-stoked'); mood('arc', 900); pts.forEach(function (p) { p.vy -= 3 + Math.random() * 3; p.vx += (Math.random() - 0.5) * 3; }); wake(); },
-      blanket: function (el) { replay(el, 'is-tugged'); mood('line', 700); },
       propeller: function (el) { replay(el, 'is-spinning'); mood('squeeze', 900); hopAll(); },
       clover: function (el) { replay(el, 'is-spinning'); mood('star', 900); pts.forEach(function (p) { p.vy -= 14; }); wake(); },
       saturn: function (el) { replay(el, 'is-tilting'); pts.forEach(function (p) { if (p.orbit) p.orbit.w *= -1; }); wake(); },

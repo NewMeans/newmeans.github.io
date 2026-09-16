@@ -1,5 +1,5 @@
 /* Home: the living rabbit, the word slot machine, product scenes. Tokens from base.css only. */
-:root{--word:var(--m-700);--rabbit:var(--m-400);--slot-bg:var(--m-100)}
+:root{--word:var(--m-700);--rabbit:var(--m-400);--slot-bg:var(--m-100);--gold:#A0710A}
 
 /* ---------- hero ---------- */
 .hero{position:relative;min-height:calc(100dvh - 64px);overflow:hidden}
@@ -10,17 +10,17 @@
 .nowrap{white-space:nowrap}
 
 /* the slot window: always there, tinted by the word, fixed to the longest word */
-.slot{display:inline-block;vertical-align:bottom;height:1.02em;overflow:hidden;position:relative;text-align:left;background:var(--slot-bg);border-radius:.12em;padding:0 .14em;box-sizing:content-box;
+.slot{display:inline-block;vertical-align:bottom;height:1.28em;overflow:hidden;position:relative;text-align:left;background:var(--slot-bg);border-radius:.12em;padding:0 .14em;box-sizing:content-box;
   box-shadow:inset 0 .14em .12em -.1em rgba(59,55,50,.22),inset 0 -.14em .12em -.1em rgba(59,55,50,.22),inset 0 0 0 1px rgba(59,55,50,.06);transition:background .45s var(--ease)}
 .slot .reel{display:block;will-change:transform}
-.slot .word{display:flex;align-items:baseline;gap:.04em;height:1.02em;line-height:1.02;white-space:nowrap}
+.slot .word{display:flex;align-items:baseline;gap:.04em;height:1.28em;line-height:1.28;white-space:nowrap}
 .slot .word .dot--icon{display:inline-block;width:.34em;height:.34em;transform:translateY(.02em)}
 .slot .word .dot--icon svg{display:block;width:100%;height:100%}
 .slot.is-landed .word{animation:land .45s var(--ease)}
 @keyframes land{0%{transform:translateY(-.08em)}55%{transform:translateY(.05em)}100%{transform:none}}
 
 /* the lever: pulled toward you (the stick foreshortens, the knob drops and grows) */
-.lever{display:inline-block;vertical-align:bottom;font-size:inherit;width:.46em;height:1.02em;margin-left:.16em;padding:0;position:relative;line-height:1}
+.lever{display:inline-block;vertical-align:bottom;font-size:inherit;width:.46em;height:1.28em;margin-left:.16em;padding:0;position:relative;line-height:1}
 .lever svg{width:100%;height:100%;overflow:visible}
 .lever .stick{transform-origin:50% 100%;transition:transform .18s var(--ease)}
 .lever .knob{transform-origin:50% 50%;transition:transform .18s var(--ease)}
@@ -37,9 +37,10 @@
 @keyframes swing{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
 @keyframes swing-hard{0%{transform:rotate(0)}30%{transform:rotate(30deg)}60%{transform:rotate(-16deg)}100%{transform:rotate(0)}}
 /* rarity: a tag by the lever, a light sweeping across rare windows, a soft holographic wash on epic ones */
-.tier{display:inline-block;vertical-align:top;margin:.14em 0 0 .32em;font:600 11px/1 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--word);border:1.5px solid currentColor;border-radius:var(--r-pill);padding:5px 8px 6px}
+.tiers{display:inline-flex;vertical-align:top;align-items:flex-start;gap:.34em;margin:.2em 0 0 .34em}
+.tier{display:inline-block;font:600 11px/1 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--word);border:1.5px solid currentColor;border-radius:var(--r-pill);padding:5px 8px 6px;white-space:nowrap}
 .tier[data-tier="epic"]{background:var(--word);color:var(--bg)}
-.tier--new{margin-left:.12em;border-style:dashed}
+.tier--new{color:var(--gold);border-style:solid}
 .slot[data-tier="rare"]::after,.slot[data-tier="epic"]::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%) no-repeat;background-size:250% 100%;animation:shimmer 3.4s ease-in-out infinite;pointer-events:none}
 @keyframes shimmer{0%{background-position:120% 0}60%,100%{background-position:-120% 0}}
 .slot[data-tier="epic"]{background-image:linear-gradient(120deg,var(--slot-bg),color-mix(in srgb,#ffd3e8 55%,var(--slot-bg)),color-mix(in srgb,#d3f0ff 55%,var(--slot-bg)),color-mix(in srgb,#fff2c9 55%,var(--slot-bg)),var(--slot-bg));background-size:300% 100%;animation:holo 7s linear infinite}
@@ -179,7 +180,10 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 :root[data-theme="cyber"] .slot[data-tier="epic"]{background-image:linear-gradient(120deg,var(--slot-bg),color-mix(in srgb,#4a1a44 70%,var(--slot-bg)),color-mix(in srgb,#0f3d4d 70%,var(--slot-bg)),var(--slot-bg))}
 :root[data-theme="cyber"] .slot[data-tier="epic"]::after{background-image:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%)}
 
-/* ---------- product scenes: tags, logo, a wordless stage, two buttons ---------- */
+/* ---------- product scenes: a section label, tags, logo, a wordless stage, one button ---------- */
+.sec{display:flex;align-items:center;gap:9px;font:600 12px/1 var(--font-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
+.sec::before{content:"";width:26px;height:1px;background:var(--line-strong)}
+.sec b{font-weight:700;color:var(--accent)}
 .scene{position:relative}
 .scene__in{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,3vh,30px);text-align:center}
 .scene__head{display:flex;flex-direction:column;align-items:center;gap:12px}
@@ -190,9 +194,8 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .replay:disabled{opacity:.4;cursor:default}
 
 /* Typer: a pinned viewport, scrubbed by scroll. A ball comes out of a portal, types TYPER, drops into another. */
-.scene--typer{height:220vh;background:var(--m-100)}
-.scene--typer .scene__pin{position:relative;height:calc(100vh - 64px);overflow:hidden}
-.scene--typer .scene__in{height:100%}
+.scene--typer{background:var(--m-100);--cta:var(--m-700);--cta-text:var(--n-50);--accent:var(--m-700)}
+.scene--typer .scene__pin{position:relative;padding:clamp(64px,9vh,110px) 0}
 .stage--typer{position:relative;width:min(100%,760px);aspect-ratio:760/360;margin:0 auto;overflow:hidden}
 .portal,.lip{position:absolute;width:calc(68 / 760 * 100%);aspect-ratio:68/24;transform:translate(-50%,-50%);opacity:0;border-radius:50%;overflow:hidden}
 .portal{z-index:2}
@@ -217,41 +220,20 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .stage--typer .cap.is-down{filter:brightness(.96)}
 .stage--typer .cap b{font:400 clamp(20px,3.6vw,44px)/1 var(--font-pixel);color:#67544F;padding-bottom:12%;opacity:0}
 .stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
-.scene--typer.is-static{height:auto}
-.scene--typer.is-static .scene__pin{height:auto;overflow:visible;padding:64px 0}
-.scene--typer.is-static .scene__in{height:auto}
 
-/* Dopamine University: two wordless cards. A sparkle picks one test, a report writes itself. */
-.scene--dopa{padding:clamp(96px,14vh,150px) 0;background:var(--c-100);--accent:var(--c-600);--accent-strong:var(--c-700);--accent-soft:var(--c-100);--accent-soft-2:var(--c-200)}
-.scene--dopa .scene__in{gap:clamp(24px,4vh,40px)}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:24px;width:min(100%,1040px);margin:0 auto}
-.card{position:relative;background:var(--bg);border-radius:var(--r-tile);border:1px solid var(--line);padding:26px;min-height:300px;text-align:left}
-.card--tests{display:grid;place-items:center}
-.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%}
-.tile{aspect-ratio:4/3;cursor:pointer;border-radius:var(--r-media);background:var(--surface);display:grid;place-items:center;padding:14%;transition:background var(--dur) var(--ease),transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease)}
-.tile svg{width:100%;height:100%;display:block}
-.tile polygon{fill:var(--n-300);transition:fill var(--dur) var(--ease)}
-.tile:hover{transform:translateY(-2px)}
-.tile.is-hit{background:var(--c-100)}
-.tile.is-picked{background:var(--c-100);box-shadow:0 0 0 2px var(--c-400)}
-.tile.is-picked polygon{fill:var(--c-400)}
-.bean{position:absolute;left:0;top:0;width:28px;height:28px;fill:var(--c-400);z-index:2;filter:drop-shadow(0 4px 6px rgba(139,46,47,.18));pointer-events:none}
-.card--report{display:flex;flex-direction:column;gap:14px}
-.ln{display:block;height:8px;border-radius:4px;background:var(--n-300);width:var(--w);transform-origin:left}
-.ln--title{height:16px;background:var(--n-800);width:54%;margin-bottom:6px}
-.axis{margin-top:auto;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding-top:18px}
-.axis__dot{width:10px;height:10px;border-radius:50%;background:var(--n-300)}
-.track{position:relative;height:6px;border-radius:3px;background:var(--n-200)}
-.needle{position:absolute;top:50%;left:50%;width:16px;height:16px;border-radius:50%;background:var(--n-800);border:3px solid var(--bg)}
-.stamp{position:absolute;right:20px;bottom:60px;width:72px;height:72px;border-radius:50%;border:3px solid var(--c-400);display:grid;place-items:center;opacity:0}
-.stamp svg{width:40px;height:40px;fill:var(--c-400)}
-.sparkle{fill:var(--c-400)}
+/* Dopamine University: shapes keep arriving, crowd toward the middle and go. */
+.scene--dopa{padding:clamp(96px,14vh,150px) 0;background:var(--c-100);--accent:var(--c-600);--accent-strong:var(--c-700);--cta:var(--c-400);--cta-text:var(--n-900)}
+.scene--dopa .scene__in{gap:clamp(20px,3.4vh,34px)}
+.blobs{width:min(100%,440px);aspect-ratio:5/4;margin:0 auto}
+.blobs canvas{display:block}
+.dopa-line{font-size:clamp(20px,2.6vw,32px);font-weight:700;letter-spacing:-.01em;color:var(--text-display);max-width:20ch;text-wrap:balance}
 
 /* ---------- the studio: the two of us running, with whatever comes at us ---------- */
 .studio{padding:clamp(60px,8vh,92px) 0 clamp(52px,7vh,80px)}
-.studio__top,.studio__bot{display:flex;justify-content:center}
+.studio__top{display:flex;flex-direction:column;align-items:center;gap:12px}
+.studio__bot{display:flex;justify-content:center}
 .studio + .foot{margin-top:clamp(24px,4vh,48px)}
-.studio__logo{height:18px;width:auto}
+.studio__title{font-family:var(--font-display);font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.02em;color:var(--text-display)}
 .run{position:relative;height:clamp(150px,16vw,184px);margin:clamp(10px,2vh,20px) 0;overflow:hidden}
 .run__crew{position:absolute;left:clamp(16px,7%,130px);bottom:38px;z-index:2}
 .runner{position:absolute;left:0;bottom:0;width:clamp(150px,15vw,208px);will-change:transform}
@@ -265,20 +247,25 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .ob--air svg{fill:var(--n-600)}
 
 @media (max-width:720px){
-  .hero{min-height:100dvh;display:flex;flex-direction:column;padding:6vh 22px 22px}
-  .copy{position:static;max-width:none}.copy .display{font-size:clamp(40px,11vw,50px)}.copy .sub{white-space:normal}
+  /* one headline block, the rabbit big underneath it, no gulf in between */
+  .hero{min-height:auto;display:flex;flex-direction:column;padding:3.5vh 20px 16px}
+  .copy{position:static;max-width:none}.copy .display{font-size:clamp(33px,9.4vw,44px)}
+  .copy .sub{white-space:normal;margin-top:14px;font-size:15px}
+  .copy.has-keyring .sub{margin-top:calc(14px + .65em)}
+  .go{margin-top:14px;font-size:14px}
+  .tiers{flex-direction:column;gap:5px;margin:.18em 0 0 .24em}
+  .tier{font-size:9px;letter-spacing:.06em;padding:3px 6px 4px;border-width:1.2px}
   .nav--wide .wrap{padding:0 22px}
-  .brandwrap{position:relative;right:auto;bottom:auto;width:66%;margin:auto 0 0 auto}
-  .bottom{display:flex;justify-content:space-between;align-items:end;padding-top:48px}.corner{position:static}
-  .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}.tier{display:block;width:max-content;margin:8px 0 0;font-size:10px;padding:4px 7px 5px}
-  :root[data-face="pixel"] .copy .display{font-size:clamp(28px,7.8vw,38px)}
-  .cards{grid-template-columns:1fr}
-  .card{min-height:auto;padding:20px}
+  .brandwrap{position:relative;right:auto;bottom:auto;width:calc(100% + 40px);max-width:none;margin:clamp(4px,1.5vh,16px) -20px 0}
+  .bottom{display:flex;justify-content:space-between;align-items:end;margin-top:clamp(18px,4vh,40px)}.corner{position:static}
+  .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}
+  :root[data-face="pixel"] .copy .display{font-size:clamp(26px,7.2vw,34px)}
+  .dopa-line{font-size:20px}
   .scene--dopa{padding:72px 0}
+  .sec{font-size:11px;letter-spacing:.14em}.sec::before{width:18px}
   .studio{padding:72px 0 56px}
   .run{height:148px}
   .run__crew{left:12px;gap:6px}
   .runner{width:126px}
-  .tiles{gap:8px}
 }
-@media (prefers-reduced-motion:reduce){.tile,.tile polygon{transition:none}.tile:hover{transform:none}.lever .stick,.lever .knob,.slot,.cursor svg{transition:none;animation:none}.acc .ac.pop,.confetti,.go.pop{animation:none}.replay{opacity:1}}
+@media (prefers-reduced-motion:reduce){.lever .stick,.lever .knob,.slot,.cursor svg{transition:none;animation:none}.acc .ac.pop,.confetti,.go.pop{animation:none}.replay{opacity:1}}

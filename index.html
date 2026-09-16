@@ -13,9 +13,9 @@
 <meta property="og:url" content="https://newmeans.github.io/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
-<link rel="stylesheet" href="base.css?v=20260916-15">
-<link rel="stylesheet" href="product.css?v=20260916-15">
-<link rel="stylesheet" href="home.css?v=20260916-15">
+<link rel="stylesheet" href="base.css?v=20260916-19">
+<link rel="stylesheet" href="product.css?v=20260916-19">
+<link rel="stylesheet" href="home.css?v=20260916-19">
 </head>
 <body class="home">
 <a class="skip-link" href="#works" data-i18n="nav.skip">본문으로 건너뛰기</a>
@@ -41,7 +41,7 @@
 <main id="top">
   <section class="hero" id="hero" aria-label="NewMeans">
     <div class="copy">
-      <h1 class="headline display">Life, a little more<br><span class="nowrap"><span class="slot" id="slot"><span class="reel" id="reel"><span class="word"><span class="w">joyful</span><span class="dot">.</span></span></span></span><button type="button" class="lever" id="lever" data-i18n="home.lever" data-i18n-attr="aria-label" aria-label="단어 다시 뽑기"><svg viewBox="0 0 46 96" aria-hidden="true"><ellipse cx="23" cy="86" rx="16" ry="7" fill="#3B3732"/><rect x="17" y="74" width="12" height="12" rx="4" fill="#706B64"/><rect class="stick" x="20" y="14" width="6" height="64" rx="3" fill="#3B3732"/><circle class="knob" cx="23" cy="14" r="12" fill="var(--word)"/></svg></button><span class="tier" id="tier" hidden></span><span class="tier tier--new" id="new" hidden>NEW</span></span></h1>
+      <h1 class="headline display">Life, a little more<br><span class="nowrap"><span class="slot" id="slot"><span class="reel" id="reel"><span class="word"><span class="w">joyful</span><span class="dot">.</span></span></span></span><button type="button" class="lever" id="lever" data-i18n="home.lever" data-i18n-attr="aria-label" aria-label="단어 다시 뽑기"><svg viewBox="0 0 46 96" aria-hidden="true"><ellipse cx="23" cy="86" rx="16" ry="7" fill="#3B3732"/><rect x="17" y="74" width="12" height="12" rx="4" fill="#706B64"/><rect class="stick" x="20" y="14" width="6" height="64" rx="3" fill="#3B3732"/><circle class="knob" cx="23" cy="14" r="12" fill="var(--word)"/></svg></button><span class="tiers"><span class="tier" id="tier" hidden></span><span class="tier tier--new" id="new" hidden>NEW</span></span></span></h1>
       <p class="sub">Games and AI services for everyday joy</p>
       <a class="go" id="go" hidden><img src="assets/brand/typer-icon.png" alt="" width="22" height="22"><span class="go__t"></span><span class="go__a" aria-hidden="true">→</span></a>
     </div>
@@ -59,9 +59,10 @@
     </div>
   </section>
 
-  <!-- Typer: a pinned scene. Logo, two tags, a wordless stage, two buttons. scenes.js drives it with scroll. -->
+  <!-- Typer: the stage plays itself once the section is on screen. scenes.js drives it. -->
   <section class="scene scene--typer" id="works" data-scene="typer" aria-label="Typer">
     <div class="scene__pin"><div class="wrap scene__in">
+      <p class="sec"><span data-i18n="sec.products">제품</span><b>01</b></p>
       <div class="scene__head">
         <div class="tags"><span class="tag" data-i18n="tag.game">Game</span><span class="tag" data-i18n="tag.mobile">Mobile</span></div>
         <a class="scene__logo" href="typer.html"><img src="assets/brand/typer-logo.png" alt="Typer"></a>
@@ -79,42 +80,24 @@
         <div class="lip lip--out" aria-hidden="true"><i class="portal__wall"></i><i class="portal__void"></i></div>
       </div>
       <div class="scene__act">
-        <a class="btn btn--primary btn--lg" href="typer.html" data-i18n="cta.more">자세히 보기</a>
-        <a class="btn btn--brand btn--lg" href="typer.html#get" data-i18n="cta.download">다운로드</a>
+        <a class="btn btn--brand btn--lg" href="typer.html" data-i18n="cta.more">자세히 보기</a>
         <button type="button" class="btn btn--icon replay" data-i18n="cta.replay" data-i18n-attr="aria-label" aria-label="다시 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
       </div>
     </div></div>
   </section>
 
-  <!-- Dopamine University: two wordless cards. A sparkle picks one test, a report writes itself. -->
+  <!-- Dopamine University: shapes keep arriving, gathering and going. No two the same. -->
   <section class="scene scene--dopa" id="dopa" data-scene="dopa" aria-label="Dopamine University">
     <div class="wrap scene__in">
+      <p class="sec"><span data-i18n="sec.products">제품</span><b>02</b></p>
       <div class="scene__head">
         <div class="tags"><span class="tag" data-i18n="tag.aitest">AI 심리테스트</span><span class="tag" data-i18n="tag.web">Web</span></div>
         <a class="scene__logo scene__logo--dopa" href="dopamine.html"><img src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
       </div>
-      <div class="cards" data-dopa-cards role="img" data-i18n="scene.dopa" data-i18n-attr="aria-label" aria-label="테스트 하나를 고르면 써지는 보고서">
-        <div class="card card--tests">
-          <div class="tiles">
-          <div class="tile" data-tile="0"><svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20.0,6.0 32.1,27.0 7.9,27.0"/></svg></div>
-          <div class="tile" data-tile="1"><svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20.0,6.0 34.0,20.0 20.0,34.0 6.0,20.0"/></svg></div>
-          <div class="tile" data-tile="2"><svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20.0,6.0 33.3,15.7 28.2,31.3 11.8,31.3 6.7,15.7"/></svg></div>
-          <div class="tile" data-tile="3"><svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20.0,6.0 32.1,13.0 32.1,27.0 20.0,34.0 7.9,27.0 7.9,13.0"/></svg></div>
-          <div class="tile" data-tile="4"><svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20.0,6.0 30.9,11.3 33.6,23.1 26.1,32.6 13.9,32.6 6.4,23.1 9.1,11.3"/></svg></div>
-          <div class="tile" data-tile="5"><svg viewBox="0 0 40 40" aria-hidden="true"><polygon points="20.0,6.0 29.9,10.1 34.0,20.0 29.9,29.9 20.0,34.0 10.1,29.9 6.0,20.0 10.1,10.1"/></svg></div>
-          </div>
-          <svg class="bean" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
-        </div>
-        <div class="card card--report">
-          <i class="ln ln--title"></i>
-          <i class="ln" style="--w:92%"></i><i class="ln" style="--w:66%"></i><i class="ln" style="--w:84%"></i><i class="ln" style="--w:48%"></i>
-          <div class="axis"><b class="axis__dot axis__dot--a"></b><i class="track"><b class="needle"></b></i><b class="axis__dot axis__dot--b"></b></div>
-          <div class="stamp"><svg class="sparkle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg></div>
-        </div>
-      </div>
+      <div class="blobs" data-dopa-blobs role="img" data-i18n="scene.dopa" data-i18n-attr="aria-label" aria-label="모였다 흩어지는 도형들"></div>
+      <p class="dopa-line" data-i18n="dopa.me">16개 유형으로는 담을 수 없는 나.</p>
       <div class="scene__act">
-        <a class="btn btn--primary btn--lg" href="dopamine.html" data-i18n="cta.more">자세히 보기</a>
-        <a class="btn btn--brand btn--lg" href="https://dodae.me/" target="_blank" rel="noopener noreferrer" data-i18n="cta.start">테스트 시작하기</a>
+        <a class="btn btn--brand btn--lg" href="dopamine.html" data-i18n="cta.more">자세히 보기</a>
       </div>
     </div>
   </section>
@@ -122,7 +105,8 @@
   <!-- the studio: the two of us, running, with whatever comes at us -->
   <section class="studio" id="studio" aria-label="NewMeans">
     <div class="wrap studio__top">
-      <img class="studio__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
+      <p class="sec"><span data-i18n="sec.studio">스튜디오</span></p>
+      <h2 class="studio__title" data-i18n="studio.title">만드는 사람들</h2>
     </div>
     <div class="run" data-runner role="img" data-i18n="studio.run" data-i18n-attr="aria-label" aria-label="두 사람이 함께 달린다">
       <div class="run__obs"></div>
@@ -160,9 +144,9 @@
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
-<script src="i18n.js?v=20260916-15" defer></script>
-<script src="product.js?v=20260916-15" defer></script>
-<script src="scenes.js?v=20260916-15" defer></script>
-<script src="hero.js?v=20260916-15" defer></script>
+<script src="i18n.js?v=20260916-19" defer></script>
+<script src="product.js?v=20260916-19" defer></script>
+<script src="scenes.js?v=20260916-19" defer></script>
+<script src="hero.js?v=20260916-19" defer></script>
 </body>
 </html>
