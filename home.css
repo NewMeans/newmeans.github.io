@@ -211,13 +211,13 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
    top edge over the ceiling hole and out of the bottom edge over the floor one, so the ball is
    only ever drawn on the near side of each hole's middle. */
 .ballclip{position:absolute;inset:0;z-index:3;pointer-events:none;
-  clip-path:polygon(0% 0%, 7.105% 0%, 7.105% 9.444%, 17.105% 9.444%, 17.105% 0%, 100% 0%,
-    100% 100%, 97.105% 100%, 97.105% 92.222%, 87.105% 92.222%, 87.105% 100%, 0% 100%)}
-.portal--in,.lip--in{left:calc(92 / 760 * 100%);top:calc(34 / 360 * 100%)}
-.portal--out,.lip--out{left:calc(700 / 760 * 100%);top:calc(332 / 360 * 100%)}
+  clip-path:polygon(0% 0%, 13.42% 0%, 13.42% 9.444%, 23.42% 9.444%, 23.42% 0%, 100% 0%,
+    100% 100%, 99.21% 100%, 99.21% 92.222%, 89.21% 92.222%, 89.21% 100%, 0% 100%)}
+.portal--in,.lip--in{left:calc(140 / 760 * 100%);top:calc(34 / 360 * 100%)}
+.portal--out,.lip--out{left:calc(716 / 760 * 100%);top:calc(332 / 360 * 100%)}
 .stage--typer .cap{position:absolute;top:calc(226 / 360 * 100%);left:calc(var(--x) / 760 * 100%);width:calc(104 / 760 * 100%);aspect-ratio:1;margin-left:calc(-52 / 760 * 100%);background:url("assets/shop/keycap/5000_0.png") center/100% 100% no-repeat;z-index:2;display:grid;place-items:center;cursor:pointer;transition:filter .15s}
 .stage--typer .cap.is-down{filter:brightness(.96)}
-.stage--typer .cap b{font:400 clamp(20px,3.6vw,44px)/1 var(--font-pixel);color:#67544F;padding-bottom:12%;opacity:0}
+.stage--typer .cap b{font:400 clamp(20px,3.6vw,44px)/1 var(--font-pixel);color:#7A5741;padding-bottom:20%;opacity:0}
 .stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
 
 /* Dopamine University: shapes keep arriving, crowd toward the middle and go. */
@@ -225,7 +225,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .scene--dopa .scene__in{gap:clamp(20px,3.4vh,34px)}
 .blobs{width:min(100%,440px);aspect-ratio:5/4;margin:0 auto}
 .blobs canvas{display:block}
-.dopa-line{font-size:clamp(20px,2.6vw,32px);font-weight:700;letter-spacing:-.01em;color:var(--text-display);max-width:20ch;text-wrap:balance}
+.scene-line{font-size:clamp(19px,2.2vw,28px);font-weight:700;letter-spacing:-.01em;color:var(--text-display);max-width:38ch;text-wrap:balance}
 
 /* ---------- the studio: the two of us running, with whatever comes at us ---------- */
 .studio{padding:clamp(60px,8vh,92px) 0 clamp(52px,7vh,80px)}
@@ -267,7 +267,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
   .bottom{display:flex;justify-content:space-between;align-items:end;margin-top:clamp(18px,4vh,40px)}.corner{position:static}
   .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}
   :root[data-face="pixel"] .copy .display{font-size:clamp(26px,7.2vw,34px)}
-  .dopa-line{font-size:20px}
+  .scene-line{font-size:19px}
   .scene--dopa{padding:72px 0}
   .sec{font-size:11px;letter-spacing:.16em}
   .studio{padding:72px 0 56px}

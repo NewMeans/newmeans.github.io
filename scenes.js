@@ -16,8 +16,8 @@
   // ================================================================ Typer
   var U = {
     W: 760, H: 360, R: 17, CAPTOP: 226,
-    CAPX: [92, 212, 332, 452, 572],
-    IN: { x: 92, y: 34 }, OUT: { x: 700, y: 332 },
+    CAPX: [140, 260, 380, 500, 620],
+    IN: { x: 140, y: 34 }, OUT: { x: 716, y: 332 },
     APEX: [150, 130, 113, 98], LAST: 128
   };
   var SPIN = 360 / (2 * Math.PI * U.R);        // degrees per stage unit rolled
@@ -78,7 +78,7 @@
       if (rtl) { rtl.kill(); rtl = null; }
       playing = true; played = true; replayBtn.disabled = true;
       if (withSound) touched = true;
-      rtl = build(3.4, true);
+      rtl = build(3.1, true);      // a touch quicker than it was
       rtl.eventCallback('onComplete', function () { playing = false; replayBtn.disabled = false; });
       rtl.play(0);
     }
@@ -97,10 +97,11 @@
       run(true);
     }
     replayBtn.addEventListener('click', replay);
+    if (sound) sound.set('4004');                           // the keycaps here sound like Chocolate
     caps.forEach(function (k) {
       k.addEventListener('pointerenter', function () { k.classList.add('is-down'); });
       k.addEventListener('pointerleave', function () { k.classList.remove('is-down'); });
-      k.addEventListener('click', function () { if (sound) sound.play(); });
+      k.addEventListener('click', function () { touched = true; if (sound) sound.play(); });
     });
     setup();
     addEventListener('resize', debounce(function () { if (!playing) setup(); }, 200));

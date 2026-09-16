@@ -289,7 +289,7 @@
       dots = bg.concat(num, kor);
       if (note) {                                               // the count is the point: give it the accent
         var parts = t('dopa.note', { n: '\u0000' }).split('\u0000'), strong = document.createElement('b');
-        strong.textContent = dots.length.toLocaleString();
+        strong.textContent = (1000).toLocaleString();   // the headline says a thousand; the field holds more
         note.textContent = parts[0];
         note.appendChild(strong); note.appendChild(document.createTextNode(parts[1] || ''));
       }
@@ -309,7 +309,7 @@
         if (d === chosen) { var q = Math.min(1, (now - chosenAt) / 400); star(d, s * (1 + q * 2.4)); ctx.fillStyle = '#FF6666'; ctx.globalAlpha = 1; ctx.fill(); continue; }
         ctx.beginPath();
         for (var k2 = 0; k2 < d.n; k2++) { var a = d.rot + k2 / d.n * 6.283; var X = d.x + Math.cos(a) * s, Y = d.y + Math.sin(a) * s; if (k2) ctx.lineTo(X, Y); else ctx.moveTo(X, Y); }
-        ctx.closePath(); ctx.fillStyle = d.col; ctx.globalAlpha = d.ink ? 1 : .72; ctx.fill();
+        ctx.closePath(); ctx.fillStyle = d.col; ctx.globalAlpha = d.ink ? 1 : .62; ctx.fill();
       }
       ctx.globalAlpha = 1;
       return any || live || glow;

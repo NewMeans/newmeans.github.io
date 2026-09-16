@@ -13,11 +13,11 @@
   var KEYS = 'qwertyasdfghzxcvbn';
   // a short row per part rather than the whole shop; monitors are few enough to keep whole
   var PICK = {
-    keycap: ['5000', '5001', '5005', '5012', '5011', '5014'],
-    frame: ['3000', '3001', '3005', '3003', '3012', '3009'],
-    switch: ['4000', '4001', '4002', '4004', '4005', '4008'],
-    sculpture: ['1000', '1001', '1004', '1005', '1007', '1008'],
-    ball: ['0000', '0001', '0002', '0004', '0007', '0009']
+    keycap: ['5000', '5005', '5012', '5011', '5003'],
+    frame: ['3000', '3005', '3003', '3004', '3012'],
+    switch: ['4000', '4001', '4004', '4002', '4008'],
+    sculpture: ['1000', '1005', '1008', '1007', '1004'],
+    ball: ['0001', '0002', '0004', '0007', '0009']
   };
   // the chip shows the part as the game draws it, not the shop's sample tile
   var SPRITE = {
@@ -134,7 +134,7 @@
     build('keycap', c.keycap); build('frame', c.frame); build('switch', c.switch); build('monitor', c.monitor); build('sculpture', c.sculpture); build('ball', c.ball);
     function first(kind, id) { return c[kind].filter(function (i) { return i.id === id; })[0] || c[kind][0]; }
     apply('keycap', first('keycap', '5000'), true); apply('frame', first('frame', '3000'), true); apply('monitor', first('monitor', '2000'), true);
-    apply('switch', first('switch', '4000'), true); apply('sculpture', first('sculpture', '1000'), true); apply('ball', first('ball', '0000'), true);
+    apply('switch', first('switch', '4000'), true); apply('sculpture', first('sculpture', '1000'), true); apply('ball', first('ball', '0001'), true);
     render();
     if (window.IntersectionObserver) { var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { io.disconnect(); cue(); } }); }, { threshold: 0.4 }); io.observe(root); } else cue();
   });
