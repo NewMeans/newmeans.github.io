@@ -195,7 +195,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 /* Typer: a pinned viewport, scrubbed by scroll. A ball comes out of a portal, types TYPER, drops into another. */
 .scene--typer{background:var(--m-100);--cta:var(--m-700);--cta-text:var(--n-50);--accent:var(--m-700)}
 .scene--typer .scene__pin{position:relative;padding:clamp(64px,9vh,110px) 0}
-.stage--typer{position:relative;width:min(100%,760px);aspect-ratio:760/360;margin:0 auto;overflow:hidden}
+.stage--typer{position:relative;width:min(100%,760px);aspect-ratio:760/320;margin:0 auto;overflow:hidden}
 .portal,.lip{position:absolute;width:calc(68 / 760 * 100%);aspect-ratio:68/24;transform:translate(-50%,-50%);opacity:0;border-radius:50%;overflow:hidden}
 .portal{z-index:2}
 .lip{z-index:5}
@@ -211,13 +211,16 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
    top edge over the ceiling hole and out of the bottom edge over the floor one, so the ball is
    only ever drawn on the near side of each hole's middle. */
 .ballclip{position:absolute;inset:0;z-index:3;pointer-events:none;
-  clip-path:polygon(0% 0%, 13.42% 0%, 13.42% 9.444%, 23.42% 9.444%, 23.42% 0%, 100% 0%,
-    100% 100%, 99.21% 100%, 99.21% 92.222%, 89.21% 92.222%, 89.21% 100%, 0% 100%)}
-.portal--in,.lip--in{left:calc(140 / 760 * 100%);top:calc(34 / 360 * 100%)}
-.portal--out,.lip--out{left:calc(716 / 760 * 100%);top:calc(332 / 360 * 100%)}
-.stage--typer .cap{position:absolute;top:calc(226 / 360 * 100%);left:calc(var(--x) / 760 * 100%);width:calc(104 / 760 * 100%);aspect-ratio:1;margin-left:calc(-52 / 760 * 100%);background:url("assets/shop/keycap/5000_0.png") center/100% 100% no-repeat;z-index:2;display:grid;place-items:center;cursor:pointer;transition:filter .15s}
+  clip-path:polygon(0% 0%, 13.42% 0%, 13.42% 5%, 23.42% 5%, 23.42% 0%, 100% 0%,
+    100% 100%, 99.21% 100%, 99.21% 88.75%, 89.21% 88.75%, 89.21% 100%, 0% 100%)}
+.portal--in,.lip--in{left:calc(140 / 760 * 100%);top:calc(16 / 320 * 100%)}
+.portal--out,.lip--out{left:calc(716 / 760 * 100%);top:calc(284 / 320 * 100%)}
+.stage--typer .cap{position:absolute;top:calc(108 / 320 * 100%);left:calc(var(--x) / 760 * 100%);width:calc(104 / 760 * 100%);aspect-ratio:1;margin-left:calc(-52 / 760 * 100%);background:url("assets/shop/keycap/5000_0.png") center/100% 100% no-repeat;z-index:2;display:grid;place-items:center;cursor:pointer;transition:filter .15s}
 .stage--typer .cap.is-down{filter:brightness(.96)}
-.stage--typer .cap b{font:400 clamp(20px,3.6vw,44px)/1 var(--font-pixel);color:#7A5741;padding-bottom:20%;opacity:0}
+.stage--typer .cap b{display:grid;place-items:center;width:50%;height:50%;color:#7A5741;padding-bottom:12%;opacity:0}
+.stage--typer .cap b svg{width:100%;height:100%;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.stage--typer .cap.is-hit{animation:capHit .2s var(--ease)}
+@keyframes capHit{45%{transform:translateY(6%) scale(.965)}}
 .stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
 
 /* Dopamine University: shapes keep arriving, crowd toward the middle and go. */

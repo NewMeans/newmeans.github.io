@@ -26,7 +26,7 @@
 
       "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI 심리테스트", "tag.web": "Web",
       "cta.more": "자세히 보기", "cta.download": "다운로드", "cta.start": "테스트 시작하기", "cta.replay": "다시 보기",
-      "scene.typer": "공이 키캡을 튀며 Typer를 친다",
+      "scene.typer": "공이 키캡 다섯 개를 튀기며 Typer를 이루는 것들을 켠다",
       "scene.dopa": "계속 새로 생겨나 모였다 사라지는 도형들",
       "dopa.me": "16개 유형으로는 정의할 수 없는 우리",
       "typer.line": "게임, ASMR, 나만의 방, 키보드 그리고 Lo-Fi 음악",
@@ -95,7 +95,7 @@
 
       "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI personality test", "tag.web": "Web",
       "cta.more": "Learn more", "cta.download": "Download", "cta.start": "Start a test", "cta.replay": "Replay",
-      "scene.typer": "A ball bounces across keycaps and types Typer",
+      "scene.typer": "A ball bounces across five keycaps, lighting up what Typer is made of",
       "scene.dopa": "Shapes keep arriving, gathering, and going",
       "dopa.me": "All of us that sixteen types cannot define",
       "typer.line": "A game, ASMR, a room of your own, keyboards and Lo-Fi",
@@ -115,7 +115,7 @@
       "typer.review.1": "There's cute music and the keyboard sounds are really satisfying.", "typer.review.1.meta": "App Store · English",
       "typer.review.2": "종료해도 이어서할 수 있어서 시간날때 계속하게 됨", "typer.review.2.meta": "Google Play · Korean", "typer.review.2.ko": "You can pick up where you left off, so I keep coming back",
       "typer.review.3": "キーボード好きには最高に至高のゲーム。", "typer.review.3.meta": "Google Play · Japanese", "typer.review.3.ko": "The ultimate game for keyboard lovers",
-      "typer.review.4": "this is fun its so fun and clicky you should try it", "typer.review.4.meta": "Google Play · English", "typer.review.4.ko": "Super relaxing, better than my Apex Pro TKL",
+      "typer.review.4": "this is fun its so fun and clicky you should try it", "typer.review.4.meta": "Google Play · English",
       "typer.review.5": "기계식 키보드의 키캡을 교체하고 축을 바꾸는 게임이라니!", "typer.review.5.meta": "Google Play · Korean", "typer.review.5.ko": "A game about swapping keycaps and switches on a mechanical keyboard!",
       "typer.review.6": "Relaxing, challenging, an extremely addictive.", "typer.review.6.meta": "App Store · English",
       "typer.review.7": "очень помогло мне во время панической атаки.", "typer.review.7.meta": "Google Play · Russian", "typer.review.7.ko": "It helped me a lot during a panic attack",

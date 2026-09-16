@@ -15,11 +15,19 @@
 
   // ================================================================ Typer
   var U = {
-    W: 760, H: 360, R: 17, CAPTOP: 226,
+    W: 760, H: 320, R: 17, CAPTOP: 108,
     CAPX: [140, 260, 380, 500, 620],
-    IN: { x: 140, y: 34 }, OUT: { x: 716, y: 332 },
-    APEX: [150, 130, 113, 98], LAST: 128
+    IN: { x: 140, y: 16 }, OUT: { x: 716, y: 284 },
+    APEX: [70, 61, 53, 46], LAST: 60
   };
+  // five caps, five things Typer is made of
+  var CAP_ICONS = [
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.2" y="6.8" width="19.6" height="10.4" rx="2.2"/><path d="M6 10.6h.01M10 10.6h.01M14 10.6h.01M18 10.6h.01M7.4 14.2h9.2"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.8" y="7" width="20.4" height="10" rx="5"/><path d="M7 9.8v4.4M4.8 12h4.4M15.8 10.8h.01M18.4 13.2h.01"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.6" cy="12" r="1.7"/><path d="M11 8.4a5 5 0 0 1 0 7.2M14.8 5.6a9 9 0 0 1 0 12.8"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 14h10.4l-1.2 6.2H8z"/><path d="M12 14V8.2"/><path d="M12 10.4c2.6.2 4.2-1 4.6-3.2-2.6-.3-4.3.9-4.6 3.2zM12 11.6c-2.4.2-3.9-.9-4.3-3 2.4-.3 4 .8 4.3 3z"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2"/><circle cx="9" cy="11.6" r="1.9"/><circle cx="15" cy="11.6" r="1.9"/><path d="M7.4 17.6l1.2-2.2h6.8l1.2 2.2"/></svg>'
+  ];
   var SPIN = 360 / (2 * Math.PI * U.R) * .55;  // degrees per stage unit, rolled lazily
   function mountTyper(root) {
     var stage = root.querySelector('.stage'), ball = stage.querySelector('.ball');
@@ -27,7 +35,7 @@
     var pIn = [stage.querySelector('.portal--in'), stage.querySelector('.lip--in')];
     var pOut = [stage.querySelector('.portal--out'), stage.querySelector('.lip--out')];
     var logo = root.querySelector('.scene__logo'), tags = root.querySelector('.tags'), act = root.querySelector('.scene__act'), replayBtn = root.querySelector('.replay');
-    'TYPER'.split('').forEach(function (ch, i) { if (letters[i]) letters[i].textContent = ch; });
+    letters.forEach(function (b, i) { if (b) b.innerHTML = CAP_ICONS[i] || ''; });
     var balls = [ball.getAttribute('src')];
     if (P) P.catalog().then(function (c) { if (c && c.ball) balls = c.ball.map(function (b) { return 'assets/shop/' + b.sprite; }); });
     var s = 1, tl = null, st = null, rtl = null;
@@ -36,7 +44,7 @@
       measure();
       var tl = G.timeline({ paused: true, defaults: { ease: 'none' } });
       var yRest = (U.CAPTOP - U.R) * s, rot = 0;
-      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: 12 * s, scale: 1, opacity: 1, rotation: 0 }, 0);
+      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: (U.IN.y - 22) * s, scale: 1, opacity: 1, rotation: 0 }, 0);
       tl.set(pIn.concat(pOut), { opacity: 0, scale: .4 }, 0);
       tl.set(letters, { opacity: 0 }, 0);
       tl.fromTo(logo, { scale: 1.08 }, { scale: 1, duration: dur * .08 }, 0);
@@ -101,7 +109,11 @@
     caps.forEach(function (k) {
       k.addEventListener('pointerenter', function () { k.classList.add('is-down'); });
       k.addEventListener('pointerleave', function () { k.classList.remove('is-down'); });
-      k.addEventListener('click', function () { touched = true; if (sound) sound.play(); });
+      k.addEventListener('click', function () {
+        touched = true; if (sound) sound.play();
+        k.classList.remove('is-hit'); void k.offsetWidth; k.classList.add('is-hit');
+      });
+      k.addEventListener('animationend', function () { k.classList.remove('is-hit'); });
     });
     setup();
     addEventListener('resize', debounce(function () { if (!playing) setup(); }, 200));
