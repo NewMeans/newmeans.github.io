@@ -184,40 +184,87 @@
     card.addEventListener('pointerleave', function () { card.style.setProperty('--ry', '0deg'); card.style.setProperty('--rx', '0deg'); card.classList.remove('is-tilting'); });
   }
 
-  // ---------------------------------------------------------------- 2,000 shapes, no two alike
+  // ---------------------------------------------------------------- a field of shapes, no two alike.
+  // With data-mask the dark shapes spell the headline: a big number, then two lines beside it.
   function mountField(root) {
     if (!root || root.__uf) return; root.__uf = true;
-    var canvas = document.createElement('canvas'); root.appendChild(canvas); var ctx = canvas.getContext('2d');
-    var N = +root.getAttribute('data-n') || 2000, dots = [], w = 0, hgt = 0, dpr = 1, px = -9999, py = -9999, lastMove = 0, raf = 0, chosen = null, chosenAt = 0;
-    var cols = ['#FF6666', '#FFBEBA', '#AF3B3D'];
+    var canvas = document.createElement('canvas'); root.appendChild(canvas);
+    var ctx = canvas.getContext('2d');
+    var dots = [], w = 0, hgt = 0, dpr = 1, px = -9999, py = -9999, lastMove = 0, raf = 0, chosen = null, chosenAt = 0;
+    var INK = ['#AF3B3D', '#8B2E2F', '#CE5151'], PALE = ['#FFD6D3', '#FEE9E7', '#FFBEBA'];
+    var masked = root.hasAttribute('data-mask');
     function seed(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
+
+    // the headline drawn once into an offscreen canvas; its alpha decides which shapes go dark
+    function maskData() {
+      if (!masked || !w || !hgt) return null;
+      var c = document.createElement('canvas'); c.width = w | 0; c.height = hgt | 0;
+      var x = c.getContext('2d'); x.fillStyle = '#fff'; x.textBaseline = 'middle';
+      var num = root.getAttribute('data-num') || '1000', a = t('dopa.count.a'), b = t('dopa.count.b');
+      var wide = w / hgt >= 1.7, numSize, lineSize;
+      if (wide) { numSize = Math.min(hgt * .66, w * .3); lineSize = numSize * .30; }
+      else { numSize = Math.min(hgt * .32, w * .46); lineSize = numSize * .46; }
+      function fNum() { x.font = '800 ' + numSize + 'px SUIT, sans-serif'; }
+      function fA() { x.font = '700 ' + lineSize + 'px SUIT, sans-serif'; }
+      function fB() { x.font = '800 ' + lineSize + 'px Hahmlet, SUIT, sans-serif'; }
+      fNum(); var numW = x.measureText(num).width;
+      fA(); var aW = x.measureText(a).width;
+      fB(); var bW = x.measureText(b).width;
+      var lineW = Math.max(aW, bW), lead = lineSize * 1.14;
+      if (wide) {
+        var gap = numSize * .10, x0 = (w - (numW + gap + lineW)) / 2, cy = hgt / 2;
+        fNum(); x.fillText(num, x0, cy);
+        fA(); x.fillText(a, x0 + numW + gap, cy - lead / 2);
+        fB(); x.fillText(b, x0 + numW + gap, cy + lead / 2);
+      } else {
+        var cy2 = hgt / 2 - lead * .55;
+        fNum(); x.fillText(num, (w - numW) / 2, cy2);
+        fA(); x.fillText(a, (w - aW) / 2, cy2 + numSize * .58 + lead * .3);
+        fB(); x.fillText(b, (w - bW) / 2, cy2 + numSize * .58 + lead * 1.3);
+      }
+      return x.getImageData(0, 0, c.width, c.height).data;
+    }
+
     function layout() {
       var r = root.getBoundingClientRect(); w = r.width; hgt = r.height; dpr = Math.min(2, devicePixelRatio || 1);
+      if (!w || !hgt) return;
       canvas.width = w * dpr; canvas.height = hgt * dpr; canvas.style.width = w + 'px'; canvas.style.height = hgt + 'px';
-      var cols_ = Math.ceil(Math.sqrt(N * w / hgt)), rows = Math.ceil(N / cols_), cw = w / cols_, ch = hgt / rows;
-      dots = [];
-      for (var i = 0; i < N; i++) {
-        var c = i % cols_, r_ = (i / cols_) | 0, s1 = seed(i), s2 = seed(i + 7), s3 = seed(i + 99);
-        var hx = c * cw + cw / 2 + (s1 - 0.5) * cw * 0.6, hy = r_ * ch + ch / 2 + (s2 - 0.5) * ch * 0.6;
-        dots.push({ hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0, n: 3 + ((s3 * 5) | 0), rot: s1 * 6.28, size: Math.max(3, Math.min(cw, ch) * (0.18 + s2 * 0.2)), col: cols[(s3 * cols.length) | 0] });
+      var mask = maskData();
+      var step = Math.max(w < 620 ? 4.8 : 6.5, Math.min(11, Math.sqrt(w * hgt / 14000)));
+      dots = []; var i = 0;
+      for (var gy = step * .6; gy < hgt; gy += step) {
+        for (var gx = step * .6; gx < w; gx += step) {
+          i++;
+          var inside = false;
+          if (mask) { var k = ((gy | 0) * (w | 0) + (gx | 0)) * 4 + 3; inside = mask[k] > 120; }
+          if (mask && !inside && seed(i) > .30) continue;           // outside the letters, a light scatter
+          var s1 = seed(i), s2 = seed(i + 7), s3 = seed(i + 99), j = inside ? .14 : .42;
+          var hx = gx + (s1 - .5) * step * j, hy = gy + (s2 - .5) * step * j;
+          dots.push({
+            hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0,
+            n: 3 + ((s3 * 6) | 0), rot: s1 * 6.28,
+            size: step * (inside ? .46 : .30) * (.82 + s2 * .36),
+            col: (inside ? INK : PALE)[(s3 * 3) | 0], ink: inside
+          });
+        }
       }
       draw(1);
     }
-    function star(d, s) { ctx.beginPath(); for (var k = 0; k < 4; k++) { var a = d.rot + k * Math.PI / 2, b = a + Math.PI / 4; ctx.lineTo(d.x + Math.cos(a) * s, d.y + Math.sin(a) * s); ctx.lineTo(d.x + Math.cos(b) * s * 0.28, d.y + Math.sin(b) * s * 0.28); } ctx.closePath(); }
+    function star(d, s) { ctx.beginPath(); for (var k = 0; k < 4; k++) { var a = d.rot + k * Math.PI / 2, b = a + Math.PI / 4; ctx.lineTo(d.x + Math.cos(a) * s, d.y + Math.sin(a) * s); ctx.lineTo(d.x + Math.cos(b) * s * .28, d.y + Math.sin(b) * s * .28); } ctx.closePath(); }
     function draw(f) {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, hgt);
       var now = performance.now(), live = now - lastMove < 1500, any = false, glow = chosen && now - chosenAt < 1800;
       for (var i = 0; i < dots.length; i++) {
         var d = dots[i];
-        d.vx += (d.hx - d.x) * 0.06 * f; d.vy += (d.hy - d.y) * 0.06 * f;
-        if (live) { var dx = d.x - px, dy = d.y - py, dist = Math.hypot(dx, dy); if (dist < 110 && dist > 0.1) { var k = (1 - dist / 110); d.vx += dx / dist * k * 6 * f; d.vy += dy / dist * k * 6 * f; d.rot += k * 0.3 * f; } }
-        d.vx *= 0.82; d.vy *= 0.82; d.x += d.vx * f; d.y += d.vy * f;
-        if (Math.abs(d.vx) + Math.abs(d.vy) > 0.05) any = true;
+        d.vx += (d.hx - d.x) * .06 * f; d.vy += (d.hy - d.y) * .06 * f;
+        if (live) { var dx = d.x - px, dy = d.y - py, dist = Math.hypot(dx, dy); if (dist < 110 && dist > .1) { var k = (1 - dist / 110); d.vx += dx / dist * k * 6 * f; d.vy += dy / dist * k * 6 * f; d.rot += k * .3 * f; } }
+        d.vx *= .82; d.vy *= .82; d.x += d.vx * f; d.y += d.vy * f;
+        if (Math.abs(d.vx) + Math.abs(d.vy) > .05) any = true;
         var s = d.size;
-        if (d === chosen) { var q = Math.min(1, (now - chosenAt) / 400); star(d, s * (1 + q * 2.2)); ctx.fillStyle = '#FF6666'; ctx.globalAlpha = 1; ctx.fill(); continue; }
+        if (d === chosen) { var q = Math.min(1, (now - chosenAt) / 400); star(d, s * (1 + q * 2.4)); ctx.fillStyle = '#FF6666'; ctx.globalAlpha = 1; ctx.fill(); continue; }
         ctx.beginPath();
         for (var k2 = 0; k2 < d.n; k2++) { var a = d.rot + k2 / d.n * 6.283; var X = d.x + Math.cos(a) * s, Y = d.y + Math.sin(a) * s; if (k2) ctx.lineTo(X, Y); else ctx.moveTo(X, Y); }
-        ctx.closePath(); ctx.fillStyle = d.col; ctx.globalAlpha = 0.85; ctx.fill();
+        ctx.closePath(); ctx.fillStyle = d.col; ctx.globalAlpha = d.ink ? 1 : .9; ctx.fill();
       }
       ctx.globalAlpha = 1;
       return any || live || glow;
@@ -227,7 +274,10 @@
     root.addEventListener('pointermove', pointer);
     root.addEventListener('pointerdown', function (e) { pointer(e); var best = null, bd = 1e9; dots.forEach(function (d) { var dd = Math.hypot(d.x - px, d.y - py); if (dd < bd) { bd = dd; best = d; } }); chosen = best; chosenAt = performance.now(); });
     root.addEventListener('pointerleave', function () { px = py = -9999; lastMove = performance.now(); if (!raf) raf = requestAnimationFrame(tick); });
-    layout(); if (window.ResizeObserver) new ResizeObserver(layout).observe(root); else addEventListener('resize', layout);
+    layout();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+    window.addEventListener('nm:langchange', layout);
+    if (window.ResizeObserver) new ResizeObserver(layout).observe(root); else addEventListener('resize', layout);
   }
 
   function auto() {

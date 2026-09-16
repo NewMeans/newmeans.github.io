@@ -3,7 +3,7 @@
  *        typing T Y P E R, bounces off the last one and drops into a second portal. Scrubbed by scroll; "replay"
  *        plays it in time with a random ball from the game. Dopamine: two wordless cards; a sparkle hops across the
  *        tests and settles on one, then a report writes itself. Reveals happen once; progress never rewinds (ratchet).
- * Count: the big number that keeps scrambling (Dopamine page). */
+ * Studio: two rabbits running while obstacles fly in from the right; scrolling speeds them up. */
 (function () {
   'use strict';
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, narrow = matchMedia('(max-width: 720px)');
@@ -15,10 +15,10 @@
 
   // ================================================================ Typer
   var U = {
-    W: 760, H: 420, R: 17, CAPTOP: 286,
+    W: 760, H: 360, R: 17, CAPTOP: 226,
     CAPX: [92, 212, 332, 452, 572],
-    IN: { x: 92, y: 40 }, OUT: { x: 700, y: 392 },
-    APEX: [176, 152, 132, 115], LAST: 150,
+    IN: { x: 92, y: 34 }, OUT: { x: 700, y: 332 },
+    APEX: [150, 130, 113, 98], LAST: 128,
     GAP: 20                                   // how far each portal half slides apart
   };
   var SPIN = 360 / (2 * Math.PI * U.R);        // degrees per stage unit rolled
@@ -176,27 +176,84 @@
     addEventListener('resize', debounce(function () { var p = bp; btl.kill(); btl = beanTL(); btl.progress(p); }, 200));
   }
 
-  // ================================================================ the scrambling number
-  function mountCount(root) {
-    var digits = [].slice.call(root.querySelectorAll('[data-digits] span')); if (!digits.length) return;
-    function show(v) { for (var i = 0; i < digits.length; i++) digits[i].textContent = v[i] || '0'; }
-    if (reduce) { show('2000'); return; }
-    var visible = true, first = true, timer = null;
-    function rnd(i) { return String(i === 0 ? 1 + ((Math.random() * 9) | 0) : (Math.random() * 10) | 0); }
-    function next() { if (first) { first = false; return '2000'; } return String(1000 + ((Math.random() * 9000) | 0)); }
-    function scramble(ticks, done) { var n = 0; (function step() { if (!visible) { timer = setTimeout(step, 300); return; } for (var i = 0; i < digits.length; i++) digits[i].textContent = rnd(i); if (++n < ticks) timer = setTimeout(step, 70); else done(); })(); }
-    function settle(target, done) { var i = 0; (function step() { digits[i].textContent = target[i]; for (var k = i + 1; k < digits.length; k++) digits[k].textContent = rnd(k); if (++i < digits.length) timer = setTimeout(step, 150); else done(); })(); }
-    function cycle() { scramble(24, function () { settle(next(), function () { timer = setTimeout(cycle, 1400); }); }); }
-    if (window.IntersectionObserver) new IntersectionObserver(function (es) { es.forEach(function (e) { visible = e.isIntersecting && !document.hidden; }); }, { threshold: 0.2 }).observe(root);
-    document.addEventListener('visibilitychange', function () { visible = !document.hidden; });
-    cycle();
+  // ================================================================ the studio: two rabbits running
+  var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
+  var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
+  var OBS = [
+    '<svg viewBox="0 0 40 40"><polygon points="6,34 11,15 23,8 34,17 32,34"/></svg>',                       // rock
+    '<svg viewBox="0 0 40 40"><polygon points="20,5 34,34 6,34"/></svg>',                                    // spike
+    '<svg viewBox="0 0 40 40"><polygon points="23,4 10,22 18,22 16,36 31,17 21,17"/></svg>',                 // bolt
+    '<svg viewBox="0 0 40 40"><rect x="7" y="13" width="26" height="21" rx="3"/><path d="M7 23.5h26M20 13v10.5M13.5 23.5V34M26.5 23.5V34" fill="none"/></svg>', // bricks
+    '<svg viewBox="0 0 40 40"><path d="M20 5c5 8 12 10 12 18a12 12 0 0 1-24 0c0-5 4-8 6-12 1 4 3 5 4 7 1-4 2-9 2-13z"/></svg>', // flame
+    '<svg viewBox="0 0 40 40"><path d="M9 34V15M31 34V15M6 19h28" fill="none"/></svg>'                       // hurdle
+  ];
+  function buildRabbit(box) {
+    var X0 = 880, Y0 = 300, W0 = 2900, H0 = 1000, base = 'assets/brand/logo-pieces/';
+    RP.forEach(function (p) {
+      var el = document.createElement('i');
+      el.className = 'rb' + (FACE[p[0]] ? ' face' : '') + (p[0] in FOOT ? ' foot' : '');
+      el.style.left = (p[1] - X0) / W0 * 100 + '%'; el.style.top = (p[2] - Y0) / H0 * 100 + '%';
+      el.style.width = p[3] / W0 * 100 + '%'; el.style.height = p[4] / H0 * 100 + '%';
+      el.style.setProperty('--m', 'url("' + base + 'p' + p[0] + '.png")');
+      box.appendChild(el);
+    });
+  }
+  function mountRunner(root) {
+    if (root.__run) return; root.__run = true;
+    var obsLayer = root.querySelector('.run__obs'), rabbits = [].slice.call(root.querySelectorAll('.runner'));
+    rabbits.forEach(function (r) { buildRabbit(r.querySelector('.runner__art')); });
+    if (reduce) return;
+    rabbits.forEach(function (r, i) {
+      var art = r.querySelector('.runner__art'), feet = art.querySelectorAll('.foot');
+      G.to(art, { y: -7, duration: .32, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
+      G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
+      G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15 });
+    });
+    function dodge(r) {
+      if (r.__jump) return; r.__jump = true;
+      G.timeline({ onComplete: function () { r.__jump = false; } })
+        .to(r, { y: -40, rotation: -6, duration: .3, ease: 'power2.out' })
+        .to(r, { y: 0, rotation: 0, duration: .34, ease: 'power2.in' });
+    }
+    var items = [], last = 0, nextAt = 0, raf = 0, seen = false, boost = 0;
+    function spawn(now) {
+      var el = document.createElement('div'); el.className = 'ob';
+      el.innerHTML = OBS[(Math.random() * OBS.length) | 0];
+      var size = 32 + Math.random() * 34, lift = Math.random() < .26 ? 22 + Math.random() * 34 : 0;
+      el.style.width = size + 'px'; el.style.marginBottom = lift + 'px';
+      obsLayer.appendChild(el);
+      items.push({ el: el, x: root.clientWidth + size, size: size, sp: 78 + Math.random() * 74, spin: lift ? 0 : .55 + Math.random() * .5, hit: {} });
+      nextAt = now + 640 + Math.random() * 1020;
+    }
+    function tick(now) {
+      raf = 0;
+      var dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+      var speed = 1 + boost; boost *= .93;
+      for (var i = items.length - 1; i >= 0; i--) {
+        var o = items[i];
+        o.x -= o.sp * speed * dt;
+        o.el.style.transform = 'translateX(' + o.x.toFixed(1) + 'px) rotate(' + (-o.x * o.spin).toFixed(1) + 'deg)';
+        for (var k = 0; k < rabbits.length; k++) {
+          var r = rabbits[k], rx = r.offsetLeft + r.parentNode.offsetLeft + r.offsetWidth * .5;
+          if (!o.hit[k] && o.x < rx + 120 && o.x > rx - 30) { o.hit[k] = 1; dodge(r); }
+        }
+        if (o.x < -o.size - 30) { o.el.remove(); items.splice(i, 1); }
+      }
+      if (now > nextAt) spawn(now);
+      if (seen) raf = requestAnimationFrame(tick); else last = 0;
+    }
+    ST.create({
+      trigger: root, start: 'top bottom', end: 'bottom top',
+      onToggle: function (self) { seen = self.isActive; if (seen && !raf) { last = 0; raf = requestAnimationFrame(tick); } },
+      onUpdate: function (self) { boost = Math.min(3.2, Math.abs(self.getVelocity()) / 700); }
+    });
   }
 
   function auto() {
     document.querySelectorAll('[data-scene="typer"]').forEach(mountTyper);
     document.querySelectorAll('[data-scene="dopa"]').forEach(mountDopa);
-    document.querySelectorAll('[data-count]').forEach(mountCount);
+    document.querySelectorAll('[data-runner]').forEach(mountRunner);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', auto); else auto();
-  window.NewMeansScenes = { typer: mountTyper, dopa: mountDopa, count: mountCount };
+  window.NewMeansScenes = { typer: mountTyper, dopa: mountDopa, runner: mountRunner };
 })();

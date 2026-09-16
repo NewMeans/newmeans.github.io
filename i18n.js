@@ -28,7 +28,7 @@
       "cta.more": "자세히 보기", "cta.download": "다운로드", "cta.start": "테스트 시작하기", "cta.replay": "다시 보기",
       "scene.typer": "공이 키캡을 튀며 Typer를 친다",
       "scene.dopa": "테스트 하나를 고르면 써지는 보고서",
-      "studio.line": "게임 클라이언트 개발자 한 명, AI 엔지니어 한 명",
+      
       "foot.privacy": "개인정보 처리방침",
 
       "typer.meta.title": "Typer: 기계식 키보드 타건음 아케이드",
@@ -50,14 +50,16 @@
       "typer.review.8": "色々な軸を集めるのが楽しかったです。", "typer.review.8.meta": "App Store · 日本語", "typer.review.8.ko": "여러 축을 모으는 게 즐거웠어요",
 
       "dopa.meta.title": "도파민대학교: AI 심리테스트 플랫폼",
-      "dopa.meta.description": "테마별 AI 심리테스트. 카카오톡 대화 하나로 AI가 쓰는 나만의 연구 보고서.",
+      "dopa.meta.description": "16개 유형으로는 정의할 수 없는 우리를 위해. 채팅 기록 하나로 AI가 쓰는 나만의 연구 보고서.",
       "dopa.here": "도파민대학교",
       "dopa.nav.how": "방법", "dopa.nav.tests": "테스트",
-      "dopa.count.a": "명의 사람", "dopa.count.b": "개의 결과", "dopa.count.sr": "사람 수만큼의 결과",
-      "dopa.fact": "테스트를 고르고 카카오톡 대화를 올리면 AI가 쓰는 연구 보고서",
-      "dopa.how.1": "테스트 고르기", "dopa.how.2": "카카오톡 대화 올리기", "dopa.how.3": "AI 연구 보고서",
+      "dopa.count.a": "명의 사람", "dopa.count.b": "개의 유형", "dopa.count.sr": "사람 수만큼의 유형",
+      "dopa.note": "같은 모양이 하나도 없는 도형들",
+      "dopa.tests.more": "같은 엔진 위에 새 테스트가 계속",
+      "dopa.fact": "16개 유형으로는 정의할 수 없는 우리를 위해",
+      "dopa.how.1": "테스트 고르기", "dopa.how.2": "채팅 기록 업로드", "dopa.how.3": "AI 연구 보고서",
       "dopa.test.egen": "AI 에겐 테토 테스트", "dopa.test.campus": "AI 캠퍼스 리크루팅 테스트",
-      "dopa.unique": "2,000명이면 2,000개의 결과. 이 도형 2,000개도 같은 것이 없음."
+      "studio.run": "두 사람이 함께 달린다"
     },
     en: {
       "meta.title": "NewMeans: games and AI",
@@ -84,7 +86,7 @@
       "cta.more": "Learn more", "cta.download": "Download", "cta.start": "Start a test", "cta.replay": "Replay",
       "scene.typer": "A ball bounces across keycaps and types Typer",
       "scene.dopa": "One test gets picked and a report writes itself",
-      "studio.line": "One game client developer, one AI engineer",
+      
       "foot.privacy": "Privacy",
 
       "typer.meta.title": "Typer: a mechanical-keyboard arcade",
@@ -106,14 +108,16 @@
       "typer.review.8": "色々な軸を集めるのが楽しかったです。", "typer.review.8.meta": "App Store · Japanese", "typer.review.8.ko": "Collecting all the different switches was fun",
 
       "dopa.meta.title": "Dopamine University: AI personality tests",
-      "dopa.meta.description": "Themed AI personality tests. One chat export, one AI-written research report.",
+      "dopa.meta.description": "For all of us that sixteen types cannot describe. One chat log, one AI-written research report.",
       "dopa.here": "Dopamine University",
       "dopa.nav.how": "How", "dopa.nav.tests": "Tests",
-      "dopa.count.a": "people", "dopa.count.b": "results", "dopa.count.sr": "As many results as there are people",
-      "dopa.fact": "Pick a test, upload a KakaoTalk chat, and the AI writes a research report",
-      "dopa.how.1": "Pick a test", "dopa.how.2": "Upload a KakaoTalk chat", "dopa.how.3": "AI research report",
+      "dopa.count.a": "people", "dopa.count.b": "types", "dopa.count.sr": "As many types as there are people",
+      "dopa.note": "No two of these shapes are alike",
+      "dopa.tests.more": "New tests keep arriving on the same engine",
+      "dopa.fact": "For all of us that sixteen types cannot describe",
+      "dopa.how.1": "Pick a test", "dopa.how.2": "Upload a chat log", "dopa.how.3": "AI research report",
       "dopa.test.egen": "AI Egen-Teto test", "dopa.test.campus": "AI campus recruiting test",
-      "dopa.unique": "2,000 people, 2,000 results. None of these 2,000 shapes repeat either."
+      "studio.run": "Two of us, running together"
     }
   };
 

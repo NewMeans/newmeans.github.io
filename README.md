@@ -5,8 +5,8 @@
 
 ## 구조
 
-- `index.html` — 홈. 살아 있는 토끼 로고와 단어 슬롯머신(히어로), Typer 장면(포털에서 나온 공이 키캡 다섯을 튀며 TYPER를 치고 다시 포털로), 도파민대학교 장면(글자 없는 테스트 타일과 보고서), 스튜디오 한 줄, 푸터 한 줄
-- `typer.html`, `dopamine.html` — 제품 원페이지. Typer는 커스터마이저(게임 상점 부품 60개) → 보드 → 숫자 → 후기 → 화면 → 배지, 도파민대학교는 숫자 헤드라인 → 세 단계 → 테스트 → 도형 필드 → CTA
+- `index.html` — 홈. 살아 있는 토끼 로고와 단어 슬롯머신(히어로), Typer 장면(포털에서 나온 공이 키캡 다섯을 튀며 TYPER를 치고 다시 포털로), 도파민대학교 장면(글자 없는 테스트 타일과 보고서), 스튜디오(CEO·CTO 토끼가 장애물을 넘으며 달린다), 푸터 한 줄
+- `typer.html`, `dopamine.html` — 제품 원페이지. Typer는 커스터마이저(게임 상점 부품 60개) → 보드 → 숫자 → 후기 → 화면 → 하단 섹션, 도파민대학교는 도형이 쓰는 헤드라인 → 세 단계 → 테스트 → 하단 섹션. 하단 섹션은 그 페이지의 행동과 다른 제품으로 가는 카드
 - `404.html` — 없는 페이지
 - `base.css` — 디자인 시스템 토큰과 공용 컴포넌트 (`DESIGN_SYSTEM.md`)
 - `home.css` — 홈 전용 스타일
@@ -18,7 +18,7 @@
 - `i18n.js` — 한/영 문구 사전과 언어 토글 (localStorage 유지)
 - `experience.js` — 스토어 배지 언어 처리
 - `assets/brand/logo-pieces/` — 로고 조각 25개 (마스크로 칠해 어떤 색으로도 바뀜)
-- `assets/fonts/` — SUIT(한글·UI·본문, OFL), Pally(헤더 전용, Fontshare ITF 무료 라이선스), Hahmlet 800 부분집합(도파민대학교 `개의 결과` 한 줄), DNF BitBit(워드마크·Typer 픽셀 숫자). 전부 자체 호스팅. GSAP는 jsDelivr CDN
+- `assets/fonts/` — SUIT(한글·UI·본문, OFL), Pally(헤더 전용, Fontshare ITF 무료 라이선스), Hahmlet 800 부분집합(도파민대학교 `개의 유형`), DNF BitBit(워드마크·Typer 픽셀 숫자). 전부 자체 호스팅. GSAP는 jsDelivr CDN
 - `assets/shop/` — 게임 상점 스프라이트와 `catalog.json` (Typer 프로젝트에서 읽기 전용으로 복사)
 - `Typer/`, `insta/` — 앱스토어 / 인스타그램 리디렉트
 
