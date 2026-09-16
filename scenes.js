@@ -212,9 +212,8 @@
     { tone: 'mint', svg: '<svg viewBox="0 0 40 40"><path d="M11 5h18v9.5a9 9 0 0 1-18 0z" fill="var(--ob-a)"/><path d="M11 8H6.5a5.5 5.5 0 0 0 5.5 5.5M29 8h4.5a5.5 5.5 0 0 1-5.5 5.5" stroke="var(--ob-b)" stroke-width="2.6" fill="none"/><rect x="17.4" y="23" width="5.2" height="6" fill="var(--ob-b)"/><rect x="10.5" y="29" width="19" height="5" rx="1.8" fill="var(--ob-b)"/></svg>' },
     { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="12" y="4" width="4.2" height="9" rx="2.1" fill="var(--ob-b)"/><rect x="23.8" y="4" width="4.2" height="9" rx="2.1" fill="var(--ob-b)"/><rect x="8" y="12" width="24" height="10" rx="3" fill="var(--ob-a)"/><path d="M20 22v6a6 6 0 0 1-6 6h-3" stroke="var(--ob-b)" stroke-width="3" fill="none" stroke-linecap="round"/></svg>' },
     { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><path d="M14 13a7 7 0 1 1 11.4 5.4C31 19.5 35 22.4 35 25.6 35 30 28.3 33.6 20 33.6S5 30 5 25.6c0-3.3 4.3-6.2 10.4-7.2A7 7 0 0 1 14 13z" fill="var(--ob-a)"/><circle cx="17" cy="11.6" r="1.7" fill="var(--ob-b)"/><path d="M25 14l6.5-1L25 16.4z" fill="var(--ob-b)"/></svg>' },
-    { img: SHOP + 'sculpture/1000_0.png' },
-    { img: SHOP + 'sculpture/1001_0.png' },
-    { img: SHOP + 'sculpture/1002_0.png' }
+    { tone: 'coral', svg: '<svg viewBox="0 0 40 40"><rect x="8" y="14" width="24" height="22" rx="3" fill="var(--ob-a)"/><path d="M12 14V9a8 8 0 0 1 16 0v5" fill="none" stroke="var(--ob-b)" stroke-width="3"/><circle cx="20" cy="24" r="3" fill="var(--ob-b)"/></svg>' },
+    { tone: 'mint', svg: '<svg viewBox="0 0 40 40"><path d="M9 34V12l11-6 11 6v22z" fill="var(--ob-a)"/><path d="M16 34V23h8v11z" fill="var(--ob-b)"/></svg>' }
   ];
   var AIR_OBS = [
     { img: 'assets/brand/dopamine-symbol.png' },
@@ -231,11 +230,11 @@
   var DROP = { 3: 1, 7: 1, 8: 1, 11: 1, 16: 1 };
   var GLASSES = {
     // square horn rims for one, rounder ones with a flatter brow for the other
-    ceo: '<svg viewBox="0 0 100 40" fill="none" stroke="#211E1B" stroke-width="6.6" stroke-linejoin="round"><rect x="6" y="8" width="28" height="22" rx="3.5"/><rect x="66" y="8" width="28" height="22" rx="3.5"/><path d="M34 17h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>',
-    cto: '<svg viewBox="0 0 100 40" fill="none" stroke="#211E1B" stroke-width="6.6" stroke-linejoin="round"><path d="M6 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14S6 25 6 16z"/><path d="M66 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14s-14-5-14-14z"/><path d="M34 16h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>'
+    ceo: '<svg viewBox="0 0 100 40" fill="none" stroke="#3B3531" stroke-width="6.6" stroke-linejoin="round"><rect x="6" y="8" width="28" height="22" rx="3.5"/><rect x="66" y="8" width="28" height="22" rx="3.5"/><path d="M34 17h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>',
+    cto: '<svg viewBox="0 0 100 40" fill="none" stroke="#3B3531" stroke-width="6.6" stroke-linejoin="round"><path d="M6 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14S6 25 6 16z"/><path d="M66 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14s-14-5-14-14z"/><path d="M34 16h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>'
   };
   var CREW = {
-    ceo: { role: 'CEO', name: 'Minsik Kim', nick: 'Olive', does: ['Game Client Dev', 'Web Frontend Dev', 'Applied AI Engineer', 'Design, all of it', 'Lunch Menu Select'] },
+    ceo: { role: 'CEO', name: 'Minsik Kim', nick: 'Olive', does: ['Game Client Dev', 'Web Frontend Dev', 'Applied AI Engineer', 'Designer by Necessity', 'Lunch Menu Select'] },
     cto: { role: 'CTO', name: 'Minseok Chang', nick: 'Ricotta', does: ['Game Client Dev', 'Infrastructure Dev', 'AI Research Engineer', 'Swimming'] }
   };
   var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
@@ -262,29 +261,44 @@
     var rabbits = [].slice.call(root.querySelectorAll('.runner'));
     rabbits.forEach(function (r) { buildRabbit(r.querySelector('.runner__art'), r.getAttribute('data-who')); });
     var arts = rabbits.map(function (r) { return r.querySelector('.runner__art'); });
-    G.set(arts, { scaleX: -1, rotation: 3.5 });                     // face right
+    G.set(arts, { scaleX: -1, rotation: 0, transformOrigin: '50% 100%' });   // face right, stand level
     var slot = [0, 0], order = [0, 1], scale = 1;                       // order[1] is the one out in front
     function measure() { var rw = rabbits[0].offsetWidth || 180; scale = rw / 182; slot = [0, rw * 1.08]; crew.style.width = (slot[1] + rw) + 'px'; }
     measure();
     rabbits.forEach(function (r, i) { G.set(r, { x: slot[i] }); });
     if (reduce) return;
-    arts.forEach(function (art, i) {
-      var feet = art.querySelectorAll('.rb--paw');
-      G.to(art, { y: -7, duration: .32, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
+    // on the ground they squash and stretch, like something soft landing over and over
+    rabbits.forEach(function (r, i) {
+      var art = arts[i], feet = art.querySelectorAll('.rb--paw');
+      r.__art = art;
+      r.__idle = G.fromTo(art, { scaleX: -1.06, scaleY: .94 },
+        { scaleX: -.96, scaleY: 1.06, duration: .36, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .18 });
       if (feet[0]) G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
       if (feet[1]) G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15 });
     });
+    function settle(r) { if (r.__idle) { G.set(r.__art, { scaleX: -1, scaleY: 1 }); r.__idle.restart(); } }
+    // takeoff stretches, the air is neutral, the landing squashes
+    function hop(r, rise, up, down) {
+      if (r.__tl) r.__tl.kill();
+      if (r.__idle) r.__idle.pause();
+      var art = r.__art;
+      r.__tl = G.timeline({ onComplete: function () { r.__busy = 0; r.__tl = null; settle(r); } })
+        .to(art, { scaleX: -.88, scaleY: 1.18, duration: .1, ease: 'power2.out' }, 0)
+        .to(art, { scaleX: -1, scaleY: 1, duration: up - .1, ease: 'power1.out' }, .1)
+        .to(r, { y: -rise * scale, duration: up, ease: 'power2.out' }, 0)
+        .to(r, { y: 0, duration: down, ease: 'power2.in' }, up)
+        .to(art, { scaleX: -1.14, scaleY: .86, duration: .08, ease: 'power2.out' }, up + down)
+        .to(art, { scaleX: -1, scaleY: 1, duration: .18, ease: 'back.out(2.4)' }, up + down + .08);
+      return r.__tl;
+    }
     function jump(r) {
       if (r.__busy === 'jump') return;
-      if (r.__tl) r.__tl.kill();                                    // a jump always wins over a swing
-      r.__busy = 'jump';
-      r.__tl = G.timeline({ onComplete: function () { r.__busy = 0; r.__tl = null; } })
-        .to(r, { y: -80 * scale, rotation: -8, duration: .38, ease: 'power2.out' })
-        .to(r, { y: 0, rotation: 0, duration: .36, ease: 'power2.in' });
+      r.__busy = 'jump'; hop(r, 86, .3, .3);
     }
     function swat(r) {
       if (r.__busy) return; r.__busy = 'swat';
-      r.__tl = G.timeline({ onComplete: function () { r.__busy = 0; r.__tl = null; } })
+      if (r.__idle) r.__idle.pause();
+      r.__tl = G.timeline({ onComplete: function () { r.__busy = 0; r.__tl = null; settle(r); } })
         .to(r, { rotation: -16, y: -10 * scale, duration: .12, ease: 'power3.out' })
         .to(r, { rotation: 0, y: 0, duration: .26, ease: 'power2.inOut' });
     }
@@ -293,7 +307,15 @@
     var swapAt = 0, spawning = true, swapping = false;
     function swap(now) {
       swapping = true; order.reverse();
-      order.forEach(function (ri, k) { G.to(rabbits[ri], { x: slot[k], duration: 1, ease: 'power2.inOut' }); });
+      order.forEach(function (ri, k) {
+        var r = rabbits[ri];
+        G.to(r, { x: slot[k], duration: .9, ease: 'power2.inOut' });
+        if (k !== 1) return;                                        // the one taking the lead hops over the other
+        r.__busy = 'swap'; r.style.zIndex = 3;
+        hop(r, 104, .45, .45).eventCallback('onComplete', function () {
+          r.__busy = 0; r.__tl = null; r.style.zIndex = ''; settle(r);
+        });
+      });
       setTimeout(function () { swapping = false; spawning = true; }, 1100);
       swapAt = now + 7000 + Math.random() * 4000;
     }
@@ -311,7 +333,7 @@
       el.style.transform = 'translate(' + x0.toFixed(1) + 'px,0px)';   // placed before its first paint
       obsLayer.appendChild(el);
       items.push({ el: el, x: x0, y: 0, vy: 0, rot: 0, alpha: 1, size: size, air: air, dead: false, hit: 0 });
-      nextAt = now + ((200 + Math.random() * 220) * scale + size * 1.2) / (SP * scale) * 1000;   // a steady gap in distance
+      nextAt = now + ((280 + Math.random() * 240) * scale + size * 1.2) / (SP * scale) * 1000;   // a steady gap in distance
     }
     function centre(r) { return crew.offsetLeft + r.offsetLeft + (G.getProperty(r, 'x') || 0) + r.offsetWidth * .5; }
     function tick(now) {
@@ -331,7 +353,7 @@
             if (o.hit & (1 << ri)) continue;
             var tta = (o.x - centre(rabbits[ri])) / sp;
             if (tta < 0) { o.hit |= 1 << ri; continue; }
-            if (tta < (o.air ? .16 : .38)) {
+            if (tta < (o.air ? .16 : .34)) {
               o.hit |= 1 << ri;
               if (o.air) { swat(rabbits[ri]); o.dead = true; o.vy = -430; break; }
               jump(rabbits[ri]);
