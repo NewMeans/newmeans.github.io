@@ -188,15 +188,15 @@
   var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
   var GROUND_OBS = [
     // a boulder with a chipped face
-    '<svg viewBox="0 0 40 40"><path d="M3 37 L7 18 L16 8 L28 9 L36 19 L35 37z"/><path d="M16 8 L19 20 L35 19" fill="none" stroke="#fff" stroke-opacity=".22" stroke-width="2.4"/></svg>',
+    '<svg viewBox="0 0 40 40"><path d="M3 37 L7 18 L16 8 L28 9 L36 19 L35 37z"/><path d="M16 8 L19 20 L35 19" fill="none" stroke="#FCFBF7" stroke-opacity=".45" stroke-width="2.4"/></svg>',
     // a cactus, the one everybody jumps
-    '<svg viewBox="0 0 40 40"><rect x="16" y="6" width="8" height="32" rx="4"/><path d="M10 18a4 4 0 0 1 4 4v5h-4a4 4 0 0 1-4-4v-1a4 4 0 0 1 4-4z"/><path d="M30 14a4 4 0 0 0-4 4v8h4a4 4 0 0 0 4-4v-4a4 4 0 0 0-4-4z"/></svg>',
+    '<svg viewBox="0 0 40 40"><rect x="16" y="2" width="9" height="36" rx="4.5"/><rect x="3" y="15" width="7" height="16" rx="3.5"/><rect x="8" y="25" width="10" height="6" rx="1"/><rect x="31" y="7" width="7" height="18" rx="3.5"/><rect x="23" y="19" width="10" height="6" rx="1"/></svg>',
     // a stack of crates
-    '<svg viewBox="0 0 40 40"><rect x="4" y="23" width="32" height="15" rx="2"/><rect x="11" y="8" width="18" height="14" rx="2"/><path d="M4 30.5h32M20 23v7.5M11 15h18M20 8v7" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="2"/></svg>',
+    '<svg viewBox="0 0 40 40"><rect x="4" y="23" width="32" height="15" rx="2"/><rect x="11" y="8" width="18" height="14" rx="2"/><path d="M4 30.5h32M20 23v7.5M11 15h18M20 8v7" fill="none" stroke="#FCFBF7" stroke-opacity=".5" stroke-width="2"/></svg>',
     // a hurdle
     '<svg viewBox="0 0 40 40"><rect x="3" y="12" width="34" height="6" rx="3"/><rect x="3" y="22" width="34" height="4" rx="2"/><rect x="5" y="15" width="5" height="23" rx="2.5"/><rect x="30" y="15" width="5" height="23" rx="2.5"/></svg>',
     // a milestone slab
-    '<svg viewBox="0 0 40 40"><path d="M8 38V14a12 12 0 0 1 24 0v24z"/><path d="M14 20h12M14 27h8" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="2.6" stroke-linecap="round"/></svg>'
+    '<svg viewBox="0 0 40 40"><path d="M8 38V15a12 12 0 0 1 24 0v23z"/><path d="M14 19h12M14 26h9" fill="none" stroke="#FCFBF7" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/></svg>'
   ];
   var AIR_OBS = [
     // a bolt
@@ -204,7 +204,7 @@
     // a flame
     '<svg viewBox="0 0 40 40"><path d="M20 2c5 9 13 11 13 20a13 13 0 0 1-26 0c0-5 4-9 6-13 1 4 3 5 4 8 1-5 3-10 3-15z"/><path d="M20 20c2 4 5 5 5 9a5 5 0 0 1-10 0c0-3 3-5 5-9z" fill="#fff" fill-opacity=".35"/></svg>',
     // a paper plane thrown across
-    '<svg viewBox="0 0 40 40"><path d="M38 6 2 20l13 4z"/><path d="M15 24l3 11 5-7z"/><path d="M38 6 18 28" fill="none" stroke="#fff" stroke-opacity=".3" stroke-width="1.8"/></svg>'
+    '<svg viewBox="0 0 40 40"><path d="M38 6 2 20l13 4z"/><path d="M15 24l3 11 5-7z"/><path d="M38 6 17 24" fill="none" stroke="#FCFBF7" stroke-opacity=".55" stroke-width="2"/></svg>'
   ];
   function buildRabbit(box) {
     var X0 = 880, Y0 = 300, W0 = 2900, H0 = 1000, base = 'assets/brand/logo-pieces/';
@@ -236,14 +236,16 @@
       G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15 });
     });
     function jump(r) {
-      if (r.__busy) return; r.__busy = true;
-      G.timeline({ onComplete: function () { r.__busy = false; } })
+      if (r.__busy === 'jump') return;
+      if (r.__tl) r.__tl.kill();                                    // a jump always wins over a swing
+      r.__busy = 'jump';
+      r.__tl = G.timeline({ onComplete: function () { r.__busy = 0; r.__tl = null; } })
         .to(r, { y: -80 * scale, rotation: -8, duration: .38, ease: 'power2.out' })
         .to(r, { y: 0, rotation: 0, duration: .36, ease: 'power2.in' });
     }
     function swat(r) {
-      if (r.__busy) return; r.__busy = true;
-      G.timeline({ onComplete: function () { r.__busy = false; } })
+      if (r.__busy) return; r.__busy = 'swat';
+      r.__tl = G.timeline({ onComplete: function () { r.__busy = 0; r.__tl = null; } })
         .to(r, { rotation: -16, y: -10 * scale, duration: .12, ease: 'power3.out' })
         .to(r, { rotation: 0, y: 0, duration: .26, ease: 'power2.inOut' });
     }
