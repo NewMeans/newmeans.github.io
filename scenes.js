@@ -293,7 +293,7 @@
     }
     function jump(r) {
       if (r.__busy === 'jump') return;
-      r.__busy = 'jump'; hop(r, 86, .3, .3);
+      r.__busy = 'jump'; hop(r, 88, .3, .42);
     }
     function swat(r) {
       if (r.__busy) return; r.__busy = 'swat';

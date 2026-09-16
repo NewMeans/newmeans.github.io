@@ -289,7 +289,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .crew{margin:auto;border:none;padding:0;background:none;max-width:min(92vw,360px)}
 .crew::backdrop{background:rgba(36,33,29,.34);backdrop-filter:blur(3px)}
 .crew__in{position:relative;overflow:hidden;background:var(--bg);border:1.5px solid var(--fur,var(--m-400));border-radius:var(--r-tile);
-  padding:24px 26px 26px;text-align:center;box-shadow:0 3px 0 var(--rim,var(--m-600)),0 30px 70px rgba(36,33,29,.2)}
+  padding:24px 26px 26px;text-align:center}
 .crew__close{position:absolute;z-index:2;right:12px;top:12px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--text-2)}
 .crew__close svg{width:17px;height:17px}
 .crew__close:hover{background:var(--surface);color:var(--text-1)}

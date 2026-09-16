@@ -8,6 +8,7 @@
   var root = document.querySelector('[data-configurator]'); if (!root || !window.TyperKeyboard) return;
   var P = window.NewMeansProduct;
   var SHOP = 'assets/shop/';
+  var BOX_AR = 1354 / 1222;                 // the monitor slot never changes shape
   var MON = { '2000': { inset: '11% 9% 22% 9%', ar: '1354/1222' }, '2001': { inset: '4% 4% 24% 4%', ar: '1380/1134' }, '2002': { inset: '4% 4% 24% 4%', ar: '1381/1134' }, '2003': { inset: '6% 6% 33% 6%', ar: '1428/1208' } };
   var PLUG = { '3000': 86, '3001': 45, '3002': 80, '3003': 80, '3004': 80, '3005': 80, '3007': 59, '3008': 80, '3009': 80, '3010': 80, '3011': 80, '3012': 80 };
   var KEYS = 'qwertyasdfghzxcvbn';
@@ -56,7 +57,16 @@
       cable.hidden = !item.cable; if (item.cable) { cable.src = SHOP + item.cable; cable.style.setProperty('--plug-y', (PLUG[item.id] || 80) + '%'); }
       paint(item.bg);
     }
-    if (kind === 'monitor') { monImg.src = SHOP + item.sprite; var m = MON[item.id] || MON['2000']; monBox.style.setProperty('--ar', m.ar); screen.style.setProperty('--inset', m.inset); screen.style.setProperty('--fg', item.fg); }
+    if (kind === 'monitor') {
+      // the box is fixed at the tallest monitor's shape; each sprite sits in it bottom-aligned,
+      // so the screen inset has to be re-expressed against the box rather than the sprite
+      monImg.src = SHOP + item.sprite;
+      var m = MON[item.id] || MON['2000'], ar = m.ar.split('/'), a = +ar[0] / +ar[1];
+      var boxH = 1 / BOX_AR, imgH = 1 / a, k = imgH / boxH, top = (1 - k) * 100;
+      var v = m.inset.split(/\s+/).map(parseFloat);                  // top right bottom left, in %
+      screen.style.setProperty('--inset', (top + v[0] * k).toFixed(2) + '% ' + v[1] + '% ' + (v[2] * k).toFixed(2) + '% ' + v[3] + '%');
+      screen.style.setProperty('--fg', item.fg);
+    }
     if (kind === 'switch') { TyperKeyboard.setSwitch(kb, item.id); if (P) P.sound.set(item.id); }
     if (kind === 'sculpture') sculpt.src = SHOP + item.sprite;
     if (kind === 'ball') { var play = document.querySelector('[data-typer-play]'); if (play && play.__playApi) play.__playApi.setBall(SHOP + item.sprite); }
@@ -126,6 +136,29 @@
     [7, 8, 9].forEach(function (i, k) { setTimeout(function () { var c = caps[i]; if (!c) return; c.classList.add('is-active'); setTimeout(function () { c.classList.remove('is-active'); }, 120); }, 1200 + k * 180); });
     if (soundBtn) setTimeout(function () { soundBtn.classList.add('is-cue'); setTimeout(function () { soundBtn.classList.remove('is-cue'); }, 2300); }, 1700);
   }
+
+  // ------------------------------------------------ the Lo-Fi the game plays, on demand
+  var BGM = [
+    ['cassette-tape-heaven', 'Cassette Tape Heaven'], ['closed-lp-bar', 'Closed LP Bar'],
+    ['lost-black-vinyl', 'Lost Black Vinyl'], ['yellow-curtain', 'Yellow Curtain'], ['serene-flow', 'Serene Flow']
+  ];
+  (function () {
+    var btn = root.querySelector('[data-lofi]'); if (!btn) return;
+    var label = btn.querySelector('.lofi__t'), audio = null, at = (Math.random() * BGM.length) | 0;
+    function load(i) {
+      at = (i + BGM.length) % BGM.length;
+      if (!audio) { audio = new Audio(); audio.volume = .42; audio.addEventListener('ended', function () { load(at + 1); audio.play(); }); }
+      audio.src = 'assets/audio/bgm/' + BGM[at][0] + '.m4a';
+      label.textContent = BGM[at][1];
+    }
+    btn.addEventListener('click', function () {
+      var on = btn.getAttribute('aria-pressed') === 'true';
+      if (on) { if (audio) audio.pause(); btn.setAttribute('aria-pressed', 'false'); label.textContent = 'Lo-Fi'; return; }
+      if (!audio || !audio.src) load(at);
+      var p = audio.play(); if (p && p.catch) p.catch(function () { });
+      btn.setAttribute('aria-pressed', 'true'); label.textContent = BGM[at][1];
+    });
+  })();
 
   // ------------------------------------------------ start
   P.catalog().then(function (c) {

@@ -36,7 +36,7 @@
 
       "typer.meta.title": "Typer: 기계식 키보드 타건음 아케이드",
       "typer.meta.description": "키캡을 부수며 타건음을 듣는 벽돌깨기 게임. 스위치와 키캡을 바꾸고 책상을 꾸며보세요.",
-      "typer.nav.reviews": "후기", "typer.nav.get": "다운로드", "typer.shots": "Typer 화면 열 장. 옆으로 밀어서 볼 수 있습니다.",
+      "typer.shots": "Typer 화면 열 장. 옆으로 밀어서 볼 수 있습니다.", "typer.lofi": "Lo-Fi 틀기",
       "typer.group.keycap": "키캡", "typer.group.frame": "프레임", "typer.group.monitor": "모니터", "typer.group.switch": "스위치", "typer.group.sculpture": "오브제", "typer.group.ball": "볼",
       "typer.sound.on": "소리 끄기", "typer.sound.off": "소리 켜기",
       "typer.desk.hint": "아무 키나 누르기, 또는 화면을 끌어서 조준",
@@ -55,7 +55,6 @@
       "dopa.meta.title": "도파민대학교: AI 심리테스트 플랫폼",
       "dopa.meta.description": "16개 유형으로는 정의할 수 없는 우리를 위해. 채팅 기록 하나로 AI가 쓰는 나만의 연구 보고서.",
       "dopa.here": "도파민대학교",
-      "dopa.nav.how": "방법", "dopa.nav.tests": "테스트",
       "dopa.count.a": "명의 사람", "dopa.count.b": "개의 유형", "dopa.count.sr": "사람 수만큼의 유형",
       "dopa.note": "{n}개의 서로 다른 도형, 16개로 분류할 수 있을까?",
       "dopa.num.reports": "분석 완료", "dopa.num.tests": "진행 중인 연구",
@@ -104,7 +103,7 @@
 
       "typer.meta.title": "Typer: a mechanical-keyboard arcade",
       "typer.meta.description": "Break keycaps to the sound of mechanical switches. Customize your keyboard and desk in Typer.",
-      "typer.nav.reviews": "Reviews", "typer.nav.get": "Download", "typer.shots": "Ten screens from Typer. Swipe sideways.",
+      "typer.shots": "Ten screens from Typer. Swipe sideways.", "typer.lofi": "Play Lo-Fi",
       "typer.group.keycap": "Keycaps", "typer.group.frame": "Frame", "typer.group.monitor": "Monitor", "typer.group.switch": "Switch", "typer.group.sculpture": "Object", "typer.group.ball": "Ball",
       "typer.sound.on": "Turn sound off", "typer.sound.off": "Turn sound on",
       "typer.desk.hint": "Press any key, or drag on the screen to aim",
@@ -123,7 +122,6 @@
       "dopa.meta.title": "Dopamine University: AI personality tests",
       "dopa.meta.description": "For all of us that sixteen types cannot describe. One chat log, one AI-written research report.",
       "dopa.here": "Dopamine University",
-      "dopa.nav.how": "How", "dopa.nav.tests": "Tests",
       "dopa.count.a": "people", "dopa.count.b": "types", "dopa.count.sr": "As many types as there are people",
       "dopa.note": "{n} shapes, no two alike. Sort those into sixteen?",
       "dopa.num.reports": "Reports written", "dopa.num.tests": "Studies running",

@@ -702,6 +702,14 @@
       for (var i = 0; i < pool.length; i++) { r -= WEIGHT[pool[i].tier]; if (r <= 0) return pool[i]; }
       return pool[pool.length - 1];
     }
+    // the slot ticks once per word that goes past, taken from the game's own roulette blip
+    var TICK = 'assets/audio/roulette.m4a', tpool = [], tp = 0;
+    function tick() {
+      if (reduce) return;
+      if (!tpool.length) for (var i = 0; i < 6; i++) { var a = new Audio(TICK); a.volume = .32; a.preload = 'auto'; tpool.push(a); }
+      var el = tpool[tp++ % tpool.length];
+      try { el.currentTime = 0; var p = el.play(); if (p && p.catch) p.catch(function () { }); } catch (e) { }
+    }
     function spin(forced) {
       if (spinning) return; spinning = true; interacted = true;
       var next = forced || pick();
@@ -715,10 +723,13 @@
       seq.push(next);
       reel.textContent = ''; seq.forEach(function (e) { reel.appendChild(wordSpan(e)); });
       var h = slot.getBoundingClientRect().height, total = (seq.length - 1) * h, dur = reduce ? 500 : 1700, t0 = performance.now();
+      var ticked = 0;
       function step(now) {
         var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3.2);
         reel.style.transform = 'translateY(' + (-total * e).toFixed(2) + 'px)';
         reel.style.filter = k < 0.75 ? 'blur(' + (1.6 * (1 - k)).toFixed(2) + 'px)' : '';
+        var past = Math.floor(e * (seq.length - 1));       // one blip per word passing the window
+        if (past > ticked) { ticked = past; tick(); }
         if (k < 1) requestAnimationFrame(step); else land(next);
       }
       requestAnimationFrame(step);

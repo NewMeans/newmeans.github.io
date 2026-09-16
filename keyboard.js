@@ -116,7 +116,7 @@
       fill();
     };
 
-    var clipCounts = {4000:4,4001:5,4002:5,4003:5,4004:5,4005:5,4006:5};
+    var clipCounts = {4000:4,4001:5,4002:5,4003:5,4004:5,4005:5,4006:5,4007:4,4008:6};
     var switchId = '4000', soundState = 'ready', pools = {}, clipIndex = 0;
     root.dataset.soundState = soundState;
     function soundChanged(error) {
