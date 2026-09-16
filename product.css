@@ -26,10 +26,20 @@
   -webkit-mask:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
 .shots::-webkit-scrollbar{display:none}
 .shots:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:var(--r-media)}
-.shots__row{display:flex;gap:clamp(14px,2.2vw,26px);padding:8px clamp(22px,6vw,90px) 26px;width:max-content}
-.shots figure{margin:0;flex:0 0 auto;width:clamp(148px,17vw,214px);scroll-snap-align:center}
-.shots figure:nth-child(even){transform:translateY(clamp(12px,2vw,26px))}
-.shots img{width:100%;height:auto;display:block;border-radius:var(--r-media);box-shadow:0 18px 38px rgba(36,33,29,.13)}
+.shots__row{display:flex;align-items:flex-start;gap:clamp(14px,2.2vw,26px);padding:26px clamp(22px,6vw,90px) 54px;width:max-content}
+.shots figure{margin:0;flex:0 0 auto;width:clamp(148px,17vw,214px);scroll-snap-align:center;transform:translateY(var(--dy,0)) rotate(var(--rot,0))}
+/* a fixed shuffle, not a random one: the same pleasing mess every visit */
+.shots figure:nth-child(1){--dy:2px;--rot:-2.4deg}
+.shots figure:nth-child(2){--dy:24px;--rot:1.8deg}
+.shots figure:nth-child(3){--dy:8px;--rot:-1.2deg}
+.shots figure:nth-child(4){--dy:29px;--rot:2.6deg}
+.shots figure:nth-child(5){--dy:0px;--rot:-3deg}
+.shots figure:nth-child(6){--dy:19px;--rot:1.1deg}
+.shots figure:nth-child(7){--dy:11px;--rot:-1.9deg}
+.shots figure:nth-child(8){--dy:27px;--rot:2.3deg}
+.shots figure:nth-child(9){--dy:5px;--rot:-2.6deg}
+.shots figure:nth-child(10){--dy:17px;--rot:1.5deg}
+.shots img{width:100%;height:auto;display:block;border-radius:var(--r-media)}
 .covers{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:min(100%,820px);margin:0 auto}
 .cover{display:block;border-radius:var(--r-tile);overflow:hidden;background:var(--surface);text-align:left}
 .cover img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}
@@ -60,7 +70,7 @@
   .end__next{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px 14px;padding:20px 22px}
   .end__logo{grid-column:1;grid-row:1;height:26px;justify-self:start}
   .end__next .tags{grid-column:1;grid-row:2;flex:none;justify-content:flex-start}
-  .end__go{grid-column:2;grid-row:1 / span 2;align-self:center}.shots__row{gap:12px;padding:6px 22px 20px}.shots figure{width:150px}.covers{grid-template-columns:1fr}}
+  .end__go{grid-column:2;grid-row:1 / span 2;align-self:center}.shots__row{gap:12px;padding:20px 22px 44px}.shots figure{width:150px}.covers{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){[data-tilt]{transition:none}.tb__brick{transition:none}}
 
 /* ---------- a section band, then numbers and reviews: shared by both product pages ---------- */
