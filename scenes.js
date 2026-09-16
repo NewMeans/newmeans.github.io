@@ -248,15 +248,18 @@
     ceo: { role: 'CEO', name: 'Minsik Kim', nick: 'Olive', does: ['Game Client Dev', 'Web Frontend Dev', 'AI Integration Engineer', 'Design, everything at NewMeans', 'Menu Select'] },
     cto: { role: 'CTO', name: 'Minseok Chang', nick: 'Ricotta', does: ['Game Client Dev', 'Infrastructure Dev', 'AI Research Engineer', 'Swimming'] }
   };
+  var EYE = { 12: 1, 13: 1 };                  // both eyes borrow the caret, so they smile
   function buildRabbit(box, who) {
     var base = 'assets/brand/logo-pieces/';
     RP.forEach(function (p) {
       if (DROP[p[0]]) return;
+      var x = p[1], y = p[2], w = p[3], h = p[4], mask = p[0];
+      if (EYE[p[0]]) { mask = 14; var nh = w * 169 / 190; y += (h - nh) / 2; h = nh; }
       var el = document.createElement('i');
       el.className = 'rb' + (FACE[p[0]] ? ' rb--face' : '') + (p[0] in FOOT ? ' rb--paw' : '');
-      el.style.left = (p[1] - HX0) / HW * 100 + '%'; el.style.top = (p[2] - HY0) / HH * 100 + '%';
-      el.style.width = p[3] / HW * 100 + '%'; el.style.height = p[4] / HH * 100 + '%';
-      el.style.setProperty('--m', 'url("' + base + 'p' + p[0] + '.png")');
+      el.style.left = (x - HX0) / HW * 100 + '%'; el.style.top = (y - HY0) / HH * 100 + '%';
+      el.style.width = w / HW * 100 + '%'; el.style.height = h / HH * 100 + '%';
+      el.style.setProperty('--m', 'url("' + base + 'p' + mask + '.png")');
       box.appendChild(el);
     });
     if (who && GLASSES[who]) box.insertAdjacentHTML('beforeend', '<i class="rb-glass">' + GLASSES[who] + '</i>');
