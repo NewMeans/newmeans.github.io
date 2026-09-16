@@ -39,6 +39,7 @@
 /* rarity: a tag by the lever, a light sweeping across rare windows, a soft holographic wash on epic ones */
 .tier{display:inline-block;vertical-align:top;margin:.14em 0 0 .32em;font:600 11px/1 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--word);border:1.5px solid currentColor;border-radius:var(--r-pill);padding:5px 8px 6px}
 .tier[data-tier="epic"]{background:var(--word);color:var(--bg)}
+.tier--new{margin-left:.12em;border-style:dashed}
 .slot[data-tier="rare"]::after,.slot[data-tier="epic"]::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 50%,transparent 70%) no-repeat;background-size:250% 100%;animation:shimmer 3.4s ease-in-out infinite;pointer-events:none}
 @keyframes shimmer{0%{background-position:120% 0}60%,100%{background-position:-120% 0}}
 .slot[data-tier="epic"]{background-image:linear-gradient(120deg,var(--slot-bg),color-mix(in srgb,#ffd3e8 55%,var(--slot-bg)),color-mix(in srgb,#d3f0ff 55%,var(--slot-bg)),color-mix(in srgb,#fff2c9 55%,var(--slot-bg)),var(--slot-bg));background-size:300% 100%;animation:holo 7s linear infinite}
@@ -223,7 +224,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .ln{display:block;height:8px;border-radius:4px;background:var(--n-300);width:var(--w);transform-origin:left}
 .ln--title{height:16px;background:var(--n-800);width:54%;margin-bottom:6px}
 .axis{margin-top:auto;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding-top:18px}
-.dot{width:12px;height:12px;border-radius:50%;background:var(--c-400)}.dot--b{background:#79C0F1}
+.axis__dot{width:12px;height:12px;border-radius:50%;background:var(--c-400)}.axis__dot--b{background:#79C0F1}
 .track{position:relative;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--c-300),var(--n-200) 50%,#B9DCF5)}
 .needle{position:absolute;top:50%;left:50%;width:16px;height:16px;border-radius:50%;background:var(--n-800);border:3px solid var(--bg)}
 .stamp{position:absolute;right:20px;bottom:60px;width:72px;height:72px;border-radius:50%;border:3px solid var(--c-400);display:grid;place-items:center;opacity:0}

@@ -643,7 +643,7 @@
     });
 
     // ---------- the slot machine ----------
-    var slot = document.getElementById('slot'), reel = document.getElementById('reel'), lever = document.getElementById('lever'), tierTag = document.getElementById('tier');
+    var slot = document.getElementById('slot'), reel = document.getElementById('reel'), lever = document.getElementById('lever'), tierTag = document.getElementById('tier'), newTag = document.getElementById('new');
     var status = document.getElementById('hero-status'), go = document.getElementById('go');
     var current = null, lastReaction = null;
     function say(m) { if (status) status.textContent = m; }
@@ -682,6 +682,7 @@
       accRoot.querySelectorAll('[data-back]').forEach(function (a) { backRoot.appendChild(a); });
       accRoot.setAttribute('data-tier', entry.tier); if (slot) slot.setAttribute('data-tier', entry.tier);
       if (tierTag) { var rare = entry.tier === 'rare' || entry.tier === 'epic'; tierTag.hidden = !rare; tierTag.textContent = entry.tier; tierTag.setAttribute('data-tier', entry.tier); }
+      if (newTag) newTag.hidden = !!foundSet[entry.w];
       hangKeyring(entry.acc.indexOf('keyring') >= 0);
       followers = []; accRoot.querySelectorAll('[data-follow]').forEach(function (el) { var p = byId[+el.getAttribute('data-follow')]; if (p) { el.style.transformOrigin = el.getAttribute('data-origin'); followers.push({ el: el, p: p }); } });
       clearInterval(cheerTimer); cheerUntil = 0; if (entry.idle === 'cheer' && !reduce) cheerTimer = setInterval(function () { if (heroSeen) { cheerUntil = performance.now() + 900; wake(); } }, 2800);
