@@ -36,7 +36,7 @@
 
       "typer.meta.title": "Typer: 기계식 키보드 타건음 아케이드",
       "typer.meta.description": "키캡을 부수며 타건음을 듣는 벽돌깨기 게임. 스위치와 키캡을 바꾸고 책상을 꾸며보세요.",
-      "typer.nav.play": "플레이", "typer.nav.get": "다운로드",
+      "typer.nav.reviews": "후기", "typer.nav.get": "다운로드", "typer.shots": "Typer 화면 열 장. 옆으로 밀어서 볼 수 있습니다.",
       "typer.group.keycap": "키캡", "typer.group.frame": "프레임", "typer.group.monitor": "모니터", "typer.group.switch": "스위치", "typer.group.sculpture": "오브제", "typer.group.ball": "볼",
       "typer.sound.on": "소리 끄기", "typer.sound.off": "소리 켜기",
       "typer.desk.hint": "아무 키나 누르기, 또는 화면을 끌어서 조준",
@@ -105,7 +105,7 @@
 
       "typer.meta.title": "Typer: a mechanical-keyboard arcade",
       "typer.meta.description": "Break keycaps to the sound of mechanical switches. Customize your keyboard and desk in Typer.",
-      "typer.nav.play": "Play", "typer.nav.get": "Download",
+      "typer.nav.reviews": "Reviews", "typer.nav.get": "Download", "typer.shots": "Ten screens from Typer. Swipe sideways.",
       "typer.group.keycap": "Keycaps", "typer.group.frame": "Frame", "typer.group.monitor": "Monitor", "typer.group.switch": "Switch", "typer.group.sculpture": "Object", "typer.group.ball": "Ball",
       "typer.sound.on": "Turn sound off", "typer.sound.off": "Turn sound on",
       "typer.desk.hint": "Press any key, or drag on the screen to aim",
