@@ -1,8 +1,8 @@
 /* Home scenes and the Dopamine University pieces, choreographed with GSAP ScrollTrigger.
- * Typer: a ball drops out of a ceiling hole, bounces across five keycaps (x linear, y quadratic = gravity),
- *        types T Y P E R, breaks the last cap and falls into a floor hole. Scrubbed by scroll; "replay" plays it in time
- *        with a random ball from the game. Dopamine: two wordless cards; a sparkle bean bounces over message bars,
- *        then a report writes itself. Reveals happen once; progress inside a card never goes backwards (ratchet).
+ * Typer: a portal splits open, a ball rolls out, bounces across five keycaps (x linear, y quadratic = gravity)
+ *        typing T Y P E R, bounces off the last one and drops into a second portal. Scrubbed by scroll; "replay"
+ *        plays it in time with a random ball from the game. Dopamine: two wordless cards; a sparkle hops across the
+ *        tests and settles on one, then a report writes itself. Reveals happen once; progress never rewinds (ratchet).
  * Count: the big number that keeps scrambling (Dopamine page). */
 (function () {
   'use strict';
@@ -14,11 +14,19 @@
   function debounce(fn, ms) { var id; return function () { clearTimeout(id); id = setTimeout(fn, ms); }; }
 
   // ================================================================ Typer
-  var U = { W: 760, H: 420, BAND: 28, CAPTOP: 288, R: 17, CAPX: [100, 240, 380, 520, 660], APEX: [200, 172, 148, 127], SHARD: [[-90, -90], [-30, -140], [40, -130], [100, -80]] };
+  var U = {
+    W: 760, H: 420, R: 17, CAPTOP: 286,
+    CAPX: [92, 212, 332, 452, 572],
+    IN: { x: 92, y: 40 }, OUT: { x: 700, y: 392 },
+    APEX: [176, 152, 132, 115], LAST: 150,
+    GAP: 20                                   // how far each portal half slides apart
+  };
+  var SPIN = 360 / (2 * Math.PI * U.R);        // degrees per stage unit rolled
   function mountTyper(root) {
     var pin = root.querySelector('.scene__pin'), stage = root.querySelector('.stage'), ball = stage.querySelector('.ball');
     var caps = [].slice.call(stage.querySelectorAll('.cap')), letters = caps.map(function (c) { return c.querySelector('b'); });
-    var shards = [].slice.call(stage.querySelectorAll('.shards i')), holeT = stage.querySelector('.hole--top'), holeB = stage.querySelector('.hole--bottom');
+    var pIn = stage.querySelector('.portal--in'), pOut = stage.querySelector('.portal--out');
+    var halves = function (p) { return [p.querySelector('.portal__t'), p.querySelector('.portal__b')]; };
     var logo = root.querySelector('.scene__logo'), tags = root.querySelector('.tags'), act = root.querySelector('.scene__act'), replayBtn = root.querySelector('.replay');
     'TYPER'.split('').forEach(function (ch, i) { if (letters[i]) letters[i].textContent = ch; });
     var balls = [ball.getAttribute('src')];
@@ -28,33 +36,47 @@
     function build(dur, replaying) {
       measure();
       var tl = G.timeline({ paused: true, defaults: { ease: 'none' } });
-      var yRest = (U.CAPTOP - U.R) * s, yTop = (U.BAND - U.R - 8) * s, yOut = (U.H + U.R + 8) * s;
-      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.CAPX[0] * s, y: yTop, opacity: 1 }, 0);
-      tl.set(holeT, { xPercent: -50, yPercent: 50, scale: 0 }, 0); tl.set(holeB, { xPercent: -50, yPercent: -50, scale: 0 }, 0);
-      tl.set(letters, { opacity: 0 }, 0); tl.set(shards, { x: 0, y: 0, rotation: 0, opacity: 0 }, 0); tl.set(caps[4], { opacity: 1, scale: 1 }, 0);
+      var yRest = (U.CAPTOP - U.R) * s, gap = U.GAP * s, rot = 0;
+      var hi = halves(pIn), ho = halves(pOut);
+      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: U.IN.y * s, scale: .25, opacity: 0, rotation: 0 }, 0);
+      tl.set(hi.concat(ho), { y: 0 }, 0);
+      tl.set([pIn, pOut], { opacity: 0 }, 0);
+      tl.set(letters, { opacity: 0 }, 0);
       tl.fromTo(logo, { scale: 1.08 }, { scale: 1, duration: dur * .08 }, 0);
       tl.fromTo(tags, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: dur * .08 }, 0);
       tl.fromTo(caps, { y: 60 * s, opacity: 0 }, { y: 0, opacity: 1, duration: dur * .06, stagger: dur * .012 }, 0);
-      tl.to(holeT, { scale: 1, duration: dur * .05 }, dur * .08);
-      tl.to(ball, { y: yRest, duration: dur * .11, ease: 'power2.in' }, dur * .13);
-      tl.to(holeT, { scale: 0, duration: dur * .06 }, dur * .16);
+      // the portal fades in, splits open, and the ball rolls out from between the halves
+      tl.to(pIn, { opacity: 1, duration: dur * .03 }, dur * .05);
+      tl.to(hi[0], { y: -gap, duration: dur * .06, ease: 'power2.out' }, dur * .08).to(hi[1], { y: gap, duration: dur * .06, ease: 'power2.out' }, dur * .08);
+      tl.to(ball, { scale: 1, opacity: 1, duration: dur * .04 }, dur * .11);
+      rot += 30;
+      tl.to(ball, { y: yRest, rotation: rot, duration: dur * .10, ease: 'power2.in' }, dur * .14);
+      tl.to(hi[0], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .18).to(hi[1], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .18);
+      tl.to(pIn, { opacity: 0, duration: dur * .04 }, dur * .25);
       function forward() { return replaying || (st && st.direction === 1); }
-      for (var i = 0; i < 5; i++) {
-        var th = dur * (.24 + .12 * i);
-        tl.to(caps[i], { y: 4 * s, duration: dur * .02 }, th).to(caps[i], { y: 0, duration: dur * .03 }, th + dur * .02);
-        tl.set(letters[i], { opacity: 1 }, th);
-        tl.call(function () { if (touched && sound && forward()) sound.play(); }, null, th);
-        if (i < 4) {
-          var d = dur * .12;
-          tl.to(ball, { x: U.CAPX[i + 1] * s, duration: d }, th);
-          tl.to(ball, { y: yRest - U.APEX[i] * s, duration: d / 2, ease: 'power1.out' }, th).to(ball, { y: yRest, duration: d / 2, ease: 'power1.in' }, th + d / 2);
-        }
+      function press(i, at) {
+        tl.to(caps[i], { y: 4 * s, duration: dur * .02 }, at).to(caps[i], { y: 0, duration: dur * .03 }, at + dur * .02);
+        tl.set(letters[i], { opacity: 1 }, at);
+        tl.call(function () { if (touched && sound && forward()) sound.play(); }, null, at);
       }
-      var t5 = dur * .72;
-      tl.to(caps[4], { opacity: 0, scale: .72, duration: dur * .04 }, t5);
-      shards.forEach(function (sh, i) { tl.fromTo(sh, { x: 0, y: 0, rotation: 0, opacity: 1 }, { x: U.SHARD[i][0] * s, y: (U.SHARD[i][1] + 110) * s, rotation: 220, opacity: 0, duration: dur * .12, ease: 'power1.out' }, t5); });
-      tl.to(ball, { y: yOut, duration: dur * .12, ease: 'power2.in' }, t5);
-      tl.to(holeB, { scale: 1, duration: dur * .04 }, dur * .76).to(holeB, { scale: 0, duration: dur * .04 }, dur * .85);
+      press(0, dur * .24);
+      for (var i = 0; i < 4; i++) {                      // four bounces between the keycaps
+        var t0 = dur * (.24 + .12 * i), d = dur * .12;
+        rot += (U.CAPX[i + 1] - U.CAPX[i]) * SPIN;
+        tl.to(ball, { x: U.CAPX[i + 1] * s, rotation: rot, duration: d }, t0);
+        tl.to(ball, { y: yRest - U.APEX[i] * s, duration: d / 2, ease: 'power1.out' }, t0).to(ball, { y: yRest, duration: d / 2, ease: 'power1.in' }, t0 + d / 2);
+        press(i + 1, t0 + d);
+      }
+      // off the last keycap, over the floor, down into the second portal
+      var t5 = dur * .72, d5 = dur * .14;
+      rot += (U.OUT.x - U.CAPX[4]) * SPIN;
+      tl.to(ball, { x: U.OUT.x * s, rotation: rot, duration: d5 }, t5);
+      tl.to(ball, { y: yRest - U.LAST * s, duration: d5 * .4, ease: 'power1.out' }, t5).to(ball, { y: U.OUT.y * s, duration: d5 * .6, ease: 'power1.in' }, t5 + d5 * .4);
+      tl.to(pOut, { opacity: 1, duration: dur * .03 }, dur * .73);
+      tl.to(ho[0], { y: -gap, duration: dur * .05, ease: 'power2.out' }, dur * .76).to(ho[1], { y: gap, duration: dur * .05, ease: 'power2.out' }, dur * .76);
+      tl.to(ball, { scale: .25, opacity: 0, duration: dur * .04 }, dur * .855);
+      tl.to(ho[0], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .87).to(ho[1], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .87);
+      tl.to(pOut, { opacity: 0, duration: dur * .04 }, dur * .94);
       tl.fromTo(act, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: dur * .1 }, dur * .86);
       tl.fromTo(replayBtn, { opacity: 0 }, { opacity: 1, duration: dur * .06 }, dur * .94);
       return tl;
@@ -98,29 +120,31 @@
   // ================================================================ Dopamine cards (home scene and dopamine.html hero)
   function mountDopa(root) {
     var cards = root.querySelector('[data-dopa-cards]'); if (!cards) return;
-    var c1 = cards.querySelector('.card--chat'), c2 = cards.querySelector('.card--report');
-    var bars = [].slice.call(c1.querySelectorAll('.bar')), bean = c1.querySelector('.bean');
+    var c1 = cards.querySelector('.card--tests'), c2 = cards.querySelector('.card--report');
+    var tiles = [].slice.call(c1.querySelectorAll('.tile')), bean = c1.querySelector('.bean');
     var lines = [].slice.call(c2.querySelectorAll('.ln')), track = c2.querySelector('.track'), needle = c2.querySelector('.needle'), stamp = c2.querySelector('.stamp');
     var head = root.querySelector('.scene__head'), act = root.querySelector('.scene__act');
-    var stops = [0, 2, 4], BR = 14;
-    function spot(i) { var b = bars[i].getBoundingClientRect(), c = c1.getBoundingClientRect(); return { x: b.right - c.left - 24, y: b.top - c.top - BR + 2 }; }
+    var hops = [0, 1, 2, 4], BR = 14;
+    function spot(i) { var b = tiles[i].getBoundingClientRect(), c = c1.getBoundingClientRect(); return { x: b.left - c.left + b.width / 2, y: b.top - c.top - BR + 4 }; }
+    function pick(i) { tiles.forEach(function (t, k) { t.classList.toggle('is-picked', k === i); }); }
     function beanTL() {
       var tl = G.timeline({ paused: true, defaults: { ease: 'none' } });
-      var start = { x: -30, y: -40 }, apex = [130, 100, 80], prev = start, seg = 1 / 3.2;
-      tl.set(bean, { xPercent: -50, yPercent: -50, x: start.x, y: start.y, opacity: 0 }, 0);
-      tl.set(bean, { opacity: 1 }, 0.02);
-      tl.set(bars, { y: 0 }, 0); tl.set(bars.map(function (b) { return b.querySelector('i'); }), { opacity: 0 }, 0);
-      stops.forEach(function (bi, k) {
-        var p = spot(bi), t0 = seg * k, d = seg;
-        tl.to(bean, { x: p.x, duration: d }, t0);
-        tl.to(bean, { y: Math.min(prev.y, p.y) - apex[k], duration: d / 2, ease: 'power1.out' }, t0).to(bean, { y: p.y, duration: d / 2, ease: 'power1.in' }, t0 + d / 2);
+      var start = { x: -26, y: -30 }, apex = [120, 96, 78], prev = start, seg = 1 / (hops.length - .2);
+      tl.set(bean, { xPercent: -50, yPercent: -50, x: start.x, y: start.y, opacity: 0, rotation: 0 }, 0);
+      tl.set(bean, { opacity: 1 }, .02);
+      tl.set(tiles, { y: 0 }, 0);
+      tl.call(function () { tiles.forEach(function (t) { t.classList.remove('is-hit', 'is-picked'); }); }, null, 0);
+      hops.forEach(function (ti, k) {
+        var p = spot(ti), t0 = seg * k, d = seg, last = k === hops.length - 1;
+        tl.to(bean, { x: p.x, rotation: 90 * (k + 1), duration: d }, t0);
+        tl.to(bean, { y: Math.min(prev.y, p.y) - (apex[k] || 60), duration: d / 2, ease: 'power1.out' }, t0).to(bean, { y: p.y, duration: d / 2, ease: 'power1.in' }, t0 + d / 2);
         var th = t0 + d;
-        tl.to(bars[bi], { y: 3, duration: .03 }, th).to(bars[bi], { y: 0, duration: .05 }, th + .03);
-        tl.set(bars[bi].querySelector('i'), { opacity: 1 }, th);
-        tl.call(function (el) { el.classList.add('is-read'); }, [bars[bi]], th);
+        tl.to(tiles[ti], { y: 3, duration: .03 }, th).to(tiles[ti], { y: 0, duration: .05 }, th + .03);
+        tl.call(function (el, isLast, idx) {
+          if (isLast) pick(idx); else { el.classList.add('is-hit'); setTimeout(function () { el.classList.remove('is-hit'); }, 420); }
+        }, [tiles[ti], last, ti], th);
         prev = p;
       });
-      tl.to(bean, { rotation: 90, duration: .18, ease: 'power1.out' }, seg * 3);
       return tl;
     }
     function repTL() {
@@ -141,12 +165,12 @@
     var bp = 0, rpp = 0;
     ST.create({ trigger: c1, start: 'top 78%', end: 'top 28%', onUpdate: function (self) { bp = Math.max(bp, self.progress); btl.progress(bp); if (bp > .999) showC2(); } });
     ST.create({ trigger: c2, start: 'top 82%', end: 'top 32%', onUpdate: function (self) { rpp = Math.max(rpp, self.progress); rp.progress(rpp); } });
-    bars.forEach(function (b, i) {
-      b.addEventListener('click', function () {
+    tiles.forEach(function (t, i) {
+      t.addEventListener('click', function () {
         if (bp < .999) return;
-        var p = spot(i); G.to(bean, { x: p.x, y: p.y, duration: .45, ease: 'power2.out' });
-        b.classList.add('is-read'); G.set(b.querySelector('i'), { opacity: 1 });
-        var tw = track ? track.clientWidth : 200; G.to(needle, { x: (i / (bars.length - 1) - .5) * tw * .7, duration: .5, ease: 'power2.inOut' });
+        var p = spot(i); G.to(bean, { x: p.x, y: p.y, rotation: '+=180', duration: .45, ease: 'power2.out' });
+        pick(i);
+        var tw = track ? track.clientWidth : 200; G.to(needle, { x: (i / (tiles.length - 1) - .5) * tw * .7, duration: .5, ease: 'power2.inOut' });
       });
     });
     addEventListener('resize', debounce(function () { var p = bp; btl.kill(); btl = beanTL(); btl.progress(p); }, 200));

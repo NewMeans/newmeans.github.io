@@ -27,7 +27,8 @@
       "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI 심리테스트", "tag.web": "Web",
       "cta.more": "자세히 보기", "cta.download": "다운로드", "cta.start": "테스트 시작하기", "cta.replay": "다시 보기",
       "scene.typer": "공이 키캡을 튀며 Typer를 친다",
-      "scene.dopa": "메시지가 읽히고 보고서가 써진다",
+      "scene.dopa": "테스트 하나를 고르면 써지는 보고서",
+      "studio.line": "게임 클라이언트 개발자 한 명, AI 엔지니어 한 명",
       "foot.privacy": "개인정보 처리방침",
 
       "typer.meta.title": "Typer: 기계식 키보드 타건음 아케이드",
@@ -82,7 +83,8 @@
       "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI personality test", "tag.web": "Web",
       "cta.more": "Learn more", "cta.download": "Download", "cta.start": "Start a test", "cta.replay": "Replay",
       "scene.typer": "A ball bounces across keycaps and types Typer",
-      "scene.dopa": "Messages get read and a report writes itself",
+      "scene.dopa": "One test gets picked and a report writes itself",
+      "studio.line": "One game client developer, one AI engineer",
       "foot.privacy": "Privacy",
 
       "typer.meta.title": "Typer: a mechanical-keyboard arcade",
