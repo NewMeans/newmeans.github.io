@@ -14,3 +14,11 @@ package-lock.json
 # Local-only dev helpers (local server launcher / commands) — not for the public repo.
 로컬서버.command
 .claude/commands/
+
+# Local-only working material. This is a public repo: design references,
+# captures of other sites, research notes, draft comparison boards and
+# experiments live here and must never be committed or published.
+_local/
+
+# Playwright MCP output (screenshots, snapshots, console logs)
+.playwright-mcp/

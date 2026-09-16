@@ -3,268 +3,161 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-i18n="meta.title">NewMeans — 게임과 AI를 만드는 2인 스튜디오</title>
+<title data-i18n="meta.title">NewMeans: 게임과 AI 서비스</title>
 <meta name="description" data-i18n-attr="content" data-i18n="meta.description" content="게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.">
 <meta name="theme-color" content="#FCFBF7">
 <meta property="og:type" content="website">
-<meta property="og:title" content="NewMeans — 게임과 AI를 만드는 2인 스튜디오">
+<meta property="og:title" content="NewMeans: 게임과 AI 서비스">
 <meta property="og:description" content="게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.">
 <meta property="og:image" content="https://newmeans.github.io/assets/brand/newmeans-logo.png">
 <meta property="og:url" content="https://newmeans.github.io/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wanteddev/wanted-sans@v1.0.3/packages/wanted-sans/fonts/webfonts/variable/complete/WantedSansVariable.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
-<link rel="stylesheet" href="base.css">
-<style>
-/* Home. 공용 시스템은 base.css, 데모 모듈(logo.js/keyboard.js)은 자체 CSS 주입.
-   구조: 살아있는 로고가 헤드라인 — 카피는 캡션 한 줄.
-   제품은 풀블리드 컬러 밴드(민트 세계 / 코랄 세계). */
-
-/* ---------- HERO : 토끼가 곧 헤드라인 ---------- */
-.hero{padding:clamp(36px,6vw,68px) 0 clamp(44px,7vw,84px)}
-.hero__in{display:flex; flex-direction:column; align-items:center; text-align:center}
-.sig-logo{width:min(92%,560px)}
-.hero__tag{margin-top:clamp(18px,3vw,28px); font-size:clamp(17px,2vw,22px); font-weight:600; letter-spacing:-.015em}
-.hero__cta{margin-top:26px; display:flex; align-items:center; gap:22px; flex-wrap:wrap; justify-content:center}
-.loaded .hero__in > *{animation:rise .7s var(--ease) both}
-.loaded .hero__in > *:nth-child(2){animation-delay:.08s}
-.loaded .hero__in > *:nth-child(3){animation-delay:.16s}
-@keyframes rise{from{opacity:0; transform:translateY(14px)}to{opacity:1; transform:none}}
-@media (prefers-reduced-motion:reduce){.loaded .hero__in > *{animation:none}}
-
-/* ---------- 제품 밴드 : 제품마다 하나의 세계 ---------- */
-.band{padding:clamp(52px,8vw,100px) 0}
-.band--typer{background:var(--mint-bg)}
-.band--dopa{background:var(--coral-bg)}
-.band__grid{display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,5vw,64px); align-items:center}
-.band__demo{display:flex; align-items:center; justify-content:center}
-.work__wordmark-link{display:inline-block; transition:opacity .18s}
-.work__wordmark-link:hover{opacity:.7}
-.work__wordmark{height:clamp(30px,3.8vw,38px); width:auto}
-.work__wordmark--dopa{height:clamp(40px,5.2vw,54px)}
-.work__kind{margin-top:13px; font-size:14px; font-weight:500; color:var(--ink-2)}
-.work__desc{margin-top:14px; font-size:1.03rem; color:var(--ink); max-width:33ch; opacity:.86}
-.work__proof{margin-top:12px; font-size:13.5px; font-weight:700; color:var(--mint-text)}
-.work__more{margin-top:20px}
-.band--dopa .link:hover{color:var(--coral-text); text-decoration-color:var(--coral-text)}
-
-.kbd-mount{width:min(100%,400px)}
-.chat{width:min(100%,370px); background:var(--card); border-radius:18px;
-  padding:clamp(15px,2vw,19px); box-shadow:0 18px 40px rgba(198,66,55,.14)}
-.chat__bar{display:flex; align-items:center; gap:7px; margin-bottom:13px; padding-bottom:11px; border-bottom:1px solid var(--line-2)}
-.chat__ava{width:25px; height:25px; border-radius:8px; background:var(--coral); display:grid; place-items:center; flex:none}
-.chat__ava img{width:16px; height:16px}
-.chat__who{font-weight:600; font-size:13px}
-.chat__tag{margin-left:auto; font-size:11.5px; color:var(--coral-text); font-weight:600}
-.bub{max-width:82%; padding:10px 13px; border-radius:14px; font-size:13.5px; margin-bottom:8px; line-height:1.45;
-  opacity:0; transform:translateY(8px); transition:.35s var(--ease)}
-.bub.show{opacity:1; transform:none}
-.bub--in{background:var(--paper); border:1px solid var(--line-2); border-bottom-left-radius:5px}
-.bub--out{background:var(--coral); color:#fff; margin-left:auto; border-bottom-right-radius:5px}
-.rep{margin-top:4px; display:flex; align-items:center; gap:10px; padding:11px 13px; border-radius:13px;
-  background:var(--mint-bg); opacity:0; transform:translateY(8px); transition:.4s var(--ease)}
-.rep.show{opacity:1; transform:none}
-.rep__b{width:26px; height:26px; border-radius:50%; background:var(--mint-text); color:#fff; display:grid; place-items:center; flex:none; font-weight:700; font-size:14px}
-.rep b{color:var(--mint-text); font-size:13px} .rep small{display:block; color:var(--ink-3); font-size:11px; margin-top:1px}
-
-/* ---------- STUDIO ---------- */
-.studio{padding:clamp(52px,8vw,96px) 0 0}
-.studio__grid{display:grid; grid-template-columns:.9fr 1.1fr; gap:clamp(26px,5vw,60px); align-items:start}
-.studio__lead{font-weight:700; font-size:clamp(20px,2.4vw,27px); line-height:1.3; letter-spacing:-.02em; margin-top:14px}
-.studio__body{color:var(--ink-2); font-size:1.03rem}
-.studio__body p+p{margin-top:14px}
-.roles{margin-top:22px; display:grid}
-.role{display:flex; gap:14px; align-items:baseline; padding:11px 0; border-top:1px solid var(--line-2)}
-.role b{font-weight:600; flex:none; width:8.5em; color:var(--ink)}
-.role span{color:var(--ink-2); font-size:.96rem}
-
-@media (max-width:860px){
-  .sig-logo{width:min(96%,440px)}
-  .band__grid{grid-template-columns:1fr; gap:24px}
-  .band__text{order:1} .band__demo{order:2}
-  .studio__grid{grid-template-columns:1fr; gap:16px}
-}
-</style>
+<link rel="stylesheet" href="base.css?v=20260917-59">
+<link rel="stylesheet" href="product.css?v=20260917-59">
+<link rel="stylesheet" href="home.css?v=20260917-59">
 </head>
-<body>
+<body class="home">
 <a class="skip-link" href="#works" data-i18n="nav.skip">본문으로 건너뛰기</a>
 
-<header class="nav">
+<header class="nav nav--wide">
   <div class="wrap nav__in">
     <a class="nav__brand" href="#top" aria-label="NewMeans"><img class="nav__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
     <div class="nav__spacer"></div>
     <nav class="nav__links" aria-label="Primary">
-      <a href="#works" data-i18n="nav.works">제품</a>
+      <a class="is-here" href="#works" data-i18n="nav.works">제품</a>
       <a href="#studio" data-i18n="nav.studio">스튜디오</a>
     </nav>
+    <div class="nav__spacer"></div>
     <div class="nav__tools">
       <div class="lang" role="group" aria-label="Language">
         <button type="button" data-lang-set="ko">KO</button><span>·</span><button type="button" data-lang-set="en">EN</button>
       </div>
-      <button class="snd" id="snd" aria-pressed="false" aria-label="Toggle sound" title="Sound">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M4 9v6h4l5 4V5L8 9H4z"/><path class="wave" d="M16 8.5a4 4 0 0 1 0 7"/>
-        </svg>
-      </button>
+      <a class="btn btn--primary btn--sm" href="mailto:newmeans.dev@gmail.com" data-i18n="home.mail">메일 보내기</a>
     </div>
   </div>
 </header>
 
 <main id="top">
-  <!-- HERO : 소개는 얘가 합니다 -->
-  <section class="hero">
-    <div class="wrap hero__in">
-      <div class="sig-logo" data-newmeans-logo></div>
-      <h1 class="hero__tag" data-i18n="home.tag">게임과 AI를 만드는 2인 스튜디오</h1>
-      <div class="hero__cta">
-        <a class="btn btn--solid" href="#works"><span data-i18n="home.cta1">제품 보기</span><span class="arw">→</span></a>
-        <a class="link" href="mailto:newmeans.dev@gmail.com" data-i18n="home.cta2">문의하기</a>
+  <section class="hero" id="hero" aria-label="NewMeans">
+    <div class="copy">
+      <h1 class="headline display">Life, a little more<br><span class="nowrap"><span class="slot" id="slot"><span class="reel" id="reel"><span class="word"><span class="w">joyful</span><span class="dot">.</span></span></span></span><button type="button" class="lever" id="lever" data-i18n="home.lever" data-i18n-attr="aria-label" aria-label="단어 다시 뽑기"><svg viewBox="0 0 46 96" aria-hidden="true"><ellipse cx="23" cy="86" rx="16" ry="7" fill="#3B3732"/><rect x="17" y="74" width="12" height="12" rx="4" fill="#706B64"/><rect class="stick" x="20" y="14" width="6" height="64" rx="3" fill="#3B3732"/><circle class="knob" cx="23" cy="14" r="12" fill="var(--word)"/></svg></button><span class="tiers"><span class="tier" id="tier" hidden></span><span class="tier tier--new" id="new" hidden>NEW</span></span></span></h1>
+      <p class="sub">Games and AI services for everyday joy</p>
+      <a class="go" id="go" hidden><img src="assets/brand/typer-icon.png" alt="" width="22" height="22"><span class="go__t"></span><span class="go__a" aria-hidden="true">→</span></a>
+    </div>
+    <div class="brandwrap">
+      <div class="acc acc--back" id="acc-back" aria-hidden="true"></div>
+      <div class="brandart" id="brandart" data-nm-hero data-acc="acc" data-back="acc-back" data-pts="pts" role="img" aria-label="NewMeans"></div>
+      <div class="acc" id="acc" aria-hidden="true"></div>
+      <div class="pts" id="pts" aria-hidden="true"></div>
+    </div>
+    <div class="sr" id="hero-keys"></div>
+    <p class="sr" id="hero-status" role="status" aria-live="polite"></p>
+    <div class="bottom">
+      <div class="corner corner--left"><span>Seoul, Korea</span><button type="button" class="wordsbtn" id="words-btn" aria-haspopup="dialog" aria-controls="words"></button></div>
+      <a class="corner corner--right" href="#works" data-i18n="home.cta1" data-i18n-attr="aria-label" aria-label="제품 보기"><svg viewBox="0 0 16 22" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 1v19"/><path d="M2 14l6 6 6-6"/></svg></a>
+    </div>
+  </section>
+
+  <!-- Typer: the stage plays itself once the section is on screen. scenes.js drives it. -->
+  <section class="scene scene--typer" id="works" data-scene="typer" aria-label="Typer">
+    <div class="scene__pin"><div class="wrap scene__in">
+      <p class="sec">Product <b>01</b></p>
+      <div class="scene__head">
+        <div class="tags"><span class="tag" data-i18n="tag.game">Game</span><span class="tag" data-i18n="tag.mobile">Mobile</span></div>
+        <a class="scene__logo" href="typer.html"><img src="assets/brand/typer-logo.png" alt="Typer"></a>
+      </div>
+      <div class="stage stage--typer" role="img" data-i18n="scene.typer" data-i18n-attr="aria-label" aria-label="공이 키캡 다섯 개를 튀기며 Typer를 이루는 것들을 켠다">
+        <div class="portal portal--in" aria-hidden="true"><i class="portal__wall"></i><i class="portal__void"></i></div>
+        <div class="portal portal--out" aria-hidden="true"><i class="portal__wall"></i><i class="portal__void"></i></div>
+        <div class="cap" style="--x:140"><b></b></div>
+        <div class="cap" style="--x:260"><b></b></div>
+        <div class="cap" style="--x:380"><b></b></div>
+        <div class="cap" style="--x:500"><b></b></div>
+        <div class="cap" style="--x:620"><b></b></div>
+        <div class="ballclip" aria-hidden="true"><img class="ball" src="assets/shop/ball/0000_0.png" alt="" draggable="false"></div>
+        <div class="lip lip--in" aria-hidden="true"><i class="portal__wall"></i><i class="portal__void"></i></div>
+        <div class="lip lip--out" aria-hidden="true"><i class="portal__wall"></i><i class="portal__void"></i></div>
+      </div>
+      <p class="scene-line" data-i18n="typer.line">키보드, 게임, ASMR, 나만의 방. 그리고 Lo-Fi 음악</p>
+      <div class="scene__act">
+        <a class="btn btn--brand btn--lg" href="typer.html" data-i18n="cta.more">자세히 보기</a>
+        <button type="button" class="btn btn--icon replay" data-i18n="cta.replay" data-i18n-attr="aria-label" aria-label="다시 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- Dopamine University: shapes keep arriving, gathering and going. No two the same. -->
+  <section class="scene scene--dopa" id="dopa" data-scene="dopa" aria-label="Dopamine University">
+    <div class="wrap scene__in">
+      <p class="sec">Product <b>02</b></p>
+      <div class="scene__head">
+        <div class="tags"><span class="tag" data-i18n="tag.aitest">AI 심리테스트</span><span class="tag" data-i18n="tag.web">Web</span></div>
+        <a class="scene__logo scene__logo--dopa" href="dopamine.html"><img src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
+      </div>
+      <div class="blobs" data-dopa-blobs role="img" data-i18n="scene.dopa" data-i18n-attr="aria-label" aria-label="모였다 흩어지는 도형들"></div>
+      <p class="scene-line" data-i18n="dopa.me">16개 유형으로는 담을 수 없는 나.</p>
+      <div class="scene__act">
+        <a class="btn btn--brand btn--lg" href="dopamine.html" data-i18n="cta.more">자세히 보기</a>
       </div>
     </div>
   </section>
 
-  <!-- TYPER : 민트 세계 -->
-  <section class="band band--typer" id="works">
-    <div class="wrap band__grid">
-      <div class="band__text" data-reveal>
-        <a class="work__wordmark-link" href="typer.html"><img class="work__wordmark" src="assets/brand/typer-logo.png" alt="Typer"></a>
-        <p class="work__kind" data-i18n="home.typer.kind">게임 · iOS / Android</p>
-        <p class="work__desc" data-i18n="home.typer.desc">기계식 키보드 타건음 아케이드. 공으로 키캡 블록을 부수고, 스위치로 소리를 바꾸고, 코인으로 책상을 꾸미는 게임.</p>
-        <p class="work__proof" data-i18n="home.typer.proof">다운로드 30,000+ · 평점 4.74 · 유료 마케팅 없이</p>
-        <p class="work__more"><a class="link" href="typer.html"><span data-i18n="home.typer.more">Typer 보기</span><span class="arw">→</span></a></p>
-      </div>
-      <div class="band__demo" data-reveal>
-        <div class="kbd-mount" data-typer-keyboard data-base="assets/desk/"></div>
+  <!-- the studio: the two of us, running, with whatever comes at us -->
+  <section class="studio" id="studio" aria-label="NewMeans">
+    <div class="wrap studio__top">
+      <p class="sec">Studio</p>
+      <h2 class="studio__title" data-i18n="studio.title">만드는 사람들</h2>
+    </div>
+    <div class="run" data-runner role="img" data-i18n="studio.run" data-i18n-attr="aria-label" aria-label="두 사람이 함께 달린다">
+      <div class="run__obs"></div>
+      <div class="run__crew">
+        <div class="runner runner--ceo" data-who="ceo"><div class="runner__art"></div><span class="runner__tag"><b>CEO</b><span>Minsik Kim</span></span></div>
+        <div class="runner runner--cto" data-who="cto"><div class="runner__art"></div><span class="runner__tag"><b>CTO</b><span>Minseok Chang</span></span></div>
       </div>
     </div>
   </section>
 
-  <!-- DOPAMINE : 코랄 세계 -->
-  <section class="band band--dopa" id="dopa">
-    <div class="wrap band__grid">
-      <div class="band__demo" data-reveal>
-        <div class="chat" id="chat">
-          <div class="chat__bar">
-            <span class="chat__ava"><img src="assets/brand/dopamine-symbol.png" alt=""></span>
-            <span class="chat__who" data-i18n="home.dopa.who">카카오톡 대화</span>
-            <span class="chat__tag" data-i18n="home.dopa.tag">AI 분석 중</span>
-          </div>
-          <div class="bub bub--in" data-step data-i18n="home.dopa.m1">나 요즘 자꾸 밤에 폰만 봐 ㅠ</div>
-          <div class="bub bub--out" data-step data-i18n="home.dopa.m2">오 그거 도파민 신호일지도?</div>
-          <div class="rep" data-step>
-            <span class="rep__b">✓</span>
-            <span><b data-i18n="home.dopa.result">분석 완료 · 자극 추구형</b><small data-i18n="home.dopa.resultSub">AI 심리 리포트 생성됨</small></span>
-          </div>
-        </div>
-      </div>
-      <div class="band__text" data-reveal>
-        <a class="work__wordmark-link" href="dopamine.html"><img class="work__wordmark work__wordmark--dopa" src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
-        <p class="work__kind" data-i18n="home.dopa.kind">AI 심리테스트 · Web</p>
-        <p class="work__desc" data-i18n="home.dopa.desc">카카오톡 대화를 분석해 심리 리포트를 써주는 AI. 정해진 유형 없이, 2,000명이면 2,000개의 결과.</p>
-        <p class="work__more"><a class="link" href="dopamine.html"><span data-i18n="home.dopa.more">도파민대학교 보기</span><span class="arw">→</span></a></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- STUDIO -->
-  <section class="studio" id="studio">
-    <div class="wrap studio__grid">
-      <div>
-        <h2 data-i18n="home.studio.title">스튜디오</h2>
-        <p class="studio__lead" data-i18n="home.studio.lead">아이디어부터 운영까지, 두 사람.</p>
-      </div>
-      <div class="studio__body">
-        <p data-i18n="home.studio.p1">게임 클라이언트 개발자와 AI 엔지니어의 조합. 기획·개발·디자인·운영 전부 내부 작업.</p>
-        <p data-i18n="home.studio.p2">Typer는 “벽돌깨기에 타건음을 입히면 어떨까”라는 아이디어에서 시작해, 지금은 177개국에 출시된 게임.</p>
-        <div class="roles">
-          <div class="role"><b data-i18n="home.role1.n">클라이언트 · 게임</b><span data-i18n="home.role1.d">기획 · 게임 개발 · 디자인 · 운영</span></div>
-          <div class="role"><b data-i18n="home.role2.n">AI · 서버</b><span data-i18n="home.role2.d">AI · 풀스택 · 빌드/배포 · QA 자동화</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
 </main>
-
-<footer class="foot" id="footer">
-  <div class="wrap foot__grid">
-    <div class="foot__brand">
-      <img class="foot__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
-      <p class="foot__say" data-i18n="foot.say">게임과 AI를 만드는 2인 스튜디오</p>
-    </div>
-    <div class="foot__col">
-      <h4 data-i18n="foot.products">제품</h4>
-      <a href="typer.html">Typer</a>
-      <a href="dopamine.html" data-i18n="foot.dopa">도파민대학교</a>
-    </div>
-    <div class="foot__col">
-      <h4 data-i18n="foot.contact">연락</h4>
-      <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
-      <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://dodae.me/" target="_blank" rel="noopener">dodae.me</a>
-    </div>
+<dialog class="crew" id="crew" aria-labelledby="crew-name">
+  <div class="crew__in">
+    <button type="button" class="crew__close" data-crew-close data-i18n="crew.close" data-i18n-attr="aria-label" aria-label="닫기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="crew__art" data-crew-art aria-hidden="true"></div>
+    <p class="crew__role" data-crew-role></p>
+    <h2 class="crew__name" id="crew-name" data-crew-name></h2>
+    <p class="crew__nick" data-crew-nick></p>
+    <ul class="crew__list" data-crew-list></ul>
   </div>
-  <div class="wrap foot__base">
-    <span>© 2026 NewMeans</span>
-    <span>Typer · Dopamine University</span>
+</dialog>
+
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <a href="#top" aria-label="NewMeans"><img class="foot__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
+    <a href="typer.html">Typer</a>
+    <a href="dopamine.html" data-i18n="dopa.here">도파민대학교</a>
+    <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
+    <a href="TyperHome/privacy.html" data-i18n="foot.privacy">개인정보 처리방침</a>
+    <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
+    <span class="foot__copy">© 2026 NewMeans, Seoul</span>
   </div>
 </footer>
 
-<script src="i18n.js" defer></script>
-<script src="logo.js" defer></script>
-<script src="keyboard.js" defer></script>
-<script>
-(function(){
-  "use strict";
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  requestAnimationFrame(function(){ document.body.classList.add('loaded'); });
+<div class="cursor" id="cursor" data-state="" aria-hidden="true">
+  <svg class="c-spark" viewBox="0 0 48 48"><circle cx="12" cy="11" r="4" fill="none" stroke="currentColor" stroke-width="3.2"/><path d="M30 16v22M19 27h22M22.5 19.5l15 15M37.5 19.5l-15 15" stroke="currentColor" stroke-width="4.2" stroke-linecap="round"/></svg>
+  <svg class="c-hand" viewBox="0 0 48 48"><path d="M16 26V12a3 3 0 1 1 6 0v10m0-11a3 3 0 1 1 6 0v11m0-8a3 3 0 1 1 6 0v14c0 8-4.5 12-12 12s-12-4-12-12v-6a3 3 0 1 1 6 0" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/></svg>
+  <svg class="c-grab" viewBox="0 0 48 48"><path d="M13 25v-3a3 3 0 1 1 6 0v-2a3 3 0 1 1 6 0v2a3 3 0 1 1 6 0v1a3 3 0 1 1 6 0v6c0 8-4.5 12-12 12s-12-4-12-12z" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6" stroke-linejoin="round"/></svg>
+  <svg class="c-pull" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6"/><path d="M24 13v20M16 26l8 8 8-8" fill="none" stroke="#3B3732" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  <svg class="c-tap" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6"/><circle cx="24" cy="24" r="7" fill="currentColor"/></svg>
+</div>
 
-  /* 로고 셀프 데모 — 설명 라벨 대신 직접 보여주기 */
-  if(!reduce){
-    setTimeout(function(){
-      var el=document.querySelector('[data-newmeans-logo]');
-      if(window.NewMeansLogo && el) NewMeansLogo.poke(el);
-    }, 1500);
-  }
-
-  /* 키보드 데모 타건음 */
-  var actx=null, on=false, sndBtn=document.getElementById('snd');
-  function ensure(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(actx&&actx.state==='suspended') actx.resume(); }
-  sndBtn.addEventListener('click', function(){ on=!on; sndBtn.setAttribute('aria-pressed',on); if(on){ ensure(); thock(); } });
-  function nudge(){ sndBtn.classList.remove('nudge'); void sndBtn.offsetWidth; sndBtn.classList.add('nudge'); }
-  function thock(){
-    if(!on){ nudge(); return; }
-    if(!actx) return; var t=actx.currentTime, dur=0.05;
-    var buf=actx.createBuffer(1,actx.sampleRate*dur,actx.sampleRate), d=buf.getChannelData(0);
-    for(var i=0;i<d.length;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/d.length,2);
-    var s=actx.createBufferSource(); s.buffer=buf;
-    var bp=actx.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=1000+Math.random()*350; bp.Q.value=.8;
-    var g=actx.createGain(); g.gain.setValueAtTime(.35,t); g.gain.exponentialRampToValueAtTime(.001,t+dur);
-    s.connect(bp); bp.connect(g); g.connect(actx.destination); s.start(t);
-    var o=actx.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(185,t); o.frequency.exponentialRampToValueAtTime(90,t+.06);
-    var g2=actx.createGain(); g2.gain.setValueAtTime(.25,t); g2.gain.exponentialRampToValueAtTime(.001,t+.08);
-    o.connect(g2); g2.connect(actx.destination); o.start(t); o.stop(t+.09);
-  }
-  window.addEventListener('DOMContentLoaded', function(){
-    var kb=document.querySelector('[data-typer-keyboard]');
-    if(kb) kb.addEventListener('pointerdown', function(e){ if(e.target.closest('[data-key]')) thock(); });
-  });
-
-  /* 리빌 */
-  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.16});
-  document.querySelectorAll('[data-reveal]').forEach(function(el){ io.observe(el); });
-
-  /* 채팅 데모 */
-  var chat=document.getElementById('chat');
-  if(chat){
-    var steps=[].slice.call(chat.querySelectorAll('[data-step]')), running=false, loop;
-    function run(){ if(running) return; running=true; steps.forEach(function(s){ s.classList.remove('show'); });
-      [[0,220],[1,900]].forEach(function(p){ setTimeout(function(){ steps[p[0]].classList.add('show'); }, p[1]); });
-      setTimeout(function(){ steps[2].classList.add('show'); running=false; }, 1700); }
-    if(reduce){ steps.forEach(function(s){ s.classList.add('show'); }); }
-    else { var cio=new IntersectionObserver(function(en){ if(en[0].isIntersecting){ run(); loop=setInterval(run,5200); } else clearInterval(loop); },{threshold:.4}); cio.observe(chat); }
-  }
-})();
-</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="i18n.js?v=20260917-59" defer></script>
+<script src="product.js?v=20260917-59" defer></script>
+<script src="scenes.js?v=20260917-59" defer></script>
+<script src="hero.js?v=20260917-59" defer></script>
 </body>
 </html>

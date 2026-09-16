@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NewMeans: 없는 페이지</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/assets/brand/newmeans-logo.png">
+<link rel="stylesheet" href="/base.css?v=20260913-1">
+<style>
+.nf{min-height:100dvh;display:grid;place-items:center;padding:40px}
+.nf__in{display:grid;gap:22px;justify-items:start;max-width:520px}
+.nf__art{position:relative;width:min(70vw,360px);aspect-ratio:2900/1000}
+.nf__art .pc{position:absolute;background:var(--brand);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+.nf__art .eye{transform:scaleY(.3)}
+.nf h1{font-family:var(--font-display);font-size:clamp(40px,6vw,64px);letter-spacing:-.03em;line-height:1.02;color:var(--text-display)}
+.nf p{color:var(--text-2)}
+</style>
+</head>
+<body>
+<main class="nf">
+  <div class="nf__in">
+    <div class="nf__art" id="art" role="img" aria-label="NewMeans"></div>
+    <h1>Page not found.</h1>
+    <p>없는 페이지. 토끼가 대신 자고 있습니다.</p>
+    <a class="btn btn--primary" href="/">홈으로 가기</a>
+  </div>
+</main>
+<script>
+(function(){
+  var P=[[1,1673,357,133,400],[2,2401,357,133,400],[3,3383,357,99,99],[4,1415,361,193,392],[5,2142,361,194,392],[7,3501,446,225,220],[8,2846,840,403,84],[9,1217,842,132,400],[10,2644,842,133,400],[11,3291,842,132,400],[12,1477,864,96,69],[13,1936,864,94,69],[14,1659,887,190,169],[15,2127,931,225,221],[16,3518,955,187,242],[17,923,1192,206,42],[18,2379,1192,205,42]];
+  var X0=880,Y0=300,W=2900,H=1000,box=document.getElementById('art');
+  P.forEach(function(p){var el=document.createElement('div');el.className='pc'+(p[0]===12||p[0]===13?' eye':'');el.style.left=(p[1]-X0)/W*100+'%';el.style.top=(p[2]-Y0)/H*100+'%';el.style.width=p[3]/W*100+'%';el.style.height=p[4]/H*100+'%';el.style.setProperty('--m','url(/assets/brand/logo-pieces/p'+p[0]+'.png)');box.appendChild(el);});
+})();
+</script>
+</body>
+</html>

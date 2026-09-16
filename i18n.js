@@ -1,292 +1,171 @@
-/* NewMeans — lightweight i18n (KO/EN)
- * Text lives here; markup carries data-i18n="key".
- * For attributes, add data-i18n-attr="content|aria-label" alongside data-i18n.
- * Other scripts read strings via window.i18n.t(key) and listen for the
- * "nm:langchange" event to refresh anything set dynamically. */
+/* NewMeans i18n (KO/EN). Text lives here; markup carries data-i18n="key" (data-i18n-attr for attributes).
+ * Scripts read strings via window.i18n.t(key) and listen for "nm:langchange". */
 (function () {
   "use strict";
-
   var STRINGS = {
     ko: {
-      "meta.title": "NewMeans — 게임과 AI를 만드는 2인 스튜디오",
+      "meta.title": "NewMeans: 게임과 AI 서비스",
       "meta.description": "게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.",
       "nav.skip": "본문으로 건너뛰기",
       "nav.works": "제품",
       "nav.studio": "스튜디오",
-      "nav.backHome": "← NewMeans",
-      "home.tag": "게임과 AI를 만드는 2인 스튜디오",
+      "home.mail": "메일 보내기",
+      "home.lever": "단어 다시 뽑기",
       "home.cta1": "제품 보기",
-      "home.cta2": "문의하기",
-      "home.typer.kind": "게임 · iOS / Android",
-      "home.typer.desc": "기계식 키보드 타건음 아케이드. 공으로 키캡 블록을 부수고, 스위치로 소리를 바꾸고, 코인으로 책상을 꾸미는 게임.",
-      "home.typer.proof": "다운로드 30,000+ · 평점 4.74 · 유료 마케팅 없이",
-      "home.typer.more": "Typer 보기",
-      "home.dopa.kind": "AI 심리테스트 · Web",
-      "home.dopa.desc": "카카오톡 대화를 분석해 심리 리포트를 써주는 AI. 정해진 유형 없이, 2,000명이면 2,000개의 결과.",
-      "home.dopa.more": "도파민대학교 보기",
-      "home.dopa.who": "카카오톡 대화",
-      "home.dopa.tag": "AI 분석 중",
-      "home.dopa.m1": "나 요즘 자꾸 밤에 폰만 봐 ㅠ",
-      "home.dopa.m2": "오 그거 도파민 신호일지도?",
-      "home.dopa.result": "분석 완료 · 자극 추구형",
-      "home.dopa.resultSub": "AI 심리 리포트 생성됨",
-      "home.studio.title": "스튜디오",
-      "home.studio.lead": "아이디어부터 운영까지, 두 사람.",
-      "home.studio.p1": "게임 클라이언트 개발자와 AI 엔지니어의 조합. 기획·개발·디자인·운영 전부 내부 작업.",
-      "home.studio.p2": "Typer는 “벽돌깨기에 타건음을 입히면 어떨까”라는 아이디어에서 시작해, 지금은 177개국에 출시된 게임.",
-      "home.role1.n": "클라이언트 · 게임",
-      "home.role1.d": "기획 · 게임 개발 · 디자인 · 운영",
-      "home.role2.n": "AI · 서버",
-      "home.role2.d": "AI · 풀스택 · 빌드/배포 · QA 자동화",
-      "foot.say": "게임과 AI를 만드는 2인 스튜디오",
-      "foot.products": "제품",
-      "foot.dopa": "도파민대학교",
-      "foot.contact": "연락",
-      "sound.enable": "소리 켜기",
-      "sound.disable": "소리 끄기",
-      "typer.meta.title": "Typer — 기계식 키보드 타건음 아케이드",
-      "typer.meta.description": "기계식 키보드 타건음, 데스크 꾸미기, 브릭브레이커를 하나로 묶은 하이브리드 캐주얼 게임. NewMeans 제작.",
-      "typer.tagline": "부수고, 듣고, 꾸미는 재미.",
-      "typer.lead": "기계식 키보드 타건음, 데스크 꾸미기, 브릭브레이커를 하나로 묶은 하이브리드 캐주얼 게임.",
-      "typer.proof": "다운로드 30,000+ · 평점 4.74 · 177개국 출시",
-      "typer.hint": "키보드 클릭 시 타건음 재생 · 우측 상단에서 소리 켜기",
-      "typer.play.title": "웹에서 바로 플레이",
-      "typer.play.lead": "실제 게임과 같은 규칙의 라이트 버전. 블록을 부술 때마다 장착한 스위치의 타건음.",
-      "typer.play.r1": "드래그로 조준",
-      "typer.play.r2": "손을 놓으면 발사",
-      "typer.play.r3": "초록 불빛 수집 시 공 +1",
-      "typer.custom.title": "내 책상 만들기",
-      "typer.custom.lead": "게임에 들어 있는 실제 아이템. 선택은 위 데스크와 아래 게임에 바로 적용.",
-      "typer.custom.switch": "스위치",
-      "typer.custom.switchNote": "클릭 시 실제 타건음",
-      "typer.custom.keycap": "키캡",
-      "typer.custom.frame": "프레임",
-      "typer.custom.monitor": "모니터",
-      "typer.m1": "오가닉 다운로드",
-      "typer.m2": "평균 평점",
-      "typer.m3": "출시 국가",
-      "typer.m4": "리뷰 언어",
-      "typer.pillars.title": "부수고, 듣고, 꾸미고",
-      "typer.p1.k": "부수고",
-      "typer.p1.d": "공으로 숫자 키캡을 부수는 한 판. 블록 체력은 생성 레벨과 동일.",
-      "typer.p2.k": "듣고",
-      "typer.p2.d": "스위치 7종의 서로 다른 타건음. 외형이 아니라 소리를 갈아 끼우는 스킨.",
-      "typer.p3.k": "꾸미고",
-      "typer.p3.d": "볼·오브제·모니터·프레임·스위치·키캡, 6개 카테고리의 데스크테리어.",
-      "typer.gallery.title": "게임 화면",
-      "typer.cta.title": "App Store와 Google Play에서 무료",
-      "typer.cta.sub": "iOS · Android · 4개 언어 지원",
-      "dopa.meta.title": "도파민대학교 — 대화를 분석하는 AI 심리테스트",
-      "dopa.meta.description": "카카오톡 대화를 분석해 심리 리포트를 써주는 AI 심리테스트 플랫폼. NewMeans 제작.",
+      "home.rabbit.action": "토끼 쓰다듬기",
+      "home.letter.action": "글자 {n} 튀기기",
+      "home.status.word": "단어: {w}",
+      "home.status.grab": "글자 {n} 잡음",
+      "home.status.letter": "글자 {n}",
+      "home.status.score": "골 {n}",
+      "home.status.clear": "키캡 전부 부숨",
+      "home.status.left": "키캡 {n}개 남음",
+      "home.words": "단어 {n}/{t}",
+      "home.words.title": "모은 단어",
+      "home.words.close": "닫기",
+
+      "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI 심리테스트", "tag.web": "Web",
+      "cta.more": "자세히 보기", "cta.download": "다운로드", "cta.start": "테스트 시작하기", "cta.replay": "다시 보기",
+      "scene.typer": "공이 키캡 다섯 개를 튀기며 Typer를 이루는 것들을 켠다",
+      "scene.dopa": "계속 새로 생겨나 모였다 사라지는 도형들",
+      "dopa.me": "16개 유형으로는 정의할 수 없는 우리",
+      "typer.line": "키보드, 게임, ASMR, 나만의 방. 그리고 Lo-Fi 음악",
+      "studio.title": "만드는 사람들", "crew.close": "닫기",
+      
+      "foot.privacy": "개인정보 처리방침",
+
+      "typer.meta.title": "Typer: 기계식 키보드 타건음 아케이드",
+      "typer.meta.description": "키캡을 부수며 타건음을 듣는 벽돌깨기 게임. 스위치와 키캡을 바꾸고 책상을 꾸며보세요.",
+      "typer.shots": "Typer 화면 열 장. 옆으로 밀어서 볼 수 있습니다.", "typer.lofi": "Lo-Fi 틀기",
+      "typer.group.keycap": "키캡", "typer.group.frame": "프레임", "typer.group.monitor": "모니터", "typer.group.switch": "스위치", "typer.group.sculpture": "오브제", "typer.group.ball": "볼",
+      "typer.sound.on": "소리 끄기", "typer.sound.off": "소리 켜기",
+      "typer.desk.hint": "아무 키나 누르기, 또는 화면을 끌어서 조준",
+      "typer.desk.broken": "부순 키캡 {n}",
+      "typer.desk.over": "게임 오버",
+      "typer.num.dl": "다운로드", "typer.num.rating": "평균 평점", "typer.num.countries": "출시 국가",
+      "typer.review.1": "There's cute music and the keyboard sounds are really satisfying.", "typer.review.1.meta": "App Store · English", "typer.review.1.ko": "음악이 귀엽고 키보드 소리가 정말 만족스러워요",
+      "typer.review.2": "종료해도 이어서할 수 있어서 시간날때 계속하게 됨", "typer.review.2.meta": "Google Play · 한국어",
+      "typer.review.3": "キーボード好きには最高に至高のゲーム。", "typer.review.3.meta": "Google Play · 日本語", "typer.review.3.ko": "키보드 좋아하는 사람에게는 최고의 게임",
+      "typer.review.4": "this is fun its so fun and clicky you should try it", "typer.review.4.meta": "Google Play · English", "typer.review.4.ko": "진짜 재밌고 소리도 좋아요, 꼭 해보세요",
+      "typer.review.5": "기계식 키보드의 키캡을 교체하고 축을 바꾸는 게임이라니!", "typer.review.5.meta": "Google Play · 한국어",
+      "typer.review.6": "Relaxing, challenging, an extremely addictive.", "typer.review.6.meta": "App Store · English", "typer.review.6.ko": "편안하고, 도전적이고, 엄청나게 중독적",
+      "typer.review.7": "очень помогло мне во время панической атаки.", "typer.review.7.meta": "Google Play · Русский", "typer.review.7.ko": "공황 발작이 왔을 때 큰 도움이 됐어요",
+      "typer.review.8": "色々な軸を集めるのが楽しかったです。", "typer.review.8.meta": "App Store · 日本語", "typer.review.8.ko": "여러 축을 모으는 게 즐거웠어요",
+
+      "dopa.meta.title": "도파민대학교: AI 심리테스트 플랫폼",
+      "dopa.meta.description": "16개 유형으로는 정의할 수 없는 우리를 위해. 채팅 기록 하나로 AI가 쓰는 나만의 연구 보고서.",
       "dopa.here": "도파민대학교",
-      "dopa.hero.t1": "대화를 넣으면,",
-      "dopa.hero.t2": "당신을 연구하는 AI.",
-      "dopa.lead": "카카오톡 대화를 분석해 나만의 심리 리포트를 써주는 초개인화 심리테스트 플랫폼.",
-      "dopa.cta": "dodae.me에서 시작하기",
-      "dopa.chat.who": "카카오톡 대화",
-      "dopa.chat.tag": "AI 분석 중",
-      "dopa.chat.m1": "나 사실 요즘 좀 지쳤어",
-      "dopa.chat.m2": "헐 무슨 일 있어?? 😥",
-      "dopa.chat.m3": "아니 그냥… 다 귀찮아 ㅎㅎ",
-      "dopa.report.title": "분석 완료 · 에겐 성향",
-      "dopa.report.sub": "AI 심리 리포트 생성됨",
-      "dopa.report.left": "에겐 74%",
-      "dopa.report.right": "테토 26%",
-      "dopa.what.title": "에겐-테토 테스트",
-      "dopa.prof.teto.label": "테토 · TETO",
-      "dopa.prof.teto.name": "테토 교수",
-      "dopa.prof.teto.desc": "직진 · 주도 · 에너지",
-      "dopa.prof.egen.label": "에겐 · EGEN",
-      "dopa.prof.egen.name": "에겐 교수",
-      "dopa.prof.egen.desc": "섬세 · 공감 · 사색",
-      "dopa.what.note": "카카오톡 대화를 올리면 참여자별 성향을 분석해 만드는 연구 보고서. MBTI 같은 고정 유형 없이, 2,000명이면 2,000개의 결과.",
-      "dopa.test.title": "나는 에겐? 테토?",
-      "dopa.test.sub": "3문항 미리보기. 정식 테스트는 AI가 대화를 직접 분석.",
-      "dopa.test.retry": "다시 하기",
-      "dopa.test.full": "정식 테스트 하러 가기",
-      "dopa.test.resultTeaser": "미리보기 결과. 정식 리포트는 AI가 대화를 읽고 훨씬 자세하게.",
-      "dopa.platform.t1": "하나의 테스트가 아니라,",
-      "dopa.platform.t2": "계속 늘어나는 플랫폼.",
-      "dopa.platform.p": "에겐-테토를 시작으로 계속 추가되는 테마별 캐릭터 심리테스트. 전부 같은 AI 분석 엔진 위에서 구동.",
-      "dopa.foot.title": "당신에 대한 연구, 지금 시작.",
-      "dopa.foot.sub": "대화 업로드 후 나머지는 AI의 몫."
+      "dopa.count.a": "명의 사람", "dopa.count.b": "개의 유형", "dopa.count.sr": "사람 수만큼의 유형",
+      "dopa.note": "{n}개의 서로 다른 도형, 16개로 분류할 수 있을까?",
+      "dopa.num.reports": "분석 완료", "dopa.num.tests": "진행 중인 연구",
+      "typer.review.1.by": "r***", "typer.review.2.by": "정***", "typer.review.3.by": "た***", "typer.review.4.by": "t***", "typer.review.5.by": "김***", "typer.review.6.by": "m***", "typer.review.7.by": "а***", "typer.review.8.by": "ゆ***",
+"dopa.review.2.by": "ㅇ***", "dopa.review.3.by": "지***", "dopa.review.4.by": "h***", "dopa.review.5.by": "민***", "dopa.review.6.by": "y***",
+      "dopa.review.1.by": "수***", "dopa.review.2.by": "지***", "dopa.review.3.by": "h***", "dopa.review.4.by": "y***",
+      "dopa.review.1": "심리테스트 이것저것 많이 해봤는데 이게 제일 재밌었어요 ㅋㅋ",
+      "dopa.review.2": "친구랑 해보고 단톡방 네 개 다 돌렸어요 다들 난리남",
+      "dopa.review.3": "솔직히 기대 안 했는데 생각보다 정확해서 놀랐습니다",
+      "dopa.review.4": "이 퀄리티가 무료라니",
+      "dopa.fact": "16개 유형으로는 정의할 수 없는 우리를 위해",
+      "dopa.how.1": "테스트 고르기", "dopa.how.2": "채팅 기록 업로드", "dopa.how.3": "AI 연구 보고서",
+      "dopa.test.egen": "AI 에겐 테토 테스트", "dopa.test.campus": "AI 캠퍼스 리크루팅 테스트",
+      "studio.run": "두 사람이 함께 달린다"
     },
     en: {
-      "meta.title": "NewMeans — a two-person games & AI studio",
-      "meta.description": "NewMeans is the two-person studio behind Typer, a keyboard-sound game, and Dopamine University, an AI psych test.",
+      "meta.title": "NewMeans: games and AI",
+      "meta.description": "NewMeans is the two-person studio behind Typer, a keyboard-sound game, and Dopamine University, an AI personality test.",
       "nav.skip": "Skip to content",
       "nav.works": "Products",
       "nav.studio": "Studio",
-      "nav.backHome": "← NewMeans",
-      "home.tag": "A two-person studio making games & AI",
+      "home.mail": "Email us",
+      "home.lever": "Spin the word",
       "home.cta1": "See products",
-      "home.cta2": "Contact",
-      "home.typer.kind": "Game · iOS / Android",
-      "home.typer.desc": "A mechanical-keyboard arcade. Break keycap blocks with balls, swap switches to change the sound, spend coins on your desk.",
-      "home.typer.proof": "30,000+ downloads · 4.74★ · zero paid marketing",
-      "home.typer.more": "See Typer",
-      "home.dopa.kind": "AI psych test · Web",
-      "home.dopa.desc": "An AI that reads a KakaoTalk chat and writes a psych report. No fixed types — 2,000 people, 2,000 results.",
-      "home.dopa.more": "See Dopamine University",
-      "home.dopa.who": "KakaoTalk chat",
-      "home.dopa.tag": "AI analyzing",
-      "home.dopa.m1": "i keep scrolling my phone all night ㅠ",
-      "home.dopa.m2": "ooh that might be a dopamine signal?",
-      "home.dopa.result": "Done · Novelty-seeker",
-      "home.dopa.resultSub": "AI report generated",
-      "home.studio.title": "Studio",
-      "home.studio.lead": "Idea to operations — two people.",
-      "home.studio.p1": "A game-client developer and an AI engineer. Planning, development, design, and ops — all in-house.",
-      "home.studio.p2": "Typer began with one idea — a brick-breaker with keyboard sounds — and is now live in 177 countries.",
-      "home.role1.n": "Client · Games",
-      "home.role1.d": "Product · game dev · design · ops",
-      "home.role2.n": "AI · Backend",
-      "home.role2.d": "AI · full-stack · build/deploy · QA automation",
-      "foot.say": "A two-person studio making games & AI",
-      "foot.products": "Products",
-      "foot.dopa": "Dopamine University",
-      "foot.contact": "Contact",
-      "sound.enable": "Turn sound on",
-      "sound.disable": "Turn sound off",
-      "typer.meta.title": "Typer — a mechanical-keyboard arcade",
-      "typer.meta.description": "Mechanical-keyboard sound, desk decorating, and a brick-breaker in one hybrid-casual game. Made by NewMeans.",
-      "typer.tagline": "Break. Listen. Customize.",
-      "typer.lead": "Mechanical-keyboard sound, desk decorating, and a brick-breaker in one hybrid-casual game.",
-      "typer.proof": "30,000+ downloads · 4.74 rating · live in 177 countries",
-      "typer.hint": "Click the keyboard for switch sounds · sound toggle at top right",
-      "typer.play.title": "Play it in the browser",
-      "typer.play.lead": "A light build with the real rules. Every block hit plays your equipped switch.",
-      "typer.play.r1": "Drag to aim",
-      "typer.play.r2": "Release to fire",
-      "typer.play.r3": "Green light = +1 ball",
-      "typer.custom.title": "Build your desk",
-      "typer.custom.lead": "Real in-game items. Picks apply to the desk above and the game below.",
-      "typer.custom.switch": "Switch",
-      "typer.custom.switchNote": "click for the real sound",
-      "typer.custom.keycap": "Keycaps",
-      "typer.custom.frame": "Frame",
-      "typer.custom.monitor": "Monitor",
-      "typer.m1": "organic downloads",
-      "typer.m2": "average rating",
-      "typer.m3": "countries",
-      "typer.m4": "review languages",
-      "typer.pillars.title": "Break, listen, customize",
-      "typer.p1.k": "Break",
-      "typer.p1.d": "One run of smashing numbered keycaps. Block HP equals its spawn level.",
-      "typer.p2.k": "Listen",
-      "typer.p2.d": "Seven switches, seven different sounds. A skin for your ears, not your eyes.",
-      "typer.p3.k": "Customize",
-      "typer.p3.d": "Balls, objects, monitors, frames, switches, keycaps — six categories of deskterior.",
-      "typer.gallery.title": "In-game screens",
-      "typer.cta.title": "Free on the App Store and Google Play",
-      "typer.cta.sub": "iOS · Android · 4 languages",
-      "dopa.meta.title": "Dopamine University — an AI psych test that reads your chats",
-      "dopa.meta.description": "An AI psych-test platform that turns a KakaoTalk chat into a personal report. Made by NewMeans.",
+      "home.rabbit.action": "Pet the rabbit",
+      "home.letter.action": "Bounce the letter {n}",
+      "home.status.word": "Word: {w}",
+      "home.status.grab": "Holding the letter {n}",
+      "home.status.letter": "Letter {n}",
+      "home.status.score": "Score {n}",
+      "home.status.clear": "All keycaps smashed",
+      "home.status.left": "{n} keycaps left",
+      "home.words": "Words {n}/{t}",
+      "home.words.title": "Words found",
+      "home.words.close": "Close",
+
+      "tag.game": "Game", "tag.mobile": "Mobile", "tag.aitest": "AI personality test", "tag.web": "Web",
+      "cta.more": "Learn more", "cta.download": "Download", "cta.start": "Start a test", "cta.replay": "Replay",
+      "scene.typer": "A ball bounces across five keycaps, lighting up what Typer is made of",
+      "scene.dopa": "Shapes keep arriving, gathering, and going",
+      "dopa.me": "All of us that sixteen types cannot define",
+      "typer.line": "Keyboards, a game, ASMR, a room of your own. And Lo-Fi.",
+      "studio.title": "The makers", "crew.close": "Close",
+      
+      "foot.privacy": "Privacy",
+
+      "typer.meta.title": "Typer: a mechanical-keyboard arcade",
+      "typer.meta.description": "Break keycaps to the sound of mechanical switches. Customize your keyboard and desk in Typer.",
+      "typer.shots": "Ten screens from Typer. Swipe sideways.", "typer.lofi": "Play Lo-Fi",
+      "typer.group.keycap": "Keycaps", "typer.group.frame": "Frame", "typer.group.monitor": "Monitor", "typer.group.switch": "Switch", "typer.group.sculpture": "Object", "typer.group.ball": "Ball",
+      "typer.sound.on": "Turn sound off", "typer.sound.off": "Turn sound on",
+      "typer.desk.hint": "Press any key, or drag on the screen to aim",
+      "typer.desk.broken": "{n} keycaps smashed",
+      "typer.desk.over": "Game over",
+      "typer.num.dl": "Downloads", "typer.num.rating": "Average rating", "typer.num.countries": "Countries",
+      "typer.review.1": "There's cute music and the keyboard sounds are really satisfying.", "typer.review.1.meta": "App Store · English",
+      "typer.review.2": "종료해도 이어서할 수 있어서 시간날때 계속하게 됨", "typer.review.2.meta": "Google Play · Korean", "typer.review.2.ko": "You can pick up where you left off, so I keep coming back",
+      "typer.review.3": "キーボード好きには最高に至高のゲーム。", "typer.review.3.meta": "Google Play · Japanese", "typer.review.3.ko": "The ultimate game for keyboard lovers",
+      "typer.review.4": "this is fun its so fun and clicky you should try it", "typer.review.4.meta": "Google Play · English",
+      "typer.review.5": "기계식 키보드의 키캡을 교체하고 축을 바꾸는 게임이라니!", "typer.review.5.meta": "Google Play · Korean", "typer.review.5.ko": "A game about swapping keycaps and switches on a mechanical keyboard!",
+      "typer.review.6": "Relaxing, challenging, an extremely addictive.", "typer.review.6.meta": "App Store · English",
+      "typer.review.7": "очень помогло мне во время панической атаки.", "typer.review.7.meta": "Google Play · Russian", "typer.review.7.ko": "It helped me a lot during a panic attack",
+      "typer.review.8": "色々な軸を集めるのが楽しかったです。", "typer.review.8.meta": "App Store · Japanese", "typer.review.8.ko": "Collecting all the different switches was fun",
+
+      "dopa.meta.title": "Dopamine University: AI personality tests",
+      "dopa.meta.description": "For all of us that sixteen types cannot describe. One chat log, one AI-written research report.",
       "dopa.here": "Dopamine University",
-      "dopa.hero.t1": "Drop in a chat,",
-      "dopa.hero.t2": "an AI that studies you.",
-      "dopa.lead": "A hyper-personalized psych-test platform that reads a KakaoTalk chat and writes your report.",
-      "dopa.cta": "Start at dodae.me",
-      "dopa.chat.who": "KakaoTalk chat",
-      "dopa.chat.tag": "AI analyzing",
-      "dopa.chat.m1": "honestly i've been drained lately",
-      "dopa.chat.m2": "omg what happened?? 😥",
-      "dopa.chat.m3": "nah just… over everything lol",
-      "dopa.report.title": "Done · Egen-leaning",
-      "dopa.report.sub": "AI psych report generated",
-      "dopa.report.left": "Egen 74%",
-      "dopa.report.right": "Teto 26%",
-      "dopa.what.title": "The Egen–Teto test",
-      "dopa.prof.teto.label": "Teto · TETO",
-      "dopa.prof.teto.name": "Prof. Teto",
-      "dopa.prof.teto.desc": "Driven · bold · high-energy",
-      "dopa.prof.egen.label": "Egen · EGEN",
-      "dopa.prof.egen.name": "Prof. Egen",
-      "dopa.prof.egen.desc": "Sensitive · warm · reflective",
-      "dopa.what.note": "A research report built from a KakaoTalk chat, one analysis per participant. No fixed types like MBTI — 2,000 people, 2,000 results.",
-      "dopa.test.title": "Egen or Teto?",
-      "dopa.test.sub": "A 3-question preview. The full test has AI read your actual chats.",
-      "dopa.test.retry": "Try again",
-      "dopa.test.full": "Take the full test",
-      "dopa.test.resultTeaser": "A preview result. The full report: AI reading your chats, in far more depth.",
-      "dopa.platform.t1": "Not one test —",
-      "dopa.platform.t2": "a growing platform.",
-      "dopa.platform.p": "Themed character tests added over time, starting with Egen–Teto. All on the same AI analysis engine.",
-      "dopa.foot.title": "The research into you, starting now.",
-      "dopa.foot.sub": "One chat upload — the rest, AI's job."
+      "dopa.count.a": "people", "dopa.count.b": "types", "dopa.count.sr": "As many types as there are people",
+      "dopa.note": "{n} shapes, no two alike. Sort those into sixteen?",
+      "dopa.num.reports": "Reports written", "dopa.num.tests": "Studies running",
+      "typer.review.1.by": "r***", "typer.review.2.by": "정***", "typer.review.3.by": "た***", "typer.review.4.by": "t***", "typer.review.5.by": "김***", "typer.review.6.by": "m***", "typer.review.7.by": "а***", "typer.review.8.by": "ゆ***",
+"dopa.review.2.by": "ㅇ***", "dopa.review.3.by": "지***", "dopa.review.4.by": "h***", "dopa.review.5.by": "민***", "dopa.review.6.by": "y***",
+      "dopa.review.1.by": "수***", "dopa.review.2.by": "지***", "dopa.review.3.by": "h***", "dopa.review.4.by": "y***",
+      "dopa.review.1": "I have done loads of these and this one was by far the most fun.",
+      "dopa.review.2": "Did it with a friend, then ran four group chats through it. Everyone lost it.",
+      "dopa.review.3": "Did not expect much and then it got me. Surprisingly sharp.",
+      "dopa.review.4": "Cannot believe this costs nothing.",
+      "dopa.fact": "For all of us that sixteen types cannot describe",
+      "dopa.how.1": "Pick a test", "dopa.how.2": "Upload a chat log", "dopa.how.3": "AI research report",
+      "dopa.test.egen": "AI Egen-Teto test", "dopa.test.campus": "AI campus recruiting test",
+      "studio.run": "Two of us, running together"
     }
   };
 
-  var STORAGE_KEY = "nm-lang";
-  var SUPPORTED = ["ko", "en"];
-
+  var STORAGE_KEY = "nm-lang", SUPPORTED = ["ko", "en"];
   function detectLang() {
-    try {
-      var saved = window.localStorage.getItem(STORAGE_KEY);
-      if (saved && SUPPORTED.indexOf(saved) !== -1) return saved;
-    } catch (e) { /* private mode */ }
+    try { var saved = window.localStorage.getItem(STORAGE_KEY); if (saved && SUPPORTED.indexOf(saved) !== -1) return saved; } catch (e) { }
     var nav = (navigator.language || "en").toLowerCase();
     return nav.indexOf("ko") === 0 ? "ko" : "en";
   }
-
   var current = detectLang();
-
-  function t(key) {
-    var table = STRINGS[current] || STRINGS.en;
-    return table[key] != null ? table[key] : (STRINGS.en[key] != null ? STRINGS.en[key] : key);
-  }
-
+  function has(key) { var table = STRINGS[current] || STRINGS.en; return table[key] != null || STRINGS.en[key] != null; }
+  function t(key) { var table = STRINGS[current] || STRINGS.en; return table[key] != null ? table[key] : (STRINGS.en[key] != null ? STRINGS.en[key] : key); }
   function apply(lang) {
     if (SUPPORTED.indexOf(lang) === -1) lang = "en";
     current = lang;
-
-    try { window.localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignore */ }
+    try { window.localStorage.setItem(STORAGE_KEY, lang); } catch (e) { }
     document.documentElement.setAttribute("lang", lang);
-
     var nodes = document.querySelectorAll("[data-i18n]");
     for (var i = 0; i < nodes.length; i++) {
-      var el = nodes[i];
-      var value = t(el.getAttribute("data-i18n"));
-      var attr = el.getAttribute("data-i18n-attr");
-      if (attr) {
-        el.setAttribute(attr, value);
-      } else {
-        el.textContent = value;
-      }
+      var el = nodes[i], key = el.getAttribute("data-i18n"), attr = el.getAttribute("data-i18n-attr");
+      if (el.hasAttribute("data-i18n-optional")) { if (!has(key)) { el.hidden = true; continue; } el.hidden = false; }
+      var value = t(key);
+      if (attr) el.setAttribute(attr, value); else el.textContent = value;
     }
-
-    // Reflect active state on the language toggle.
     var buttons = document.querySelectorAll("[data-lang-set]");
-    for (var j = 0; j < buttons.length; j++) {
-      var btn = buttons[j];
-      var isActive = btn.getAttribute("data-lang-set") === lang;
-      btn.classList.toggle("is-active", isActive);
-      btn.setAttribute("aria-pressed", isActive ? "true" : "false");
-    }
-
-    // Let dynamic scripts (sound label, etc.) refresh.
+    for (var j = 0; j < buttons.length; j++) { var btn = buttons[j], on = btn.getAttribute("data-lang-set") === lang; btn.classList.toggle("is-active", on); btn.setAttribute("aria-pressed", on ? "true" : "false"); }
     window.dispatchEvent(new CustomEvent("nm:langchange", { detail: { lang: lang } }));
   }
-
-  function wireToggle() {
-    var buttons = document.querySelectorAll("[data-lang-set]");
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].addEventListener("click", function () {
-        apply(this.getAttribute("data-lang-set"));
-      });
-    }
-  }
-
-  window.i18n = { t: t, lang: function () { return current; }, set: apply };
-
-  function init() {
-    wireToggle();
-    apply(current);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+  function wireToggle() { var buttons = document.querySelectorAll("[data-lang-set]"); for (var i = 0; i < buttons.length; i++) buttons[i].addEventListener("click", function () { apply(this.getAttribute("data-lang-set")); }); }
+  window.i18n = { t: t, has: has, lang: function () { return current; }, set: apply };
+  function init() { wireToggle(); apply(current); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
 })();

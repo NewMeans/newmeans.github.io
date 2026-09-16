@@ -1,0 +1,94 @@
+/* Product pieces shared by the pages. Tokens from base.css only. */
+
+/* ---------- play frame: the board in a phone-like screen ---------- */
+.play{display:flex;flex-direction:column;align-items:center;gap:22px;width:100%}
+.play__screen{position:relative;width:min(100%,440px);aspect-ratio:700/640;border-radius:22px;background:#1E1B1A;color:#65CDA7;padding:14px;box-shadow:0 30px 70px rgba(36,33,29,.16);cursor:crosshair;touch-action:none;user-select:none}
+.play__screen .tb{position:absolute;inset:14px;width:calc(100% - 28px);height:calc(100% - 28px);display:block;overflow:visible}
+.play__status{font-size:13px;color:var(--text-2);min-height:20px}
+.tb__brick{transition:transform .4s var(--ease)}
+.tb__brick text{font-family:var(--font-pixel)}
+.tb__brick.is-hit image{animation:tb-hit .18s}
+@keyframes tb-hit{50%{opacity:.5}}
+.tb__line{stroke:currentColor;stroke-opacity:.35;stroke-dasharray:6 8}
+.tb__aim{fill:none;stroke:currentColor;stroke-width:3;stroke-dasharray:4 10;stroke-linecap:round;opacity:.85}
+.tb__flash{fill:currentColor;font-family:var(--font-pixel);opacity:0}.tb__flash.is-on{opacity:1;animation:tb-flash .4s steps(2) 3}
+@keyframes tb-flash{50%{opacity:.2}}
+.tb__shards rect{fill:#EEE6D6;animation:tb-shard .55s ease-out forwards}
+@keyframes tb-shard{to{transform:translate(var(--dx),var(--dy)) rotate(90deg);opacity:0}}
+.switches{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.switches button{height:36px;padding:0 14px 1px;border-radius:var(--r-pill);background:var(--surface);color:var(--text-2);font:500 13px/1 var(--font-ui);transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.switches button:hover{color:var(--text-1)}
+.switches button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-text)}
+
+/* ---------- screens, covers, field ---------- */
+/* ten screens, a strip you push sideways */
+.shots{width:100%;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.shots::-webkit-scrollbar{display:none}
+.shots:focus-visible{outline:2px solid var(--accent);outline-offset:6px;border-radius:var(--r-media)}
+.shots__row{display:flex;align-items:flex-start;gap:clamp(14px,2.2vw,26px);padding:26px clamp(22px,6vw,90px) 54px;width:max-content}
+.shots figure{margin:0;flex:0 0 auto;width:clamp(148px,17vw,214px);scroll-snap-align:center;transform:translateY(var(--dy,0)) rotate(var(--rot,0))}
+/* a fixed shuffle, not a random one: the same pleasing mess every visit */
+.shots figure:nth-child(1){--dy:2px;--rot:-2.4deg}
+.shots figure:nth-child(2){--dy:24px;--rot:1.8deg}
+.shots figure:nth-child(3){--dy:8px;--rot:-1.2deg}
+.shots figure:nth-child(4){--dy:29px;--rot:2.6deg}
+.shots figure:nth-child(5){--dy:0px;--rot:-3deg}
+.shots figure:nth-child(6){--dy:19px;--rot:1.1deg}
+.shots figure:nth-child(7){--dy:11px;--rot:-1.9deg}
+.shots figure:nth-child(8){--dy:27px;--rot:2.3deg}
+.shots figure:nth-child(9){--dy:5px;--rot:-2.6deg}
+.shots figure:nth-child(10){--dy:17px;--rot:1.5deg}
+.shots img{width:100%;height:auto;display:block;border-radius:var(--r-media)}
+.covers{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:min(100%,820px);margin:0 auto}
+.cover{display:block;border-radius:var(--r-tile);overflow:hidden;background:var(--surface);text-align:left}
+.cover img{width:100%;aspect-ratio:3/2;object-fit:cover;display:block}
+.cover__name{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px 16px;font-weight:600;font-size:15px}
+.cover__name .arw{width:36px;height:36px;border-radius:var(--r-pill);display:grid;place-items:center;background:var(--bg);color:var(--text-1);font-size:16px;flex:none;transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
+.cover:hover .arw{background:var(--btn-bg);color:var(--btn-text)}
+.field{position:relative;width:100%;height:clamp(260px,38vw,440px);overflow:hidden;background:var(--surface);cursor:crosshair}
+.field canvas{display:block}
+[data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s var(--ease);position:relative}
+[data-tilt]::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.3),transparent 55%);opacity:0;transition:opacity .25s;pointer-events:none}
+[data-tilt].is-tilting::after{opacity:1}
+
+/* ---------- the bottom of a product page: this product's action, then the other one ---------- */
+.end{padding:clamp(72px,10vh,110px) 0 0}
+.end__in{display:flex;flex-direction:column;align-items:center;gap:clamp(36px,6vh,60px)}
+.end__next{display:flex;align-items:center;justify-content:space-between;gap:24px;width:min(100%,760px);padding:22px 26px;border-radius:var(--r-tile);background:var(--surface);transition:background var(--dur) var(--ease)}
+.end__next:hover{background:var(--surface-hover)}
+.end__logo{height:30px;width:auto;flex:none}
+.end__next .tags{flex:1;justify-content:flex-start}
+.end__go{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px 1px;border-radius:var(--r-pill);background:var(--next-bg,var(--btn-bg));color:#fff;font-size:13px;font-weight:600;white-space:nowrap;flex:none}
+.tp .end__next{--next-bg:var(--c-400)}      /* it points at Dopamine */
+.dp .end__next{--next-bg:var(--m-700)}      /* it points at Typer */
+.end__go::after{content:"\2192";transition:transform .18s var(--ease)}
+.end__next:hover .end__go::after{transform:translateX(3px)}
+
+@media (max-width:720px){
+  /* logo over tags on the left, the button centred against both */
+  .end__next{display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px 14px;padding:20px 22px}
+  .end__logo{grid-column:1;grid-row:1;height:26px;justify-self:start}
+  .end__next .tags{grid-column:1;grid-row:2;flex:none;justify-content:flex-start}
+  .end__go{grid-column:2;grid-row:1 / span 2;align-self:center}.shots__row{gap:12px;padding:20px 22px 44px}.shots figure{width:150px}.covers{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){[data-tilt]{transition:none}.tb__brick{transition:none}}
+
+/* ---------- a section band, then numbers and reviews: shared by both product pages ---------- */
+.block{width:min(100%,1040px);margin:0 auto;padding:clamp(72px,10vh,120px) clamp(22px,4vw,40px) 0;display:flex;flex-direction:column;align-items:center;gap:22px}
+.block__label{font:600 12px/1 var(--font-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
+.nums{flex-direction:row;justify-content:center;flex-wrap:wrap;gap:clamp(28px,6vw,80px)}
+.num{display:flex;flex-direction:column;align-items:center;gap:6px}
+.num b{font:800 clamp(30px,3.6vw,48px)/1 var(--font-ui);color:var(--text-display);letter-spacing:-.02em}
+.num span{font-size:13px;color:var(--text-2)}
+.reviews__grid{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin:0;padding:0}
+.review{background:var(--surface);border-radius:var(--r-tile);padding:18px 20px 18px;display:flex;flex-direction:column;gap:10px;text-align:left}
+.review__who{display:flex;align-items:center;gap:10px}
+.review__av{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font:700 14px/1 var(--font-ui);background:var(--av-bg,var(--n-200));color:var(--av-fg,var(--n-700))}
+.tp{--av-bg:var(--m-200);--av-fg:var(--m-800)}
+.dp{--av-bg:var(--c-200);--av-fg:var(--c-700)}
+.review__id{display:flex;flex-direction:column;gap:2px;min-width:0}
+.review__id b{font:600 13.5px/1 var(--font-ui);color:var(--text-1)}
+.review__meta{font-size:11.5px;line-height:1;color:var(--text-2)}
+.review__q{font-size:15.5px;line-height:1.55;color:var(--text-1);margin:0}
+.review__t{font-size:13px;line-height:1.5;color:var(--text-2);margin:0}
+@media (max-width:760px){.reviews__grid{grid-template-columns:1fr}.block{padding-top:64px}}

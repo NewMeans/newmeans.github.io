@@ -116,10 +116,55 @@
       fill();
     };
 
-    keys.addEventListener("pointerdown", function (e) {
-      var c = e.target.closest("[data-key]"); if (!c) return; e.preventDefault();
+    var clipCounts = {4000:4,4001:5,4002:5,4003:5,4004:5,4005:5,4006:5,4007:4,4008:6};
+    var switchId = '4000', soundState = 'ready', pools = {}, clipIndex = 0;
+    root.dataset.soundState = soundState;
+    function soundChanged(error) {
+      root.dataset.soundState = soundState;
+      root.dispatchEvent(new CustomEvent('tp:soundstate', {bubbles:true, detail:{state:soundState, error:error || null}}));
+    }
+    function playSound() {
+      if (soundState === 'muted') return;
+      if (!pools[switchId]) {
+        pools[switchId] = [];
+        for (var i=0; i<clipCounts[switchId]; i++) {
+          pools[switchId].push(new Audio('assets/audio/switch/'+switchId+'/'+i+'.m4a'));
+        }
+      }
+      var bank = pools[switchId], clip = bank[clipIndex++ % bank.length];
+      var playId = clip._playId = (clip._playId || 0) + 1;
+      clip.currentTime = 0;
+      soundState = 'on'; soundChanged();
+      clip.play().catch(function(error) {
+        // A later key press or an explicit mute may cancel this playback.
+        if (error.name === 'AbortError' && clip._playId !== playId) return;
+        console.error('TyperKeyboard: audio playback failed: '+clip.src, error);
+        soundState = 'ready'; soundChanged(error);
+      });
+    }
+    root.__tpPlay = playSound;
+    root.__tpPress = function(idx) { caps[((idx % caps.length) + caps.length) % caps.length].click(); };
+    root.__tpSwitch = function(id) {
+      if (!clipCounts[id]) throw new Error('TyperKeyboard: unknown switch '+id);
+      switchId = id;
+    };
+    root.__tpSound = function(enabled) {
+      soundState = enabled ? 'on' : 'muted';
+      if (enabled) playSound();
+      else {
+        Object.keys(pools).forEach(function(id) { pools[id].forEach(function(clip) {
+          clip._playId = (clip._playId || 0) + 1; clip.pause();
+        }); });
+        soundChanged();
+      }
+    };
+    // Native click supports pointer, touch, Enter and Space without double playback.
+    keys.addEventListener("click", function (e) {
+      var c = e.target.closest("[data-key]"); if (!c) return;
       c.classList.add("is-active"); clearTimeout(c._t);
       c._t = setTimeout(function () { c.classList.remove("is-active"); }, 120);
+      playSound();
+      root.dispatchEvent(new CustomEvent('tp:key',{bubbles:true,detail:{index:Number(c.dataset.idx)}}));
       if (onPress) onPress(c);
     });
   }
@@ -133,6 +178,10 @@
 
   window.TyperKeyboard = {
     mount: mount,
-    setSkin: function (el, skin) { if (el && el.__tpSkin) el.__tpSkin(skin); }
+    setSkin: function (el, skin) { if (el && el.__tpSkin) el.__tpSkin(skin); },
+    setSwitch: function (el, id) { el.__tpSwitch(id); },
+    play: function (el) { if (el && el.__tpPlay) el.__tpPlay(); },
+    press: function (el, idx) { if (el && el.__tpPress) el.__tpPress(idx); },
+    setSound: function (el, enabled) { el.__tpSound(enabled); }
   };
 })();
