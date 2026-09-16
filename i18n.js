@@ -29,7 +29,7 @@
       "scene.typer": "공이 키캡 다섯 개를 튀기며 Typer를 이루는 것들을 켠다",
       "scene.dopa": "계속 새로 생겨나 모였다 사라지는 도형들",
       "dopa.me": "16개 유형으로는 정의할 수 없는 우리",
-      "typer.line": "게임, ASMR, 나만의 방, 키보드 그리고 Lo-Fi 음악",
+      "typer.line": "키보드, 게임, ASMR, 나만의 방. 그리고 Lo-Fi 음악",
       "studio.title": "만드는 사람들", "crew.close": "닫기",
       
       "foot.privacy": "개인정보 처리방침",
@@ -98,7 +98,7 @@
       "scene.typer": "A ball bounces across five keycaps, lighting up what Typer is made of",
       "scene.dopa": "Shapes keep arriving, gathering, and going",
       "dopa.me": "All of us that sixteen types cannot define",
-      "typer.line": "A game, ASMR, a room of your own, keyboards and Lo-Fi",
+      "typer.line": "Keyboards, a game, ASMR, a room of your own. And Lo-Fi.",
       "studio.title": "The makers", "crew.close": "Close",
       
       "foot.privacy": "Privacy",

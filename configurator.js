@@ -12,11 +12,11 @@
   var PLUG = { '3000': 86, '3001': 45, '3002': 80, '3003': 80, '3004': 80, '3005': 80, '3007': 59, '3008': 80, '3009': 80, '3010': 80, '3011': 80, '3012': 80 };
   var KEYS = 'qwertyasdfghzxcvbn';
   // a short row per part rather than the whole shop; monitors are few enough to keep whole
-  var PICK = {
-    keycap: ['5000', '5005', '5012', '5011', '5007'],
-    frame: ['3000', '3005', '3003', '3008', '3007'],
-    switch: ['4000', '4004', '4002', '4007', '4006'],
-    sculpture: ['1000', '1005', '1007', '1001', '1002']
+  var PICK = {                                        // four each, so each one can be big
+    keycap: ['5000', '5005', '5012', '5007'],
+    frame: ['3000', '3005', '3008', '3007'],
+    switch: ['4000', '4004', '4007', '4006'],
+    sculpture: ['1000', '1005', '1001', '1002']
   };
   var CAP_FACE = { '5005': 1, '5007': 9 };            // the cap that stands for the set
   // the chip shows the part as the game draws it, not the shop's sample tile
@@ -77,7 +77,7 @@
     setTimeout(function () {
       bgBase.style.setProperty('--c', color); bgNext.style.transition = 'none'; bgNext.classList.remove('is-in'); void bgNext.offsetWidth; bgNext.style.transition = '';
       painting = false; if (queued) { var q = queued; queued = null; paint(q); }
-    }, 760);
+    }, 1200);
   }
 
   // ------------------------------------------------ chips

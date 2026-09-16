@@ -215,12 +215,11 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
     100% 100%, 99.21% 100%, 99.21% 88.75%, 89.21% 88.75%, 89.21% 100%, 0% 100%)}
 .portal--in,.lip--in{left:calc(140 / 760 * 100%);top:calc(16 / 320 * 100%)}
 .portal--out,.lip--out{left:calc(716 / 760 * 100%);top:calc(284 / 320 * 100%)}
-.stage--typer .cap{position:absolute;top:calc(108 / 320 * 100%);left:calc(var(--x) / 760 * 100%);width:calc(104 / 760 * 100%);aspect-ratio:1;margin-left:calc(-52 / 760 * 100%);background:url("assets/shop/keycap/5000_0.png") center/100% 100% no-repeat;z-index:2;display:grid;place-items:center;cursor:pointer;transition:filter .15s}
-.stage--typer .cap.is-down{filter:brightness(.96)}
+.stage--typer .cap{position:absolute;top:calc(108 / 320 * 100%);left:calc(var(--x) / 760 * 100%);width:calc(104 / 760 * 100%);aspect-ratio:1;margin-left:calc(-52 / 760 * 100%);background:url("assets/shop/keycap/5000_0.png") center/100% 100% no-repeat;z-index:2;display:grid;place-items:center;cursor:pointer;user-select:none;-webkit-user-select:none}
 /* the icon sits at the centre of the cap's top face, not the centre of the sprite */
 .stage--typer .cap b{position:absolute;left:50%;top:38.4%;transform:translate(-50%,-50%);display:grid;place-items:center;width:54%;height:54%;color:#7A5741;opacity:0}
 .stage--typer .cap b svg{width:100%;height:100%;display:block;fill:currentColor;stroke:none;overflow:visible}
-.stage--typer .cap b svg text{font:800 9.3px/1 var(--font-ui);letter-spacing:-.02em;fill:currentColor}
+.stage--typer .cap b svg text{font:900 9.8px/1 var(--font-ui);letter-spacing:-.02em;fill:currentColor}
 .stage--typer .cap.is-hit{animation:capHit .2s var(--ease)}
 @keyframes capHit{45%{transform:translateY(6%) scale(.965)}}
 .stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
@@ -233,9 +232,8 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .scene-line{font-size:clamp(19px,2.2vw,28px);font-weight:700;letter-spacing:-.01em;color:var(--text-display);max-width:38ch;text-wrap:balance}
 
 /* ---------- the studio: the two of us running, with whatever comes at us ---------- */
-.studio{padding:clamp(60px,8vh,92px) 0 clamp(52px,7vh,80px)}
+.studio{padding:clamp(60px,8vh,92px) 0 clamp(30px,4vh,52px)}
 .studio__top{display:flex;flex-direction:column;align-items:center;gap:12px}
-.studio__bot{display:flex;justify-content:center}
 .studio + .foot{margin-top:clamp(24px,4vh,48px)}
 .studio__title{font-family:var(--font-display);font-size:clamp(26px,3.4vw,40px);font-weight:700;letter-spacing:-.02em;color:var(--text-display)}
 .run{position:relative;height:clamp(196px,21vw,244px);margin:clamp(10px,2vh,20px) 0;overflow:hidden}
@@ -244,8 +242,8 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .runner__art{position:relative;width:100%;aspect-ratio:1854/885;transform-origin:50% 90%}
 .rb{position:absolute;background:var(--fur,var(--m-400));-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
 .rb--face{transform:translateX(-16%)}
-.runner--ceo,.crew[data-who="ceo"]{--fur:#8C9B57;--rim:#6E7C40}      /* olive */
-.runner--cto,.crew[data-who="cto"]{--fur:#E0894A;--rim:#BC6A2F}      /* apricot */
+.runner--ceo,.crew[data-who="ceo"]{--fur:#A6B865;--rim:#7D8F46}      /* olive */
+.runner--cto,.crew[data-who="cto"]{--fur:#F49E5C;--rim:#D2783A}      /* apricot */
 .rb-glass{position:absolute;left:24.3%;top:43.6%;width:41%;height:34.4%;pointer-events:none}
 .rb-glass svg{width:100%;height:100%;display:block;overflow:visible}
 .runner{cursor:pointer}
@@ -292,18 +290,18 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 @media (prefers-reduced-motion:reduce){.lever .stick,.lever .knob,.slot,.cursor svg{transition:none;animation:none}.acc .ac.pop,.confetti,.go.pop{animation:none}.replay{opacity:1}}
 
 /* ---------- who made it: one card per rabbit ---------- */
-.crew{margin:auto;border:none;padding:0;background:none;max-width:min(92vw,360px);overflow:visible}
+.crew{margin:auto;border:none;padding:0;background:none;max-width:min(92vw,360px)}
 .crew::backdrop{background:rgba(36,33,29,.34);backdrop-filter:blur(3px)}
-.crew__in{position:relative;background:var(--bg);border:1.5px solid var(--fur,var(--m-400));border-radius:var(--r-tile);
-  padding:74px 26px 26px;text-align:center;box-shadow:0 3px 0 var(--rim,var(--m-600)),0 30px 70px rgba(36,33,29,.2)}
+.crew__in{position:relative;overflow:hidden;background:var(--bg);border:1.5px solid var(--fur,var(--m-400));border-radius:var(--r-tile);
+  padding:24px 26px 26px;text-align:center;box-shadow:0 3px 0 var(--rim,var(--m-600)),0 30px 70px rgba(36,33,29,.2)}
 .crew__close{position:absolute;z-index:2;right:12px;top:12px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--text-2)}
 .crew__close svg{width:17px;height:17px}
 .crew__close:hover{background:var(--surface);color:var(--text-1)}
-.crew__art{position:absolute;left:50%;top:-28px;transform:translateX(-50%) scaleX(-1);width:158px;aspect-ratio:1854/885}
+.crew__art{position:relative;transform:scaleX(-1);width:162px;aspect-ratio:1854/885;margin:0 auto 14px}
 .crew__role{font:700 10px/1 var(--font-ui);letter-spacing:.24em;color:var(--rim,var(--m-700))}
 .crew__name{margin-top:8px;font-family:var(--font-display);font-size:27px;font-weight:700;letter-spacing:-.02em;color:var(--text-display)}
 .crew__nick{margin-top:3px;font-size:13.5px;font-weight:600;color:var(--text-2)}
 .crew__list{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;text-align:left}
 .crew__list li{position:relative;padding-left:20px;font-size:14.5px;line-height:1.45;color:var(--text-1)}
 .crew__list li::before{content:"";position:absolute;left:4px;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--fur,var(--m-400))}
-@media (max-width:720px){.crew__in{padding:64px 22px 22px}.crew__art{width:134px;top:-22px}.crew__name{font-size:24px}}
+@media (max-width:720px){.crew__in{padding:20px 22px 22px}.crew__art{width:138px}.crew__name{font-size:24px}}
