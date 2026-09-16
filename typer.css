@@ -1,6 +1,79 @@
-/* Typer page: one column, the game up top. Shared frame in product.css, tokens in base.css. */
-.tp .nav__here{white-space:nowrap}
-.tp .one__head .line{white-space:pre-line}
-.tp .play__screen{background:#24211D}
-.tp .shots figure:nth-child(2){transform:translateY(-14px)}
-@media (max-width:720px){.tp .shots figure:nth-child(2){transform:none}}
+/* Typer page: the configurator up top, then the game, numbers, reviews, screens, badges. Tokens from base.css. */
+.tp section[id]{scroll-margin-top:72px}
+.block{width:min(100%,1040px);margin:0 auto;padding:clamp(72px,10vh,120px) clamp(22px,4vw,40px) 0;display:flex;flex-direction:column;align-items:center;gap:22px}
+
+/* ---------- configurator ---------- */
+.build{position:relative;min-height:calc(100dvh - 64px);overflow:hidden;isolation:isolate}
+.build__bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.build__layer{position:absolute;inset:0;background:var(--c,#FFFAED)}
+.build__layer--next{clip-path:circle(0 at 50% 55%);opacity:0}
+.build__layer--next.is-in{clip-path:circle(120vmax at 50% 55%);opacity:1;transition:clip-path .7s var(--ease)}
+.build__in{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2.4vh,24px);padding-top:clamp(18px,3vh,32px);padding-bottom:clamp(24px,4vh,40px)}
+.build__head{display:flex;flex-direction:column;align-items:center;gap:12px}
+.build__logo{margin:0;line-height:0}
+.build__logo img{height:clamp(40px,4.6vw,60px);width:auto;display:block}
+.build__grid{display:grid;grid-template-columns:minmax(220px,1fr) minmax(400px,540px) minmax(220px,1fr);gap:clamp(18px,3vw,40px);align-items:center;width:100%}
+.build__col:last-child{position:relative;z-index:3}
+.build__col{display:flex;flex-direction:column;gap:22px;min-width:0}
+.build__col:first-child{align-items:flex-end}
+.group{display:flex;flex-direction:column;gap:8px}
+.build__col:first-child .group{align-items:flex-end}
+.group__t{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--text-1);margin:0}
+.group__n{font:400 13px/1 var(--font-pixel);color:var(--text-2);padding-top:2px}
+.chips{display:grid;grid-template-columns:repeat(5,44px);gap:8px}
+.chip{position:relative;width:44px;height:44px;border-radius:50%;background:var(--surface);border:1px solid var(--line-strong);display:grid;place-items:center;padding:5px;transition:transform .15s var(--ease),border-color .15s var(--ease),box-shadow .15s var(--ease)}
+.chip img{width:100%;height:100%;object-fit:contain;pointer-events:none}
+.chip:hover{transform:translateY(-2px)}
+.chip[aria-pressed="true"]{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.chip--swatch img{border-radius:50%}
+.soundbtn{width:28px;height:28px;border-radius:var(--r-pill);display:grid;place-items:center;color:var(--text-2);margin-left:2px}
+.soundbtn svg{width:15px;height:15px}
+.soundbtn[aria-pressed="false"] .w{opacity:0}
+.soundbtn:hover{background:var(--surface-hover);color:var(--text-1)}
+.soundbtn.is-cue{animation:cue 1.1s var(--ease) 2}
+@keyframes cue{35%{transform:scale(1.35);color:var(--accent)}}
+.build__act{margin-top:4px}
+
+/* the desk */
+.desk{position:relative;width:100%;max-width:540px;margin:0 auto;clip-path:inset(-6% -9% -8% -14%)}
+.monitor{position:relative;width:76%;margin:0 auto;aspect-ratio:var(--ar,1354/1222);z-index:1;container-type:inline-size}
+.monitor__img{width:100%;height:100%;display:block}
+.monitor__screen{position:absolute;inset:var(--inset,11% 9% 22% 9%);padding:5% 6%;overflow:hidden;color:var(--fg,#65CDA7);pointer-events:none}
+.screen__text{margin:0;font:400 2.9cqw/1.35 var(--font-pixel);white-space:pre;letter-spacing:.02em}
+.screen__text .caret{display:inline-block;width:.55em;height:1em;background:currentColor;vertical-align:-.1em;animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+.desk__sculpture{position:absolute;left:-5%;bottom:-5%;width:22%;height:auto;z-index:4;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(27,24,21,.12))}
+.desk__kbwrap{position:relative;width:100%;margin-top:-2%}
+.desk__cable{position:absolute;left:88%;top:3%;width:74%;max-width:none;transform:translate(-4%,calc(-1 * var(--plug-y,86%)));z-index:2;pointer-events:none}
+.desk__cable[hidden]{display:none}
+.desk__kb{position:relative;z-index:3}
+.desk__kb .tp-kb__cap{cursor:pointer}
+
+/* ---------- numbers, reviews, screens, badges ---------- */
+.nums{flex-direction:row;justify-content:center;flex-wrap:wrap;gap:clamp(28px,6vw,80px)}
+.num{display:flex;flex-direction:column;align-items:center;gap:6px}
+.num b{font:400 clamp(30px,3.6vw,48px)/1 var(--font-pixel);color:var(--text-display);letter-spacing:.02em}
+.num span{font-size:13px;color:var(--text-2)}
+.reviews__grid{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin:0;padding:0}
+.review{background:var(--surface);border-radius:var(--r-tile);padding:20px 22px 18px;display:flex;flex-direction:column;gap:6px;text-align:left}
+.review__q{font-size:16px;line-height:1.5;color:var(--text-1);margin:0}
+.review__t{font-size:13px;line-height:1.5;color:var(--text-2);margin:0}
+.review__meta{font-size:12.5px;color:var(--text-2);margin-top:6px}
+.screens .shots{width:min(100%,820px)}
+.get{padding-bottom:20px}
+
+@media (max-width:980px){
+  .build__grid{grid-template-columns:1fr;gap:26px}
+  .desk{order:-1;max-width:520px}
+  .build__col,.build__col:first-child,.build__col:first-child .group{align-items:stretch}
+  .build__col{gap:16px}
+  .group__t{justify-content:flex-start}
+  .chips{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px;gap:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chip{flex:none;width:40px;height:40px;scroll-snap-align:start}
+}
+@media (max-width:720px){
+  .reviews__grid{grid-template-columns:1fr}
+  .block{padding-top:64px}
+}
+@media (prefers-reduced-motion:reduce){.chip,.build__layer--next.is-in{transition:none}.soundbtn.is-cue{animation:none}.screen__text .caret{animation:none}}

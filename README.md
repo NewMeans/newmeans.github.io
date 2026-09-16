@@ -5,18 +5,21 @@
 
 ## 구조
 
-- `index.html` — 홈. 살아 있는 토끼 로고와 단어 슬롯머신(히어로), Typer 데스크, 도파민대학교 테스트, 스튜디오, 푸터
-- `typer.html`, `dopamine.html` — 제품 페이지
+- `index.html` — 홈. 살아 있는 토끼 로고와 단어 슬롯머신(히어로), Typer 장면(천장 구멍에서 떨어진 공이 키캡 다섯을 튀며 TYPER를 친다), 도파민대학교 장면(글자 없는 카드 두 장), 한 줄 푸터
+- `typer.html`, `dopamine.html` — 제품 원페이지. Typer는 커스터마이저(게임 상점 부품 60개) → 보드 → 숫자 → 후기 → 화면 → 배지, 도파민대학교는 숫자 헤드라인 → 세 단계 → 테스트 → 도형 필드 → CTA
 - `404.html` — 없는 페이지
 - `base.css` — 디자인 시스템 토큰과 공용 컴포넌트 (`DESIGN_SYSTEM.md`)
 - `home.css` — 홈 전용 스타일
 - `hero.js` — 토끼(포인터 추종, 글자 끌기, 안절부절)와 단어 슬롯머신, 단어별 소품
 - `keyboard.js` — Typer 키보드 컴포넌트와 타건음
-- `product.js`, `product.css` — 홈의 제품 장면(스크롤 진행 하나로 CSS 안무), Typer 보드(키캡 블록 벽돌깨기, 드래그 조준, 스위치 타건음), 도파민대학교 연구 보고서 카드, 기울어지는 카드, 2,000개 도형 필드, 엔드 카드의 잠든 토끼. 홈과 제품 페이지가 같이 쓴다
+- `scenes.js` — 홈 장면 둘과 도파민대학교 조각(GSAP ScrollTrigger: 고정 장면은 scrub, 카드 등장은 once, 카드 안 연출은 되감기지 않는 래칫), 숫자 뒤섞기
+- `configurator.js` — Typer 커스터마이저. `assets/shop/catalog.json`(게임 상점 데이터에서 생성)만 읽는다
+- `product.js`, `product.css` — 상점 카탈로그 로더, 스위치 소리, Typer 보드(키캡 블록 벽돌깨기, 드래그 조준), 기울어지는 카드, 2,000개 도형 필드. 홈과 제품 페이지가 같이 쓴다
 - `i18n.js` — 한/영 문구 사전과 언어 토글 (localStorage 유지)
 - `experience.js` — 스토어 배지 언어 처리
 - `assets/brand/logo-pieces/` — 로고 조각 25개 (마스크로 칠해 어떤 색으로도 바뀜)
-- `assets/fonts/` — Bricolage Grotesque(OFL, 자체 호스팅), DNF BitBit. Wanted Sans는 CDN
+- `assets/fonts/` — SUIT(한글·UI·본문, OFL), Pally(헤더 전용, Fontshare ITF 무료 라이선스), Hahmlet 800 부분집합(도파민대학교 `개의 결과` 한 줄), DNF BitBit(워드마크·Typer 픽셀 숫자). 전부 자체 호스팅. GSAP는 jsDelivr CDN
+- `assets/shop/` — 게임 상점 스프라이트와 `catalog.json` (Typer 프로젝트에서 읽기 전용으로 복사)
 - `Typer/`, `insta/` — 앱스토어 / 인스타그램 리디렉트
 
 ## 계획 문서

@@ -1,0 +1,1014 @@
+{
+ "ball": [
+  {
+   "id": "0000",
+   "name": "Rubber",
+   "price": 0,
+   "sprite": "ball/0000_0.png",
+   "thumb": "ball/0000_s.png",
+   "trail": "#E86F67"
+  },
+  {
+   "id": "0001",
+   "name": "Cat Ball",
+   "price": 800,
+   "sprite": "ball/0001_0.png",
+   "thumb": "ball/0001_s.png",
+   "trail": "#323232"
+  },
+  {
+   "id": "0002",
+   "name": "Mint Choco",
+   "price": 100,
+   "sprite": "ball/0002_0.png",
+   "thumb": "ball/0002_s.png",
+   "trail": "#B3C7B6"
+  },
+  {
+   "id": "0003",
+   "name": "Tennis Ball",
+   "price": 100,
+   "sprite": "ball/0003_0.png",
+   "thumb": "ball/0003_s.png",
+   "trail": "#BEF616"
+  },
+  {
+   "id": "0004",
+   "name": "Globe",
+   "price": 500,
+   "sprite": "ball/0004_0.png",
+   "thumb": "ball/0004_s.png",
+   "trail": "#73ABF9"
+  },
+  {
+   "id": "0005",
+   "name": "Lemon",
+   "price": 800,
+   "sprite": "ball/0005_0.png",
+   "thumb": "ball/0005_s.png",
+   "trail": "#FBDF5F"
+  },
+  {
+   "id": "0006",
+   "name": "Beach Ball",
+   "price": 500,
+   "sprite": "ball/0006_0.png",
+   "thumb": "ball/0006_s.png",
+   "trail": "#FFFFFF"
+  },
+  {
+   "id": "0007",
+   "name": "Star Candy",
+   "price": 1200,
+   "sprite": "ball/0007_0.png",
+   "thumb": "ball/0007_s.png",
+   "trail": "#FFFFFF"
+  },
+  {
+   "id": "0008",
+   "name": "Baseball",
+   "price": 500,
+   "sprite": "ball/0008_0.png",
+   "thumb": "ball/0008_s.png",
+   "trail": "#FFFFFF"
+  },
+  {
+   "id": "0009",
+   "name": "Watermelon",
+   "price": 800,
+   "sprite": "ball/0009_0.png",
+   "thumb": "ball/0009_s.png",
+   "trail": "#5F976B"
+  }
+ ],
+ "sculpture": [
+  {
+   "id": "1000",
+   "name": "Cactus",
+   "price": 0,
+   "sprite": "sculpture/1000_0.png",
+   "thumb": "sculpture/1000_s.png"
+  },
+  {
+   "id": "1001",
+   "name": "Iced Americano",
+   "price": 480,
+   "sprite": "sculpture/1001_0.png",
+   "thumb": "sculpture/1001_s.png"
+  },
+  {
+   "id": "1002",
+   "name": "Apple",
+   "price": 300,
+   "sprite": "sculpture/1002_0.png",
+   "thumb": "sculpture/1002_s.png"
+  },
+  {
+   "id": "1003",
+   "name": "Caffeine",
+   "price": 180,
+   "sprite": "sculpture/1003_0.png",
+   "thumb": "sculpture/1003_s.png"
+  },
+  {
+   "id": "1004",
+   "name": "GoldenBeaver",
+   "price": 0,
+   "sprite": "sculpture/1004_0.png",
+   "thumb": "sculpture/1004_s.png"
+  },
+  {
+   "id": "1005",
+   "name": "Mint Choco Parfait",
+   "price": 0,
+   "sprite": "sculpture/1005_0.png",
+   "thumb": "sculpture/1005_s.png"
+  },
+  {
+   "id": "1006",
+   "name": "Supporter Coffee",
+   "price": 0,
+   "sprite": "sculpture/1006_0.png",
+   "thumb": "sculpture/1006_s.png"
+  },
+  {
+   "id": "1007",
+   "name": "Lavender Ice Cream",
+   "price": 0,
+   "sprite": "sculpture/1007_0.png",
+   "thumb": "sculpture/1007_s.png"
+  },
+  {
+   "id": "1008",
+   "name": "Citrus Sunset",
+   "price": 0,
+   "sprite": "sculpture/1008_0.png",
+   "thumb": "sculpture/1008_s.png"
+  }
+ ],
+ "monitor": [
+  {
+   "id": "2000",
+   "name": "Retro",
+   "price": 0,
+   "sprite": "monitor/2000.png",
+   "thumb": "monitor/2000_s.png",
+   "bg": "#3A312D",
+   "fg": "#65CDA7"
+  },
+  {
+   "id": "2001",
+   "name": "Modern",
+   "price": 300,
+   "sprite": "monitor/2001.png",
+   "thumb": "monitor/2001_s.png",
+   "bg": "#262626",
+   "fg": "#E2E2E2"
+  },
+  {
+   "id": "2002",
+   "name": "Modern White",
+   "price": 350,
+   "sprite": "monitor/2002.png",
+   "thumb": "monitor/2002_s.png",
+   "bg": "#262626",
+   "fg": "#FFAEEC"
+  },
+  {
+   "id": "2003",
+   "name": "Studio PC",
+   "price": 400,
+   "sprite": "monitor/2003.png",
+   "thumb": "monitor/2003_s.png",
+   "bg": "#1E1E1E",
+   "fg": "#73B77B"
+  }
+ ],
+ "frame": [
+  {
+   "id": "3000",
+   "name": "Retro",
+   "price": 0,
+   "frame": "frame/3000_1.png",
+   "frameGame": "frame/3000_0.png",
+   "thumb": "frame/3000_s.png",
+   "bg": "#FFFAED",
+   "cable": "frame/3000_2.png",
+   "cablePos": [
+    3.98,
+    -0.41
+   ],
+   "cableSize": 0.85,
+   "geo": "retro"
+  },
+  {
+   "id": "3001",
+   "name": "Modern",
+   "price": 400,
+   "frame": "frame/3001_1.png",
+   "frameGame": "frame/3001_0.png",
+   "thumb": "frame/3001_s.png",
+   "bg": "#DDE7F4",
+   "cable": "frame/3001_2.png",
+   "cablePos": [
+    3.982,
+    -1.158
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3002",
+   "name": "Mocha Latte",
+   "price": 200,
+   "frame": "frame/3002_1.png",
+   "frameGame": "frame/3002_0.png",
+   "thumb": "frame/3002_s.png",
+   "bg": "#FFF2DE",
+   "cable": "frame/3002_2.png",
+   "cablePos": [
+    4.319,
+    -0.675
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3003",
+   "name": "Lavender Sky",
+   "price": 300,
+   "frame": "frame/3003_1.png",
+   "frameGame": "frame/3003_0.png",
+   "thumb": "frame/3003_s.png",
+   "bg": "#E5EAF5",
+   "cable": "frame/3003_2.png",
+   "cablePos": [
+    4.319,
+    -0.675
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3004",
+   "name": "Sunset Breeze",
+   "price": 300,
+   "frame": "frame/3004_1.png",
+   "frameGame": "frame/3004_0.png",
+   "thumb": "frame/3004_s.png",
+   "bg": "#D5E0EC",
+   "cable": "frame/3004_2.png",
+   "cablePos": [
+    4.319,
+    -0.675
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3005",
+   "name": "Mint Choco",
+   "price": 200,
+   "frame": "frame/3005_1.png",
+   "frameGame": "frame/3005_0.png",
+   "thumb": "frame/3005_s.png",
+   "bg": "#FFF2DE",
+   "cable": "frame/3005_2.png",
+   "cablePos": [
+    4.319,
+    -0.675
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3006",
+   "name": "Midnight Edge",
+   "price": 400,
+   "frame": "frame/3006_1.png",
+   "frameGame": "frame/3006_0.png",
+   "thumb": "frame/3006_s.png",
+   "bg": "#E6E6E6",
+   "cable": null,
+   "cablePos": [
+    0.0,
+    0.0
+   ],
+   "cableSize": 0.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3007",
+   "name": "Silver Paws",
+   "price": 2000,
+   "frame": "frame/3007_1.png",
+   "frameGame": "frame/3007_0.png",
+   "thumb": "frame/3007_s.png",
+   "bg": "#DFE3E8",
+   "cable": "frame/3007_2.png",
+   "cablePos": [
+    4.071,
+    -0.899
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3008",
+   "name": "Pure White",
+   "price": 800,
+   "frame": "frame/3008_1.png",
+   "frameGame": "frame/3008_0.png",
+   "thumb": "frame/3008_s.png",
+   "bg": "#E9EEF5",
+   "cable": "frame/3008_2.png",
+   "cablePos": [
+    4.319,
+    -0.59
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3009",
+   "name": "Deep Black",
+   "price": 800,
+   "frame": "frame/3009_1.png",
+   "frameGame": "frame/3009_0.png",
+   "thumb": "frame/3009_s.png",
+   "bg": "#E9EEF5",
+   "cable": "frame/3009_2.png",
+   "cablePos": [
+    4.319,
+    -0.59
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3010",
+   "name": "Lemon Yellow",
+   "price": 800,
+   "frame": "frame/3010_1.png",
+   "frameGame": "frame/3010_0.png",
+   "thumb": "frame/3010_s.png",
+   "bg": "#FFF2C7",
+   "cable": "frame/3010_2.png",
+   "cablePos": [
+    4.319,
+    -0.59
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3011",
+   "name": "Cherry Red",
+   "price": 800,
+   "frame": "frame/3011_1.png",
+   "frameGame": "frame/3011_0.png",
+   "thumb": "frame/3011_s.png",
+   "bg": "#F1DDD5",
+   "cable": "frame/3011_2.png",
+   "cablePos": [
+    4.319,
+    -0.59
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  },
+  {
+   "id": "3012",
+   "name": "Clear Acrylic",
+   "price": 2000,
+   "frame": "frame/3012_1.png",
+   "frameGame": "frame/3012_0.png",
+   "thumb": "frame/3012_s.png",
+   "bg": "#EAEAEA",
+   "cable": "frame/3012_2.png",
+   "cablePos": [
+    4.203,
+    -0.7
+   ],
+   "cableSize": 1.0,
+   "geo": "modern"
+  }
+ ],
+ "switch": [
+  {
+   "id": "4000",
+   "name": "Standard",
+   "price": 0,
+   "sprite": "switch/4000.png",
+   "thumb": "switch/4000_s.png",
+   "clips": 4
+  },
+  {
+   "id": "4001",
+   "name": "Brown",
+   "price": 300,
+   "sprite": "switch/4001.png",
+   "thumb": "switch/4001_s.png",
+   "clips": 5
+  },
+  {
+   "id": "4002",
+   "name": "Red",
+   "price": 300,
+   "sprite": "switch/4002.png",
+   "thumb": "switch/4002_s.png",
+   "clips": 5
+  },
+  {
+   "id": "4003",
+   "name": "White",
+   "price": 600,
+   "sprite": "switch/4003.png",
+   "thumb": "switch/4003_s.png",
+   "clips": 5
+  },
+  {
+   "id": "4004",
+   "name": "Chocolate",
+   "price": 400,
+   "sprite": "switch/4004.png",
+   "thumb": "switch/4004_s.png",
+   "clips": 5
+  },
+  {
+   "id": "4005",
+   "name": "Capacitive",
+   "price": 500,
+   "sprite": "switch/4005.png",
+   "thumb": "switch/4005_s.png",
+   "clips": 5
+  },
+  {
+   "id": "4006",
+   "name": "Low Profile",
+   "price": 600,
+   "sprite": "switch/4006.png",
+   "thumb": "switch/4006_s.png",
+   "clips": 5
+  },
+  {
+   "id": "4007",
+   "name": "Blue",
+   "price": 800,
+   "sprite": "switch/4007.png",
+   "thumb": "switch/4007_s.png",
+   "clips": 4
+  },
+  {
+   "id": "4008",
+   "name": "Purple",
+   "price": 1000,
+   "sprite": "switch/4008.png",
+   "thumb": "switch/4008_s.png",
+   "clips": 6
+  }
+ ],
+ "keycap": [
+  {
+   "id": "5000",
+   "name": "Retro",
+   "price": 0,
+   "thumb": "keycap/5000_s.png",
+   "slots": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "sprites": [
+    "keycap/5000_0.png",
+    "keycap/5000_1.png"
+   ],
+   "bed": "#261F1D",
+   "text": "#67544F",
+   "light": "#FFFAED"
+  },
+  {
+   "id": "5001",
+   "name": "Modern",
+   "price": 400,
+   "thumb": "keycap/5001_s.png",
+   "slots": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    3
+   ],
+   "sprites": [
+    "keycap/5001_0.png",
+    "keycap/5001_1.png",
+    "keycap/5001_2.png",
+    "keycap/5001_3.png"
+   ],
+   "bed": "#28282A",
+   "text": "#0A0806",
+   "light": "#9EADFF"
+  },
+  {
+   "id": "5002",
+   "name": "Mocha Latte",
+   "price": 300,
+   "thumb": "keycap/5002_s.png",
+   "slots": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    4
+   ],
+   "sprites": [
+    "keycap/5002_0.png",
+    "keycap/5002_1.png",
+    "keycap/5002_2.png",
+    "keycap/5002_3.png",
+    "keycap/5002_4.png"
+   ],
+   "bed": "#212424",
+   "text": "#0A0806",
+   "light": "#FAF1D7"
+  },
+  {
+   "id": "5003",
+   "name": "Lavender Sky",
+   "price": 300,
+   "thumb": "keycap/5003_s.png",
+   "slots": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    4
+   ],
+   "sprites": [
+    "keycap/5003_0.png",
+    "keycap/5003_1.png",
+    "keycap/5003_2.png",
+    "keycap/5003_3.png",
+    "keycap/5003_4.png"
+   ],
+   "bed": "#1C1C22",
+   "text": "#0A0806",
+   "light": "#A0B9F7"
+  },
+  {
+   "id": "5004",
+   "name": "Sunset Breeze",
+   "price": 300,
+   "thumb": "keycap/5004_s.png",
+   "slots": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    4
+   ],
+   "sprites": [
+    "keycap/5004_0.png",
+    "keycap/5004_1.png",
+    "keycap/5004_2.png",
+    "keycap/5004_3.png",
+    "keycap/5004_4.png"
+   ],
+   "bed": "#292625",
+   "text": "#0A0806",
+   "light": "#F2AB7A"
+  },
+  {
+   "id": "5005",
+   "name": "Mint Choco",
+   "price": 200,
+   "thumb": "keycap/5005_s.png",
+   "slots": [
+    2,
+    0,
+    0,
+    0,
+    0,
+    3,
+    3,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    3
+   ],
+   "sprites": [
+    "keycap/5005_0.png",
+    "keycap/5005_1.png",
+    "keycap/5005_2.png",
+    "keycap/5005_3.png"
+   ],
+   "bed": "#212424",
+   "text": "#0A0806",
+   "light": "#B6DDCB"
+  },
+  {
+   "id": "5006",
+   "name": "Midnight Edge",
+   "price": 400,
+   "thumb": "keycap/5006_s.png",
+   "slots": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "sprites": [
+    "keycap/5006_0.png",
+    "keycap/5006_1.png"
+   ],
+   "bed": "#1E1E1E",
+   "text": "#C4D3D3",
+   "light": "#DEFFFF"
+  },
+  {
+   "id": "5007",
+   "name": "Silver Paws",
+   "price": 2000,
+   "thumb": "keycap/5007_s.png",
+   "slots": [
+    7,
+    10,
+    9,
+    8,
+    11,
+    12,
+    13,
+    10,
+    8,
+    7,
+    11,
+    9,
+    11,
+    7,
+    9,
+    8,
+    10,
+    13
+   ],
+   "sprites": [
+    "keycap/5007_10.png",
+    "keycap/5007_11.png",
+    "keycap/5007_12.png",
+    "keycap/5007_13.png",
+    "keycap/5007_7.png",
+    "keycap/5007_8.png",
+    "keycap/5007_9.png"
+   ],
+   "bed": "#1E1E1E",
+   "text": "#4F4F4F",
+   "light": "#FFFFFF"
+  },
+  {
+   "id": "5008",
+   "name": "Pure White",
+   "price": 800,
+   "thumb": "keycap/5008_s.png",
+   "slots": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "sprites": [
+    "keycap/5008_0.png",
+    "keycap/5008_1.png"
+   ],
+   "bed": "#000000",
+   "text": "#5C697D",
+   "light": "#C7E6FF"
+  },
+  {
+   "id": "5009",
+   "name": "Deep Black",
+   "price": 800,
+   "thumb": "keycap/5009_s.png",
+   "slots": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "sprites": [
+    "keycap/5009_0.png",
+    "keycap/5009_1.png"
+   ],
+   "bed": "#000000",
+   "text": "#D6D6D6",
+   "light": "#FFFFFF"
+  },
+  {
+   "id": "5010",
+   "name": "Lemon Yellow",
+   "price": 800,
+   "thumb": "keycap/5010_s.png",
+   "slots": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "sprites": [
+    "keycap/5010_0.png",
+    "keycap/5010_1.png"
+   ],
+   "bed": "#000000",
+   "text": "#8F6B1A",
+   "light": "#FFE661"
+  },
+  {
+   "id": "5011",
+   "name": "Color Pop",
+   "price": 1400,
+   "thumb": "keycap/5011_s.png",
+   "slots": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    9,
+    9,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    4,
+    9
+   ],
+   "sprites": [
+    "keycap/5011_0.png",
+    "keycap/5011_1.png",
+    "keycap/5011_2.png",
+    "keycap/5011_3.png",
+    "keycap/5011_4.png",
+    "keycap/5011_9.png"
+   ],
+   "bed": "#000000",
+   "text": "#FFFFFF",
+   "light": "#5C8CFF"
+  },
+  {
+   "id": "5012",
+   "name": "Pastel Rainbow",
+   "price": 1600,
+   "thumb": "keycap/5012_s.png",
+   "slots": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    1,
+    2,
+    3,
+    4,
+    7,
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ],
+   "sprites": [
+    "keycap/5012_0.png",
+    "keycap/5012_1.png",
+    "keycap/5012_2.png",
+    "keycap/5012_3.png",
+    "keycap/5012_4.png",
+    "keycap/5012_5.png",
+    "keycap/5012_6.png",
+    "keycap/5012_7.png"
+   ],
+   "bed": "#000000",
+   "text": "#000000",
+   "light": "#CFE8FE"
+  },
+  {
+   "id": "5013",
+   "name": "Emerald Fade",
+   "price": 1600,
+   "thumb": "keycap/5013_s.png",
+   "slots": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    8,
+    9,
+    5,
+    3,
+    4,
+    6,
+    7,
+    2,
+    5,
+    3,
+    4,
+    6,
+    10
+   ],
+   "sprites": [
+    "keycap/5013_0.png",
+    "keycap/5013_1.png",
+    "keycap/5013_10.png",
+    "keycap/5013_2.png",
+    "keycap/5013_3.png",
+    "keycap/5013_4.png",
+    "keycap/5013_5.png",
+    "keycap/5013_6.png",
+    "keycap/5013_7.png",
+    "keycap/5013_8.png",
+    "keycap/5013_9.png"
+   ],
+   "bed": "#000000",
+   "text": "#000000",
+   "light": "#6BF2D1"
+  },
+  {
+   "id": "5014",
+   "name": "Cherry Red",
+   "price": 800,
+   "thumb": "keycap/5014_s.png",
+   "slots": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    1,
+    1,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    1
+   ],
+   "sprites": [
+    "keycap/5014_0.png",
+    "keycap/5014_1.png"
+   ],
+   "bed": "#000000",
+   "text": "#8F2421",
+   "light": "#FF5C5C"
+  }
+ ],
+ "_meta": {
+  "source": "Typer game shop data, exported 2026-09-15 (read-only copy)",
+  "paths": "relative to assets/shop/",
+  "wide_slots": [
+   5,
+   6,
+   17
+  ]
+ }
+}

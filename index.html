@@ -13,10 +13,9 @@
 <meta property="og:url" content="https://newmeans.github.io/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/png" href="assets/brand/newmeans-logo.png">
-<link rel="preload" href="assets/fonts/BricolageGrotesque-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="base.css?v=20260915-2">
-<link rel="stylesheet" href="product.css?v=20260915-2">
-<link rel="stylesheet" href="home.css?v=20260915-2">
+<link rel="stylesheet" href="base.css?v=20260916-1">
+<link rel="stylesheet" href="product.css?v=20260916-1">
+<link rel="stylesheet" href="home.css?v=20260916-1">
 </head>
 <body class="home">
 <a class="skip-link" href="#works" data-i18n="nav.skip">본문으로 건너뛰기</a>
@@ -60,64 +59,73 @@
     </div>
   </section>
 
-  <!-- TWO SCENES: each product as a pinned scroll sequence. A big logo, one object, one hint, one action. -->
+  <!-- Typer: a pinned scene. Logo, two tags, a wordless stage, two buttons. scenes.js drives it with scroll. -->
   <section class="scene scene--typer" id="works" data-scene="typer" aria-label="Typer">
     <div class="scene__pin"><div class="wrap scene__in">
-      <a class="scene__logo" href="typer.html"><img src="assets/brand/typer-logo.png" alt="Typer"></a>
-      <div class="scene__stage stage--typer" aria-hidden="true">
-        <svg class="trail" viewBox="0 0 760 360"><defs><clipPath id="trail-clip"><rect x="-20" y="-80" width="0" height="520"/></clipPath></defs><path clip-path="url(#trail-clip)" d="M60 -40 L184 239 L308 110 L432 239 L494 166 L556 239 L820 -70"/></svg>
-        <div class="cap c1" style="--x:8"><b class="n">3</b></div>
-        <div class="cap c2" style="--x:132"><b class="n n--a">3</b><b class="n n--b">2</b></div>
-        <div class="cap c3" style="--x:256"><b class="n">1</b></div>
-        <div class="cap c4" style="--x:380"><b class="n n--a">2</b><b class="n n--b">1</b></div>
-        <div class="cap c5" style="--x:504"><b class="n n--a">1</b><b class="n n--b">0</b><i class="sh"></i><i class="sh"></i><i class="sh"></i><i class="sh"></i></div>
-        <div class="cap c6" style="--x:628"><b class="n">2</b></div>
-        <span class="wave"><i></i><i></i><i></i><i></i></span>
-        <img class="ball" src="assets/game/ball.png" alt="" draggable="false">
+      <div class="scene__head">
+        <a class="scene__logo" href="typer.html"><img src="assets/brand/typer-logo.png" alt="Typer"></a>
+        <div class="tags"><span class="tag" data-i18n="tag.game">Game</span><span class="tag" data-i18n="tag.mobile">Mobile</span></div>
       </div>
-      <p class="scene__hint" data-i18n="home.typer.hint">키캡이 부서질 때마다 타건음</p>
+      <div class="stage stage--typer" role="img" data-i18n="scene.typer" data-i18n-attr="aria-label" aria-label="공이 키캡을 튀며 Typer를 친다">
+        <div class="band band--top"><i class="hole hole--top"></i></div>
+        <div class="cap" style="--x:100"><b></b></div>
+        <div class="cap" style="--x:240"><b></b></div>
+        <div class="cap" style="--x:380"><b></b></div>
+        <div class="cap" style="--x:520"><b></b></div>
+        <div class="cap" style="--x:660"><b></b></div>
+        <div class="shards"><i></i><i></i><i></i><i></i></div>
+        <img class="ball" src="assets/shop/ball/0000_0.png" alt="" draggable="false">
+        <div class="band band--bottom"><i class="hole hole--bottom"></i></div>
+      </div>
       <div class="scene__act">
-        <div class="badges">
-          <a href="https://apps.apple.com/kr/app/typer-asmr-keyboard-smash/id6753107938" target="_blank" rel="noopener noreferrer"><img data-store="app-store" src="assets/badges/app-store-ko.svg" alt="App Store에서 다운로드"></a>
-          <a href="https://play.google.com/store/apps/details?id=com.NewMeans.Typer" target="_blank" rel="noopener noreferrer"><img data-store="google-play" src="assets/badges/google-play-ko.svg" alt="Google Play에서 다운로드"></a>
-        </div>
-        <a class="link" href="typer.html" data-i18n="home.typer.more">키보드 골라보기</a>
+        <a class="btn btn--primary btn--lg" href="typer.html" data-i18n="cta.more">자세히 보기</a>
+        <a class="btn btn--tint btn--lg" href="typer.html#get" data-i18n="cta.download">다운로드</a>
+        <button type="button" class="btn btn--icon replay" data-i18n="cta.replay" data-i18n-attr="aria-label" aria-label="다시 보기"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg></button>
       </div>
     </div></div>
   </section>
 
+  <!-- Dopamine University: two wordless cards. A sparkle bounces over messages, a report writes itself. -->
   <section class="scene scene--dopa" id="dopa" data-scene="dopa" aria-label="Dopamine University">
-    <div class="scene__pin"><div class="wrap scene__in">
-      <a class="scene__logo scene__logo--dopa" href="dopamine.html"><img src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
-      <div class="scene__stage stage--dopa" aria-hidden="true">
-        <div class="report" data-report>
-          <div class="report__head"><img src="assets/brand/dopamine-symbol.png" alt=""><span data-i18n="dopa.report">연구 보고서</span><em>dodae.me</em></div>
-          <div class="report__lines"><i style="--w:92%;--d:.3"></i><i style="--w:66%;--d:.36"></i><i style="--w:84%;--d:.42"></i><i style="--w:48%;--d:.48"></i><i style="--w:74%;--d:.54"></i></div>
-          <div class="report__axis"><span data-i18n="dopa.teto">테토</span><i class="report__track"><b class="report__needle"></b></i><span data-i18n="dopa.egen">에겐</span></div>
-          <div class="report__stamp"><img src="assets/brand/dopamine-symbol.png" alt=""></div>
+    <div class="wrap scene__in">
+      <div class="scene__head">
+        <a class="scene__logo scene__logo--dopa" href="dopamine.html"><img src="assets/brand/dopamine-logo.png" alt="Dopamine University"></a>
+        <div class="tags"><span class="tag" data-i18n="tag.aitest">AI 심리테스트</span><span class="tag" data-i18n="tag.web">Web</span></div>
+      </div>
+      <div class="cards" data-dopa-cards role="img" data-i18n="scene.dopa" data-i18n-attr="aria-label" aria-label="메시지가 읽히고 보고서가 써진다">
+        <div class="card card--chat">
+          <span class="bar" style="--w:62%"><i></i></span>
+          <span class="bar" style="--w:40%"><i></i></span>
+          <span class="bar" style="--w:74%"><i></i></span>
+          <span class="bar" style="--w:48%"><i></i></span>
+          <span class="bar" style="--w:56%"><i></i></span>
+          <svg class="bean" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg>
+        </div>
+        <div class="card card--report">
+          <i class="ln ln--title"></i>
+          <i class="ln" style="--w:92%"></i><i class="ln" style="--w:66%"></i><i class="ln" style="--w:84%"></i><i class="ln" style="--w:48%"></i>
+          <div class="axis"><b class="dot dot--a"></b><i class="track"><b class="needle"></b></i><b class="dot dot--b"></b></div>
+          <div class="stamp"><svg class="sparkle" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0C13 8 16 11 24 12C16 13 13 16 12 24C11 16 8 13 0 12C8 11 11 8 12 0Z"/></svg></div>
         </div>
       </div>
-      <p class="scene__hint" data-i18n="home.dopa.hint">내 카톡으로 보는 나의 다른 모습</p>
-      <div class="scene__act"><a class="btn btn--tint" href="dopamine.html" data-i18n="home.dopa.more">테스트 둘러보기</a></div>
-    </div></div>
+      <div class="scene__act">
+        <a class="btn btn--primary btn--lg" href="dopamine.html" data-i18n="cta.more">자세히 보기</a>
+        <a class="btn btn--tint btn--lg" href="https://dodae.me/" target="_blank" rel="noopener noreferrer" data-i18n="cta.start">테스트 시작하기</a>
+      </div>
+    </div>
   </section>
 
 </main>
 
-<!-- END CARD: the mark, asleep, and the few links that matter -->
-<footer class="end" id="studio">
-  <div class="wrap end__in">
-    <div class="end__mark">
-      <div class="sleep" data-sleep aria-hidden="true"></div>
-      <img class="end__wordmark" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans">
-    </div>
-    <div class="end__row">
-      <span>© 2026 NewMeans</span>
-      <span>Seoul, Korea</span>
-      <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
-      <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
-      <a href="TyperHome/privacy.html" data-i18n="foot.privacy">개인정보 처리방침</a>
-    </div>
+<footer class="foot" id="studio">
+  <div class="wrap foot__in">
+    <a href="#top" aria-label="NewMeans"><img class="foot__logo" src="assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
+    <a href="typer.html">Typer</a>
+    <a href="dopamine.html" data-i18n="dopa.here">도파민대학교</a>
+    <a href="https://www.instagram.com/typer_asmr/" target="_blank" rel="noopener">Instagram</a>
+    <a href="TyperHome/privacy.html" data-i18n="foot.privacy">개인정보 처리방침</a>
+    <a href="mailto:newmeans.dev@gmail.com">newmeans.dev@gmail.com</a>
+    <span class="foot__copy">© 2026 NewMeans, Seoul</span>
   </div>
 </footer>
 
@@ -129,10 +137,11 @@
   <svg class="c-tap" viewBox="0 0 48 48"><circle cx="24" cy="24" r="18" fill="#FCFBF7" stroke="#3B3732" stroke-width="2.6"/><circle cx="24" cy="24" r="7" fill="currentColor"/></svg>
 </div>
 
-<script src="i18n.js?v=20260915-2" defer></script>
-<script src="experience.js?v=20260915-2" defer></script>
-<script src="keyboard.js?v=20260915-2" defer></script>
-<script src="product.js?v=20260915-2" defer></script>
-<script src="hero.js?v=20260915-2" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="i18n.js?v=20260916-1" defer></script>
+<script src="product.js?v=20260916-1" defer></script>
+<script src="scenes.js?v=20260916-1" defer></script>
+<script src="hero.js?v=20260916-1" defer></script>
 </body>
 </html>

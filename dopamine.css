@@ -1,4 +1,43 @@
-/* Dopamine University page: coral accent (body[data-accent="coral"]), one column. Shared frame in product.css. */
-.dp .nav__here{white-space:nowrap}
-.dp .report{cursor:crosshair}
-.dp .one__note b{color:var(--text-1)}
+/* Dopamine University: coral accent, SUIT everywhere, Hahmlet for one line. home.css supplies the card scene styles. */
+.dp section[id]{scroll-margin-top:72px}
+
+/* ---------- hero: the scrambling number and the two wordless cards ---------- */
+.dp-hero{padding:clamp(40px,7vh,72px) 0 clamp(56px,9vh,96px)}
+.dp-hero__grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,72px);align-items:center}
+.dp-hero__copy{align-items:flex-start;text-align:left}
+.dp-hero__copy .tags{justify-content:flex-start}
+.dp-logo{width:min(100%,300px);height:auto}
+.count{display:flex;align-items:center;gap:.08em;margin:10px 0 0;font-weight:800;line-height:1}
+.count__num{display:flex;font-family:var(--font-ui);font-weight:800;font-size:clamp(88px,9.4vw,150px);line-height:.9;letter-spacing:-.04em;color:var(--text-display);font-variant-numeric:tabular-nums}
+.count__num span{display:inline-block;width:.6em;text-align:center}
+.count__lines{display:flex;flex-direction:column;gap:.04em;margin-left:.12em;font-size:clamp(26px,3.3vw,52px);line-height:1.1;white-space:nowrap}
+.count__a{font-family:var(--font-ui);font-weight:700;color:var(--text-1)}
+.count__b{display:inline-flex;align-items:center;gap:.14em;font-family:var(--font-result);font-weight:800;color:var(--c-700)}
+.count__b .sparkle{width:.5em;height:.5em;fill:var(--c-400);flex:none;margin-top:.1em}
+.dp-fact{margin:18px 0 0;font-size:16px;line-height:1.6;color:var(--text-2);max-width:40ch}
+.dp-hero__act{justify-content:flex-start;margin-top:26px}
+.cards--stack{grid-template-columns:1fr;gap:18px;width:min(100%,470px);justify-self:end}
+.cards--stack .card{min-height:250px}
+
+/* ---------- three steps in one row ---------- */
+.dp-how{padding:clamp(48px,7vh,80px) 0 0}
+.how{list-style:none;display:flex;justify-content:center;align-items:center;gap:clamp(18px,3vw,36px);flex-wrap:wrap}
+.how li{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:600;color:var(--text-1)}
+.how li+li::before{content:"";width:28px;height:1px;background:var(--line-strong);margin-right:clamp(6px,2vw,18px)}
+.how svg{width:32px;height:32px;color:var(--accent);flex:none}
+
+/* ---------- tests, the field, the last button ---------- */
+.dp-tests{padding:clamp(72px,10vh,120px) 0 0}
+.dp-unique{padding:clamp(72px,10vh,120px) 0 0}
+.dp-unique__line{display:block;text-align:center;font-size:15px;color:var(--text-2);margin:0 auto 22px}
+.dp-unique .field{width:100%;border-radius:0}
+.dp-get{padding:clamp(64px,9vh,100px) 0 0;display:flex;justify-content:center}
+
+@media (max-width:860px){
+  .dp-hero__grid{grid-template-columns:1fr;gap:36px}
+  .cards--stack{justify-self:stretch;width:100%}
+  .count__num{font-size:clamp(72px,19vw,110px)}
+  .count__lines{font-size:clamp(22px,6.4vw,38px)}
+  .how{flex-direction:column;align-items:flex-start;gap:14px;padding:0 clamp(22px,4vw,40px)}
+  .how li+li::before{display:none}
+}
