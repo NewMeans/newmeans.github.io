@@ -37,7 +37,7 @@
 @keyframes swing{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}
 @keyframes swing-hard{0%{transform:rotate(0)}30%{transform:rotate(30deg)}60%{transform:rotate(-16deg)}100%{transform:rotate(0)}}
 /* rarity: a tag by the lever, a light sweeping across rare windows, a soft holographic wash on epic ones */
-.tiers{display:inline-flex;vertical-align:top;align-items:flex-start;gap:.34em;margin:.2em 0 0 .34em}
+.tiers{display:inline-flex;vertical-align:top;align-items:flex-start;gap:.11em;margin:.2em 0 0 .34em}
 .tier{display:inline-block;font:600 11px/1 var(--font-ui);letter-spacing:.08em;text-transform:uppercase;color:var(--word);border:1.5px solid currentColor;border-radius:var(--r-pill);padding:5px 8px 6px;white-space:nowrap}
 .tier[data-tier="epic"]{background:var(--word);color:var(--bg)}
 .tier--new{color:var(--gold);border-style:solid}
