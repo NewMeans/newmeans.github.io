@@ -6,7 +6,7 @@
 .build__bg{position:absolute;inset:0;z-index:-1;pointer-events:none}
 .build__layer{position:absolute;inset:0;background:var(--c,#FFFAED)}
 .build__layer--next{clip-path:circle(0 at 50% 55%);opacity:0}
-.build__layer--next.is-in{clip-path:circle(120vmax at 50% 55%);opacity:1;transition:clip-path 1.15s var(--ease)}
+.build__layer--next.is-in{clip-path:circle(120vmax at 50% 55%);opacity:1;transition:clip-path 2.3s var(--ease)}
 .build__in{max-width:1520px;display:flex;flex-direction:column;align-items:center;gap:clamp(14px,2.4vh,24px);padding-top:clamp(18px,3vh,32px);padding-bottom:clamp(24px,4vh,40px)}
 .build__head{display:flex;flex-direction:column;align-items:center;gap:12px}
 .build__logo{margin:0;line-height:0}
@@ -21,7 +21,7 @@
 /* the parts float: no tile, no border, no shadow until you pick one */
 .chips{display:flex;flex-wrap:nowrap;gap:clamp(15px,2.2vw,34px);width:100%;justify-content:flex-start;align-items:center}
 .build__col:first-child .chips{justify-content:flex-end}
-.chip{--dy:0px;--rot:0deg;--sc:1;position:relative;flex:0 1 83px;min-width:0;aspect-ratio:1;height:auto;background:none;border:0;padding:0;display:grid;place-items:center;overflow:visible;transform:translateY(var(--dy)) rotate(var(--rot))}
+.chip{--dy:0px;--rot:0deg;--sc:.9;position:relative;flex:0 1 83px;min-width:0;aspect-ratio:1;height:auto;background:none;border:0;padding:0;display:grid;place-items:center;overflow:visible;transform:translateY(var(--dy)) rotate(var(--rot))}
 .chip img{width:100%;height:100%;object-fit:contain;pointer-events:none;transform:scale(var(--sc));transition:filter .18s var(--ease),transform .18s var(--ease)}
 .chip:hover img{transform:scale(var(--sc)) translateY(-4px)}
 .chip[aria-pressed="true"]{z-index:2}
@@ -32,9 +32,9 @@
 .chip:nth-child(3){--dy:8px;--rot:-2deg}
 .chip:nth-child(4){--dy:-8px;--rot:6deg}
 .chip:nth-child(5){--dy:12px;--rot:-4deg}
-.chip--frame{--sc:1.4}
+.chip--frame{--sc:1.26}
 .chip--frame img{filter:drop-shadow(0 1px 1.5px rgba(27,24,21,.28))}   /* the white and grey cases would vanish on cream otherwise */
-.chip--monitor,.chip--switch{--sc:1.1}
+.chip--monitor,.chip--switch{--sc:.99}
 /* the sound toggle leads the switch row */
 .chips .soundbtn{flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;margin-right:8px;border-radius:50%;border:1.5px solid var(--line-strong);color:var(--text-2);background:none}
 .soundbtn svg{width:19px;height:19px}
@@ -75,7 +75,7 @@
   .chip{flex:0 1 70px}
   /* the mute button would shove the switch row off-centre: balance it with a spacer */
   .group[data-group="switch"] .chips::after{content:"";flex:0 0 42px}
-  .chip--frame{--sc:1.6}
+  .chip--frame{--sc:1.44}
   .group[data-group="frame"]{padding:10px 0}
 }
 @media (prefers-reduced-motion:reduce){.chip,.build__layer--next.is-in{transition:none}.soundbtn.is-cue{animation:none}.screen__text .caret{animation:none}}

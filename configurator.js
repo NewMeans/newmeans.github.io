@@ -77,7 +77,7 @@
     setTimeout(function () {
       bgBase.style.setProperty('--c', color); bgNext.style.transition = 'none'; bgNext.classList.remove('is-in'); void bgNext.offsetWidth; bgNext.style.transition = '';
       painting = false; if (queued) { var q = queued; queued = null; paint(q); }
-    }, 1200);
+    }, 2400);
   }
 
   // ------------------------------------------------ chips
