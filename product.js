@@ -191,7 +191,7 @@
     var canvas = document.createElement('canvas'); root.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     var dots = [], w = 0, hgt = 0, dpr = 1, px = -9999, py = -9999, lastMove = 0, raf = 0, chosen = null, chosenAt = 0;
-    var INK = ['#E8392F', '#FF4A3E', '#D22F28'], HOT = ['#FF7E63', '#FF9077', '#FF6D52'], PALE = ['#FFD8D2', '#FFE6E1', '#FFC9C1'];
+    var INK = ['#E8392F', '#FF4A3E', '#D22F28'], HOT = ['#FF7E63', '#FF9077', '#FF6D52'], PALE = ['#FFCBC0', '#FFDAD2', '#FFBCAE'];
     var note = document.querySelector('[data-shape-note]');
     var masked = root.hasAttribute('data-mask');
     function seed(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
@@ -229,30 +229,42 @@
       return x.getImageData(0, 0, c.width, c.height).data;
     }
 
+    // Exactly TARGET shapes, on every screen: the grid is sized from the count, not the other way
+    // round, so the number the caption states is the number actually drawn.
+    var TARGET = 10000;
     function layout() {
       var r = root.getBoundingClientRect(); w = r.width; hgt = r.height; dpr = Math.min(2, devicePixelRatio || 1);
       if (!w || !hgt) return;
       canvas.width = w * dpr; canvas.height = hgt * dpr; canvas.style.width = w + 'px'; canvas.style.height = hgt + 'px';
-      var mask = maskData();
-      var step = Math.max(w < 620 ? 3.8 : 5.0, Math.min(9, Math.sqrt(w * hgt / 26000)));
-      dots = []; var i = 0, row = 0;
+      var mask = maskData(), cells = TARGET * 2.9;
+      var step = Math.min(12, Math.max(1.8, Math.sqrt(w * hgt / (.92 * cells))));
+      var ink = [], bg = [], i = 0, row = 0;
       for (var gy = step * .6; gy < hgt; gy += step * .92, row++) {
         for (var gx = step * .6 + (row % 2) * step * .5; gx < w; gx += step) {   // rows offset so it never looks ruled
           i++;
           var g = 0;
           if (mask) { var k = ((gy | 0) * (w | 0) + (gx | 0)) * 4; g = mask[k + 3] > 120 ? (mask[k + 1] > 120 ? 1 : 2) : 0; }
-          if (mask && !g && seed(i) > .22) continue;               // outside the letters, a light scatter
           var s1 = seed(i), s2 = seed(i + 7), s3 = seed(i + 99), j = g ? .34 : .55;
           var hx = gx + (s1 - .5) * step * j, hy = gy + (s2 - .5) * step * j;
           var ramp = g === 1 ? INK : g === 2 ? HOT : PALE;
-          dots.push({
-            hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0,
+          var d = {
+            hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0, s: s1,
             n: 3 + ((s3 * 6) | 0), rot: s1 * 6.28,
-            size: step * (g ? .52 : .3) * (.8 + s2 * .38),
+            size: Math.max(g ? 1.15 : .7, step * (g ? .52 : .27) * (.8 + s2 * .38)),
             col: ramp[(s3 * 3) | 0], ink: !!g
-          });
+          };
+          (g ? ink : bg).push(d);
         }
       }
+      var need = TARGET - ink.length, picked = [];
+      if (need <= 0) { ink.sort(function (a, b) { return a.s - b.s; }); ink.length = Math.max(0, TARGET); }
+      else if (bg.length) {
+        var thr = Math.min(1, need / bg.length), q;
+        for (q = 0; q < bg.length; q++) if (bg[q].s < thr) picked.push(bg[q]);
+        if (picked.length > need) picked.length = need;
+        else for (q = 0; q < bg.length && picked.length < need; q++) if (bg[q].s >= thr) picked.push(bg[q]);
+      }
+      dots = ink.concat(picked);
       if (note) {                                               // the count is the point: give it the accent
         var parts = t('dopa.note', { n: '\u0000' }).split('\u0000'), strong = document.createElement('b');
         strong.textContent = dots.length.toLocaleString();

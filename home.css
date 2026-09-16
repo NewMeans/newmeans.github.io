@@ -222,7 +222,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
 
 /* Dopamine University: shapes keep arriving, crowd toward the middle and go. */
-.scene--dopa{padding:clamp(96px,14vh,150px) 0;background:var(--c-100);--accent:var(--c-600);--accent-strong:var(--c-700);--cta:var(--c-400);--cta-text:var(--n-900)}
+.scene--dopa{padding:clamp(96px,14vh,150px) 0;background:var(--c-100);--accent:var(--c-600);--accent-strong:var(--c-700);--cta:var(--c-400);--cta-text:#fff}
 .scene--dopa .scene__in{gap:clamp(20px,3.4vh,34px)}
 .blobs{width:min(100%,440px);aspect-ratio:5/4;margin:0 auto}
 .blobs canvas{display:block}

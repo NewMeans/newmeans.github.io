@@ -1,6 +1,5 @@
 /* Typer page: the configurator up top, then the game, numbers, reviews, screens, badges. Tokens from base.css. */
 .tp section[id]{scroll-margin-top:72px}
-.block{width:min(100%,1040px);margin:0 auto;padding:clamp(72px,10vh,120px) clamp(22px,4vw,40px) 0;display:flex;flex-direction:column;align-items:center;gap:22px}
 
 /* ---------- configurator ---------- */
 .build{position:relative;min-height:calc(100dvh - 64px);overflow:hidden;isolation:isolate}
@@ -49,16 +48,8 @@
 .desk__kb{position:relative;z-index:3}
 .desk__kb .tp-kb__cap{cursor:pointer}
 
-/* ---------- numbers, reviews, screens, badges ---------- */
-.nums{flex-direction:row;justify-content:center;flex-wrap:wrap;gap:clamp(28px,6vw,80px)}
-.num{display:flex;flex-direction:column;align-items:center;gap:6px}
-.num b{font:400 clamp(30px,3.6vw,48px)/1 var(--font-pixel);color:var(--text-display);letter-spacing:.02em}
-.num span{font-size:13px;color:var(--text-2)}
-.reviews__grid{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px;width:100%;margin:0;padding:0}
-.review{background:var(--surface);border-radius:var(--r-tile);padding:20px 22px 18px;display:flex;flex-direction:column;gap:6px;text-align:left}
-.review__q{font-size:16px;line-height:1.5;color:var(--text-1);margin:0}
-.review__t{font-size:13px;line-height:1.5;color:var(--text-2);margin:0}
-.review__meta{font-size:12.5px;color:var(--text-2);margin-top:6px}
+/* ---------- screens, badges (numbers and reviews live in product.css, both pages use them) ---------- */
+.tp .num b{font-family:var(--font-pixel);font-weight:400;letter-spacing:.02em}
 .screens .shots{width:min(100%,820px)}
 .get{padding-bottom:20px}
 
@@ -71,9 +62,5 @@
   .chips{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 8px;gap:8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
   .chips::-webkit-scrollbar{display:none}
   .chip{flex:none;width:40px;height:40px;scroll-snap-align:start}
-}
-@media (max-width:720px){
-  .reviews__grid{grid-template-columns:1fr}
-  .block{padding-top:64px}
 }
 @media (prefers-reduced-motion:reduce){.chip,.build__layer--next.is-in{transition:none}.soundbtn.is-cue{animation:none}.screen__text .caret{animation:none}}

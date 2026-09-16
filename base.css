@@ -36,7 +36,7 @@
 :root[data-theme="cyber"] .nav__logo,:root[data-theme="cyber"] .foot__logo{filter:invert(1) hue-rotate(180deg)}
 body,.nav,.scene,.foot{transition:background-color .6s var(--ease),color .6s var(--ease)}
 body[data-accent="coral"]{--accent:var(--c-600); --accent-strong:var(--c-700); --accent-soft:var(--c-100); --accent-soft-2:var(--c-200); --brand:var(--c-400); --focus:var(--c-600);
-  --cta:var(--c-400); --cta-text:var(--n-900)}   /* the product's own coral, with ink on it so the label still reads */
+  --cta:var(--c-400); --cta-text:#fff}   /* the product's own coral, white on it, as dodae.me runs it */
 
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
