@@ -193,7 +193,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .replay:disabled{opacity:.4;cursor:default}
 
 /* Typer: a pinned viewport, scrubbed by scroll. A ball comes out of a portal, types TYPER, drops into another. */
-.scene--typer{background:var(--m-100);--cta:var(--m-700);--cta-text:var(--n-50);--accent:var(--m-700)}
+.scene--typer{background:var(--m-100);--cta:var(--m-700);--cta-text:var(--n-50);--accent:var(--m-700);--surface-hover:var(--m-200)}
 .scene--typer .scene__pin{position:relative;padding:clamp(64px,9vh,110px) 0}
 .stage--typer{position:relative;width:min(100%,760px);aspect-ratio:760/320;margin:0 auto;overflow:hidden}
 .portal,.lip{position:absolute;width:calc(68 / 760 * 100%);aspect-ratio:68/24;transform:translate(-50%,-50%);opacity:0;border-radius:50%;overflow:hidden}
