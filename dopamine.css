@@ -1,4 +1,4 @@
-/* Dopamine University: coral accent, SUIT everywhere, Hahmlet for one line.
+/* Dopamine University: coral accent, SUIT everywhere.
    The hero headline is drawn by the field itself: dark shapes spell it, pale ones scatter around. */
 .dp section[id]{scroll-margin-top:72px}
 
@@ -6,11 +6,13 @@
 .dp-hero{padding:clamp(28px,5vh,56px) 0 clamp(56px,9vh,92px)}
 .dp-hero__head{display:flex;flex-direction:column;align-items:center;gap:12px}
 .dp-logo{width:min(100%,300px);height:auto}
-.field--hero{height:clamp(300px,34vw,470px);margin:clamp(8px,2vh,20px) 0 0;background:none;cursor:crosshair}
-.dp-hero__foot{display:flex;flex-direction:column;align-items:center;gap:14px;text-align:center}
-.dp-note{font-size:13px;color:var(--text-2)}
-.dp-fact{font-size:clamp(18px,2.2vw,26px);font-weight:600;line-height:1.4;color:var(--text-1);max-width:34ch;margin-top:4px;text-wrap:balance}
-.dp-hero__foot .btn{margin-top:6px}
+.field--hero{height:clamp(300px,34vw,470px);margin:clamp(8px,2vh,20px) 0 0;background:none;cursor:crosshair;
+  -webkit-mask:linear-gradient(180deg,transparent,#000 9% 88%,transparent);mask:linear-gradient(180deg,transparent,#000 9% 88%,transparent)}
+.dp-hero__foot{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.dp-note{font-size:clamp(19px,2.4vw,30px);font-weight:700;line-height:1.35;color:var(--text-display);max-width:28ch;letter-spacing:-.01em;text-wrap:balance}
+.dp-note b{font-weight:700;color:var(--accent)}
+.dp-fact{font-size:clamp(14px,1.5vw,17px);font-weight:500;line-height:1.5;color:var(--text-2);max-width:34ch;text-wrap:balance}
+.dp-hero__foot .btn{margin-top:10px}
 
 /* ---------- three steps in one row ---------- */
 .dp-how{padding:clamp(48px,7vh,80px) 0 0}

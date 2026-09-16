@@ -1,19 +1,18 @@
 /* ============================================================
    NewMeans design system v2 (see DESIGN_SYSTEM.md, REFACTOR_PLAN.md)
    Faces: SUIT for Korean, UI and body. Pally for headers only. DNF BitBit for the wordmark
-   and Typer's pixel numbers. Hahmlet (a 4-glyph subset) for one line on the Dopamine page.
+   and Typer's pixel numbers and the letters the Dopamine field spells out.
    One accent per page (mint here, coral on dopamine.html), neutrals tinted with the ink hue.
    ============================================================ */
 @font-face{font-family:"SUIT";src:url("assets/fonts/SUIT-Variable.woff2") format("woff2-variations");font-weight:100 900;font-display:swap}
 @font-face{font-family:"Pally";src:url("assets/fonts/Pally-500.woff2") format("woff2");font-weight:500;font-display:swap}
 @font-face{font-family:"Pally";src:url("assets/fonts/Pally-700.woff2") format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"Hahmlet";src:url("assets/fonts/Hahmlet-800-types.woff2") format("woff2");font-weight:800;font-display:swap}
 @font-face{font-family:"DNFBitBit";src:url("assets/fonts/DNFBitBitv2.ttf") format("truetype");font-display:swap}
 
 :root{
   --n-50:#FCFBF7; --n-100:#F9F5F1; --n-200:#F1ECE6; --n-300:#DFDAD4; --n-400:#BCB6B0; --n-500:#97918A; --n-600:#706B64; --n-700:#514D48; --n-800:#3B3732; --n-900:#24211D;
   --m-50:#E9FCF2; --m-100:#DAF7E8; --m-200:#C3EDD8; --m-300:#A8E0C5; --m-400:#85C6A8; --m-500:#6BAB8E; --m-600:#538F74; --m-700:#3E765E; --m-800:#305D4A; --m-900:#234234;
-  --c-50:#FEF4F3; --c-100:#FEE9E7; --c-200:#FFD6D3; --c-300:#FFBEBA; --c-400:#FF6666; --c-500:#F26A68; --c-600:#CE5151; --c-700:#AF3B3D; --c-800:#8B2E2F; --c-900:#622322;
+  --c-50:#FFF3F1; --c-100:#FFE6E2; --c-200:#FFD2CC; --c-300:#FFB5AD; --c-400:#FF7A70; --c-500:#FF554B; --c-600:#DA3B34; --c-700:#B92E2A; --c-800:#8E2320; --c-900:#611A18;
 
   --bg:var(--n-50); --surface:var(--n-100); --surface-hover:var(--n-200);
   --line:var(--n-200); --line-strong:var(--n-300);
@@ -25,7 +24,6 @@
   --font-ui:"SUIT",system-ui,"Apple SD Gothic Neo",sans-serif;
   --font-display:"Pally",var(--font-ui);
   --font-pixel:"DNFBitBit",monospace;
-  --font-result:"Hahmlet",var(--font-ui);
 
   /* aliases still read by hero.js and older rules */
   --paper:var(--bg); --ink:var(--text-1); --ink-2:var(--text-2); --ink-3:var(--n-500);
@@ -37,7 +35,7 @@
 :root[data-theme="cyber"]{--bg:#0B0A14;--surface:#15132A;--surface-hover:#1E1B38;--line:#26224A;--line-strong:#3A3570;--text-1:#EDE9FF;--text-2:#A9A3D6;--text-display:#F4F0FF;--accent:#3AF0FF;--accent-strong:#8AF7FF;--accent-soft:#12202E;--accent-soft-2:#1A3446;--brand:#FF3AD6;--focus:#3AF0FF;--btn-bg:#F0FF3A;--btn-bg-hover:#FFFF7A;--btn-text:#0B0A14}
 :root[data-theme="cyber"] .nav__logo,:root[data-theme="cyber"] .foot__logo{filter:invert(1) hue-rotate(180deg)}
 body,.nav,.scene,.foot{transition:background-color .6s var(--ease),color .6s var(--ease)}
-body[data-accent="coral"]{--accent:var(--c-700); --accent-strong:var(--c-800); --accent-soft:var(--c-100); --accent-soft-2:var(--c-200); --brand:var(--c-400); --focus:var(--c-600)}
+body[data-accent="coral"]{--accent:var(--c-600); --accent-strong:var(--c-700); --accent-soft:var(--c-100); --accent-soft-2:var(--c-200); --brand:var(--c-400); --focus:var(--c-600)}
 
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}

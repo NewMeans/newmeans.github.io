@@ -191,7 +191,8 @@
     var canvas = document.createElement('canvas'); root.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     var dots = [], w = 0, hgt = 0, dpr = 1, px = -9999, py = -9999, lastMove = 0, raf = 0, chosen = null, chosenAt = 0;
-    var INK = ['#AF3B3D', '#8B2E2F', '#CE5151'], PALE = ['#FFD6D3', '#FEE9E7', '#FFBEBA'];
+    var INK = ['#E8392F', '#FF4A3E', '#D22F28'], HOT = ['#FF7E63', '#FF9077', '#FF6D52'], PALE = ['#FFD8D2', '#FFE6E1', '#FFC9C1'];
+    var note = document.querySelector('[data-shape-note]');
     var masked = root.hasAttribute('data-mask');
     function seed(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
 
@@ -199,27 +200,30 @@
     function maskData() {
       if (!masked || !w || !hgt) return null;
       var c = document.createElement('canvas'); c.width = w | 0; c.height = hgt | 0;
-      var x = c.getContext('2d'); x.fillStyle = '#fff'; x.textBaseline = 'middle';
+      var x = c.getContext('2d'); x.textBaseline = 'middle';
       var num = root.getAttribute('data-num') || '1000', a = t('dopa.count.a'), b = t('dopa.count.b');
       var wide = w / hgt >= 1.7, numSize, lineSize;
-      if (wide) { numSize = Math.min(hgt * .66, w * .3); lineSize = numSize * .30; }
-      else { numSize = Math.min(hgt * .32, w * .46); lineSize = numSize * .46; }
+      if (wide) { numSize = Math.min(hgt * .64, w * .29); lineSize = numSize * .44; }
+      else { numSize = Math.min(hgt * .33, w * .44); lineSize = numSize * .5; }
       function fNum() { x.font = '800 ' + numSize + 'px SUIT, sans-serif'; }
       function fA() { x.font = '700 ' + lineSize + 'px SUIT, sans-serif'; }
-      function fB() { x.font = '800 ' + lineSize + 'px Hahmlet, SUIT, sans-serif'; }
+      function fB() { x.font = '700 ' + lineSize + 'px SUIT, sans-serif'; }
       fNum(); var numW = x.measureText(num).width;
       fA(); var aW = x.measureText(a).width;
       fB(); var bW = x.measureText(b).width;
-      var lineW = Math.max(aW, bW), lead = lineSize * 1.14;
+      var lineW = Math.max(aW, bW), lead = lineSize * 1.18;
+      x.fillStyle = '#fff';                                     // white: the number and the first line
       if (wide) {
         var gap = numSize * .10, x0 = (w - (numW + gap + lineW)) / 2, cy = hgt / 2;
         fNum(); x.fillText(num, x0, cy);
         fA(); x.fillText(a, x0 + numW + gap, cy - lead / 2);
+        x.fillStyle = '#f00';                                   // red: the second line, coloured differently
         fB(); x.fillText(b, x0 + numW + gap, cy + lead / 2);
       } else {
         var cy2 = hgt / 2 - lead * .55;
         fNum(); x.fillText(num, (w - numW) / 2, cy2);
         fA(); x.fillText(a, (w - aW) / 2, cy2 + numSize * .58 + lead * .3);
+        x.fillStyle = '#f00';
         fB(); x.fillText(b, (w - bW) / 2, cy2 + numSize * .58 + lead * 1.3);
       }
       return x.getImageData(0, 0, c.width, c.height).data;
@@ -230,23 +234,30 @@
       if (!w || !hgt) return;
       canvas.width = w * dpr; canvas.height = hgt * dpr; canvas.style.width = w + 'px'; canvas.style.height = hgt + 'px';
       var mask = maskData();
-      var step = Math.max(w < 620 ? 4.8 : 6.5, Math.min(11, Math.sqrt(w * hgt / 14000)));
-      dots = []; var i = 0;
-      for (var gy = step * .6; gy < hgt; gy += step) {
-        for (var gx = step * .6; gx < w; gx += step) {
+      var step = Math.max(w < 620 ? 3.8 : 5.0, Math.min(9, Math.sqrt(w * hgt / 26000)));
+      dots = []; var i = 0, row = 0;
+      for (var gy = step * .6; gy < hgt; gy += step * .92, row++) {
+        for (var gx = step * .6 + (row % 2) * step * .5; gx < w; gx += step) {   // rows offset so it never looks ruled
           i++;
-          var inside = false;
-          if (mask) { var k = ((gy | 0) * (w | 0) + (gx | 0)) * 4 + 3; inside = mask[k] > 120; }
-          if (mask && !inside && seed(i) > .30) continue;           // outside the letters, a light scatter
-          var s1 = seed(i), s2 = seed(i + 7), s3 = seed(i + 99), j = inside ? .14 : .42;
+          var g = 0;
+          if (mask) { var k = ((gy | 0) * (w | 0) + (gx | 0)) * 4; g = mask[k + 3] > 120 ? (mask[k + 1] > 120 ? 1 : 2) : 0; }
+          if (mask && !g && seed(i) > .22) continue;               // outside the letters, a light scatter
+          var s1 = seed(i), s2 = seed(i + 7), s3 = seed(i + 99), j = g ? .34 : .55;
           var hx = gx + (s1 - .5) * step * j, hy = gy + (s2 - .5) * step * j;
+          var ramp = g === 1 ? INK : g === 2 ? HOT : PALE;
           dots.push({
             hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0,
             n: 3 + ((s3 * 6) | 0), rot: s1 * 6.28,
-            size: step * (inside ? .46 : .30) * (.82 + s2 * .36),
-            col: (inside ? INK : PALE)[(s3 * 3) | 0], ink: inside
+            size: step * (g ? .52 : .3) * (.8 + s2 * .38),
+            col: ramp[(s3 * 3) | 0], ink: !!g
           });
         }
+      }
+      if (note) {                                               // the count is the point: give it the accent
+        var parts = t('dopa.note', { n: '\u0000' }).split('\u0000'), strong = document.createElement('b');
+        strong.textContent = dots.length.toLocaleString();
+        note.textContent = parts[0];
+        note.appendChild(strong); note.appendChild(document.createTextNode(parts[1] || ''));
       }
       draw(1);
     }

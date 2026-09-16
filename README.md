@@ -18,7 +18,7 @@
 - `i18n.js` — 한/영 문구 사전과 언어 토글 (localStorage 유지)
 - `experience.js` — 스토어 배지 언어 처리
 - `assets/brand/logo-pieces/` — 로고 조각 25개 (마스크로 칠해 어떤 색으로도 바뀜)
-- `assets/fonts/` — SUIT(한글·UI·본문, OFL), Pally(헤더 전용, Fontshare ITF 무료 라이선스), Hahmlet 800 부분집합(도파민대학교 `개의 유형`), DNF BitBit(워드마크·Typer 픽셀 숫자). 전부 자체 호스팅. GSAP는 jsDelivr CDN
+- `assets/fonts/` — SUIT(한글·UI·본문, OFL), Pally(헤더 전용, Fontshare ITF 무료 라이선스), DNF BitBit(워드마크·Typer 픽셀 숫자). 전부 자체 호스팅. GSAP는 jsDelivr CDN
 - `assets/shop/` — 게임 상점 스프라이트와 `catalog.json` (Typer 프로젝트에서 읽기 전용으로 복사)
 - `Typer/`, `insta/` — 앱스토어 / 인스타그램 리디렉트
 

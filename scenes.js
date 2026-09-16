@@ -18,15 +18,14 @@
     W: 760, H: 360, R: 17, CAPTOP: 226,
     CAPX: [92, 212, 332, 452, 572],
     IN: { x: 92, y: 34 }, OUT: { x: 700, y: 332 },
-    APEX: [150, 130, 113, 98], LAST: 128,
-    GAP: 20                                   // how far each portal half slides apart
+    APEX: [150, 130, 113, 98], LAST: 128
   };
   var SPIN = 360 / (2 * Math.PI * U.R);        // degrees per stage unit rolled
   function mountTyper(root) {
     var pin = root.querySelector('.scene__pin'), stage = root.querySelector('.stage'), ball = stage.querySelector('.ball');
     var caps = [].slice.call(stage.querySelectorAll('.cap')), letters = caps.map(function (c) { return c.querySelector('b'); });
-    var pIn = stage.querySelector('.portal--in'), pOut = stage.querySelector('.portal--out');
-    var halves = function (p) { return [p.querySelector('.portal__t'), p.querySelector('.portal__b')]; };
+    var pIn = [stage.querySelector('.portal--in'), stage.querySelector('.lip--in')];
+    var pOut = [stage.querySelector('.portal--out'), stage.querySelector('.lip--out')];
     var logo = root.querySelector('.scene__logo'), tags = root.querySelector('.tags'), act = root.querySelector('.scene__act'), replayBtn = root.querySelector('.replay');
     'TYPER'.split('').forEach(function (ch, i) { if (letters[i]) letters[i].textContent = ch; });
     var balls = [ball.getAttribute('src')];
@@ -36,23 +35,19 @@
     function build(dur, replaying) {
       measure();
       var tl = G.timeline({ paused: true, defaults: { ease: 'none' } });
-      var yRest = (U.CAPTOP - U.R) * s, gap = U.GAP * s, rot = 0;
-      var hi = halves(pIn), ho = halves(pOut);
-      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: U.IN.y * s, scale: .25, opacity: 0, rotation: 0 }, 0);
-      tl.set(hi.concat(ho), { y: 0 }, 0);
-      tl.set([pIn, pOut], { opacity: 0 }, 0);
+      var yRest = (U.CAPTOP - U.R) * s, rot = 0;
+      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: (U.IN.y - 4) * s, scale: .2, opacity: 0, rotation: 0 }, 0);
+      tl.set(pIn.concat(pOut), { opacity: 0, scale: .4 }, 0);
       tl.set(letters, { opacity: 0 }, 0);
       tl.fromTo(logo, { scale: 1.08 }, { scale: 1, duration: dur * .08 }, 0);
       tl.fromTo(tags, { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: dur * .08 }, 0);
       tl.fromTo(caps, { y: 60 * s, opacity: 0 }, { y: 0, opacity: 1, duration: dur * .06, stagger: dur * .012 }, 0);
-      // the portal fades in, splits open, and the ball rolls out from between the halves
-      tl.to(pIn, { opacity: 1, duration: dur * .03 }, dur * .05);
-      tl.to(hi[0], { y: -gap, duration: dur * .06, ease: 'power2.out' }, dur * .08).to(hi[1], { y: gap, duration: dur * .06, ease: 'power2.out' }, dur * .08);
-      tl.to(ball, { scale: 1, opacity: 1, duration: dur * .04 }, dur * .11);
+      // the hole opens in the ceiling and the ball drops out of it: the near rim hides whatever is still inside
+      tl.to(pIn, { opacity: 1, scale: 1, duration: dur * .06, ease: 'back.out(2)' }, dur * .06);
+      tl.to(ball, { scale: 1, opacity: 1, duration: dur * .05 }, dur * .12);
       rot += 30;
       tl.to(ball, { y: yRest, rotation: rot, duration: dur * .10, ease: 'power2.in' }, dur * .14);
-      tl.to(hi[0], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .18).to(hi[1], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .18);
-      tl.to(pIn, { opacity: 0, duration: dur * .04 }, dur * .25);
+      tl.to(pIn, { opacity: 0, scale: .5, duration: dur * .06 }, dur * .24);
       function forward() { return replaying || (st && st.direction === 1); }
       function press(i, at) {
         tl.to(caps[i], { y: 4 * s, duration: dur * .02 }, at).to(caps[i], { y: 0, duration: dur * .03 }, at + dur * .02);
@@ -67,16 +62,14 @@
         tl.to(ball, { y: yRest - U.APEX[i] * s, duration: d / 2, ease: 'power1.out' }, t0).to(ball, { y: yRest, duration: d / 2, ease: 'power1.in' }, t0 + d / 2);
         press(i + 1, t0 + d);
       }
-      // off the last keycap, over the floor, down into the second portal
+      // off the last keycap, over the floor, down into the second hole
       var t5 = dur * .72, d5 = dur * .14;
       rot += (U.OUT.x - U.CAPX[4]) * SPIN;
       tl.to(ball, { x: U.OUT.x * s, rotation: rot, duration: d5 }, t5);
-      tl.to(ball, { y: yRest - U.LAST * s, duration: d5 * .4, ease: 'power1.out' }, t5).to(ball, { y: U.OUT.y * s, duration: d5 * .6, ease: 'power1.in' }, t5 + d5 * .4);
-      tl.to(pOut, { opacity: 1, duration: dur * .03 }, dur * .73);
-      tl.to(ho[0], { y: -gap, duration: dur * .05, ease: 'power2.out' }, dur * .76).to(ho[1], { y: gap, duration: dur * .05, ease: 'power2.out' }, dur * .76);
-      tl.to(ball, { scale: .25, opacity: 0, duration: dur * .04 }, dur * .855);
-      tl.to(ho[0], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .87).to(ho[1], { y: 0, duration: dur * .06, ease: 'power2.in' }, dur * .87);
-      tl.to(pOut, { opacity: 0, duration: dur * .04 }, dur * .94);
+      tl.to(ball, { y: yRest - U.LAST * s, duration: d5 * .4, ease: 'power1.out' }, t5).to(ball, { y: (U.OUT.y + 6) * s, duration: d5 * .6, ease: 'power1.in' }, t5 + d5 * .4);
+      tl.to(pOut, { opacity: 1, scale: 1, duration: dur * .05, ease: 'back.out(2)' }, dur * .74);
+      tl.to(ball, { scale: .18, opacity: 0, duration: dur * .05 }, dur * .82);
+      tl.to(pOut, { opacity: 0, scale: .5, duration: dur * .06 }, dur * .89);
       tl.fromTo(act, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: dur * .1 }, dur * .86);
       tl.fromTo(replayBtn, { opacity: 0 }, { opacity: 1, duration: dur * .06 }, dur * .94);
       return tl;
@@ -177,21 +170,24 @@
   }
 
   // ================================================================ the studio: two rabbits running
+  // They face right, take turns leading, jump what is on the ground and swat what flies at them.
   var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
   var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
-  var OBS = [
-    '<svg viewBox="0 0 40 40"><polygon points="6,34 11,15 23,8 34,17 32,34"/></svg>',                       // rock
-    '<svg viewBox="0 0 40 40"><polygon points="20,5 34,34 6,34"/></svg>',                                    // spike
-    '<svg viewBox="0 0 40 40"><polygon points="23,4 10,22 18,22 16,36 31,17 21,17"/></svg>',                 // bolt
-    '<svg viewBox="0 0 40 40"><rect x="7" y="13" width="26" height="21" rx="3"/><path d="M7 23.5h26M20 13v10.5M13.5 23.5V34M26.5 23.5V34" fill="none"/></svg>', // bricks
-    '<svg viewBox="0 0 40 40"><path d="M20 5c5 8 12 10 12 18a12 12 0 0 1-24 0c0-5 4-8 6-12 1 4 3 5 4 7 1-4 2-9 2-13z"/></svg>', // flame
-    '<svg viewBox="0 0 40 40"><path d="M9 34V15M31 34V15M6 19h28" fill="none"/></svg>'                       // hurdle
+  var GROUND_OBS = [
+    '<svg viewBox="0 0 40 40"><polygon points="4,36 10,15 23,7 35,17 34,36"/></svg>',                         // rock
+    '<svg viewBox="0 0 40 40"><polygon points="20,3 33,36 7,36"/></svg>',                                     // spike
+    '<svg viewBox="0 0 40 40"><rect x="6" y="24" width="28" height="12" rx="2"/><rect x="11" y="10" width="18" height="11" rx="2"/></svg>', // bricks
+    '<svg viewBox="0 0 40 40"><rect x="6" y="14" width="28" height="7" rx="3"/><rect x="7" y="18" width="6" height="18" rx="2"/><rect x="27" y="18" width="6" height="18" rx="2"/></svg>' // hurdle
+  ];
+  var AIR_OBS = [
+    '<svg viewBox="0 0 40 40"><polygon points="24,3 9,23 18,23 15,37 32,16 22,16"/></svg>',                   // bolt
+    '<svg viewBox="0 0 40 40"><path d="M20 3c5 9 13 11 13 20a13 13 0 0 1-26 0c0-5 4-9 6-13 1 4 3 5 4 8 1-5 3-10 3-15z"/></svg>' // flame
   ];
   function buildRabbit(box) {
     var X0 = 880, Y0 = 300, W0 = 2900, H0 = 1000, base = 'assets/brand/logo-pieces/';
     RP.forEach(function (p) {
       var el = document.createElement('i');
-      el.className = 'rb' + (FACE[p[0]] ? ' face' : '') + (p[0] in FOOT ? ' foot' : '');
+      el.className = 'rb' + (FACE[p[0]] ? ' rb--face' : '') + (p[0] in FOOT ? ' rb--paw' : '');
       el.style.left = (p[1] - X0) / W0 * 100 + '%'; el.style.top = (p[2] - Y0) / H0 * 100 + '%';
       el.style.width = p[3] / W0 * 100 + '%'; el.style.height = p[4] / H0 * 100 + '%';
       el.style.setProperty('--m', 'url("' + base + 'p' + p[0] + '.png")');
@@ -200,48 +196,87 @@
   }
   function mountRunner(root) {
     if (root.__run) return; root.__run = true;
-    var obsLayer = root.querySelector('.run__obs'), rabbits = [].slice.call(root.querySelectorAll('.runner'));
+    var obsLayer = root.querySelector('.run__obs'), crew = root.querySelector('.run__crew');
+    var rabbits = [].slice.call(root.querySelectorAll('.runner'));
     rabbits.forEach(function (r) { buildRabbit(r.querySelector('.runner__art')); });
+    var arts = rabbits.map(function (r) { return r.querySelector('.runner__art'); });
+    G.set(arts, { scaleX: -1, rotation: 3.5 });                     // face right
+    var slot = [0, 0], order = [0, 1], scale = 1;                       // order[1] is the one out in front
+    function measure() { var rw = rabbits[0].offsetWidth || 180; scale = rw / 208; slot = [0, rw * .98]; crew.style.width = (slot[1] + rw) + 'px'; }
+    measure();
+    rabbits.forEach(function (r, i) { G.set(r, { x: slot[i] }); });
     if (reduce) return;
-    rabbits.forEach(function (r, i) {
-      var art = r.querySelector('.runner__art'), feet = art.querySelectorAll('.foot');
+    arts.forEach(function (art, i) {
+      var feet = art.querySelectorAll('.rb--paw');
       G.to(art, { y: -7, duration: .32, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
       G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
       G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15 });
     });
-    function dodge(r) {
-      if (r.__jump) return; r.__jump = true;
-      G.timeline({ onComplete: function () { r.__jump = false; } })
-        .to(r, { y: -40, rotation: -6, duration: .3, ease: 'power2.out' })
-        .to(r, { y: 0, rotation: 0, duration: .34, ease: 'power2.in' });
+    function jump(r) {
+      if (r.__busy) return; r.__busy = true;
+      G.timeline({ onComplete: function () { r.__busy = false; } })
+        .to(r, { y: -80 * scale, rotation: -8, duration: .38, ease: 'power2.out' })
+        .to(r, { y: 0, rotation: 0, duration: .36, ease: 'power2.in' });
     }
+    function swat(r) {
+      if (r.__busy) return; r.__busy = true;
+      G.timeline({ onComplete: function () { r.__busy = false; } })
+        .to(r, { rotation: 15, y: -10 * scale, duration: .12, ease: 'power3.out' })
+        .to(r, { rotation: 0, y: 0, duration: .26, ease: 'power2.inOut' });
+    }
+    // they swap places so each takes a turn out front
+    var swapAt = 0;
+    function swap(now) {
+      order.reverse();
+      order.forEach(function (ri, k) { G.to(rabbits[ri], { x: slot[k], duration: 1, ease: 'power2.inOut' }); });
+      swapAt = now + 5200 + Math.random() * 3600;
+    }
+    // one world speed, like the dinosaur game: obstacles never overtake each other
+    var SP = 340, AIR_Y = [58, 92], GROUND_SIZE = [28, 36, 50];
     var items = [], last = 0, nextAt = 0, raf = 0, seen = false, boost = 0;
     function spawn(now) {
-      var el = document.createElement('div'); el.className = 'ob';
-      el.innerHTML = OBS[(Math.random() * OBS.length) | 0];
-      var size = 32 + Math.random() * 34, lift = Math.random() < .26 ? 22 + Math.random() * 34 : 0;
-      el.style.width = size + 'px'; el.style.marginBottom = lift + 'px';
+      var air = Math.random() < .28;
+      var el = document.createElement('div'); el.className = 'ob' + (air ? ' ob--air' : '');
+      el.innerHTML = (air ? AIR_OBS : GROUND_OBS)[(Math.random() * (air ? AIR_OBS : GROUND_OBS).length) | 0];
+      var size = (air ? 30 + ((Math.random() * 2) | 0) * 8 : GROUND_SIZE[(Math.random() * GROUND_SIZE.length) | 0]) * scale;
+      el.style.width = size + 'px';
+      el.style.marginBottom = (air ? AIR_Y[(Math.random() * AIR_Y.length) | 0] * scale : 0) + 'px';
       obsLayer.appendChild(el);
-      items.push({ el: el, x: root.clientWidth + size, size: size, sp: 78 + Math.random() * 74, spin: lift ? 0 : .55 + Math.random() * .5, hit: {} });
-      nextAt = now + 640 + Math.random() * 1020;
+      items.push({ el: el, x: root.clientWidth + size, y: 0, vy: 0, rot: 0, alpha: 1, size: size, air: air, dead: false, hit: 0 });
+      nextAt = now + ((200 + Math.random() * 220) * scale + size * 1.2) / (SP * scale) * 1000;   // a steady gap in distance
     }
+    function centre(r) { return crew.offsetLeft + r.offsetLeft + (G.getProperty(r, 'x') || 0) + r.offsetWidth * .5; }
     function tick(now) {
       raf = 0;
       var dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
-      var speed = 1 + boost; boost *= .93;
+      var speed = (1 + boost) * scale; boost *= .93;
+      if (!swapAt) swapAt = now + 4200; else if (now > swapAt) swap(now);
+      var sp = SP * speed;
       for (var i = items.length - 1; i >= 0; i--) {
         var o = items[i];
-        o.x -= o.sp * speed * dt;
-        o.el.style.transform = 'translateX(' + o.x.toFixed(1) + 'px) rotate(' + (-o.x * o.spin).toFixed(1) + 'deg)';
-        for (var k = 0; k < rabbits.length; k++) {
-          var r = rabbits[k], rx = r.offsetLeft + r.parentNode.offsetLeft + r.offsetWidth * .5;
-          if (!o.hit[k] && o.x < rx + 120 && o.x > rx - 30) { o.hit[k] = 1; dodge(r); }
+        if (o.dead) {
+          o.x += 250 * dt; o.vy += 900 * dt; o.y += o.vy * dt; o.rot += 760 * dt; o.alpha -= dt * 1.4;
+        } else {
+          o.x -= sp * dt;                                        // ground pieces stay upright, like the dino game
+          for (var ri = 0; ri < rabbits.length; ri++) {            // whoever it reaches first deals with it
+            if (o.hit & (1 << ri)) continue;
+            var tta = (o.x - centre(rabbits[ri])) / sp;
+            if (tta < 0) { o.hit |= 1 << ri; continue; }
+            if (tta < (o.air ? .16 : .38)) {
+              o.hit |= 1 << ri;
+              if (o.air) { swat(rabbits[ri]); o.dead = true; o.vy = -430; break; }
+              jump(rabbits[ri]);
+            }
+          }
         }
-        if (o.x < -o.size - 30) { o.el.remove(); items.splice(i, 1); }
+        o.el.style.opacity = o.alpha < 1 ? Math.max(0, o.alpha) : '';
+        o.el.style.transform = 'translate(' + o.x.toFixed(1) + 'px,' + o.y.toFixed(1) + 'px) rotate(' + o.rot.toFixed(1) + 'deg)';
+        if (o.x < -o.size - 40 || o.alpha <= 0) { o.el.remove(); items.splice(i, 1); }
       }
       if (now > nextAt) spawn(now);
       if (seen) raf = requestAnimationFrame(tick); else last = 0;
     }
+    addEventListener('resize', debounce(function () { measure(); order.forEach(function (ri, k) { G.set(rabbits[ri], { x: slot[k] }); }); }, 200));
     ST.create({
       trigger: root, start: 'top bottom', end: 'bottom top',
       onToggle: function (self) { seen = self.isActive; if (seen && !raf) { last = 0; raf = requestAnimationFrame(tick); } },
