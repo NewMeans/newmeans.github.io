@@ -13,9 +13,9 @@
   <meta property="og:url" content="https://newmeans.github.io/typer.html">
   <meta name="twitter:card" content="summary">
   <link rel="icon" type="image/png" href="assets/brand/typer-icon.png">
-  <link rel="stylesheet" href="base.css?v=20260916-23">
-  <link rel="stylesheet" href="product.css?v=20260916-23">
-  <link rel="stylesheet" href="typer.css?v=20260916-23">
+  <link rel="stylesheet" href="base.css?v=20260916-28">
+  <link rel="stylesheet" href="product.css?v=20260916-28">
+  <link rel="stylesheet" href="typer.css?v=20260916-28">
 </head>
 <body class="tp">
   <a class="skip-link" href="#main" data-i18n="nav.skip">본문으로 건너뛰기</a>
@@ -73,13 +73,6 @@
       </div>
     </section>
 
-    <!-- the game itself -->
-    <section class="block play" id="play" data-typer-play aria-label="Play">
-      <div class="play__screen"><div data-typer-board></div></div>
-      <div class="switches" data-switches role="group" aria-label="Switch"></div>
-      <p class="play__status" data-play-status role="status"></p>
-    </section>
-
     <section class="block nums" id="numbers" aria-label="Typer in numbers">
       <div class="num"><b>30,000+</b><span data-i18n="typer.num.dl">다운로드</span></div>
       <div class="num"><b>4.74</b><span data-i18n="typer.num.rating">평균 평점</span></div>
@@ -89,14 +82,14 @@
 
     <section class="block reviews" id="reviews" aria-label="Reviews">
       <ul class="reviews__grid">
-        <li class="review"><p class="review__q" data-i18n="typer.review.1"></p><p class="review__t" data-i18n="typer.review.1.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.1.meta"></span></li>
-        <li class="review"><p class="review__q" data-i18n="typer.review.2"></p><p class="review__t" data-i18n="typer.review.2.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.2.meta"></span></li>
-        <li class="review"><p class="review__q" data-i18n="typer.review.3"></p><p class="review__t" data-i18n="typer.review.3.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.3.meta"></span></li>
-        <li class="review"><p class="review__q" data-i18n="typer.review.4"></p><p class="review__t" data-i18n="typer.review.4.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.4.meta"></span></li>
-        <li class="review"><p class="review__q" data-i18n="typer.review.5"></p><p class="review__t" data-i18n="typer.review.5.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.5.meta"></span></li>
-        <li class="review"><p class="review__q" data-i18n="typer.review.6"></p><p class="review__t" data-i18n="typer.review.6.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.6.meta"></span></li>
-        <li class="review"><p class="review__q" data-i18n="typer.review.7"></p><p class="review__t" data-i18n="typer.review.7.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.7.meta"></span></li>
-        <li class="review"><p class="review__q" data-i18n="typer.review.8"></p><p class="review__t" data-i18n="typer.review.8.ko" data-i18n-optional></p><span class="review__meta" data-i18n="typer.review.8.meta"></span></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">r</span><span class="review__id"><b data-i18n="typer.review.1.by"></b><span class="review__meta" data-i18n="typer.review.1.meta"></span></span></div><p class="review__q" data-i18n="typer.review.1"></p><p class="review__t" data-i18n="typer.review.1.ko" data-i18n-optional></p></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">정</span><span class="review__id"><b data-i18n="typer.review.2.by"></b><span class="review__meta" data-i18n="typer.review.2.meta"></span></span></div><p class="review__q" data-i18n="typer.review.2"></p><p class="review__t" data-i18n="typer.review.2.ko" data-i18n-optional></p></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">た</span><span class="review__id"><b data-i18n="typer.review.3.by"></b><span class="review__meta" data-i18n="typer.review.3.meta"></span></span></div><p class="review__q" data-i18n="typer.review.3"></p><p class="review__t" data-i18n="typer.review.3.ko" data-i18n-optional></p></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">l</span><span class="review__id"><b data-i18n="typer.review.4.by"></b><span class="review__meta" data-i18n="typer.review.4.meta"></span></span></div><p class="review__q" data-i18n="typer.review.4"></p><p class="review__t" data-i18n="typer.review.4.ko" data-i18n-optional></p></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">김</span><span class="review__id"><b data-i18n="typer.review.5.by"></b><span class="review__meta" data-i18n="typer.review.5.meta"></span></span></div><p class="review__q" data-i18n="typer.review.5"></p><p class="review__t" data-i18n="typer.review.5.ko" data-i18n-optional></p></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">m</span><span class="review__id"><b data-i18n="typer.review.6.by"></b><span class="review__meta" data-i18n="typer.review.6.meta"></span></span></div><p class="review__q" data-i18n="typer.review.6"></p><p class="review__t" data-i18n="typer.review.6.ko" data-i18n-optional></p></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">а</span><span class="review__id"><b data-i18n="typer.review.7.by"></b><span class="review__meta" data-i18n="typer.review.7.meta"></span></span></div><p class="review__q" data-i18n="typer.review.7"></p><p class="review__t" data-i18n="typer.review.7.ko" data-i18n-optional></p></li>
+        <li class="review"><div class="review__who"><span class="review__av" aria-hidden="true">ゆ</span><span class="review__id"><b data-i18n="typer.review.8.by"></b><span class="review__meta" data-i18n="typer.review.8.meta"></span></span></div><p class="review__q" data-i18n="typer.review.8"></p><p class="review__t" data-i18n="typer.review.8.ko" data-i18n-optional></p></li>
       </ul>
     </section>
 
@@ -136,10 +129,10 @@
     </div>
   </footer>
 
-  <script src="i18n.js?v=20260916-23" defer></script>
-  <script src="experience.js?v=20260916-23" defer></script>
-  <script src="keyboard.js?v=20260916-23" defer></script>
-  <script src="product.js?v=20260916-23" defer></script>
-  <script src="configurator.js?v=20260916-23" defer></script>
+  <script src="i18n.js?v=20260916-28" defer></script>
+  <script src="experience.js?v=20260916-28" defer></script>
+  <script src="keyboard.js?v=20260916-28" defer></script>
+  <script src="product.js?v=20260916-28" defer></script>
+  <script src="configurator.js?v=20260916-28" defer></script>
 </body>
 </html>

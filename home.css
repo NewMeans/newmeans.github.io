@@ -181,14 +181,13 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 :root[data-theme="cyber"] .slot[data-tier="epic"]::after{background-image:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%)}
 
 /* ---------- product scenes: a section label, tags, logo, a wordless stage, one button ---------- */
-.sec{display:flex;align-items:center;gap:9px;font:600 12px/1 var(--font-ui);letter-spacing:.16em;text-transform:uppercase;color:var(--text-2)}
-.sec::before{content:"";width:26px;height:1px;background:var(--line-strong)}
+.sec{font:600 12px/1 var(--font-ui);letter-spacing:.18em;text-transform:uppercase;color:var(--text-2)}
 .sec b{font-weight:700;color:var(--accent)}
 .scene{position:relative}
 .scene__in{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(18px,3vh,30px);text-align:center}
 .scene__head{display:flex;flex-direction:column;align-items:center;gap:12px}
-.scene__logo img{height:clamp(52px,6.5vw,92px);width:auto;display:block}
-.scene__logo--dopa img{height:clamp(56px,7vw,100px)}
+.scene__logo img{height:clamp(49px,6.2vw,87px);width:auto;display:block}
+.scene__logo--dopa img{height:clamp(53px,6.65vw,95px)}
 .scene__act{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap}
 .replay{opacity:0}
 .replay:disabled{opacity:.4;cursor:default}
@@ -240,11 +239,19 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .runner__art{position:relative;width:100%;aspect-ratio:2900/1000;margin-bottom:-3.8%;transform-origin:50% 90%}
 .rb{position:absolute;background:var(--m-400);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
 .rb--face{transform:translateX(-16%)}
-.runner__tag{position:absolute;left:50%;bottom:-20px;z-index:2;transform:translateX(-50%) rotate(-3deg);background:var(--bg);border:1px solid var(--line-strong);border-radius:var(--r-pill);padding:4px 10px 5px;font:600 11px/1 var(--font-ui);letter-spacing:.08em;color:var(--text-1);white-space:nowrap}
+.runner__tag{position:absolute;left:50%;bottom:-30px;z-index:2;transform:translateX(-50%) rotate(-2.5deg);
+  background:var(--bg);border:1.5px solid var(--m-400);border-radius:11px;padding:5px 11px 6px;
+  display:flex;flex-direction:column;align-items:center;gap:3px;white-space:nowrap;box-shadow:0 3px 0 rgba(133,198,168,.4)}
+.runner__tag::before{content:"";position:absolute;left:50%;top:-8px;width:18px;height:8px;transform:translateX(-50%);border-radius:4px 4px 0 0;background:var(--m-400)}
+.runner__tag b{font:700 8px/1 var(--font-ui);letter-spacing:.16em;color:var(--m-700)}
+.runner__tag span{font:600 11px/1 var(--font-ui);color:var(--text-1)}
 .run__obs{position:absolute;inset:0;z-index:1}
 .ob{position:absolute;bottom:38px;left:0;will-change:transform}
-.ob svg{display:block;width:100%;height:auto;fill:var(--n-700);stroke:none}
-.ob--air svg{fill:var(--n-600)}
+.ob svg{display:block;width:100%;height:auto;overflow:visible}
+.ob--coral{--ob-a:var(--c-300);--ob-b:var(--c-700)}
+.ob--mint{--ob-a:var(--m-300);--ob-b:var(--m-800)}
+.ob--sand{--ob-a:var(--n-300);--ob-b:var(--n-700)}
+.ob--gold{--ob-a:#F4CE7A;--ob-b:var(--gold)}
 
 @media (max-width:720px){
   /* one headline block, the rabbit big underneath it, no gulf in between */
@@ -256,15 +263,15 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
   .tiers{flex-direction:column;gap:5px;margin:.18em 0 0 .24em}
   .tier{font-size:9px;letter-spacing:.06em;padding:3px 6px 4px;border-width:1.2px}
   .nav--wide .wrap{padding:0 22px}
-  .brandwrap{position:relative;right:auto;bottom:auto;width:calc(100% + 40px);max-width:none;margin:clamp(4px,1.5vh,16px) -20px 0}
+  .brandwrap{position:relative;right:auto;bottom:auto;width:min(100%,330px);max-width:none;margin:clamp(10px,2.4vh,24px) auto 0}
   .bottom{display:flex;justify-content:space-between;align-items:end;margin-top:clamp(18px,4vh,40px)}.corner{position:static}
   .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}
   :root[data-face="pixel"] .copy .display{font-size:clamp(26px,7.2vw,34px)}
   .dopa-line{font-size:20px}
   .scene--dopa{padding:72px 0}
-  .sec{font-size:11px;letter-spacing:.14em}.sec::before{width:18px}
+  .sec{font-size:11px;letter-spacing:.16em}
   .studio{padding:72px 0 56px}
-  .run{height:148px}
+  .run{height:156px}
   .run__crew{left:12px;gap:6px}
   .runner{width:126px}
 }

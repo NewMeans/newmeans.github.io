@@ -130,9 +130,10 @@
       shapes.push({
         n: n, col: col, r: R * (.135 + Math.random() * .095),
         x: w / 2 + Math.cos(a) * d, y: h / 2 + Math.sin(a) * d * .8, vx: 0, vy: 0,
-        rot: Math.random() * 6.283, spin: (Math.random() - .5) * .7,
+        rot: Math.random() * 6.283, spin: (Math.random() - .5) * .7, k: 0,
         age: born ? .45 + Math.random() * 2.4 : 0, life: 4.2 + Math.random() * 3.4
       });
+      var o = shapes[shapes.length - 1]; o.k = Math.min(1, o.age / .55) * Math.min(1, (o.life - o.age) / .7);
     }
     function step(dt) {
       var cx = w / 2, cy = h / 2, i, j, o, p;
@@ -186,25 +187,19 @@
   // They face right, take turns leading, jump what is on the ground and swat what flies at them.
   var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
   var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
+  // What you actually hit while building something: the runway, the deadline, the bug, the wall,
+  // the graph that turns down, the servers, the one-star, the reply that says no.
   var GROUND_OBS = [
-    // a boulder with a chipped face
-    '<svg viewBox="0 0 40 40"><path d="M3 37 L7 18 L16 8 L28 9 L36 19 L35 37z"/><path d="M16 8 L19 20 L35 19" fill="none" stroke="#FCFBF7" stroke-opacity=".45" stroke-width="2.4"/></svg>',
-    // a cactus, the one everybody jumps
-    '<svg viewBox="0 0 40 40"><rect x="16" y="2" width="9" height="36" rx="4.5"/><rect x="3" y="15" width="7" height="16" rx="3.5"/><rect x="8" y="25" width="10" height="6" rx="1"/><rect x="31" y="7" width="7" height="18" rx="3.5"/><rect x="23" y="19" width="10" height="6" rx="1"/></svg>',
-    // a stack of crates
-    '<svg viewBox="0 0 40 40"><rect x="4" y="23" width="32" height="15" rx="2"/><rect x="11" y="8" width="18" height="14" rx="2"/><path d="M4 30.5h32M20 23v7.5M11 15h18M20 8v7" fill="none" stroke="#FCFBF7" stroke-opacity=".5" stroke-width="2"/></svg>',
-    // a hurdle
-    '<svg viewBox="0 0 40 40"><rect x="3" y="12" width="34" height="6" rx="3"/><rect x="3" y="22" width="34" height="4" rx="2"/><rect x="5" y="15" width="5" height="23" rx="2.5"/><rect x="30" y="15" width="5" height="23" rx="2.5"/></svg>',
-    // a milestone slab
-    '<svg viewBox="0 0 40 40"><path d="M8 38V15a12 12 0 0 1 24 0v23z"/><path d="M14 19h12M14 26h9" fill="none" stroke="#FCFBF7" stroke-opacity=".7" stroke-width="3" stroke-linecap="round"/></svg>'
+    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><path d="M7 4h26v5l-9 11 9 11v5H7v-5l9-11L7 9z" fill="var(--ob-a)"/><path d="M12 31h16l-8-9z" fill="var(--ob-b)"/><rect x="5" y="2" width="30" height="4" rx="2" fill="var(--ob-b)"/><rect x="5" y="34" width="30" height="4" rx="2" fill="var(--ob-b)"/></svg>' },       // the deadline
+    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><rect x="4" y="13" width="32" height="23" rx="5" fill="var(--ob-a)"/><path d="M4 18h32v5H4z" fill="var(--ob-b)" opacity=".35"/><circle cx="28" cy="25" r="4" fill="var(--ob-b)"/><path d="M8 13 24 6l3 7" fill="none" stroke="var(--ob-b)" stroke-width="2.6" stroke-linejoin="round"/></svg>' },   // the runway
+    { tone: 'coral', svg: '<svg viewBox="0 0 40 40"><ellipse cx="20" cy="24" rx="9" ry="11" fill="var(--ob-a)"/><path d="M20 15v18M11 20h18" stroke="var(--ob-b)" stroke-width="2.2"/><path d="M11 14 5 9M29 14l6-5M9 24H3M31 24h6M11 32l-5 5M29 32l5 5" stroke="var(--ob-b)" stroke-width="2.6" stroke-linecap="round" fill="none"/><circle cx="20" cy="11" r="5" fill="var(--ob-b)"/></svg>' },   // the bug
+    { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="2" y="12" width="36" height="8" rx="2" fill="var(--ob-a)"/><rect x="2" y="22" width="36" height="8" rx="2" fill="var(--ob-a)"/><rect x="2" y="32" width="36" height="6" rx="2" fill="var(--ob-a)"/><path d="M14 12v8M28 12v8M8 22v8M22 22v8M34 22v8M14 32v6M28 32v6" stroke="var(--ob-b)" stroke-width="2"/></svg>' },   // the wall
+    { tone: 'coral', svg: '<svg viewBox="0 0 40 40"><path d="M4 8v28h32" fill="none" stroke="var(--ob-b)" stroke-width="3" stroke-linecap="round"/><path d="M9 14l8 9 6-4 9 10" fill="none" stroke="var(--ob-a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 22v8h-9" fill="none" stroke="var(--ob-a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>' }   // the graph that turns down
   ];
   var AIR_OBS = [
-    // a bolt
-    '<svg viewBox="0 0 40 40"><path d="M25 2 8 23h9l-3 15 16-21h-9z"/></svg>',
-    // a flame
-    '<svg viewBox="0 0 40 40"><path d="M20 2c5 9 13 11 13 20a13 13 0 0 1-26 0c0-5 4-9 6-13 1 4 3 5 4 8 1-5 3-10 3-15z"/><path d="M20 20c2 4 5 5 5 9a5 5 0 0 1-10 0c0-3 3-5 5-9z" fill="#fff" fill-opacity=".35"/></svg>',
-    // a paper plane thrown across
-    '<svg viewBox="0 0 40 40"><path d="M38 6 2 20l13 4z"/><path d="M15 24l3 11 5-7z"/><path d="M38 6 17 24" fill="none" stroke="#FCFBF7" stroke-opacity=".55" stroke-width="2"/></svg>'
+    { tone: 'mint', svg: '<svg viewBox="0 0 40 40"><path d="M11 30a8 8 0 0 1 .6-16 11 11 0 0 1 20.4 3A7 7 0 0 1 31 30z" fill="var(--ob-a)"/><path d="M22 16l-8 11h6l-2 9 10-12h-6z" fill="var(--ob-b)"/></svg>' },    // the servers
+    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><path d="M20 4l4.6 10.2L36 15.6l-8.4 7.7 2.2 11.3L20 29l-9.8 5.6 2.2-11.3L4 15.6l11.4-1.4z" fill="var(--ob-a)" stroke="var(--ob-b)" stroke-width="2.2" stroke-linejoin="round"/></svg>' },   // the one-star
+    { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="3" y="9" width="34" height="23" rx="3" fill="var(--ob-a)"/><path d="M3 12l17 11 17-11" fill="none" stroke="var(--ob-b)" stroke-width="2.6" stroke-linejoin="round"/><path d="M25 24l9 9M34 24l-9 9" stroke="var(--ob-b)" stroke-width="3" stroke-linecap="round"/></svg>' }    // the reply that says no
   ];
   function buildRabbit(box) {
     var X0 = 880, Y0 = 300, W0 = 2900, H0 = 1000, base = 'assets/brand/logo-pieces/';
@@ -262,14 +257,16 @@
     var SP = 340, AIR_Y = [58, 92], GROUND_SIZE = [28, 36, 50];
     var items = [], last = 0, nextAt = 0, raf = 0, seen = false, boost = 0;
     function spawn(now) {
-      var air = Math.random() < .28;
-      var el = document.createElement('div'); el.className = 'ob' + (air ? ' ob--air' : '');
-      el.innerHTML = (air ? AIR_OBS : GROUND_OBS)[(Math.random() * (air ? AIR_OBS : GROUND_OBS).length) | 0];
+      var air = Math.random() < .3, pool = air ? AIR_OBS : GROUND_OBS, pick = pool[(Math.random() * pool.length) | 0];
+      var el = document.createElement('div'); el.className = 'ob ob--' + pick.tone + (air ? ' ob--air' : '');
+      el.innerHTML = pick.svg;
       var size = (air ? 30 + ((Math.random() * 2) | 0) * 8 : GROUND_SIZE[(Math.random() * GROUND_SIZE.length) | 0]) * scale;
+      var x0 = root.clientWidth + size;
       el.style.width = size + 'px';
       el.style.marginBottom = (air ? AIR_Y[(Math.random() * AIR_Y.length) | 0] * scale : 0) + 'px';
+      el.style.transform = 'translate(' + x0.toFixed(1) + 'px,0px)';   // placed before its first paint
       obsLayer.appendChild(el);
-      items.push({ el: el, x: root.clientWidth + size, y: 0, vy: 0, rot: 0, alpha: 1, size: size, air: air, dead: false, hit: 0 });
+      items.push({ el: el, x: x0, y: 0, vy: 0, rot: 0, alpha: 1, size: size, air: air, dead: false, hit: 0 });
       nextAt = now + ((200 + Math.random() * 220) * scale + size * 1.2) / (SP * scale) * 1000;   // a steady gap in distance
     }
     function centre(r) { return crew.offsetLeft + r.offsetLeft + (G.getProperty(r, 'x') || 0) + r.offsetWidth * .5; }

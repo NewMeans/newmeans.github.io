@@ -191,7 +191,7 @@
     var canvas = document.createElement('canvas'); root.appendChild(canvas);
     var ctx = canvas.getContext('2d');
     var dots = [], w = 0, hgt = 0, dpr = 1, px = -9999, py = -9999, lastMove = 0, raf = 0, chosen = null, chosenAt = 0;
-    var INK = ['#E8392F', '#FF4A3E', '#D22F28'], HOT = ['#FF7E63', '#FF9077', '#FF6D52'], PALE = ['#FFCBC0', '#FFDAD2', '#FFBCAE'];
+    var INK = ['#E8392F', '#FF4A3E', '#D22F28'], HOT = ['#F97316', '#FF8B1A', '#E8690A'], PALE = ['#FFCBC0', '#FFDAD2', '#FFBCAE'];
     var note = document.querySelector('[data-shape-note]');
     var masked = root.hasAttribute('data-mask');
     function seed(i) { var x = Math.sin(i * 12.9898) * 43758.5453; return x - Math.floor(x); }
@@ -203,8 +203,8 @@
       var x = c.getContext('2d'); x.textBaseline = 'middle';
       var num = root.getAttribute('data-num') || '1000', a = t('dopa.count.a'), b = t('dopa.count.b');
       var wide = w / hgt >= 1.7, numSize, lineSize;
-      if (wide) { numSize = Math.min(hgt * .64, w * .29); lineSize = numSize * .44; }
-      else { numSize = Math.min(hgt * .33, w * .44); lineSize = numSize * .5; }
+      if (wide) { numSize = Math.min(hgt * .64, w * .29); lineSize = numSize * .48; }
+      else { numSize = Math.min(hgt * .34, w * .46); lineSize = numSize * .52; }
       function fNum() { x.font = '800 ' + numSize + 'px SUIT, sans-serif'; }
       function fA() { x.font = '700 ' + lineSize + 'px SUIT, sans-serif'; }
       function fB() { x.font = '700 ' + lineSize + 'px SUIT, sans-serif'; }
@@ -212,59 +212,81 @@
       fA(); var aW = x.measureText(a).width;
       fB(); var bW = x.measureText(b).width;
       var lineW = Math.max(aW, bW), lead = lineSize * 1.18;
-      x.fillStyle = '#fff';                                     // white: the number and the first line
+      x.fillStyle = '#fff';                                     // white: the number; red below: the first line
       if (wide) {
         var gap = numSize * .10, x0 = (w - (numW + gap + lineW)) / 2, cy = hgt / 2;
         fNum(); x.fillText(num, x0, cy);
+        x.fillStyle = '#f00';
         fA(); x.fillText(a, x0 + numW + gap, cy - lead / 2);
-        x.fillStyle = '#f00';                                   // red: the second line, coloured differently
+        x.fillStyle = '#00f';                                   // blue: the second line, coloured differently
         fB(); x.fillText(b, x0 + numW + gap, cy + lead / 2);
       } else {
         var cy2 = hgt / 2 - lead * .55;
         fNum(); x.fillText(num, (w - numW) / 2, cy2);
-        fA(); x.fillText(a, (w - aW) / 2, cy2 + numSize * .58 + lead * .3);
         x.fillStyle = '#f00';
+        fA(); x.fillText(a, (w - aW) / 2, cy2 + numSize * .58 + lead * .3);
+        x.fillStyle = '#00f';
         fB(); x.fillText(b, (w - bW) / 2, cy2 + numSize * .58 + lead * 1.3);
       }
-      return x.getImageData(0, 0, c.width, c.height).data;
+      var d = x.getImageData(0, 0, c.width, c.height).data, area = [0, 0, 0, 0];
+      for (var q = 3; q < d.length; q += 4) area[d[q] > 120 ? (d[q - 3] > 120 ? (d[q - 2] > 120 ? 1 : 2) : 3) : 0]++;
+      return { d: d, area: area };
     }
 
-    // Exactly TARGET shapes, on every screen: the grid is sized from the count, not the other way
-    // round, so the number the caption states is the number actually drawn.
-    var TARGET = 10000;
+    // Exactly TARGET shapes. Each part of the picture gets its own grid, sized from how much
+    // area it covers and how many shapes it should get, so the number is made of big shapes,
+    // the two lines beside it of small ones, and the field behind of large sparse ones.
+    var TARGET = 3000, WANT = [900, 1100, 1000];      // background, the number, the two lines
     function layout() {
       var r = root.getBoundingClientRect(); w = r.width; hgt = r.height; dpr = Math.min(2, devicePixelRatio || 1);
       if (!w || !hgt) return;
       canvas.width = w * dpr; canvas.height = hgt * dpr; canvas.style.width = w + 'px'; canvas.style.height = hgt + 'px';
-      var mask = maskData(), cells = TARGET * 2.9;
-      var step = Math.min(12, Math.max(1.8, Math.sqrt(w * hgt / (.92 * cells))));
-      var ink = [], bg = [], i = 0, row = 0;
-      for (var gy = step * .6; gy < hgt; gy += step * .92, row++) {
-        for (var gx = step * .6 + (row % 2) * step * .5; gx < w; gx += step) {   // rows offset so it never looks ruled
-          i++;
-          var g = 0;
-          if (mask) { var k = ((gy | 0) * (w | 0) + (gx | 0)) * 4; g = mask[k + 3] > 120 ? (mask[k + 1] > 120 ? 1 : 2) : 0; }
-          var s1 = seed(i), s2 = seed(i + 7), s3 = seed(i + 99), j = g ? .34 : .55;
-          var hx = gx + (s1 - .5) * step * j, hy = gy + (s2 - .5) * step * j;
-          var ramp = g === 1 ? INK : g === 2 ? HOT : PALE;
-          var d = {
-            hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0, s: s1,
-            n: 3 + ((s3 * 6) | 0), rot: s1 * 6.28,
-            size: Math.max(g ? 1.15 : .7, step * (g ? .52 : .27) * (.8 + s2 * .38)),
-            col: ramp[(s3 * 3) | 0], ink: !!g
-          };
-          (g ? ink : bg).push(d);
+      var m = maskData(), mask = m && m.d, W = w | 0;
+      var area = m ? m.area : [w * hgt, 0, 0, 0];
+      function at(gx, gy) { if (!mask) return 0; var k = ((gy | 0) * W + (gx | 0)) * 4; return mask[k + 3] > 120 ? (mask[k] > 120 ? (mask[k + 1] > 120 ? 1 : 2) : 3) : 0; }
+      function collect(step, keep, sizeK) {
+        var out = [], i = 0, row = 0;
+        for (var gy = step * .5; gy < hgt; gy += step * .92, row++) {
+          for (var gx = step * .5 + (row % 2) * step * .5; gx < w; gx += step) {
+            i++; var g = at(gx, gy); if (keep.indexOf(g) < 0) continue;
+            var s1 = seed(i + keep[0] * 977), s2 = seed(i + 7), s3 = seed(i + 99), j = g ? .3 : .6;
+            var ramp = g === 0 ? PALE : g === 3 ? HOT : INK;
+            var hx = gx + (s1 - .5) * step * j, hy = gy + (s2 - .5) * step * j;
+            out.push({
+              hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0, s: s1,
+              n: 3 + ((s3 * 6) | 0), rot: s1 * 6.28,
+              size: Math.max(.8, step * sizeK * (.8 + s2 * .4)),
+              col: ramp[(s3 * 3) | 0], ink: !!g
+            });
+          }
         }
+        return out;
       }
-      var need = TARGET - ink.length, picked = [];
-      if (need <= 0) { ink.sort(function (a, b) { return a.s - b.s; }); ink.length = Math.max(0, TARGET); }
-      else if (bg.length) {
-        var thr = Math.min(1, need / bg.length), q;
-        for (q = 0; q < bg.length; q++) if (bg[q].s < thr) picked.push(bg[q]);
-        if (picked.length > need) picked.length = need;
-        else for (q = 0; q < bg.length && picked.length < need; q++) if (bg[q].s >= thr) picked.push(bg[q]);
+      // Tune the spacing until the pool is the size it should be. Dropping shapes at random
+      // instead would punch holes in the letters.
+      function gather(want, px, keep, sizeK) {
+        if (!want || !px) return [];
+        var step = Math.max(1.4, Math.sqrt(px / (.92 * want))), out = [];
+        for (var pass = 0; pass < 5; pass++) {
+          out = collect(step, keep, sizeK);
+          if (!out.length) break;
+          var ratio = out.length / want;
+          if (ratio < .96 || ratio > 1.04) step = Math.max(1.4, step * Math.sqrt(ratio)); else break;
+        }
+        return out;
       }
-      dots = ink.concat(picked);
+      var num = gather(WANT[1], area[1], [1], .5);
+      var kor = gather(WANT[2], area[2] + area[3], [2, 3], .46);
+      var bg = gather(Math.max(0, TARGET - num.length - kor.length), area[0], [0], .36);
+      var room = Math.max(0, TARGET - num.length - kor.length);
+      if (bg.length > room) { bg.sort(function (a, b) { return a.s - b.s; }); bg.length = room; }
+      for (var pad = bg.length; pad < room && bg.length; pad++) {                 // land on the number exactly
+        var src = bg[(seed(pad + 31) * bg.length) | 0], off = 14 + seed(pad + 57) * 22;
+        bg.push({ hx: src.hx + (seed(pad) - .5) * off, hy: src.hy + (seed(pad + 3) - .5) * off, x: 0, y: 0, vx: 0, vy: 0, s: seed(pad + 11),
+          n: src.n, rot: seed(pad + 5) * 6.28, size: src.size, col: src.col, ink: false });
+        var q = bg[bg.length - 1]; q.x = q.hx; q.y = q.hy;
+      }
+      dots = bg.concat(num, kor);
       if (note) {                                               // the count is the point: give it the accent
         var parts = t('dopa.note', { n: '\u0000' }).split('\u0000'), strong = document.createElement('b');
         strong.textContent = dots.length.toLocaleString();
@@ -287,7 +309,7 @@
         if (d === chosen) { var q = Math.min(1, (now - chosenAt) / 400); star(d, s * (1 + q * 2.4)); ctx.fillStyle = '#FF6666'; ctx.globalAlpha = 1; ctx.fill(); continue; }
         ctx.beginPath();
         for (var k2 = 0; k2 < d.n; k2++) { var a = d.rot + k2 / d.n * 6.283; var X = d.x + Math.cos(a) * s, Y = d.y + Math.sin(a) * s; if (k2) ctx.lineTo(X, Y); else ctx.moveTo(X, Y); }
-        ctx.closePath(); ctx.fillStyle = d.col; ctx.globalAlpha = d.ink ? 1 : .9; ctx.fill();
+        ctx.closePath(); ctx.fillStyle = d.col; ctx.globalAlpha = d.ink ? 1 : .72; ctx.fill();
       }
       ctx.globalAlpha = 1;
       return any || live || glow;

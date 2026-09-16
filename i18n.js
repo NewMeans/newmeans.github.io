@@ -28,8 +28,8 @@
       "cta.more": "자세히 보기", "cta.download": "다운로드", "cta.start": "테스트 시작하기", "cta.replay": "다시 보기",
       "scene.typer": "공이 키캡을 튀며 Typer를 친다",
       "scene.dopa": "계속 새로 생겨나 모였다 사라지는 도형들",
-      "dopa.me": "16개 유형으로는 담을 수 없는 나.",
-      "sec.products": "제품", "sec.studio": "스튜디오", "studio.title": "만드는 사람들",
+      "dopa.me": "16개 유형으로는 정의할 수 없는 우리",
+      "studio.title": "만드는 사람들",
       
       "foot.privacy": "개인정보 처리방침",
 
@@ -58,6 +58,8 @@
       "dopa.count.a": "명의 사람", "dopa.count.b": "개의 유형", "dopa.count.sr": "사람 수만큼의 유형",
       "dopa.note": "{n}개의 서로 다른 도형, 16개로 분류할 수 있을까?",
       "dopa.num.reports": "분석 완료", "dopa.num.tests": "진행 중인 연구",
+      "typer.review.1.by": "r***", "typer.review.2.by": "정***", "typer.review.3.by": "た***", "typer.review.4.by": "l***", "typer.review.5.by": "김***", "typer.review.6.by": "m***", "typer.review.7.by": "а***", "typer.review.8.by": "ゆ***",
+      "dopa.review.1.by": "수***", "dopa.review.2.by": "ㅇ***", "dopa.review.3.by": "지***", "dopa.review.4.by": "h***", "dopa.review.5.by": "민***", "dopa.review.6.by": "y***",
       "dopa.review.1": "심리테스트 진짜 많이 해봤는데 이게 제일 재밌었어요",
       "dopa.review.2": "내가 한 말 그대로 가져와서 분석하니까 소름 돋았어요",
       "dopa.review.3": "관계 분석이 신기해서 단톡방 다 돌려봤어요",
@@ -94,8 +96,8 @@
       "cta.more": "Learn more", "cta.download": "Download", "cta.start": "Start a test", "cta.replay": "Replay",
       "scene.typer": "A ball bounces across keycaps and types Typer",
       "scene.dopa": "Shapes keep arriving, gathering, and going",
-      "dopa.me": "The me that sixteen types cannot hold.",
-      "sec.products": "Products", "sec.studio": "Studio", "studio.title": "The makers",
+      "dopa.me": "All of us that sixteen types cannot define",
+      "studio.title": "The makers",
       
       "foot.privacy": "Privacy",
 
@@ -124,6 +126,8 @@
       "dopa.count.a": "people", "dopa.count.b": "types", "dopa.count.sr": "As many types as there are people",
       "dopa.note": "{n} shapes, no two alike. Sort those into sixteen?",
       "dopa.num.reports": "Reports written", "dopa.num.tests": "Studies running",
+      "typer.review.1.by": "r***", "typer.review.2.by": "정***", "typer.review.3.by": "た***", "typer.review.4.by": "l***", "typer.review.5.by": "김***", "typer.review.6.by": "m***", "typer.review.7.by": "а***", "typer.review.8.by": "ゆ***",
+      "dopa.review.1.by": "수***", "dopa.review.2.by": "ㅇ***", "dopa.review.3.by": "지***", "dopa.review.4.by": "h***", "dopa.review.5.by": "민***", "dopa.review.6.by": "y***",
       "dopa.review.1": "I have taken a lot of these. This one was the most fun.",
       "dopa.review.2": "It quoted things I actually said. Genuinely unsettling.",
       "dopa.review.3": "The relationship read was so good I ran every group chat through it.",
