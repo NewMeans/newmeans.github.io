@@ -312,7 +312,7 @@
         G.to(r, { x: slot[k], duration: .9, ease: 'power2.inOut' });
         if (k !== 1) return;                                        // the one taking the lead hops over the other
         r.__busy = 'swap'; r.style.zIndex = 3;
-        hop(r, 104, .45, .45).eventCallback('onComplete', function () {
+        hop(r, 150, .5, .5).eventCallback('onComplete', function () {
           r.__busy = 0; r.__tl = null; r.style.zIndex = ''; settle(r);
         });
       });

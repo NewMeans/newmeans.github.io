@@ -702,9 +702,9 @@
       for (var i = 0; i < pool.length; i++) { r -= WEIGHT[pool[i].tier]; if (r <= 0) return pool[i]; }
       return pool[pool.length - 1];
     }
-    // the slot ticks once per word that goes past, taken from the game's own roulette blip
+    // the slot blips once per word that goes past, taken from the game's own roulette sound
     var TICK = 'assets/audio/roulette.m4a', tpool = [], tp = 0;
-    function tick() {
+    function blip() {
       if (reduce) return;
       if (!tpool.length) for (var i = 0; i < 6; i++) { var a = new Audio(TICK); a.volume = .32; a.preload = 'auto'; tpool.push(a); }
       var el = tpool[tp++ % tpool.length];
@@ -729,7 +729,7 @@
         reel.style.transform = 'translateY(' + (-total * e).toFixed(2) + 'px)';
         reel.style.filter = k < 0.75 ? 'blur(' + (1.6 * (1 - k)).toFixed(2) + 'px)' : '';
         var past = Math.floor(e * (seq.length - 1));       // one blip per word passing the window
-        if (past > ticked) { ticked = past; tick(); }
+        if (past > ticked) { ticked = past; blip(); }
         if (k < 1) requestAnimationFrame(step); else land(next);
       }
       requestAnimationFrame(step);
