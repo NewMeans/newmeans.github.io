@@ -13,12 +13,11 @@
 .build__logo img{height:clamp(40px,4.6vw,60px);width:auto;display:block}
 .build__grid{display:grid;grid-template-columns:minmax(230px,1fr) minmax(330px,440px) minmax(230px,1fr);gap:clamp(16px,2.6vw,36px);align-items:center;width:100%}
 .build__col:last-child{position:relative;z-index:3}
-.build__col{display:flex;flex-direction:column;gap:clamp(26px,3.4vh,44px);min-width:0}
+.build__col{display:flex;flex-direction:column;gap:clamp(44px,6.5vh,86px);min-width:0}
 .build__col:first-child{align-items:flex-end}
 .group{display:flex;flex-direction:column;gap:8px}
 .build__col:first-child .group{align-items:flex-end}
-.group__t{display:flex;align-items:center;gap:8px;margin:0;min-height:0}
-.group__t > span,.group__n{display:none}
+.group__t{display:none}
 /* the parts float: no tile, no border, no shadow until you pick one */
 .chips{display:flex;flex-wrap:nowrap;gap:clamp(10px,1.5vw,20px);width:100%;justify-content:flex-start;align-items:center}
 .build__col:first-child .chips{justify-content:flex-end}
@@ -36,7 +35,8 @@
 .chip--frame{--sc:1.34}
 .chip--frame::before{content:"";position:absolute;inset:28% 2%;background:var(--fill,transparent);border-radius:2px;z-index:-1}
 .chip--monitor,.chip--switch{--sc:1.1}
-.soundbtn{width:28px;height:28px;border-radius:var(--r-pill);display:grid;place-items:center;color:var(--text-2);margin-left:2px}
+/* the sound toggle sits with the tags, shaped like one */
+.tags .soundbtn{display:inline-grid;place-items:center;width:32px;height:28px;border-radius:var(--r-pill);border:1px solid var(--line-strong);color:var(--text-2);background:none}
 .soundbtn svg{width:15px;height:15px}
 .soundbtn[aria-pressed="false"] .w{opacity:0}
 .soundbtn:hover{background:var(--surface-hover);color:var(--text-1)}

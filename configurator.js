@@ -15,7 +15,7 @@
   var PICK = {
     keycap: ['5000', '5005', '5012', '5011', '5003'],
     frame: ['3000', '3005', '3003', '3004', '3012'],
-    switch: ['4000', '4001', '4004', '4002', '4008'],
+    switch: ['4000', '4001', '4004', '4002', '4006'],
     sculpture: ['1000', '1005', '1008', '1007', '1004'],
     ball: ['0001', '0002', '0004', '0007', '0009']
   };
@@ -84,7 +84,7 @@
   function build(kind, items) {
     var group = root.querySelector('[data-group="' + kind + '"]'), row = group.querySelector('.chips'), n = group.querySelector('.group__n');
     var only = PICK[kind]; if (only) items = only.map(function (id) { return items.filter(function (i) { return i.id === id; })[0]; }).filter(Boolean);
-    n.textContent = items.length;
+    if (n) n.textContent = items.length;
     items.forEach(function (it) {
       var b = document.createElement('button'); b.type = 'button'; b.className = 'chip chip--' + kind; b.dataset.id = it.id; b.title = it.name; b.setAttribute('aria-label', it.name); b.setAttribute('aria-pressed', 'false');
       if (kind === 'frame' && it.bg) b.style.setProperty('--fill', it.bg);   // the case is an outline in game: fill it with its own colourway

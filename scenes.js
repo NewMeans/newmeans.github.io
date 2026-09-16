@@ -20,7 +20,7 @@
     IN: { x: 140, y: 34 }, OUT: { x: 716, y: 332 },
     APEX: [150, 130, 113, 98], LAST: 128
   };
-  var SPIN = 360 / (2 * Math.PI * U.R);        // degrees per stage unit rolled
+  var SPIN = 360 / (2 * Math.PI * U.R) * .55;  // degrees per stage unit, rolled lazily
   function mountTyper(root) {
     var stage = root.querySelector('.stage'), ball = stage.querySelector('.ball');
     var caps = [].slice.call(stage.querySelectorAll('.cap')), letters = caps.map(function (c) { return c.querySelector('b'); });
@@ -187,7 +187,10 @@
   // ================================================================ the studio: two rabbits running
   // They face right, take turns leading, jump what is on the ground and swat what flies at them.
   var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
+  // only the head runs: the back curve, the trailing bracket, the tail and the sparkles sit out
+  var DROP = { 3: 1, 7: 1, 8: 1, 11: 1, 16: 1 };
   var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
+  var HX0 = 923, HY0 = 357, HW = 1854, HH = 885;
   // What you actually hit while building something: the runway, the deadline, the bug, the wall,
   // the graph that turns down, the servers, the one-star, the reply that says no.
   var GROUND_OBS = [
@@ -203,12 +206,13 @@
     { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="3" y="9" width="34" height="23" rx="3" fill="var(--ob-a)"/><path d="M3 12l17 11 17-11" fill="none" stroke="var(--ob-b)" stroke-width="2.6" stroke-linejoin="round"/><path d="M25 24l9 9M34 24l-9 9" stroke="var(--ob-b)" stroke-width="3" stroke-linecap="round"/></svg>' }    // the reply that says no
   ];
   function buildRabbit(box) {
-    var X0 = 880, Y0 = 300, W0 = 2900, H0 = 1000, base = 'assets/brand/logo-pieces/';
+    var base = 'assets/brand/logo-pieces/';
     RP.forEach(function (p) {
+      if (DROP[p[0]]) return;
       var el = document.createElement('i');
       el.className = 'rb' + (FACE[p[0]] ? ' rb--face' : '') + (p[0] in FOOT ? ' rb--paw' : '');
-      el.style.left = (p[1] - X0) / W0 * 100 + '%'; el.style.top = (p[2] - Y0) / H0 * 100 + '%';
-      el.style.width = p[3] / W0 * 100 + '%'; el.style.height = p[4] / H0 * 100 + '%';
+      el.style.left = (p[1] - HX0) / HW * 100 + '%'; el.style.top = (p[2] - HY0) / HH * 100 + '%';
+      el.style.width = p[3] / HW * 100 + '%'; el.style.height = p[4] / HH * 100 + '%';
       el.style.setProperty('--m', 'url("' + base + 'p' + p[0] + '.png")');
       box.appendChild(el);
     });
@@ -221,15 +225,15 @@
     var arts = rabbits.map(function (r) { return r.querySelector('.runner__art'); });
     G.set(arts, { scaleX: -1, rotation: 3.5 });                     // face right
     var slot = [0, 0], order = [0, 1], scale = 1;                       // order[1] is the one out in front
-    function measure() { var rw = rabbits[0].offsetWidth || 180; scale = rw / 208; slot = [0, rw * .98]; crew.style.width = (slot[1] + rw) + 'px'; }
+    function measure() { var rw = rabbits[0].offsetWidth || 180; scale = rw / 182; slot = [0, rw * 1.08]; crew.style.width = (slot[1] + rw) + 'px'; }
     measure();
     rabbits.forEach(function (r, i) { G.set(r, { x: slot[i] }); });
     if (reduce) return;
     arts.forEach(function (art, i) {
       var feet = art.querySelectorAll('.rb--paw');
       G.to(art, { y: -7, duration: .32, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
-      G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
-      G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15 });
+      if (feet[0]) G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
+      if (feet[1]) G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15 });
     });
     function jump(r) {
       if (r.__busy === 'jump') return;
