@@ -217,8 +217,10 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .portal--out,.lip--out{left:calc(716 / 760 * 100%);top:calc(284 / 320 * 100%)}
 .stage--typer .cap{position:absolute;top:calc(108 / 320 * 100%);left:calc(var(--x) / 760 * 100%);width:calc(104 / 760 * 100%);aspect-ratio:1;margin-left:calc(-52 / 760 * 100%);background:url("assets/shop/keycap/5000_0.png") center/100% 100% no-repeat;z-index:2;display:grid;place-items:center;cursor:pointer;transition:filter .15s}
 .stage--typer .cap.is-down{filter:brightness(.96)}
-.stage--typer .cap b{display:grid;place-items:center;width:50%;height:50%;color:#7A5741;padding-bottom:12%;opacity:0}
-.stage--typer .cap b svg{width:100%;height:100%;display:block;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* the icon sits at the centre of the cap's top face, not the centre of the sprite */
+.stage--typer .cap b{position:absolute;left:50%;top:38.4%;transform:translate(-50%,-50%);display:grid;place-items:center;width:54%;height:54%;color:#7A5741;opacity:0}
+.stage--typer .cap b svg{width:100%;height:100%;display:block;fill:currentColor;stroke:none;overflow:visible}
+.stage--typer .cap b svg text{font:800 9.3px/1 var(--font-ui);letter-spacing:-.02em;fill:currentColor}
 .stage--typer .cap.is-hit{animation:capHit .2s var(--ease)}
 @keyframes capHit{45%{transform:translateY(6%) scale(.965)}}
 .stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
@@ -240,17 +242,26 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .run__crew{position:absolute;left:clamp(16px,7%,130px);bottom:62px;z-index:2}
 .runner{position:absolute;left:0;bottom:0;width:clamp(132px,13vw,182px);will-change:transform}
 .runner__art{position:relative;width:100%;aspect-ratio:1854/885;transform-origin:50% 90%}
-.rb{position:absolute;background:var(--m-400);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
+.rb{position:absolute;background:var(--fur,var(--m-400));-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
 .rb--face{transform:translateX(-16%)}
-.runner__tag{position:absolute;left:50%;bottom:-40px;z-index:2;transform:translateX(-50%) rotate(-2.5deg);
-  background:var(--bg);border:1.5px solid var(--m-400);border-radius:11px;padding:5px 11px 6px;
-  display:flex;flex-direction:column;align-items:center;gap:3px;white-space:nowrap;box-shadow:0 3px 0 rgba(133,198,168,.4)}
-.runner__tag::before{content:"";position:absolute;left:50%;top:-8px;width:18px;height:8px;transform:translateX(-50%);border-radius:4px 4px 0 0;background:var(--m-400)}
-.runner__tag b{font:700 8px/1 var(--font-ui);letter-spacing:.16em;color:var(--m-700)}
-.runner__tag span{font:600 11px/1 var(--font-ui);color:var(--text-1)}
+.runner--ceo,.crew[data-who="ceo"]{--fur:#8C9B57;--rim:#6E7C40}      /* olive */
+.runner--cto,.crew[data-who="cto"]{--fur:#E0894A;--rim:#BC6A2F}      /* apricot */
+.rb-glass{position:absolute;left:24.3%;top:43.6%;width:41%;height:34.4%;pointer-events:none}
+.rb-glass svg{width:100%;height:100%;display:block;overflow:visible}
+.runner{cursor:pointer}
+.runner:focus-visible{outline:2px solid var(--rim);outline-offset:6px;border-radius:8px}
+/* a lanyard card: a clip, a punched hole, the role over the name */
+.runner__tag{position:absolute;left:50%;bottom:-42px;z-index:2;transform:translateX(-50%) rotate(-2deg);
+  background:var(--bg);border:1.5px solid var(--fur,var(--m-400));border-radius:8px;padding:7px 13px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;white-space:nowrap;
+  box-shadow:0 2px 0 var(--rim,var(--m-600)),0 6px 14px rgba(36,33,29,.08)}
+.runner__tag::before{content:"";position:absolute;left:50%;top:-7px;width:22px;height:7px;transform:translateX(-50%);border-radius:3px 3px 0 0;background:var(--fur,var(--m-400))}
+.runner__tag::after{content:"";position:absolute;left:50%;top:3px;width:16px;height:3.5px;transform:translateX(-50%);border-radius:2px;background:var(--fur,var(--m-400));opacity:.32}
+.runner__tag b{margin-top:5px;font:700 7.5px/1 var(--font-ui);letter-spacing:.2em;color:var(--rim,var(--m-700))}
+.runner__tag span{font:700 11.5px/1 var(--font-ui);letter-spacing:-.01em;color:var(--text-1)}
 .run__obs{position:absolute;inset:0;z-index:1}
 .ob{position:absolute;bottom:62px;left:0;will-change:transform}
-.ob svg{display:block;width:100%;height:auto;overflow:visible}
+.ob svg,.ob img{display:block;width:100%;height:auto;overflow:visible}
 .ob--coral{--ob-a:var(--c-300);--ob-b:var(--c-700)}
 .ob--mint{--ob-a:var(--m-300);--ob-b:var(--m-800)}
 .ob--sand{--ob-a:var(--n-300);--ob-b:var(--n-700)}
@@ -279,3 +290,20 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
   .runner{width:114px}
 }
 @media (prefers-reduced-motion:reduce){.lever .stick,.lever .knob,.slot,.cursor svg{transition:none;animation:none}.acc .ac.pop,.confetti,.go.pop{animation:none}.replay{opacity:1}}
+
+/* ---------- who made it: one card per rabbit ---------- */
+.crew{margin:auto;border:none;padding:0;background:none;max-width:min(92vw,360px);overflow:visible}
+.crew::backdrop{background:rgba(36,33,29,.34);backdrop-filter:blur(3px)}
+.crew__in{position:relative;background:var(--bg);border:1.5px solid var(--fur,var(--m-400));border-radius:var(--r-tile);
+  padding:74px 26px 26px;text-align:center;box-shadow:0 3px 0 var(--rim,var(--m-600)),0 30px 70px rgba(36,33,29,.2)}
+.crew__close{position:absolute;z-index:2;right:12px;top:12px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:var(--text-2)}
+.crew__close svg{width:17px;height:17px}
+.crew__close:hover{background:var(--surface);color:var(--text-1)}
+.crew__art{position:absolute;left:50%;top:-28px;transform:translateX(-50%) scaleX(-1);width:158px;aspect-ratio:1854/885}
+.crew__role{font:700 10px/1 var(--font-ui);letter-spacing:.24em;color:var(--rim,var(--m-700))}
+.crew__name{margin-top:8px;font-family:var(--font-display);font-size:27px;font-weight:700;letter-spacing:-.02em;color:var(--text-display)}
+.crew__nick{margin-top:3px;font-size:13.5px;font-weight:600;color:var(--text-2)}
+.crew__list{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;text-align:left}
+.crew__list li{position:relative;padding-left:20px;font-size:14.5px;line-height:1.45;color:var(--text-1)}
+.crew__list li::before{content:"";position:absolute;left:4px;top:.55em;width:7px;height:7px;border-radius:50%;background:var(--fur,var(--m-400))}
+@media (max-width:720px){.crew__in{padding:64px 22px 22px}.crew__art{width:134px;top:-22px}.crew__name{font-size:24px}}

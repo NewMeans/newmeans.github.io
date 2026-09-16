@@ -20,13 +20,14 @@
     IN: { x: 140, y: 16 }, OUT: { x: 716, y: 284 },
     APEX: [70, 61, 53, 46], LAST: 60
   };
-  // five caps, five things Typer is made of
+  // five caps, five things Typer is made of. One family: solid, rounded, bold,
+  // and the last one is the word itself.
   var CAP_ICONS = [
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.2" y="6.8" width="19.6" height="10.4" rx="2.2"/><path d="M6 10.6h.01M10 10.6h.01M14 10.6h.01M18 10.6h.01M7.4 14.2h9.2"/></svg>',
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1.8" y="7" width="20.4" height="10" rx="5"/><path d="M7 9.8v4.4M4.8 12h4.4M15.8 10.8h.01M18.4 13.2h.01"/></svg>',
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.6" cy="12" r="1.7"/><path d="M11 8.4a5 5 0 0 1 0 7.2M14.8 5.6a9 9 0 0 1 0 12.8"/></svg>',
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.8 14h10.4l-1.2 6.2H8z"/><path d="M12 14V8.2"/><path d="M12 10.4c2.6.2 4.2-1 4.6-3.2-2.6-.3-4.3.9-4.6 3.2zM12 11.6c-2.4.2-3.9-.9-4.3-3 2.4-.3 4 .8 4.3 3z"/></svg>',
-    '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2"/><circle cx="9" cy="11.6" r="1.9"/><circle cx="15" cy="11.6" r="1.9"/><path d="M7.4 17.6l1.2-2.2h6.8l1.2 2.2"/></svg>'
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M3.4 5.8h17.2A2.4 2.4 0 0 1 23 8.2v7.6a2.4 2.4 0 0 1-2.4 2.4H3.4A2.4 2.4 0 0 1 1 15.8V8.2a2.4 2.4 0 0 1 2.4-2.4zm.9 2.9v2.2h2.6V8.7H4.3zm4.1 0v2.2H11V8.7H8.4zm4.2 0v2.2h2.6V8.7h-2.6zm4.2 0v2.2h2.9V8.7h-2.9zM7 12.7v2.6h10v-2.6H7z"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M8 6.2h8a6 6 0 0 1 5.9 7.1l-.5 3a3.2 3.2 0 0 1-5.6 1.5L14.4 16H9.6l-1.8 1.8a3.2 3.2 0 0 1-5.6-1.5l-.5-3A6 6 0 0 1 8 6.2zM6 9.3v1.6H4.4v2.1H6v1.6h2.1V13h1.6v-2.1H8.1V9.3H6zm10.7.8a1.35 1.35 0 1 0 0 2.7 1.35 1.35 0 0 0 0-2.7zm2.3 3.5a1.35 1.35 0 1 0 0 2.7 1.35 1.35 0 0 0 0-2.7z"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8a9.2 9.2 0 0 0-9.2 9.2v1.4h2.9V12a6.3 6.3 0 0 1 12.6 0v1.4h2.9V12A9.2 9.2 0 0 0 12 2.8z"/><path d="M4 12.7h1.7a1.7 1.7 0 0 1 1.7 1.7v4.1a1.7 1.7 0 0 1-1.7 1.7H4a1.7 1.7 0 0 1-1.7-1.7v-4.1A1.7 1.7 0 0 1 4 12.7z"/><path d="M18.3 12.7H20a1.7 1.7 0 0 1 1.7 1.7v4.1a1.7 1.7 0 0 1-1.7 1.7h-1.7a1.7 1.7 0 0 1-1.7-1.7v-4.1a1.7 1.7 0 0 1 1.7-1.7z"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.1 12.3h1.8V8.1h-1.8z"/><path d="M12.7 12.3c-.5-3.3 1.4-5.6 5.2-6.2.6 3.5-1.4 5.7-5.2 6.2z"/><path d="M11.3 12.3c.5-2.9-1.1-4.9-4.3-5.4-.5 3.1 1.2 5.1 4.3 5.4z"/><path d="M5.3 12.6h13.4a1 1 0 0 1 1 1.1l-.2 1.5H4.5l-.2-1.5a1 1 0 0 1 1-1.1z"/><path d="M5.1 16.4h13.8l-.8 3.9a1.9 1.9 0 0 1-1.9 1.5H7.8a1.9 1.9 0 0 1-1.9-1.5z"/></svg>',
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="15.9" text-anchor="middle">Lo-Fi</text></svg>'
   ];
   var SPIN = 360 / (2 * Math.PI * U.R) * .55;  // degrees per stage unit, rolled lazily
   function mountTyper(root) {
@@ -201,23 +202,53 @@
   var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
   // only the head runs: the back curve, the trailing bracket, the tail and the sparkles sit out
   var DROP = { 3: 1, 7: 1, 8: 1, 11: 1, 16: 1 };
+  var GLASSES = {
+    // square horn rims for one, rounder ones with a flatter brow for the other
+    ceo: '<svg viewBox="0 0 100 40" fill="none" stroke="#211E1B" stroke-width="6.6" stroke-linejoin="round"><rect x="6" y="8" width="28" height="22" rx="3.5"/><rect x="66" y="8" width="28" height="22" rx="3.5"/><path d="M34 17h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>',
+    cto: '<svg viewBox="0 0 100 40" fill="none" stroke="#211E1B" stroke-width="6.6" stroke-linejoin="round"><path d="M6 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14S6 25 6 16z"/><path d="M66 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14s-14-5-14-14z"/><path d="M34 16h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>'
+  };
+  var CREW = {
+    ceo: { role: 'CEO', name: 'Minsik Kim', nick: 'Olive', does: ['Game Client Dev', 'Web Frontend Dev', 'AI Integration Engineer', 'Design, everything at NewMeans', 'Menu Select'] },
+    cto: { role: 'CTO', name: 'Minseok Chang', nick: 'Ricotta', does: ['Game Client Dev', 'Infrastructure Dev', 'AI Research Engineer', 'Swimming'] }
+  };
   var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
   var HX0 = 923, HY0 = 357, HW = 1854, HH = 885;
-  // What you actually hit while building something: the runway, the deadline, the bug, the wall,
-  // the graph that turns down, the servers, the one-star, the reply that says no.
+  // Whatever the day throws at you. Some of it is drawn, some of it is lifted
+  // straight out of the game.
+  var SHOP = 'assets/shop/';
   var GROUND_OBS = [
-    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><path d="M7 4h26v5l-9 11 9 11v5H7v-5l9-11L7 9z" fill="var(--ob-a)"/><path d="M12 31h16l-8-9z" fill="var(--ob-b)"/><rect x="5" y="2" width="30" height="4" rx="2" fill="var(--ob-b)"/><rect x="5" y="34" width="30" height="4" rx="2" fill="var(--ob-b)"/></svg>' },       // the deadline
-    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><rect x="4" y="13" width="32" height="23" rx="5" fill="var(--ob-a)"/><path d="M4 18h32v5H4z" fill="var(--ob-b)" opacity=".35"/><circle cx="28" cy="25" r="4" fill="var(--ob-b)"/><path d="M8 13 24 6l3 7" fill="none" stroke="var(--ob-b)" stroke-width="2.6" stroke-linejoin="round"/></svg>' },   // the runway
-    { tone: 'coral', svg: '<svg viewBox="0 0 40 40"><ellipse cx="20" cy="24" rx="9" ry="11" fill="var(--ob-a)"/><path d="M20 15v18M11 20h18" stroke="var(--ob-b)" stroke-width="2.2"/><path d="M11 14 5 9M29 14l6-5M9 24H3M31 24h6M11 32l-5 5M29 32l5 5" stroke="var(--ob-b)" stroke-width="2.6" stroke-linecap="round" fill="none"/><circle cx="20" cy="11" r="5" fill="var(--ob-b)"/></svg>' },   // the bug
-    { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="2" y="12" width="36" height="8" rx="2" fill="var(--ob-a)"/><rect x="2" y="22" width="36" height="8" rx="2" fill="var(--ob-a)"/><rect x="2" y="32" width="36" height="6" rx="2" fill="var(--ob-a)"/><path d="M14 12v8M28 12v8M8 22v8M22 22v8M34 22v8M14 32v6M28 32v6" stroke="var(--ob-b)" stroke-width="2"/></svg>' },   // the wall
-    { tone: 'coral', svg: '<svg viewBox="0 0 40 40"><path d="M4 8v28h32" fill="none" stroke="var(--ob-b)" stroke-width="3" stroke-linecap="round"/><path d="M9 14l8 9 6-4 9 10" fill="none" stroke="var(--ob-a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M34 22v8h-9" fill="none" stroke="var(--ob-a)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>' }   // the graph that turns down
+    { tone: 'coral', svg: '<svg viewBox="0 0 40 40"><path d="M20 3 36 33a2.4 2.4 0 0 1-2.1 3.6H6.1A2.4 2.4 0 0 1 4 33z" fill="var(--ob-a)"/><path d="M20 3 27.6 17H12.4z" fill="var(--ob-b)" opacity=".28"/><circle cx="15" cy="24" r="2.6" fill="var(--ob-b)"/><circle cx="25" cy="27" r="2.6" fill="var(--ob-b)"/><circle cx="20" cy="17" r="2.1" fill="var(--ob-b)"/></svg>' },   // pizza
+    { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="7" y="7" width="26" height="19" rx="2.6" fill="var(--ob-a)"/><rect x="10" y="10" width="20" height="13" rx="1.4" fill="var(--ob-b)" opacity=".5"/><path d="M3 28h34l-1.4 4.4a2 2 0 0 1-1.9 1.4H6.3a2 2 0 0 1-1.9-1.4z" fill="var(--ob-a)"/></svg>' },   // laptop
+    { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="8" y="5" width="24" height="30" rx="2.4" fill="var(--ob-a)" transform="rotate(-6 20 20)"/><rect x="8" y="5" width="24" height="30" rx="2.4" fill="var(--ob-a)" transform="rotate(5 20 20)"/><path d="M14 14h13M14 20h13M14 26h8" stroke="var(--ob-b)" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>' },   // paperwork
+    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><rect x="5" y="11" width="30" height="19" rx="3" fill="var(--ob-a)"/><path d="M5 17h30" stroke="var(--ob-b)" stroke-width="2.6" fill="none"/><path d="M20 11v19" stroke="var(--ob-b)" stroke-width="2.6" fill="none"/><path d="M20 11c-4-6-11-4-9 1 1 2.6 5.6 2.6 9-1zM20 11c4-6 11-4 9 1-1 2.6-5.6 2.6-9-1z" fill="var(--ob-b)"/></svg>' },   // a gift, or a delivery
+    { tone: 'mint', svg: '<svg viewBox="0 0 40 40"><rect x="6" y="8" width="28" height="24" rx="4" fill="var(--ob-a)"/><rect x="10" y="12" width="20" height="12" rx="2" fill="var(--ob-b)" opacity=".45"/><circle cx="14" cy="28" r="1.8" fill="var(--ob-b)"/><circle cx="20" cy="28" r="1.8" fill="var(--ob-b)"/><circle cx="26" cy="28" r="1.8" fill="var(--ob-b)"/></svg>' },   // a monitor full of tickets
+    { img: SHOP + 'sculpture/1000_0.png' },   // the cactus off the desk
+    { img: SHOP + 'sculpture/1001_0.png' },   // the coffee
+    { img: SHOP + 'sculpture/1002_0.png' },   // the apple
+    { img: SHOP + 'keycap/5000_0.png' },      // a loose keycap
+    { img: SHOP + 'keycap/5011_0.png' }
   ];
   var AIR_OBS = [
-    { tone: 'mint', svg: '<svg viewBox="0 0 40 40"><path d="M11 30a8 8 0 0 1 .6-16 11 11 0 0 1 20.4 3A7 7 0 0 1 31 30z" fill="var(--ob-a)"/><path d="M22 16l-8 11h6l-2 9 10-12h-6z" fill="var(--ob-b)"/></svg>' },    // the servers
-    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><path d="M20 4l4.6 10.2L36 15.6l-8.4 7.7 2.2 11.3L20 29l-9.8 5.6 2.2-11.3L4 15.6l11.4-1.4z" fill="var(--ob-a)" stroke="var(--ob-b)" stroke-width="2.2" stroke-linejoin="round"/></svg>' },   // the one-star
-    { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><rect x="3" y="9" width="34" height="23" rx="3" fill="var(--ob-a)"/><path d="M3 12l17 11 17-11" fill="none" stroke="var(--ob-b)" stroke-width="2.6" stroke-linejoin="round"/><path d="M25 24l9 9M34 24l-9 9" stroke="var(--ob-b)" stroke-width="3" stroke-linecap="round"/></svg>' }    // the reply that says no
+    { img: SHOP + 'ball/0001_0.png' },        // the ball, out of its own game
+    { img: SHOP + 'ball/0009_0.png' },
+    { img: 'assets/brand/dopamine-symbol.png' },
+    { tone: 'sand', svg: '<svg viewBox="0 0 40 40"><path d="M38 6 2 20l13 4z" fill="var(--ob-a)"/><path d="M15 24l3 11 5-7z" fill="var(--ob-b)"/></svg>' },
+    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><path d="M24 3 9 23h9l-3 14 16-21h-9z" fill="var(--ob-a)"/></svg>' },
+    { tone: 'gold', svg: '<svg viewBox="0 0 40 40"><path d="M20 4l4.6 10.2L36 15.6l-8.4 7.7 2.2 11.3L20 29l-9.8 5.6 2.2-11.3L4 15.6l11.4-1.4z" fill="var(--ob-a)"/></svg>' }
   ];
-  function buildRabbit(box) {
+
+  // only the head runs: the back curve, the trailing bracket, the tail and the sparkles sit out
+  var DROP = { 3: 1, 7: 1, 8: 1, 11: 1, 16: 1 };
+  var GLASSES = {
+    // square horn rims for one, rounder ones with a flatter brow for the other
+    ceo: '<svg viewBox="0 0 100 40" fill="none" stroke="#211E1B" stroke-width="6.6" stroke-linejoin="round"><rect x="6" y="8" width="28" height="22" rx="3.5"/><rect x="66" y="8" width="28" height="22" rx="3.5"/><path d="M34 17h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>',
+    cto: '<svg viewBox="0 0 100 40" fill="none" stroke="#211E1B" stroke-width="6.6" stroke-linejoin="round"><path d="M6 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14S6 25 6 16z"/><path d="M66 16c0-6.5 6-9 14-9s14 2.5 14 9c0 9-6 14-14 14s-14-5-14-14z"/><path d="M34 16h32" stroke-linecap="round"/><path d="M6 13H1M94 13h5" stroke-linecap="round"/></svg>'
+  };
+  var CREW = {
+    ceo: { role: 'CEO', name: 'Minsik Kim', nick: 'Olive', does: ['Game Client Dev', 'Web Frontend Dev', 'AI Integration Engineer', 'Design, everything at NewMeans', 'Menu Select'] },
+    cto: { role: 'CTO', name: 'Minseok Chang', nick: 'Ricotta', does: ['Game Client Dev', 'Infrastructure Dev', 'AI Research Engineer', 'Swimming'] }
+  };
+  function buildRabbit(box, who) {
     var base = 'assets/brand/logo-pieces/';
     RP.forEach(function (p) {
       if (DROP[p[0]]) return;
@@ -228,12 +259,13 @@
       el.style.setProperty('--m', 'url("' + base + 'p' + p[0] + '.png")');
       box.appendChild(el);
     });
+    if (who && GLASSES[who]) box.insertAdjacentHTML('beforeend', '<i class="rb-glass">' + GLASSES[who] + '</i>');
   }
   function mountRunner(root) {
     if (root.__run) return; root.__run = true;
     var obsLayer = root.querySelector('.run__obs'), crew = root.querySelector('.run__crew');
     var rabbits = [].slice.call(root.querySelectorAll('.runner'));
-    rabbits.forEach(function (r) { buildRabbit(r.querySelector('.runner__art')); });
+    rabbits.forEach(function (r) { buildRabbit(r.querySelector('.runner__art'), r.getAttribute('data-who')); });
     var arts = rabbits.map(function (r) { return r.querySelector('.runner__art'); });
     G.set(arts, { scaleX: -1, rotation: 3.5 });                     // face right
     var slot = [0, 0], order = [0, 1], scale = 1;                       // order[1] is the one out in front
@@ -275,8 +307,8 @@
     var items = [], last = 0, nextAt = 0, raf = 0, seen = false, boost = 0;
     function spawn(now) {
       var air = Math.random() < .3, pool = air ? AIR_OBS : GROUND_OBS, pick = pool[(Math.random() * pool.length) | 0];
-      var el = document.createElement('div'); el.className = 'ob ob--' + pick.tone + (air ? ' ob--air' : '');
-      el.innerHTML = pick.svg;
+      var el = document.createElement('div'); el.className = 'ob' + (pick.tone ? ' ob--' + pick.tone : '') + (air ? ' ob--air' : '');
+      el.innerHTML = pick.img ? '<img src="' + pick.img + '" alt="" loading="lazy">' : pick.svg;
       var size = (air ? 30 + ((Math.random() * 2) | 0) * 8 : GROUND_SIZE[(Math.random() * GROUND_SIZE.length) | 0]) * scale;
       var x0 = root.clientWidth + size;
       el.style.width = size + 'px';
@@ -317,6 +349,32 @@
       }
       if (spawning && now > nextAt) spawn(now);
       if (seen) raf = requestAnimationFrame(tick); else last = 0;
+    }
+    // a card for whoever you tapped
+    var dlg = document.getElementById('crew');
+    function openCard(who) {
+      var c = CREW[who]; if (!dlg || !c) return;
+      dlg.setAttribute('data-who', who);
+      var art = dlg.querySelector('[data-crew-art]');
+      if (art && !art.children.length) buildRabbit(art, who);
+      dlg.querySelector('[data-crew-role]').textContent = c.role;
+      dlg.querySelector('[data-crew-name]').textContent = c.name;
+      dlg.querySelector('[data-crew-nick]').textContent = '@' + c.nick;
+      var list = dlg.querySelector('[data-crew-list]'); list.textContent = '';
+      c.does.forEach(function (d) { var li = document.createElement('li'); li.textContent = d; list.appendChild(li); });
+      if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    }
+    if (dlg) {
+      var art0 = dlg.querySelector('[data-crew-art]');
+      dlg.addEventListener('click', function (e) { if (e.target === dlg || e.target.closest('[data-crew-close]')) dlg.close(); });
+      rabbits.forEach(function (r) {
+        var who = r.getAttribute('data-who'); if (!who) return;
+        r.setAttribute('role', 'button'); r.setAttribute('tabindex', '0');
+        r.addEventListener('click', function () { openCard(who); });
+        r.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(who); } });
+      });
+      if (art0) art0.textContent = '';
+      dlg.addEventListener('close', function () { var a = dlg.querySelector('[data-crew-art]'); if (a) a.textContent = ''; });
     }
     addEventListener('resize', debounce(function () { measure(); order.forEach(function (ri, k) { G.set(rabbits[ri], { x: slot[k] }); }); }, 200));
     ST.create({

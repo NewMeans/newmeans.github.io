@@ -30,7 +30,7 @@
       "scene.dopa": "계속 새로 생겨나 모였다 사라지는 도형들",
       "dopa.me": "16개 유형으로는 정의할 수 없는 우리",
       "typer.line": "게임, ASMR, 나만의 방, 키보드 그리고 Lo-Fi 음악",
-      "studio.title": "만드는 사람들",
+      "studio.title": "만드는 사람들", "crew.close": "닫기",
       
       "foot.privacy": "개인정보 처리방침",
 
@@ -99,7 +99,7 @@
       "scene.dopa": "Shapes keep arriving, gathering, and going",
       "dopa.me": "All of us that sixteen types cannot define",
       "typer.line": "A game, ASMR, a room of your own, keyboards and Lo-Fi",
-      "studio.title": "The makers",
+      "studio.title": "The makers", "crew.close": "Close",
       
       "foot.privacy": "Privacy",
 
