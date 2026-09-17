@@ -269,9 +269,11 @@
     }
 
     // ---------- simulation (main branch rules) ----------
-    var rect, cx, cy, reach, MAX = 6;
-    function measure() { rect = root.getBoundingClientRect(); cx = rect.left + rect.width / 2; cy = rect.top + rect.height / 2; reach = Math.max(300, rect.width * 1.1); MAX = rect.width * 0.03; }
-    addEventListener('resize', measure); addEventListener('scroll', measure, { passive: true });
+    var rect, hrect, cx, cy, reach, MAX = 6;
+    function measure() { rect = root.getBoundingClientRect(); hrect = hero.getBoundingClientRect(); cx = rect.left + rect.width / 2; cy = rect.top + rect.height / 2; reach = Math.max(300, rect.width * 1.1); MAX = rect.width * 0.03; }
+    var measureRaf = 0;                                            // scrolling must never pay for a layout per event
+    function remeasure() { if (!measureRaf) measureRaf = requestAnimationFrame(function () { measureRaf = 0; measure(); }); }
+    addEventListener('resize', remeasure); addEventListener('scroll', remeasure, { passive: true });
     var nx = 0, ny = 0, tnx = 0, tny = 0, tm = 0, lastT = 0, raf = 0, agitate = 0, lastSweat = -9, away = null, dragEl = null, interacted = false;
     var pointerX = -9999, pointerY = -9999, lastMove = -9999, ppx = 0, ppy = 0, pvx = 0, pvy = 0;
     var eyeMood = null, earMood = null, moodOverride = null, spinning = false, reaction = null, waveTimer = 0, heroSeen = true, cheerUntil = 0, cheerTimer = 0, followers = [];
@@ -286,13 +288,31 @@
     letters.forEach(function (p) {
       p.el.addEventListener('pointerenter', function () { p.hover = true; if (!dragEl) cursorState('hand'); wake(); });
       p.el.addEventListener('pointerleave', function () { p.hover = false; if (!dragEl) cursorState(''); wake(); });
-      p.el.addEventListener('pointerdown', function (e) {
-        e.preventDefault(); interacted = true; dragEl = p; away = p; p.dragging = true; p.el.classList.add('drag'); cursorState('grab');
+      var pending = false;                                          // a finger that has not said yet whether it means to scroll
+      function grab(e) {
+        pending = false; interacted = true; dragEl = p; away = p; p.dragging = true; p.el.classList.add('drag'); cursorState('grab');
         try { p.el.setPointerCapture(e.pointerId); } catch (_) { }
         var r = p.el.getBoundingClientRect(); p.gx = e.clientX - (r.left + r.width / 2); p.gy = e.clientY - (r.top + r.height / 2);
-        p.downAt = performance.now(); p.downX = e.clientX; p.downY = e.clientY; say(t('home.status.grab', { n: NAME[p.id] })); wake();
+        say(t('home.status.grab', { n: NAME[p.id] })); wake();
+      }
+      p.el.addEventListener('pointerdown', function (e) {
+        p.downAt = performance.now(); p.downX = e.clientX; p.downY = e.clientY;
+        if (e.pointerType === 'touch') { pending = true; return; }  // hold off: the page may want to scroll instead
+        e.preventDefault(); grab(e);
       });
-      function up(e) { if (dragEl !== p) return; dragEl = null; p.dragging = false; p.el.classList.remove('drag'); cursorState(p.hover ? 'hand' : ''); if (e && e.type === 'pointerup' && performance.now() - p.downAt < 220 && Math.hypot(e.clientX - p.downX, e.clientY - p.downY) < 6) poke(p); wake(); }
+      p.el.addEventListener('pointermove', function (e) {           // sideways means a grab; down the page is the browser's
+        if (!pending || dragEl) return;
+        var dx = e.clientX - p.downX, dy = e.clientY - p.downY;
+        if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) grab(e);
+      });
+      function up(e) {
+        var waiting = pending; pending = false;
+        var tap = e && e.type === 'pointerup' && Math.hypot(e.clientX - p.downX, e.clientY - p.downY) < (waiting ? 10 : 6)
+          && performance.now() - p.downAt < (waiting ? 500 : 220);
+        if (dragEl !== p) { if (waiting && tap) poke(p); return; }  // a tap the finger never turned into a drag
+        dragEl = null; p.dragging = false; p.el.classList.remove('drag'); cursorState(p.hover ? 'hand' : '');
+        if (tap) poke(p); wake();
+      }
       p.el.addEventListener('pointerup', up); p.el.addEventListener('pointercancel', up); p.el.addEventListener('lostpointercapture', up);
     });
     function spawnSweat() {
@@ -315,7 +335,7 @@
         var p = pieces[k], tx, ty, rot = 0;
         if (p.dragging) {
           tx = (pointerX - rect.left - p.gx) - p.hx * rect.width; ty = (pointerY - rect.top - p.gy) - p.hy * rect.height;
-          var hr = hero.getBoundingClientRect(), pw = p.el.offsetWidth, ph = p.el.offsetHeight, ox = rect.left + p.hx * rect.width, oy = rect.top + p.hy * rect.height;
+          var hr = hrect, pw = p.el.offsetWidth, ph = p.el.offsetHeight, ox = rect.left + p.hx * rect.width, oy = rect.top + p.hy * rect.height;
           tx = Math.max(hr.left - ox + pw * 0.2, Math.min(hr.right - ox - pw * 0.2, tx)); ty = Math.max(hr.top - oy + ph * 0.2, Math.min(hr.bottom - oy - ph * 0.2, ty));
         } else if (p.role === 'spark') {
           var live = (pointerActive || agitate > 0.02 || spinning) ? 1 : 0;
@@ -349,19 +369,21 @@
       }
       stepBall(f); if (ball && !ball.rest && !ball.drag) moving = true;
       if (stepParticles(f, now)) moving = true;
-      var fc = pieces[10]; accRoot.style.setProperty('--ax', fc.x.toFixed(2) + 'px'); accRoot.style.setProperty('--ay', fc.y.toFixed(2) + 'px');
+      // written straight onto the element: a custom property here invalidates every accessory
+      // under it each frame, and they inherit it whether they use it or not
+      var fc = pieces[10]; accRoot.style.transform = 'translate(' + fc.x.toFixed(2) + 'px,' + fc.y.toFixed(2) + 'px)';
       for (var q = 0; q < followers.length; q++) { var fp = followers[q].p; followers[q].el.style.transform = 'translate(' + (fp.x - fc.x).toFixed(2) + 'px,' + (fp.y - fc.y).toFixed(2) + 'px) rotate(' + fp.rot.toFixed(2) + 'deg)'; }
       if (cur && curOn) { curX += (curTX - curX) * 0.35; curY += (curTY - curY) * 0.35; cur.style.transform = 'translate(' + curX.toFixed(1) + 'px,' + curY.toFixed(1) + 'px)'; if (Math.abs(curTX - curX) + Math.abs(curTY - curY) > 0.3) moving = true; }
       if (moving || dragEl || agitate > 0.01 || spinning || pointerActive) raf = requestAnimationFrame(tick); else lastT = 0;
     }
     function poke(p, soft) {
       if (!p) p = letters[(Math.random() * letters.length) | 0];
-      measure(); var sc = rect.width / 560;
+      var sc = rect.width / 560;
       if (soft) { p.vy = -14 * sc; wake(); return; }
       p.vx = (Math.random() < 0.5 ? -1 : 1) * (9 + Math.random() * 5) * sc; p.vy = -(27 + Math.random() * 8) * sc; away = p;
       say(t('home.status.letter', { n: NAME[p.id] })); wake();
     }
-    function hopAll() { measure(); var sc = rect.width / 560; pieces.forEach(function (p) { if (p.role !== 'word' && p.role !== 'spark') p.vy -= 9 * sc; }); wake(); }
+    function hopAll() { var sc = rect.width / 560; pieces.forEach(function (p) { if (p.role !== 'word' && p.role !== 'spark') p.vy -= 9 * sc; }); wake(); }
     var moodTimer = 0;
     function mood(m, ms) { moodOverride = m; wake(); clearTimeout(moodTimer); moodTimer = setTimeout(function () { moodOverride = null; wake(); }, ms); }
     measure();
@@ -391,7 +413,7 @@
     // particles float like things in space: a slow drift, a bump from the cursor sends them off, no spring home
     function stepParticles(f, now) {
       if (!pts.length || !heroSeen) return false;
-      var u = BW / rect.width, px = (pointerX - rect.left) * u, py = (pointerY - rect.top) * u, hr = hero.getBoundingClientRect();
+      var u = BW / rect.width, px = (pointerX - rect.left) * u, py = (pointerY - rect.top) * u, hr = hrect;
       var xmin = (hr.left - rect.left) * u, xmax = (hr.right - rect.left) * u, ymin = (hr.top - rect.top) * u, ymax = (hr.bottom - rect.top) * u;
       var live = now - lastMove < 900, R = 380, any = false;
       pvx = px - ppx; pvy = py - ppy; ppx = px; ppy = py; if (Math.abs(pvx) + Math.abs(pvy) > 600) { pvx = 0; pvy = 0; }
@@ -499,7 +521,7 @@
     }
     function stepBall(f) {
       if (!ball || ball.drag || ball.rest) return;
-      var u = BW / rect.width, hr = hero.getBoundingClientRect(), r = ball.r, arcade = ball.mode === 'arcade';
+      var u = BW / rect.width, hr = hrect, r = ball.r, arcade = ball.mode === 'arcade';
       var xmin = (hr.left - rect.left) * u + r, xmax = Math.min(WALLX - r, (hr.right - rect.left) * u - r), ymin = (hr.top - rect.top) * u + r, ground = BH - r;
       if (arcade) ymin = Math.max(ymin, (WALL.y - 420) * fk());
       if (ball.court) { var cc = ball.court; xmin = cc.x0 + r; xmax = cc.x1 - r; ymin = cc.y0 + r; if (ball.y > cc.y1 + r) { toLauncher(); return; } }
@@ -718,16 +740,21 @@
       reaction = lastReaction = opts[(Math.random() * opts.length) | 0];
       if (reaction === 'wave' && !reduce) { var i = 0; waveTimer = setInterval(function () { poke(letters[i++ % letters.length], true); }, 110); }
       wake();
-      var seq = [current || WORDS[0]]; var n = reduce ? 4 : 18;
+      var seq = [current || WORDS[0]]; var n = reduce ? 4 : (fine ? 18 : 10);
       for (var j = 0; j < n; j++) seq.push(WORDS[(Math.random() * WORDS.length) | 0]);
       seq.push(next);
-      reel.textContent = ''; seq.forEach(function (e) { reel.appendChild(wordSpan(e)); });
+      var frag = document.createDocumentFragment();
+      seq.forEach(function (e) { frag.appendChild(wordSpan(e)); });
+      reel.textContent = ''; reel.appendChild(frag);
       var h = slot.getBoundingClientRect().height, total = (seq.length - 1) * h, dur = reduce ? 500 : 1700, t0 = performance.now();
-      var ticked = 0;
+      var ticked = 0, blurStep = -1;
       function step(now) {
         var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3.2);
         reel.style.transform = 'translateY(' + (-total * e).toFixed(2) + 'px)';
-        reel.style.filter = k < 0.75 ? 'blur(' + (1.6 * (1 - k)).toFixed(2) + 'px)' : '';
+        if (fine) {                                     // a blur radius that moves every frame repaints the text every
+          var b = k < 0.75 ? Math.round(1.6 * (1 - k) * 5) : 0;   // frame. Step it, and leave it off where it hurts most
+          if (b !== blurStep) { blurStep = b; reel.style.filter = b ? 'blur(' + (b / 5) + 'px)' : ''; }
+        }
         var past = Math.floor(e * (seq.length - 1));       // one blip per word passing the window
         if (past > ticked) { ticked = past; blip(); }
         if (k < 1) requestAnimationFrame(step); else land(next);

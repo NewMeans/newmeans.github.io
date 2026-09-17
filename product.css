@@ -46,7 +46,7 @@
 .cover__name{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:14px 18px 16px;font-weight:600;font-size:15px}
 .cover__name .arw{width:36px;height:36px;border-radius:var(--r-pill);display:grid;place-items:center;background:var(--bg);color:var(--text-1);font-size:16px;flex:none;transition:background var(--dur) var(--ease),color var(--dur) var(--ease)}
 .cover:hover .arw{background:var(--btn-bg);color:var(--btn-text)}
-.field{position:relative;width:100%;height:clamp(260px,38vw,440px);overflow:hidden;background:var(--surface);cursor:crosshair}
+.field{position:relative;width:100%;height:clamp(260px,38vw,440px);overflow:hidden;background:var(--surface);cursor:crosshair;touch-action:pan-y}
 .field canvas{display:block}
 [data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .25s var(--ease);position:relative}
 [data-tilt]::after{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.3),transparent 55%);opacity:0;transition:opacity .25s;pointer-events:none}
