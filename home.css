@@ -54,7 +54,7 @@
 
 /* the rabbit and the wordmark, both painted with the word's colour */
 .brandwrap{position:absolute;right:6vw;bottom:14vh;width:min(45vw,700px);aspect-ratio:3334/1370;z-index:1}
-.brandart{position:absolute;inset:0;touch-action:none;z-index:1}
+.brandart{position:absolute;inset:0;touch-action:pan-y;z-index:1}
 .pc{position:absolute;will-change:transform;background:var(--rabbit);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
 .pc.word{cursor:grab}.pc.word.drag{cursor:grabbing;z-index:6}
 /* eye shapes: an svg over each eye piece, in the rabbit colour, the logo's stroke weight */
@@ -66,7 +66,7 @@
 .pts{position:absolute;inset:0;pointer-events:none;z-index:3}
 .pt{position:absolute;will-change:transform}.pt svg{display:block;width:100%;height:100%;overflow:visible}
 .acc .ac{position:absolute;display:block}
-.acc .ac.hit{pointer-events:auto;cursor:pointer;touch-action:none}
+.acc .ac.hit{pointer-events:auto;cursor:pointer;touch-action:pan-y}
 .acc .ac.pop{animation:pop .5s var(--ease) both}
 .acc svg.ac{overflow:visible}
 .acc .ac.carry{transition:left .5s var(--ease),top .5s var(--ease)}
@@ -263,7 +263,10 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 
 @media (max-width:720px){
   /* one headline block, the rabbit big underneath it, no gulf in between */
-  .hero{min-height:auto;display:flex;flex-direction:column;padding:3.5vh 20px 16px}
+  /* the window, less the sticky bar and less the strip the phone's own chrome sits over:
+     without that slack the bottom row and its arrow end up under the browser toolbar */
+  .hero{--chrome:calc(64px + 28px + env(safe-area-inset-bottom,0px));min-height:calc(100svh - var(--chrome));
+    display:flex;flex-direction:column;padding:3vh 20px 14px}
   .copy{position:static;max-width:none}.copy .display{font-size:clamp(33px,9.4vw,44px)}
   .copy .sub{white-space:normal;margin-top:14px;font-size:15px}
   .copy.has-keyring .sub{margin-top:calc(14px + .65em)}
@@ -271,8 +274,8 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
   .tiers{flex-direction:column;gap:5px;margin:.18em 0 0 .24em}
   .tier{font-size:9px;letter-spacing:.06em;padding:3px 6px 4px;border-width:1.2px}
   .nav--wide .wrap{padding:0 22px}
-  .brandwrap{position:relative;right:auto;bottom:auto;width:min(100%,330px);max-width:none;margin:clamp(10px,2.4vh,24px) auto 0}
-  .bottom{display:flex;justify-content:space-between;align-items:end;margin-top:clamp(18px,4vh,40px)}.corner{position:static}
+  .brandwrap{position:relative;right:auto;bottom:auto;width:min(74%,258px);max-width:none;margin:auto auto 0}
+  .bottom{display:flex;justify-content:space-between;align-items:end;margin-top:auto;padding-top:18px}.corner{position:static}
   .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}
   :root[data-face="pixel"] .copy .display{font-size:clamp(26px,7.2vw,34px)}
   .scene-line{font-size:19px}

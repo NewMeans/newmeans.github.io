@@ -208,25 +208,37 @@
       function fNum() { x.font = '800 ' + numSize + 'px SUIT, sans-serif'; }
       function fA() { x.font = '700 ' + lineSize + 'px SUIT, sans-serif'; }
       function fB() { x.font = '700 ' + lineSize + 'px SUIT, sans-serif'; }
-      fNum(); var numW = x.measureText(num).width;
-      fA(); var aW = x.measureText(a).width;
-      fB(); var bW = x.measureText(b).width;
+      fNum(); var mN = x.measureText(num), numW = mN.width;
+      fA(); var mA = x.measureText(a), aW = mA.width;
+      fB(); var mB = x.measureText(b), bW = mB.width;
       var lineW = Math.max(aW, bW), lead = lineSize * 1.18;
+      // Centre on the ink, not on the em boxes. Digits and Hangul sit differently inside their
+      // boxes, so a hand-picked offset lands the block off-centre at some sizes and not others.
+      var yN, yA, yB;
+      if (wide) { yN = 0; yA = -lead / 2; yB = lead / 2; }
+      else { yN = 0; yA = numSize * .58 + lead * .3; yB = numSize * .58 + lead * 1.3; }
+      function edges(m, y, size) {
+        var up = m.actualBoundingBoxAscent, dn = m.actualBoundingBoxDescent;
+        if (!(up > 0) || !(dn > -size)) { up = size * .36; dn = size * .36; }   // engines without ink metrics
+        return [y - up, y + dn];
+      }
+      var eN = edges(mN, yN, numSize), eA = edges(mA, yA, lineSize), eB = edges(mB, yB, lineSize);
+      var shift = hgt / 2 - (Math.min(eN[0], eA[0], eB[0]) + Math.max(eN[1], eA[1], eB[1])) / 2;
+      yN += shift; yA += shift; yB += shift;
       x.fillStyle = '#fff';                                     // white: the number; red below: the first line
       if (wide) {
-        var gap = numSize * .10, x0 = (w - (numW + gap + lineW)) / 2, cy = hgt / 2;
-        fNum(); x.fillText(num, x0, cy);
+        var gap = numSize * .10, x0 = (w - (numW + gap + lineW)) / 2;
+        fNum(); x.fillText(num, x0, yN);
         x.fillStyle = '#f00';
-        fA(); x.fillText(a, x0 + numW + gap, cy - lead / 2);
+        fA(); x.fillText(a, x0 + numW + gap, yA);
         x.fillStyle = '#00f';                                   // blue: the second line, coloured differently
-        fB(); x.fillText(b, x0 + numW + gap, cy + lead / 2);
+        fB(); x.fillText(b, x0 + numW + gap, yB);
       } else {
-        var cy2 = hgt / 2 - lead * .55;
-        fNum(); x.fillText(num, (w - numW) / 2, cy2);
+        fNum(); x.fillText(num, (w - numW) / 2, yN);
         x.fillStyle = '#f00';
-        fA(); x.fillText(a, (w - aW) / 2, cy2 + numSize * .58 + lead * .3);
+        fA(); x.fillText(a, (w - aW) / 2, yA);
         x.fillStyle = '#00f';
-        fB(); x.fillText(b, (w - bW) / 2, cy2 + numSize * .58 + lead * 1.3);
+        fB(); x.fillText(b, (w - bW) / 2, yB);
       }
       var d = x.getImageData(0, 0, c.width, c.height).data, area = [0, 0, 0, 0];
       for (var q = 3; q < d.length; q += 4) area[d[q] > 120 ? (d[q - 3] > 120 ? (d[q - 2] > 120 ? 1 : 2) : 3) : 0]++;
