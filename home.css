@@ -12,7 +12,11 @@
 /* the slot window: always there, tinted by the word, fixed to the longest word */
 .slot{display:inline-block;vertical-align:bottom;height:1.28em;overflow:hidden;position:relative;text-align:left;background:var(--slot-bg);border-radius:.12em;padding:0 .14em;box-sizing:content-box;
   box-shadow:inset 0 .14em .12em -.1em rgba(59,55,50,.22),inset 0 -.14em .12em -.1em rgba(59,55,50,.22),inset 0 0 0 1px rgba(59,55,50,.06);transition:background .45s var(--ease)}
-.slot .reel{display:block;will-change:transform}
+.slot .reel{display:block}
+.slot.is-spinning .reel{will-change:transform}
+.hero .slot.is-spinning,.hero .slot.is-spinning::after{animation-play-state:paused}
+.hero.is-paused *,.hero.is-paused *::before,.hero.is-paused *::after{animation-play-state:paused!important}
+.hero.hero--compact .slot,.hero.hero--compact .slot::after{animation:none}
 .slot .word{display:flex;align-items:baseline;gap:.04em;height:1.28em;line-height:1.28;white-space:nowrap}
 .slot .word .dot--icon{display:inline-block;width:.34em;height:.34em;transform:translateY(.02em)}
 .slot .word .dot--icon svg{display:block;width:100%;height:100%}
@@ -22,13 +26,16 @@
 /* the lever: pulled toward you (the stick foreshortens, the knob drops and grows) */
 .lever{display:inline-block;vertical-align:bottom;font-size:inherit;width:.46em;height:1.28em;margin-left:.16em;padding:0;position:relative;line-height:1}
 .lever svg{width:100%;height:100%;overflow:visible}
-.lever .stick{transform-origin:50% 100%;transition:transform .18s var(--ease)}
-.lever .knob{transform-origin:50% 50%;transition:transform .18s var(--ease)}
-.lever:hover .knob{transform:translateY(4px) scale(1.06)}
-.lever.is-pulled .stick{animation:pull-stick .7s var(--ease)}
-.lever.is-pulled .knob{animation:pull-knob .7s var(--ease)}
+/* Move the HTML layers, so SVG geometry does not need layout on every pull frame. */
+.lever__art{position:absolute;left:0;top:.16em;width:.46em;height:.96em;pointer-events:none}
+.lever__art svg{display:block}
+.lever__stick{transform-origin:50% 100%;transition:transform .18s var(--ease)}
+.lever__knob{transform-origin:50% 50%;transition:transform .18s var(--ease)}
+.lever:hover .lever__knob{transform:translateY(.04em) scale(1.06)}
+.lever.is-pulled .lever__stick{animation:pull-stick .7s var(--ease);will-change:transform}
+.lever.is-pulled .lever__knob{animation:pull-knob .7s var(--ease);will-change:transform}
 @keyframes pull-stick{0%{transform:scaleY(1)}30%{transform:scaleY(.22)}65%{transform:scaleY(1.06)}100%{transform:scaleY(1)}}
-@keyframes pull-knob{0%{transform:translateY(0) scale(1)}30%{transform:translateY(46px) scale(1.55)}65%{transform:translateY(-3px) scale(.98)}100%{transform:translateY(0) scale(1)}}
+@keyframes pull-knob{0%{transform:translateY(0) scale(1)}30%{transform:translateY(.46em) scale(1.55)}65%{transform:translateY(-.03em) scale(.98)}100%{transform:translateY(0) scale(1)}}
 /* the keycap keyring that hangs on the lever (clicky) */
 .lever .keyring{position:absolute;left:30%;top:80%;width:.62em;height:.95em;overflow:visible;transform-origin:15% 9%;animation:swing 2.8s ease-in-out infinite;pointer-events:auto;cursor:pointer}
 .copy .sub{transition:margin-top .4s var(--ease)}.copy.has-keyring .sub{margin-top:calc(22px + .65em)}
@@ -55,6 +62,10 @@
 /* the rabbit and the wordmark, both painted with the word's colour */
 .brandwrap{position:absolute;right:6vw;bottom:14vh;width:min(45vw,700px);aspect-ratio:3334/1370;z-index:1}
 .brandart{position:absolute;inset:0;touch-action:none;z-index:1}
+.brandart .rab{cursor:pointer}
+.hero--compact .brandart{touch-action:pan-y}
+.hero--compact .pc.word{pointer-events:none;will-change:auto}
+.hero--compact .acc,.hero--compact .pts{display:none}
 .pc{position:absolute;will-change:transform;background:var(--rabbit);-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat}
 .pc.word{cursor:grab}.pc.word.drag{cursor:grabbing;z-index:6}
 /* eye shapes: an svg over each eye piece, in the rabbit colour, the logo's stroke weight */
@@ -71,7 +82,7 @@
 .acc svg.ac{overflow:visible}
 .acc .ac.carry{transition:left .5s var(--ease),top .5s var(--ease)}
 .acc .ac.is-carried{transition:none;z-index:9}
-.acc .ac[data-prop="ball"]{cursor:grab;z-index:8;will-change:left,top}
+.acc .ac[data-prop="ball"]{cursor:grab;z-index:8;will-change:transform}
 .acc .ac.is-gone{visibility:hidden}
 .acc .shard{animation:shards .9s ease-out both;transform-origin:center}
 @keyframes shards{0%{transform:scale(.3);opacity:1}100%{transform:scale(1.5) translateY(-40px);opacity:0}}
@@ -222,7 +233,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .stage--typer .cap b svg text{font:900 9.8px/1 var(--font-ui);letter-spacing:-.02em;fill:currentColor}
 .stage--typer .cap.is-hit{animation:capHit .2s var(--ease)}
 @keyframes capHit{45%{transform:translateY(6%) scale(.965)}}
-.stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;will-change:transform}
+.stage--typer .ball{position:absolute;left:0;top:0;width:calc(34 / 760 * 100%);aspect-ratio:1;visibility:hidden;will-change:transform}
 
 /* Dopamine University: shapes keep arriving, crowd toward the middle and go. */
 .scene--dopa{padding:clamp(96px,14vh,150px) 0;background:var(--c-100);--accent:var(--c-600);--accent-strong:var(--c-700);--cta:var(--c-400);--cta-text:#fff}
@@ -262,8 +273,8 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .ob--gold{--ob-a:#F4CE7A;--ob-b:var(--gold)}
 
 @media (max-width:720px){
-  /* one headline block, the rabbit big underneath it, no gulf in between */
-  .hero{min-height:auto;display:flex;flex-direction:column;padding:3.5vh 20px 16px}
+  /* Keep a full first screen without resizing the scene as browser chrome retracts. */
+  .hero{min-height:calc(100svh - 64px);display:flex;flex-direction:column;gap:clamp(28px,5svh,48px);padding:clamp(32px,6svh,56px) 20px max(24px,env(safe-area-inset-bottom))}
   .copy{position:static;max-width:none}.copy .display{font-size:clamp(33px,9.4vw,44px)}
   .copy .sub{white-space:normal;margin-top:14px;font-size:15px}
   .copy.has-keyring .sub{margin-top:calc(14px + .65em)}
@@ -271,8 +282,8 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
   .tiers{flex-direction:column;gap:5px;margin:.18em 0 0 .24em}
   .tier{font-size:9px;letter-spacing:.06em;padding:3px 6px 4px;border-width:1.2px}
   .nav--wide .wrap{padding:0 22px}
-  .brandwrap{position:relative;right:auto;bottom:auto;width:min(100%,330px);max-width:none;margin:clamp(10px,2.4vh,24px) auto 0}
-  .bottom{display:flex;justify-content:space-between;align-items:end;margin-top:clamp(18px,4vh,40px)}.corner{position:static}
+  .brandwrap{position:relative;right:auto;bottom:auto;flex:none;align-self:flex-end;width:min(72vw,280px);max-width:100%;margin:auto -2px 0 auto}
+  .bottom{display:flex;justify-content:space-between;align-items:end;margin-top:clamp(12px,3svh,28px)}.corner{position:static}
   .words__row{grid-template-columns:1fr;gap:6px}.wd{font-size:19px}
   :root[data-face="pixel"] .copy .display{font-size:clamp(26px,7.2vw,34px)}
   .scene-line{font-size:19px}
@@ -283,7 +294,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
   .run__crew{left:12px;gap:6px}
   .runner{width:114px}
 }
-@media (prefers-reduced-motion:reduce){.lever .stick,.lever .knob,.slot,.cursor svg{transition:none;animation:none}.acc .ac.pop,.confetti,.go.pop{animation:none}.replay{opacity:1}}
+@media (prefers-reduced-motion:reduce){.lever__stick,.lever__knob,.slot,.cursor svg{transition:none;animation:none}.hero .lever__art,.hero .ac,.hero .ac *,.hero .slot .word,.hero .slot::after,.hero .keyring,.acc .ac.pop,.confetti,.go.pop{animation:none!important}.replay{opacity:1}}
 
 /* ---------- who made it: one card per rabbit ---------- */
 .crew{margin:auto;border:none;padding:0;background:none;max-width:min(92vw,360px)}

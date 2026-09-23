@@ -205,6 +205,17 @@
     };
   })();
   var REACTION_EYES = { dizzy: 'spiral', wave: 'round', flap: 'squeeze', hop: 'happy' };
+  // Direct rabbit interaction stays available even when mobile omits all the props.
+  var PET = {
+    joyful: ['happy', 'hop'], calm: ['line', 'breathe'], cozy: ['arc', 'breathe'], playful: ['happy', 'hop'],
+    clicky: ['happy', 'tap'], curious: ['round', 'peek'], cheerful: ['happy', 'dance'], chatty: ['happy', 'chat'],
+    warm: ['arc', 'breathe'], silly: ['squeeze', 'wiggle'], witty: ['skeptic', 'peek'], surprising: ['round', 'hop'],
+    retro: ['dot', 'tap'], rhythmic: ['happy', 'dance'], aesthetic: ['arc', 'sway'], thoughtful: ['skeptic', 'peek'],
+    satisfying: ['arc', 'tap'], dramatic: ['tear', 'sway'], connected: ['heart', 'sway'], exciting: ['star', 'dance'],
+    ASMR: ['line', 'breathe'], insightful: ['happy', 'peek'], dopamine: ['star', 'hop'], sparkly: ['star', 'wiggle'],
+    lucky: ['star', 'hop'], cosmic: ['dot', 'sway'], smashing: ['squeeze', 'tap'], enlightened: ['happy', 'breathe'],
+    'mint choco': ['happy', 'chat'], arcade: ['round', 'hop'], cyberpunk: ['round', 'tap']
+  };
   var DOTS = {
     key: '<svg viewBox="0 0 40 40"><rect x="4" y="6" width="32" height="30" rx="7" fill="currentColor"/><rect x="10" y="10" width="20" height="14" rx="4" fill="#FCFBF7" opacity=".85"/></svg>',
     star: '<svg viewBox="0 0 40 40"><polygon points="20,2 24,15 38,20 24,25 20,38 16,25 2,20 16,15" fill="currentColor"/></svg>',
@@ -217,8 +228,11 @@
     var accRoot = document.getElementById(root.getAttribute('data-acc')) || root;
     var backRoot = document.getElementById(root.getAttribute('data-back')) || accRoot;
     var ptRoot = document.getElementById(root.getAttribute('data-pts')) || accRoot;
-    var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var reduceMQ = matchMedia('(prefers-reduced-motion: reduce)');
+    var reduce = reduceMQ.matches;
     var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    var compactMQ = matchMedia('(max-width: 720px), (pointer: coarse)');
+    var compact = compactMQ.matches;
     var pieces = PARTS.map(function (p, i) {
       var id = p[0], r = role(id);
       var el = document.createElement('div');
@@ -248,6 +262,7 @@
     var cur = document.getElementById('cursor'), curX = 0, curY = 0, curTX = 0, curTY = 0, curOn = false;
     function cursorState(s) { if (cur) cur.setAttribute('data-state', s); }
     var hero = root.closest('.hero') || document.body;
+    hero.classList.toggle('hero--compact', compact);
     if (fine && cur) {
       hero.classList.add('has-cursor');
       hero.addEventListener('pointerenter', function () { curOn = true; cur.classList.add('is-on'); });
@@ -259,34 +274,54 @@
     var clips = null, clipAt = 0;
     function click(i) {
       if (!clips) { clips = []; for (var k = 0; k < 4; k++) clips.push(new Audio('assets/audio/switch/4000/' + k + '.m4a')); }
-      var c = clips[(i != null ? i : clipAt++) % clips.length]; try { c.currentTime = 0; c.play().catch(function () { }); } catch (_) { }
+      var c = clips[(i != null ? i : clipAt++) % clips.length]; try { c.currentTime = 0; c.play().catch(audioError); } catch (err) { audioError(err); }
     }
     var rhythm = 0;
     function playRhythm(el) {
       if (rhythm) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); ptRoot.classList.remove('is-playing'); return; }
       var pattern = [0, 1, 0, 2, 0, 1, 3, 2], i = 0; el.classList.add('is-playing'); ptRoot.classList.add('is-playing');
-      rhythm = setInterval(function () { click(pattern[i % pattern.length]); i++; if (i >= 16) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); ptRoot.classList.remove('is-playing'); } }, 250);
+      rhythm = setInterval(function () { if (!heroSeen || document.hidden) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); ptRoot.classList.remove('is-playing'); return; } click(pattern[i % pattern.length]); i++; if (i >= 16) { clearInterval(rhythm); rhythm = 0; el.classList.remove('is-playing'); ptRoot.classList.remove('is-playing'); } }, 250);
     }
 
     // ---------- simulation (main branch rules) ----------
-    var rect, cx, cy, reach, MAX = 6;
-    function measure() { rect = root.getBoundingClientRect(); cx = rect.left + rect.width / 2; cy = rect.top + rect.height / 2; reach = Math.max(300, rect.width * 1.1); MAX = rect.width * 0.03; }
-    addEventListener('resize', measure); addEventListener('scroll', measure, { passive: true });
+    var rect, heroRect, cx, cy, reach, MAX = 6, geometryDirty = true;
+    function measure() { rect = root.getBoundingClientRect(); heroRect = hero.getBoundingClientRect(); cx = rect.left + rect.width / 2; cy = rect.top + rect.height / 2; reach = Math.max(300, rect.width * 1.1); MAX = rect.width * 0.03; geometryDirty = false; if (ball) placeBall(); }
+    function invalidateGeometry() { geometryDirty = true; if (heroSeen) wake(); }
+    addEventListener('resize', invalidateGeometry); addEventListener('scroll', invalidateGeometry, { passive: true });
+    if (window.ResizeObserver) new ResizeObserver(invalidateGeometry).observe(hero);
     var nx = 0, ny = 0, tnx = 0, tny = 0, tm = 0, lastT = 0, raf = 0, agitate = 0, lastSweat = -9, away = null, dragEl = null, interacted = false;
     var pointerX = -9999, pointerY = -9999, lastMove = -9999, ppx = 0, ppy = 0, pvx = 0, pvy = 0;
     var eyeMood = null, earMood = null, moodOverride = null, spinning = false, reaction = null, waveTimer = 0, heroSeen = true, cheerUntil = 0, cheerTimer = 0, followers = [];
-    if (window.IntersectionObserver) new IntersectionObserver(function (es) { es.forEach(function (e) { heroSeen = e.isIntersecting; if (heroSeen) wake(); }); }, { threshold: 0.05 }).observe(hero);
+    var pet = null, petAt = 0, petUntil = 0, lastPet = -Infinity;
+    function syncActivity() {
+      var active = heroSeen && !document.hidden;
+      hero.classList.toggle('is-paused', !active);
+      if (!active) {
+        if (raf) cancelAnimationFrame(raf); raf = 0; lastT = 0;
+        if (spinAnimation) spinAnimation.pause();
+        if (clips) clips.forEach(function (clip) { clip.pause(); });
+        if (tpool) tpool.forEach(function (clip) { clip.pause(); });
+      }
+      else { geometryDirty = true; if (spinAnimation && spinAnimation.playState === 'paused') spinAnimation.play(); wake(); }
+    }
+    if (window.IntersectionObserver) new IntersectionObserver(function (es) { es.forEach(function (e) { heroSeen = e.isIntersecting; syncActivity(); }); }, { threshold: 0 }).observe(hero);
+    document.addEventListener('visibilitychange', syncActivity);
     document.addEventListener('pointermove', function (e) {
+      if ((!heroSeen || document.hidden || !hero.contains(e.target)) && !dragEl) return;
+      if (!fine && !dragEl) return;
+      if (geometryDirty) measure();
       pointerX = e.clientX; pointerY = e.clientY; lastMove = performance.now(); curTX = e.clientX; curTY = e.clientY;
       tnx = Math.max(-1, Math.min(1, (e.clientX - cx) / reach)); tny = Math.max(-1, Math.min(1, (e.clientY - cy) / reach));
-      if (dragEl) e.preventDefault();
       wake();
-    }, { passive: false });
+    }, { passive: true });
+    hero.addEventListener('pointerleave', function () { if (!dragEl) { tnx = 0; tny = 0; lastMove = -9999; wake(); } });
     document.addEventListener('pointerleave', function () { tnx = 0; tny = 0; wake(); });
     letters.forEach(function (p) {
-      p.el.addEventListener('pointerenter', function () { p.hover = true; if (!dragEl) cursorState('hand'); wake(); });
+      p.el.addEventListener('pointerenter', function () { if (compact) return; p.hover = true; if (!dragEl) cursorState('hand'); wake(); });
       p.el.addEventListener('pointerleave', function () { p.hover = false; if (!dragEl) cursorState(''); wake(); });
       p.el.addEventListener('pointerdown', function (e) {
+        if (compact) return;
+        measure(); pointerX = e.clientX; pointerY = e.clientY;
         e.preventDefault(); interacted = true; dragEl = p; away = p; p.dragging = true; p.el.classList.add('drag'); cursorState('grab');
         try { p.el.setPointerCapture(e.pointerId); } catch (_) { }
         var r = p.el.getBoundingClientRect(); p.gx = e.clientX - (r.left + r.width / 2); p.gy = e.clientY - (r.top + r.height / 2);
@@ -296,12 +331,17 @@
       p.el.addEventListener('pointerup', up); p.el.addEventListener('pointercancel', up); p.el.addEventListener('lostpointercapture', up);
     });
     function spawnSweat() {
+      if (compact) return;
       var s = document.createElement('div'); s.className = 'nm-sweat'; s.textContent = ';';
       s.style.left = '57.7%'; s.style.top = '22%'; accRoot.appendChild(s); s.addEventListener('animationend', function () { s.remove(); });
     }
-    function wake() { if (!raf) raf = requestAnimationFrame(tick); }
+    function wake() { if (!raf && heroSeen && !document.hidden) raf = requestAnimationFrame(tick); }
     function tick(now) {
       raf = 0;
+      if (!heroSeen || document.hidden) { lastT = 0; return; }
+      // Keep mobile physics at 60 Hz; the compositor can still move the reel at native refresh.
+      if (compact && lastT && now - lastT < 1000 / 60 - 1) { raf = requestAnimationFrame(tick); return; }
+      if (geometryDirty) measure();
       var dt = Math.min(0.05, lastT ? (now - lastT) / 1000 : 0.016); lastT = now; tm += dt;
       var f = Math.min(2, dt * 60);
       nx += (tnx - nx) * 0.09; ny += (tny - ny) * 0.09;
@@ -310,20 +350,23 @@
       else agitate += (0 - agitate) * 0.08;
       if (!reduce && agitate > 0.35 && tm - lastSweat > 0.5) { spawnSweat(); lastSweat = tm; }
       var pointerActive = (now - lastMove) < 1200, moving = false, s = reduce ? 0.35 : 1;
+      var petting = pet && now < petUntil, petTime = (now - petAt) / 1000;
+      var petEnvelope = petting ? Math.sin(Math.PI * Math.min(1, (now - petAt) / (petUntil - petAt))) : 0;
+      if (petting && !reduce) moving = true;
       setEyes(moodOverride || (spinning && reaction && REACTION_EYES[reaction]) || (agitate > 0.45 ? 'round' : eyeMood));
       for (var k = 0; k < pieces.length; k++) {
         var p = pieces[k], tx, ty, rot = 0;
         if (p.dragging) {
           tx = (pointerX - rect.left - p.gx) - p.hx * rect.width; ty = (pointerY - rect.top - p.gy) - p.hy * rect.height;
-          var hr = hero.getBoundingClientRect(), pw = p.el.offsetWidth, ph = p.el.offsetHeight, ox = rect.left + p.hx * rect.width, oy = rect.top + p.hy * rect.height;
+          var hr = heroRect, pw = parseFloat(p.el.style.width) * rect.width / 100, ph = parseFloat(p.el.style.height) * rect.height / 100, ox = rect.left + p.hx * rect.width, oy = rect.top + p.hy * rect.height;
           tx = Math.max(hr.left - ox + pw * 0.2, Math.min(hr.right - ox - pw * 0.2, tx)); ty = Math.max(hr.top - oy + ph * 0.2, Math.min(hr.bottom - oy - ph * 0.2, ty));
         } else if (p.role === 'spark') {
-          var live = (pointerActive || agitate > 0.02 || spinning) ? 1 : 0;
+          var live = !reduce && (pointerActive || agitate > 0.02 || spinning) ? 1 : 0;
           tx = nx * 0.6 * MAX * s + Math.sin(tm * 1.6 + p.phase) * MAX * 0.5 * s * live;
           ty = ny * 0.6 * MAX * s + Math.cos(tm * 1.3 + p.phase) * MAX * 0.6 * s * live;
-          if (spinning && reaction === 'hop') { tx = Math.cos(tm * 7 + p.phase) * MAX * 1.6; ty = Math.sin(tm * 7 + p.phase) * MAX * 1.6; }
+          if (spinning && !reduce && reaction === 'hop') { tx = Math.cos(tm * 7 + p.phase) * MAX * 1.6; ty = Math.sin(tm * 7 + p.phase) * MAX * 1.6; }
         } else {
-          var lean = LEAN[p.role] * s; tx = nx * lean * MAX; ty = ny * lean * MAX;
+          var lean = (compact && p.role === 'word' ? 0 : LEAN[p.role]) * s; tx = nx * lean * MAX; ty = ny * lean * MAX;
           if (p.hover) { ty -= rect.width * 0.02; rot = -3; }
           var left = p.id === 4 || p.id === 1;
           if (p.role === 'ear' && earMood) rot += earMood === 'droop' ? (left ? -14 : 14) : (left ? 5 : -5);
@@ -339,31 +382,58 @@
             else if (reaction === 'hop') { if (p.role !== 'word') ty -= Math.abs(Math.sin(tm * 8)) * MAX * 1.8; }
             else if (reaction === 'wave') { if (p.role !== 'word') ty += Math.sin(tm * 6 + p.hx * 5) * MAX * 0.45; }
           }
+          if (petting && !reduce && p.role !== 'word') {
+            var amp = MAX * petEnvelope, beat = Math.sin(petTime * 18);
+            if (pet === 'hop') ty -= Math.abs(Math.sin(petTime * 9)) * amp * 1.9;
+            else if (pet === 'breathe') { ty += Math.sin(petTime * 3) * amp * 0.4; if (p.role === 'ear') rot += (left ? -11 : 11) * petEnvelope; }
+            else if (pet === 'peek') { if (p.role === 'face') tx += amp * 0.6; if (p.role === 'ear') rot += (left ? -18 : 9) * petEnvelope; }
+            else if (pet === 'dance') { tx += beat * amp * 0.5; ty -= Math.abs(beat) * amp * 0.6; if (p.role === 'ear' || p.role === 'feet') rot += beat * 14; }
+            else if (pet === 'wiggle') { if (p.role === 'ear' || p.role === 'tail') rot += beat * 23 * petEnvelope; else ty += beat * amp * 0.3; }
+            else if (pet === 'tap') { if (p.role === 'feet') rot += Math.max(0, Math.sin(petTime * 20 + p.phase)) * 26 * petEnvelope; else if (p.role === 'face') ty += Math.abs(beat) * amp * 0.35; }
+            else if (pet === 'chat') { if (p.id === 14) ty += Math.abs(beat) * amp * 0.5; else if (p.role === 'ear') rot += beat * 6 * petEnvelope; }
+            else { ty += Math.sin(petTime * 6 + p.hx * 3) * amp * 0.6; if (p.role === 'ear') rot += Math.sin(petTime * 6) * 9 * petEnvelope; }
+          }
         }
         var kk = p.dragging ? 0.35 : 0.16;
         p.vx += (tx - p.x) * kk; p.vy += (ty - p.y) * kk; p.vx *= 0.74; p.vy *= 0.74; p.x += p.vx; p.y += p.vy;
         if (Math.abs(p.vx) + Math.abs(p.vy) > 0.05 || Math.abs(rot - p.rot) > 0.01) moving = true;
         p.rot += (rot - p.rot) * (p.role === 'word' ? 0.2 : 1);
         var eyeT = p.alt && p.big !== 1 ? ' scale(' + p.big + ')' : '';
-        p.el.style.transform = 'translate(' + p.x.toFixed(2) + 'px,' + p.y.toFixed(2) + 'px)' + (Math.abs(p.rot) > 0.01 ? ' rotate(' + p.rot.toFixed(2) + 'deg)' : '') + eyeT;
+        var transform = 'translate(' + p.x.toFixed(2) + 'px,' + p.y.toFixed(2) + 'px)' + (Math.abs(p.rot) > 0.01 ? ' rotate(' + p.rot.toFixed(2) + 'deg)' : '') + eyeT;
+        if (transform !== p.transform) { p.el.style.transform = transform; p.transform = transform; }
       }
       stepBall(f); if (ball && !ball.rest && !ball.drag) moving = true;
       if (stepParticles(f, now)) moving = true;
-      var fc = pieces[10]; accRoot.style.setProperty('--ax', fc.x.toFixed(2) + 'px'); accRoot.style.setProperty('--ay', fc.y.toFixed(2) + 'px');
+      var fc = pieces[10]; if (!compact) accRoot.style.transform = 'translate(' + fc.x.toFixed(2) + 'px,' + fc.y.toFixed(2) + 'px)';
       for (var q = 0; q < followers.length; q++) { var fp = followers[q].p; followers[q].el.style.transform = 'translate(' + (fp.x - fc.x).toFixed(2) + 'px,' + (fp.y - fc.y).toFixed(2) + 'px) rotate(' + fp.rot.toFixed(2) + 'deg)'; }
       if (cur && curOn) { curX += (curTX - curX) * 0.35; curY += (curTY - curY) * 0.35; cur.style.transform = 'translate(' + curX.toFixed(1) + 'px,' + curY.toFixed(1) + 'px)'; if (Math.abs(curTX - curX) + Math.abs(curTY - curY) > 0.3) moving = true; }
       if (moving || dragEl || agitate > 0.01 || spinning || pointerActive) raf = requestAnimationFrame(tick); else lastT = 0;
     }
     function poke(p, soft) {
+      if (compact || reduce) { if (!soft) petRabbit(); return; }
       if (!p) p = letters[(Math.random() * letters.length) | 0];
       measure(); var sc = rect.width / 560;
       if (soft) { p.vy = -14 * sc; wake(); return; }
       p.vx = (Math.random() < 0.5 ? -1 : 1) * (9 + Math.random() * 5) * sc; p.vy = -(27 + Math.random() * 8) * sc; away = p;
       say(t('home.status.letter', { n: NAME[p.id] })); wake();
     }
-    function hopAll() { measure(); var sc = rect.width / 560; pieces.forEach(function (p) { if (p.role !== 'word' && p.role !== 'spark') p.vy -= 9 * sc; }); wake(); }
+    function hopAll() { if (reduce) return; measure(); var sc = rect.width / 560; pieces.forEach(function (p) { if (p.role !== 'word' && p.role !== 'spark') p.vy -= 9 * sc; }); wake(); }
     var moodTimer = 0;
     function mood(m, ms) { moodOverride = m; wake(); clearTimeout(moodTimer); moodTimer = setTimeout(function () { moodOverride = null; wake(); }, ms); }
+    function petRabbit() {
+      var now = performance.now(); if (spinning || now - lastPet < 180) return;
+      lastPet = now; interacted = true;
+      var response = PET[current ? current.w : 'joyful'];
+      pet = response[1]; petAt = now; petUntil = now + (pet === 'breathe' ? 1700 : 1100);
+      mood(response[0], petUntil - now); wake();
+    }
+    root.addEventListener('click', function (e) {
+      if (e.target.closest('.word')) return;
+      measure();
+      if (e.clientY < rect.top + rect.height * 0.65) petRabbit();
+    });
+    root.addEventListener('pointerover', function (e) { if (e.target.closest('.rab')) cursorState('tap'); });
+    root.addEventListener('pointerout', function (e) { if (e.target.closest('.rab')) cursorState(''); });
     measure();
     if (!reduce) setTimeout(function () { if (!interacted) poke(); }, 1800);   // self demo: a letter jumps once to show it is loose
 
@@ -371,6 +441,7 @@
     var pts = [];
     function setupParticles(entry) {
       ptRoot.textContent = ''; pts = [];
+      if (compact || reduce) return;
       (entry.pt || []).forEach(function (spec) {
         var def = PT[spec.k], n = spec.n || 6;
         for (var i = 0; i < n; i++) {
@@ -391,7 +462,7 @@
     // particles float like things in space: a slow drift, a bump from the cursor sends them off, no spring home
     function stepParticles(f, now) {
       if (!pts.length || !heroSeen) return false;
-      var u = BW / rect.width, px = (pointerX - rect.left) * u, py = (pointerY - rect.top) * u, hr = hero.getBoundingClientRect();
+      var u = BW / rect.width, px = (pointerX - rect.left) * u, py = (pointerY - rect.top) * u, hr = heroRect;
       var xmin = (hr.left - rect.left) * u, xmax = (hr.right - rect.left) * u, ymin = (hr.top - rect.top) * u, ymax = (hr.bottom - rect.top) * u;
       var live = now - lastMove < 900, R = 380, any = false;
       pvx = px - ppx; pvy = py - ppy; ppx = px; ppy = py; if (Math.abs(pvx) + Math.abs(pvy) > 600) { pvx = 0; pvy = 0; }
@@ -431,6 +502,7 @@
       var el = accRoot.querySelector('[data-prop="ball"]'); ball = null; scoreN = 0; if (!el) return;
       var r = 95 * fs();
       ball = { el: el, roll: el.querySelector('.roll'), x: -400 * fk() + r, y: BH - r, r: r, vx: 0, vy: 0, ang: 0, drag: false, rest: true, trail: [], threwAt: 0, mode: 'gravity', until: 0, court: null, aim: null };
+      el.style.left = '0'; el.style.top = '0';
       var court = backRoot.querySelector('[data-prop="court"]'); aimEl = null;
       if (court) { var k = fk(); ball.court = { x0: (WALL.x - 100) * k, x1: (WALL.x - 100) * k + 2800 * k, y0: (WALL.y - 260) * k, y1: BH }; toLauncher(); bindAim(court); bindAim(el); }
       el.addEventListener('pointerdown', function (e) {
@@ -457,7 +529,8 @@
       placeBall();
     }
     function placeBall() {
-      ball.el.style.left = (ball.x - ball.r) / BW * 100 + '%'; ball.el.style.top = (ball.y - ball.r) / BH * 100 + '%';
+      var unit = rect.width / BW;
+      ball.el.style.transform = 'translate(' + ((ball.x - ball.r) * unit).toFixed(2) + 'px,' + ((ball.y - ball.r) * unit).toFixed(2) + 'px)';
       ball.roll.style.transform = 'rotate(' + ball.ang.toFixed(1) + 'deg)';
     }
     // the game's aiming: press inside the court, drag to aim, let go to fire; a ball that falls out comes back to the launcher
@@ -499,7 +572,7 @@
     }
     function stepBall(f) {
       if (!ball || ball.drag || ball.rest) return;
-      var u = BW / rect.width, hr = hero.getBoundingClientRect(), r = ball.r, arcade = ball.mode === 'arcade';
+      var u = BW / rect.width, hr = heroRect, r = ball.r, arcade = ball.mode === 'arcade';
       var xmin = (hr.left - rect.left) * u + r, xmax = Math.min(WALLX - r, (hr.right - rect.left) * u - r), ymin = (hr.top - rect.top) * u + r, ground = BH - r;
       if (arcade) ymin = Math.max(ymin, (WALL.y - 420) * fk());
       if (ball.court) { var cc = ball.court; xmin = cc.x0 + r; xmax = cc.x1 - r; ymin = cc.y0 + r; if (ball.y > cc.y1 + r) { toLauncher(); return; } }
@@ -646,6 +719,7 @@
 
     // ---------- the slot machine ----------
     var slot = document.getElementById('slot'), reel = document.getElementById('reel'), lever = document.getElementById('lever'), tierTag = document.getElementById('tier'), newTag = document.getElementById('new');
+    var slotWidthSignature = '', fontMeasureFrame = 0;
     var status = document.getElementById('hero-status'), go = document.getElementById('go');
     var current = null, lastReaction = null;
     function say(m) { if (status) status.textContent = m; }
@@ -658,9 +732,19 @@
     }
     function fixWidth() {
       if (!slot) return;
+      // Hero type sizes depend on viewport width and data-face, never viewport height.
+      var signature = innerWidth + '|' + (document.documentElement.getAttribute('data-face') || '');
+      if (signature === slotWidthSignature) return;
+      // Keep a draw running through address-bar/height changes and font swaps with equal row height.
+      if (spinAnimation && Math.abs(slot.getBoundingClientRect().height - spinRowHeight) > 0.1) spinAnimation.finish();
       var probe = document.createElement('span'); probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;left:-9999px'; slot.appendChild(probe);
-      var max = 0; WORDS.forEach(function (e) { var sp = wordSpan(e); probe.appendChild(sp); max = Math.max(max, sp.getBoundingClientRect().width); probe.removeChild(sp); });
-      probe.remove(); slot.style.width = Math.ceil(max) + 'px';
+      WORDS.forEach(function (e) { probe.appendChild(wordSpan(e)); });
+      var max = probe.getBoundingClientRect().width;
+      probe.remove(); slot.style.width = Math.ceil(max) + 'px'; slotWidthSignature = signature; geometryDirty = true;
+    }
+    function fontsChanged() {
+      if (fontMeasureFrame) return;
+      fontMeasureFrame = requestAnimationFrame(function () { fontMeasureFrame = 0; slotWidthSignature = ''; fixWidth(); });
     }
     function hangKeyring(on) {
       if (!lever) return; var k = lever.querySelector('.keyring'); if (k) k.remove();
@@ -677,23 +761,24 @@
       if (entry.theme) html.setAttribute('data-theme', entry.theme); else html.removeAttribute('data-theme');
       if (entry.font) html.setAttribute('data-face', entry.font); else html.removeAttribute('data-face');
       if ((entry.font || '') !== faceWas) fixWidth();
+      clearTimeout(moodTimer); moodOverride = null; pet = null;
       eyeMood = entry.eyes || null; earMood = entry.ears || null; byId[13].big = 1; byId[13].el.classList.remove('is-big');
       if (rhythm) { clearInterval(rhythm); rhythm = 0; ptRoot.classList.remove('is-playing'); }
       accRoot.querySelectorAll('.ac').forEach(function (a) { a.remove(); }); backRoot.querySelectorAll('.ac').forEach(function (a) { a.remove(); });
-      accRoot.insertAdjacentHTML('beforeend', entry.acc.map(function (k) { return ACC[k] ? ACC[k]() : ''; }).join(''));
+      if (!compact) accRoot.insertAdjacentHTML('beforeend', entry.acc.map(function (k) { return ACC[k] ? ACC[k]() : ''; }).join(''));
       accRoot.querySelectorAll('[data-back]').forEach(function (a) { backRoot.appendChild(a); });
       accRoot.setAttribute('data-tier', entry.tier); if (slot) slot.setAttribute('data-tier', entry.tier);
       if (tierTag) { var rare = entry.tier === 'rare' || entry.tier === 'epic'; tierTag.hidden = !rare; tierTag.textContent = entry.tier; tierTag.setAttribute('data-tier', entry.tier); }
       if (newTag) newTag.hidden = !!foundSet[entry.w];
-      hangKeyring(entry.acc.indexOf('keyring') >= 0);
+      hangKeyring(!compact && entry.acc.indexOf('keyring') >= 0);
       followers = []; accRoot.querySelectorAll('[data-follow]').forEach(function (el) { var p = byId[+el.getAttribute('data-follow')]; if (p) { el.style.transformOrigin = el.getAttribute('data-origin'); followers.push({ el: el, p: p }); } });
-      clearInterval(cheerTimer); cheerUntil = 0; if (entry.idle === 'cheer' && !reduce) cheerTimer = setInterval(function () { if (heroSeen) { cheerUntil = performance.now() + 900; wake(); } }, 2800);
+      clearInterval(cheerTimer); cheerUntil = 0; if (entry.idle === 'cheer' && !reduce && !compact) cheerTimer = setInterval(function () { if (heroSeen && !document.hidden && !spinning) { cheerUntil = performance.now() + 900; wake(); } }, 2800);
       setupParticles(entry); setupBall(); setupFeed();
-      if (animate) { accRoot.querySelectorAll('.ac').forEach(function (a, i) { a.style.animationDelay = (i * 40) + 'ms'; a.classList.add('pop'); }); backRoot.querySelectorAll('.ac').forEach(function (a) { a.classList.add('pop'); }); }
+      if (animate) { accRoot.querySelectorAll('.ac').forEach(function (a, i) { if (a.getAttribute('data-prop') === 'ball') return; a.style.animationDelay = (i * 40) + 'ms'; a.classList.add('pop'); }); backRoot.querySelectorAll('.ac').forEach(function (a) { a.classList.add('pop'); }); }
       if (go) { var pr = PRODUCT[entry.product]; if (pr) { go.querySelector('.go__t').textContent = t(pr.key); go.querySelector('img').src = pr.icon; go.querySelector('img').alt = pr.name; go.href = pr.href; go.hidden = false; go.classList.remove('pop'); if (animate) { void go.offsetWidth; go.classList.add('pop'); } } else go.hidden = true; }
       try { sessionStorage.setItem('nm-word', entry.w); } catch (_) { }
       found(entry.w);
-      say(t('home.status.word', { w: entry.w })); wake();
+      geometryDirty = true; say(t('home.status.word', { w: entry.w })); wake();
     }
     function pick() {
       var pool = WORDS.filter(function (e) { return e !== current; }), total = 0;
@@ -702,39 +787,49 @@
       for (var i = 0; i < pool.length; i++) { r -= WEIGHT[pool[i].tier]; if (r <= 0) return pool[i]; }
       return pool[pool.length - 1];
     }
-    // the slot blips once per word that goes past, taken from the game's own roulette sound
-    var TICK = 'assets/audio/roulette.m4a', tpool = [], tp = 0;
+    // Short pooled cues from the game's roulette sound, independent of animation frames.
+    var TICK = 'assets/audio/roulette.m4a', tpool = [], tp = 0, spinAnimation = null, spinSound = 0, spinRowHeight = 0;
+    var audioWarnings = {};
+    function audioError(err) {
+      var key = err && (err.name + ': ' + err.message);
+      if (!audioWarnings[key]) { audioWarnings[key] = true; console.warn('NewMeans hero audio:', err); }
+    }
     function blip() {
-      if (reduce) return;
-      if (!tpool.length) for (var i = 0; i < 6; i++) { var a = new Audio(TICK); a.volume = .32; a.preload = 'auto'; tpool.push(a); }
+      if (reduce || !heroSeen || document.hidden) return;
+      if (!tpool.length) for (var i = 0; i < 3; i++) { var a = new Audio(TICK); a.volume = .32; a.preload = 'auto'; tpool.push(a); }
       var el = tpool[tp++ % tpool.length];
-      try { el.currentTime = 0; var p = el.play(); if (p && p.catch) p.catch(function () { }); } catch (e) { }
+      try { el.currentTime = 0; var p = el.play(); if (p && p.catch) p.catch(audioError); } catch (e) { audioError(e); }
     }
     function spin(forced) {
       if (spinning) return; spinning = true; interacted = true;
       var next = forced || pick();
+      slot.classList.add('is-spinning'); lever.setAttribute('aria-disabled', 'true');
+      pet = null; clearTimeout(moodTimer); moodOverride = null;
       lever.classList.remove('is-pulled'); void lever.offsetWidth; lever.classList.add('is-pulled'); setTimeout(function () { lever.classList.remove('is-pulled'); }, 1000);
       var opts = ['dizzy', 'wave', 'flap', 'hop'].filter(function (r) { return r !== lastReaction; });
       reaction = lastReaction = opts[(Math.random() * opts.length) | 0];
-      if (reaction === 'wave' && !reduce) { var i = 0; waveTimer = setInterval(function () { poke(letters[i++ % letters.length], true); }, 110); }
+      if (reaction === 'wave' && !reduce && !compact) { var i = 0; waveTimer = setInterval(function () { if (heroSeen && !document.hidden) poke(letters[i++ % letters.length], true); }, 110); }
       wake();
-      var seq = [current || WORDS[0]]; var n = reduce ? 4 : 18;
+      var seq = [current || WORDS[0]]; var n = reduce ? 0 : compact ? 9 : 14;
       for (var j = 0; j < n; j++) seq.push(WORDS[(Math.random() * WORDS.length) | 0]);
       seq.push(next);
-      reel.textContent = ''; seq.forEach(function (e) { reel.appendChild(wordSpan(e)); });
-      var h = slot.getBoundingClientRect().height, total = (seq.length - 1) * h, dur = reduce ? 500 : 1700, t0 = performance.now();
-      var ticked = 0;
-      function step(now) {
-        var k = Math.min(1, (now - t0) / dur), e = 1 - Math.pow(1 - k, 3.2);
-        reel.style.transform = 'translateY(' + (-total * e).toFixed(2) + 'px)';
-        reel.style.filter = k < 0.75 ? 'blur(' + (1.6 * (1 - k)).toFixed(2) + 'px)' : '';
-        var past = Math.floor(e * (seq.length - 1));       // one blip per word passing the window
-        if (past > ticked) { ticked = past; blip(); }
-        if (k < 1) requestAnimationFrame(step); else land(next);
+      var fragment = document.createDocumentFragment(); seq.forEach(function (e) { fragment.appendChild(wordSpan(e)); }); reel.replaceChildren(fragment);
+      var h = slot.getBoundingClientRect().height, total = (seq.length - 1) * h, dur = reduce ? 160 : 1700;
+      spinRowHeight = h;
+      // The compositor owns the reel; no per-frame blur or main-thread DOM writes.
+      spinAnimation = reel.animate(reduce ? [{ opacity: 1 }, { opacity: 0.15 }] : [
+        { transform: 'translate3d(0,0,0)' }, { transform: 'translate3d(0,-' + total + 'px,0)' }
+      ], { duration: dur, easing: 'cubic-bezier(.12,.64,.22,1)', fill: 'forwards' });
+      if (!reduce) {
+        blip(); var blips = 0;
+        spinSound = setInterval(function () { if (++blips > 10) { clearInterval(spinSound); spinSound = 0; return; } blip(); }, compact ? 140 : 110);
       }
-      requestAnimationFrame(step);
+      spinAnimation.onfinish = function () { land(next); };
     }
     function land(next) {
+      if (spinAnimation) { spinAnimation.cancel(); spinAnimation = null; }
+      clearInterval(spinSound); spinSound = 0;
+      slot.classList.remove('is-spinning'); lever.removeAttribute('aria-disabled');
       slot.classList.add('is-landed'); setTimeout(function () { slot.classList.remove('is-landed'); }, 500);
       reel.textContent = ''; reel.appendChild(wordSpan(next)); reel.style.transform = ''; reel.style.filter = '';
       clearInterval(waveTimer); spinning = false; reaction = null;
@@ -745,6 +840,7 @@
       else { burst(40); hopAll(); mood('star', 1800); setTimeout(hopAll, 260); setTimeout(hopAll, 520); poke(); }
     }
     function burst(n) {
+      if (compact || reduce || !heroSeen || document.hidden) return;
       var cols = ['#FF6666', '#DAB249', '#79C0F1', '#C1A9EE', '#95C78A', '#EE95D1'];
       for (var i = 0; i < n; i++) {
         var c = document.createElement('i'); c.className = 'confetti'; c.style.background = cols[i % cols.length];
@@ -768,7 +864,7 @@
       var n = foundN();
       if (wordsBtn) wordsBtn.textContent = t('home.words', { n: n, t: WORDS.length });
       if (wordsCount) wordsCount.textContent = n + ' / ' + WORDS.length;
-      if (!wordsGrid) return; wordsGrid.textContent = '';
+      if (!wordsGrid || !wordsDlg || !wordsDlg.open) return; wordsGrid.textContent = '';
       TIERS.forEach(function (tier) {
         var row = document.createElement('div'); row.className = 'words__row'; row.setAttribute('data-tier', tier);
         var h = document.createElement('p'); h.className = 'words__tier'; h.textContent = tier; row.appendChild(h);
@@ -783,7 +879,7 @@
       });
     }
     if (wordsBtn && wordsDlg) {
-      wordsBtn.addEventListener('click', function () { renderWords(); wordsDlg.showModal(); });
+      wordsBtn.addEventListener('click', function () { wordsDlg.showModal(); renderWords(); });
       wordsDlg.addEventListener('click', function (e) { if (e.target === wordsDlg || e.target.closest('.words__close')) wordsDlg.close(); });
     }
 
@@ -791,17 +887,41 @@
     var initial = WORDS.filter(function (e) { return e.w === saved; })[0] || WORDS[0];
     if (slot && reel) {
       fixWidth(); addEventListener('resize', fixWidth);
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fixWidth);
+      if (document.fonts) {
+        document.fonts.ready.then(fontsChanged);
+        document.fonts.addEventListener('loadingdone', fontsChanged);
+      }
       reel.textContent = ''; reel.appendChild(wordSpan(initial));
     }
     applyWord(initial, false);
-    if (narrowMQ.addEventListener) narrowMQ.addEventListener('change', function () { if (current) applyWord(current, false); });
+    if (reduceMQ.addEventListener) reduceMQ.addEventListener('change', function (e) {
+      reduce = e.matches;
+      if (reduce) {
+        clearInterval(waveTimer); waveTimer = 0; cheerUntil = 0; pet = null;
+        pieces.forEach(function (p) { if (!p.dragging) p.x = p.y = p.vx = p.vy = 0; });
+        document.querySelectorAll('.confetti').forEach(function (el) { el.remove(); });
+        accRoot.querySelectorAll('.nm-sweat').forEach(function (el) { el.remove(); });
+        if (spinAnimation) {
+          clearInterval(spinSound); spinSound = 0; tpool.forEach(function (clip) { clip.pause(); });
+          spinAnimation.finish(); return; // land() regenerates the selected word using the new preference.
+        }
+      }
+      if (!spinning && current) applyWord(current, false);
+      wake();
+    });
+    if (compactMQ.addEventListener) compactMQ.addEventListener('change', function () {
+      compact = compactMQ.matches; hero.classList.toggle('hero--compact', compact);
+      letters.forEach(function (p) { p.hover = false; p.dragging = false; p.x = p.y = p.vx = p.vy = 0; p.el.classList.remove('drag'); });
+      dragEl = null; away = null; tnx = tny = nx = ny = 0;
+      if (current) applyWord(current, false); buildKeys(); invalidateGeometry();
+    });
 
     // keyboard access: hidden buttons for the rabbit and each letter
     var kb = document.getElementById('hero-keys');
     function buildKeys() {
       if (!kb) return; kb.textContent = '';
-      var rb = document.createElement('button'); rb.type = 'button'; rb.textContent = t('home.rabbit.action'); rb.addEventListener('click', function () { poke(); }); kb.appendChild(rb);
+      var rb = document.createElement('button'); rb.type = 'button'; rb.textContent = t('home.rabbit.action'); rb.addEventListener('click', petRabbit); kb.appendChild(rb);
+      if (compact) return;
       letters.forEach(function (p) { var b = document.createElement('button'); b.type = 'button'; b.textContent = t('home.letter.action', { n: NAME[p.id] }); b.addEventListener('click', function () { poke(p); }); kb.appendChild(b); });
     }
     buildKeys();
@@ -809,9 +929,9 @@
 
     root.__nm = { spin: spin, poke: poke, words: WORDS, set: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) spin(e); }, setNow: function (w) { var e = WORDS.filter(function (x) { return x.w === w; })[0]; if (e) { reel.textContent = ''; reel.appendChild(wordSpan(e)); applyWord(e, true); } },
       throwBall: function (vx, vy) { if (ball) { ball.rest = false; ball.vx = vx; ball.vy = vy; if (wallLive()) arcadeOn(); wake(); } }, shoot: function () { if (ball) shootBall(); }, ball: function () { return ball ? { x: Math.round(ball.x), y: Math.round(ball.y), rest: ball.rest, score: scoreN, mode: ball.mode } : null; },
-      mood: mood, eyes: function () { return eyesNow; }, particles: function () { return pts.map(function (p) { return [Math.round(p.x), Math.round(p.y)]; }); },
+      mood: mood, pet: petRabbit, eyes: function () { return eyesNow; }, particles: function () { return pts.map(function (p) { return [Math.round(p.x), Math.round(p.y)]; }); },
       cursor: function (x, y, s) { curOn = true; cur && cur.classList.add('is-on'); curX = curTX = x; curY = curTY = y; cursorState(s || ''); wake(); },
-      stats: function () { return { word: current && current.w, tier: current && current.tier, agitate: +agitate.toFixed(2), spinning: spinning, reaction: reaction, away: away ? NAME[away.id] : null, rendering: !!raf, go: go ? !go.hidden : null, found: foundN() }; } };
+      stats: function () { return { word: current && current.w, tier: current && current.tier, agitate: +agitate.toFixed(2), spinning: spinning, reaction: reaction, pet: performance.now() < petUntil ? pet : null, compact: compact, away: away ? NAME[away.id] : null, rendering: !!raf, go: go ? !go.hidden : null, found: foundN() }; } };
     window.NewMeansHero = root.__nm;
   }
   function auto() { document.querySelectorAll('[data-nm-hero]').forEach(mount); }

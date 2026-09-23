@@ -1,8 +1,7 @@
 /* Home scenes and the Dopamine University pieces, choreographed with GSAP ScrollTrigger.
  * Typer: a portal splits open, a ball rolls out, bounces across five keycaps (x linear, y quadratic = gravity)
- *        typing T Y P E R, bounces off the last one and drops into a second portal. Scrubbed by scroll; "replay"
- *        plays it in time with a random ball from the game. Dopamine: two wordless cards; a sparkle hops across the
- *        tests and settles on one, then a report writes itself. Reveals happen once; progress never rewinds (ratchet).
+ *        typing T Y P E R, bounces off the last one and drops into a second portal. Plays once enough of the
+ *        section is visible; "replay" plays it with a random ball from the game. Dopamine: soft, colourful shapes.
  * Studio: two rabbits running while obstacles fly in from the right; scrolling speeds them up. */
 (function () {
   'use strict';
@@ -39,13 +38,13 @@
     letters.forEach(function (b, i) { if (b) b.innerHTML = CAP_ICONS[i] || ''; });
     var balls = [ball.getAttribute('src')];
     if (P) P.catalog().then(function (c) { if (c && c.ball) balls = c.ball.map(function (b) { return 'assets/shop/' + b.sprite; }); });
-    var s = 1, tl = null, st = null, rtl = null;
+    var s = 1, tl = null, st = null, rtl = null, inView = false;
     function measure() { s = stage.clientWidth / U.W || 1; }
     function build(dur, replaying) {
       measure();
       var tl = G.timeline({ paused: true, defaults: { ease: 'none' } });
       var yRest = (U.CAPTOP - U.R) * s, rot = 0;
-      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: (U.IN.y - 22) * s, scale: 1, opacity: 1, rotation: 0 }, 0);
+      tl.set(ball, { xPercent: -50, yPercent: -50, x: U.IN.x * s, y: (U.IN.y - 22) * s, scale: 1, autoAlpha: 0, rotation: 0 }, 0);
       tl.set(pIn.concat(pOut), { opacity: 0, scale: .4 }, 0);
       tl.set(letters, { opacity: 0 }, 0);
       tl.fromTo(logo, { scale: 1.08 }, { scale: 1, duration: dur * .08 }, 0);
@@ -54,6 +53,7 @@
       // the hole opens in the ceiling and the ball drops out of it: the near rim hides whatever is still inside
       tl.to(pIn, { opacity: 1, scale: 1, duration: dur * .06, ease: 'back.out(2)' }, dur * .06);
       rot += 30;
+      tl.set(ball, { autoAlpha: 1 }, dur * .14);
       tl.to(ball, { y: yRest, rotation: rot, duration: dur * .10, ease: 'power2.in' }, dur * .14);
       tl.to(pIn, { opacity: 0, scale: .5, duration: dur * .06 }, dur * .24);
       function forward() { return replaying || (st && st.direction === 1); }
@@ -77,28 +77,41 @@
       tl.to(ball, { y: yRest - U.LAST * s, duration: d5 * .4, ease: 'power1.out' }, t5).to(ball, { y: U.OUT.y * s, duration: d5 * .6, ease: 'power1.in' }, t5 + d5 * .4);
       tl.to(pOut, { opacity: 1, scale: 1, duration: dur * .05, ease: 'back.out(2)' }, dur * .74);
       tl.to(ball, { y: (U.OUT.y + 36) * s, duration: dur * .06, ease: 'power1.in' }, dur * .86);   // same size, straight into the slot
+      tl.set(ball, { autoAlpha: 0 }, dur * .92);
       tl.to(pOut, { opacity: 0, scale: .5, duration: dur * .06 }, dur * .89);
       tl.fromTo(act, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: dur * .1 }, dur * .86);
       tl.fromTo(replayBtn, { opacity: 0 }, { opacity: 1, duration: dur * .06 }, dur * .94);
       return tl;
     }
     var playing = false, played = false;
+    function syncPlayback() {
+      if (rtl && playing) rtl.paused(document.hidden || !inView);
+    }
+    function playback(progress) {
+      if (rtl) rtl.kill();
+      rtl = build(3.1, true);
+      rtl.eventCallback('onComplete', function () { playing = false; replayBtn.disabled = false; });
+      rtl.progress(progress || 0, true);
+      syncPlayback();
+    }
     function run(withSound) {                               // play it through once, at its own pace
-      if (rtl) { rtl.kill(); rtl = null; }
       playing = true; played = true; replayBtn.disabled = true;
       if (withSound) touched = true;
-      rtl = build(3.1, true);      // a touch quicker than it was
-      rtl.eventCallback('onComplete', function () { playing = false; replayBtn.disabled = false; });
-      rtl.play(0);
+      playback(0);
     }
     function setup() {
-      if (rtl) { rtl.kill(); rtl = null; }
-      if (st) { st.kill(); st = null; }
+      if (playing && rtl) { playback(rtl.progress()); return; }
       if (tl) tl.kill();
       tl = build(1, false);
-      if (reduce || played) { tl.progress(1); return; }     // after it has run, the stage just stays finished
+      if (reduce || played) { tl.progress(1, true); return; } // after it has run, the stage just stays finished
       tl.progress(0);
-      st = ST.create({ trigger: root, start: 'top 62%', once: true, onEnter: function () { run(false); } });
+    }
+    function tryStart(self) {
+      if (!reduce && !played && self.isActive && !document.hidden) run(false);
+    }
+    function requiredVisibleHeight() {
+      // A tall section must still be able to reach the threshold on a short phone viewport.
+      return Math.min(root.offsetHeight, innerHeight) * 2 / 3;
     }
     function replay() {
       var cur = ball.getAttribute('src'), pool = balls.filter(function (b) { return b !== cur; });
@@ -115,7 +128,16 @@
       k.addEventListener('animationend', function () { k.classList.remove('is-hit'); });
     });
     setup();
-    addEventListener('resize', debounce(function () { if (!playing) setup(); }, 200));
+    ST.create({ trigger: root, start: 'top bottom', end: 'bottom top',
+      onToggle: function (self) { inView = self.isActive; syncPlayback(); },
+      onRefresh: function (self) { inView = self.isActive; syncPlayback(); } });
+    st = ST.create({ trigger: root,
+      start: function () { return 'top bottom-=' + requiredVisibleHeight(); },
+      end: function () { return 'bottom top+=' + requiredVisibleHeight(); },
+      onToggle: tryStart, onRefresh: tryStart });
+    tryStart(st);
+    document.addEventListener('visibilitychange', function () { syncPlayback(); tryStart(st); });
+    addEventListener('resize', debounce(setup, 200));
   }
 
   // ================================================================ Dopamine: shapes crowding a centre
@@ -128,8 +150,12 @@
     var ctx = canvas.getContext('2d');
     var w = 0, h = 0, dpr = 1, shapes = [], want = 6, raf = 0, last = 0, seen = false, nextAt = 0;
     function layout() {
-      var r = host.getBoundingClientRect(); w = r.width; h = r.height; if (!w || !h) return;
-      dpr = Math.min(2, devicePixelRatio || 1);
+      var r = host.getBoundingClientRect();
+      var nextDpr = Math.min(matchMedia('(pointer: coarse)').matches ? 1.5 : 2, devicePixelRatio || 1);
+      if (!r.width || !r.height || (r.width === w && r.height === h && dpr === nextDpr)) return;
+      var sx = w ? r.width / w : 1, sy = h ? r.height / h : 1;
+      shapes.forEach(function (o) { o.x *= sx; o.y *= sy; o.r *= Math.min(sx, sy); });
+      w = r.width; h = r.height; dpr = nextDpr;
       canvas.width = w * dpr; canvas.height = h * dpr; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
       draw();
     }
@@ -160,8 +186,9 @@
         var dx = p.x - o.x, dy = p.y - o.y, dd = Math.hypot(dx, dy) || .01, gap = (o.r * o.k + p.r * p.k) * .98;
         if (dd < gap) { var push = (gap - dd) / dd * 9 * dt; o.vx -= dx * push; o.vy -= dy * push; p.vx += dx * push; p.vy += dy * push; }
       }
+      var damping = Math.pow(.9, dt * 60);
       for (i = 0; i < shapes.length; i++) {
-        o = shapes[i]; o.vx *= .9; o.vy *= .9; o.x += o.vx * dt * 60 * .06; o.y += o.vy * dt * 60 * .06; o.rot += o.spin * dt;
+        o = shapes[i]; o.vx *= damping; o.vy *= damping; o.x += o.vx * dt * 60 * .06; o.y += o.vy * dt * 60 * .06; o.rot += o.spin * dt;
       }
       if (shapes.length < want && performance.now() > nextAt) { spawn(false); nextAt = performance.now() + 260 + Math.random() * 520; if (shapes.length >= want) want = 4 + ((Math.random() * 4) | 0); }
     }
@@ -179,20 +206,29 @@
       }
     }
     function tick(now) {
-      raf = 0; var dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
+      raf = 0;
+      if (!seen || document.hidden) { last = 0; return; }
+      if (last && now - last < 1000 / 60 - 1) { raf = requestAnimationFrame(tick); return; }
+      var dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
       step(dt); draw();
-      if (seen) raf = requestAnimationFrame(tick); else last = 0;
+      raf = requestAnimationFrame(tick);
+    }
+    function syncVisibility() {
+      if (seen && !document.hidden) { if (!raf) { last = 0; raf = requestAnimationFrame(tick); } }
+      else { cancelAnimationFrame(raf); raf = 0; last = 0; }
     }
     layout();
+    if (window.ResizeObserver) new ResizeObserver(debounce(layout, 120)).observe(host); else addEventListener('resize', debounce(layout, 200));
     if (reduce) { for (var z = 0; z < 6; z++) spawn(true); shapes.forEach(function (o) { o.k = 1; }); for (var q = 0; q < 90; q++) step(.05); draw(); return; }
     for (var z2 = 0; z2 < 5; z2++) spawn(true);
     ST.create({ trigger: host, start: 'top bottom', end: 'bottom top',
-      onToggle: function (self) { seen = self.isActive; if (seen && !raf) { last = 0; raf = requestAnimationFrame(tick); } } });
+      onToggle: function (self) { seen = self.isActive; syncVisibility(); },
+      onRefresh: function (self) { seen = self.isActive; syncVisibility(); } });
+    document.addEventListener('visibilitychange', syncVisibility);
     var head = root.querySelector('.scene__head'), line = root.querySelector('.dopa-line'), act = root.querySelector('.scene__act'), sec = root.querySelector('.sec');
     var intro = [sec, head, host, line, act].filter(Boolean);
     G.set(intro, { opacity: 0, y: 18 });
     ST.create({ trigger: root, start: 'top 72%', once: true, onEnter: function () { G.to(intro, { opacity: 1, y: 0, duration: .7, stagger: .1, ease: 'power2.out' }); } });
-    if (window.ResizeObserver) new ResizeObserver(debounce(layout, 120)).observe(host); else addEventListener('resize', debounce(layout, 200));
   }
 
   // ================================================================ the studio: two rabbits running
@@ -262,19 +298,23 @@
     rabbits.forEach(function (r) { buildRabbit(r.querySelector('.runner__art'), r.getAttribute('data-who')); });
     var arts = rabbits.map(function (r) { return r.querySelector('.runner__art'); });
     G.set(arts, { scaleX: -1, rotation: 0, transformOrigin: '50% 100%' });   // face right, stand level
-    var slot = [0, 0], order = [0, 1], scale = 1;                       // order[1] is the one out in front
-    function measure() { var rw = rabbits[0].offsetWidth || 180; scale = rw / 182; slot = [0, rw * 1.08]; crew.style.width = (slot[1] + rw) + 'px'; }
+    var slot = [0, 0], order = [0, 1], scale = 1, fieldWidth = 0, crewLeft = 0, metrics = [];
+    function measure() {
+      var rw = rabbits[0].offsetWidth || 180;
+      fieldWidth = root.clientWidth; crewLeft = crew.offsetLeft;
+      metrics = rabbits.map(function (r) { return { left: r.offsetLeft, halfWidth: r.offsetWidth * .5 }; });
+      scale = rw / 182; slot = [0, rw * 1.08]; crew.style.width = (slot[1] + rw) + 'px';
+    }
     measure();
     rabbits.forEach(function (r, i) { G.set(r, { x: slot[i] }); });
-    if (reduce) return;
     // on the ground they squash and stretch, like something soft landing over and over
-    rabbits.forEach(function (r, i) {
+    if (!reduce) rabbits.forEach(function (r, i) {
       var art = arts[i], feet = art.querySelectorAll('.rb--paw');
-      r.__art = art;
+      r.__art = art; r.__feet = [];
       r.__idle = G.fromTo(art, { scaleX: -1.06, scaleY: .94 },
-        { scaleX: -.96, scaleY: 1.06, duration: .36, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .18 });
-      if (feet[0]) G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15 });
-      if (feet[1]) G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15 });
+        { scaleX: -.96, scaleY: 1.06, duration: .36, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .18, paused: true });
+      if (feet[0]) r.__feet.push(G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15, paused: true }));
+      if (feet[1]) r.__feet.push(G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15, paused: true }));
     });
     function settle(r) { if (r.__idle) { G.set(r.__art, { scaleX: -1, scaleY: 1 }); r.__idle.restart(); } }
     // takeoff stretches, the air is neutral, the landing squashes
@@ -304,30 +344,30 @@
     }
     // they swap places so each takes a turn out front - obstacles stop coming first, and
     // the ones already on screen are allowed to run past before anybody moves
-    var swapAt = 0, spawning = true, swapping = false;
+    var swapAt = 0, swapEndsAt = 0, spawning = true, swapping = false;
     function swap(now) {
       swapping = true; order.reverse();
       order.forEach(function (ri, k) {
         var r = rabbits[ri];
-        G.to(r, { x: slot[k], duration: .9, ease: 'power2.inOut' });
+        r.__shift = G.to(r, { x: slot[k], duration: .9, ease: 'power2.inOut', onComplete: function () { r.__shift = null; } });
         if (k !== 1) return;                                        // the one taking the lead hops over the other
         r.__busy = 'swap'; r.style.zIndex = 3;
         hop(r, 150, .5, .5).eventCallback('onComplete', function () {
           r.__busy = 0; r.__tl = null; r.style.zIndex = ''; settle(r);
         });
       });
-      setTimeout(function () { swapping = false; spawning = true; }, 1100);
+      swapEndsAt = now + 1100;
       swapAt = now + 7000 + Math.random() * 4000;
     }
     // one world speed, like the dinosaur game: obstacles never overtake each other
     var SP = 340, AIR_Y = [58, 92], GROUND_SIZE = [28, 36, 50];
-    var items = [], last = 0, nextAt = 0, raf = 0, seen = false, boost = 0;
+    var items = [], last = 0, nextAt = 0, raf = 0, seen = false, active = false, boost = 0, time = 0, centres = [];
     function spawn(now) {
       var air = Math.random() < .3, pool = air ? AIR_OBS : GROUND_OBS, pick = pool[(Math.random() * pool.length) | 0];
       var el = document.createElement('div'); el.className = 'ob' + (pick.tone ? ' ob--' + pick.tone : '') + (air ? ' ob--air' : '');
       el.innerHTML = pick.img ? '<img src="' + pick.img + '" alt="" loading="lazy">' : pick.svg;
       var size = (air ? 30 + ((Math.random() * 2) | 0) * 8 : GROUND_SIZE[(Math.random() * GROUND_SIZE.length) | 0]) * scale;
-      var x0 = root.clientWidth + size;
+      var x0 = fieldWidth + size;
       el.style.width = size + 'px';
       el.style.marginBottom = (air ? AIR_Y[(Math.random() * AIR_Y.length) | 0] * scale : 0) + 'px';
       el.style.transform = 'translate(' + x0.toFixed(1) + 'px,0px)';   // placed before its first paint
@@ -335,14 +375,19 @@
       items.push({ el: el, x: x0, y: 0, vy: 0, rot: 0, alpha: 1, size: size, air: air, dead: false, hit: 0 });
       nextAt = now + ((280 + Math.random() * 240) * scale + size * 1.2) / (SP * scale) * 1000;   // a steady gap in distance
     }
-    function centre(r) { return crew.offsetLeft + r.offsetLeft + (G.getProperty(r, 'x') || 0) + r.offsetWidth * .5; }
-    function tick(now) {
+    function tick(stamp) {
       raf = 0;
-      var dt = Math.min(.05, last ? (now - last) / 1000 : .016); last = now;
-      var speed = (1 + boost) * scale; boost *= .93;
+      if (!active) { last = 0; return; }
+      if (last && stamp - last < 1000 / 60 - 1) { raf = requestAnimationFrame(tick); return; }
+      var dt = Math.min(.05, last ? (stamp - last) / 1000 : .016); last = stamp;
+      var now = time += dt * 1000;
+      var speed = (1 + boost) * scale; boost *= Math.pow(.93, dt * 60);
+      if (swapping && now >= swapEndsAt) { swapping = false; spawning = true; }
       if (!swapAt) swapAt = now + 5000;
       else if (!swapping && now > swapAt) { spawning = false; if (!items.length) swap(now); }
       var sp = SP * speed;
+      // Read each rabbit's cached transform once, before any obstacle styles are written.
+      for (var n = 0; n < rabbits.length; n++) centres[n] = crewLeft + metrics[n].left + (G.getProperty(rabbits[n], 'x') || 0) + metrics[n].halfWidth;
       for (var i = items.length - 1; i >= 0; i--) {
         var o = items[i];
         if (o.dead) {
@@ -351,7 +396,7 @@
           o.x -= sp * dt;                                        // ground pieces stay upright, like the dino game
           for (var ri = 0; ri < rabbits.length; ri++) {            // whoever it reaches first deals with it
             if (o.hit & (1 << ri)) continue;
-            var tta = (o.x - centre(rabbits[ri])) / sp;
+            var tta = (o.x - centres[ri]) / sp;
             if (tta < 0) { o.hit |= 1 << ri; continue; }
             if (tta < (o.air ? .16 : .34)) {
               o.hit |= 1 << ri;
@@ -365,7 +410,20 @@
         if (o.x < -o.size - 40 || o.alpha <= 0) { o.el.remove(); items.splice(i, 1); }
       }
       if (spawning && now > nextAt) spawn(now);
-      if (seen) raf = requestAnimationFrame(tick); else last = 0;
+      raf = requestAnimationFrame(tick);
+    }
+    function syncVisibility() {
+      var nextActive = seen && !reduce && !document.hidden && !(dlg && dlg.open);
+      if (nextActive === active) return;
+      active = nextActive;
+      rabbits.forEach(function (r) {
+        if (r.__idle) r.__idle.paused(!active || !!r.__busy);
+        if (r.__feet) r.__feet.forEach(function (tween) { tween.paused(!active); });
+        if (r.__tl) r.__tl.paused(!active);
+        if (r.__shift) r.__shift.paused(!active);
+      });
+      if (active) { last = 0; if (!raf) raf = requestAnimationFrame(tick); }
+      else { cancelAnimationFrame(raf); raf = 0; last = 0; boost = 0; }
     }
     // a card for whoever you tapped
     var dlg = document.getElementById('crew');
@@ -380,6 +438,7 @@
       var list = dlg.querySelector('[data-crew-list]'); list.textContent = '';
       c.does.forEach(function (d) { var li = document.createElement('li'); li.textContent = d; list.appendChild(li); });
       if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+      syncVisibility();
     }
     if (dlg) {
       var art0 = dlg.querySelector('[data-crew-art]');
@@ -391,14 +450,23 @@
         r.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(who); } });
       });
       if (art0) art0.textContent = '';
-      dlg.addEventListener('close', function () { var a = dlg.querySelector('[data-crew-art]'); if (a) a.textContent = ''; });
+      dlg.addEventListener('close', function () { var a = dlg.querySelector('[data-crew-art]'); if (a) a.textContent = ''; syncVisibility(); });
     }
-    addEventListener('resize', debounce(function () { measure(); order.forEach(function (ri, k) { G.set(rabbits[ri], { x: slot[k] }); }); }, 200));
+    addEventListener('resize', debounce(function () {
+      measure();
+      order.forEach(function (ri, k) {
+        var r = rabbits[ri];
+        if (r.__shift) { r.__shift.kill(); r.__shift = null; }
+        G.set(r, { x: slot[k] });
+      });
+    }, 200));
     ST.create({
       trigger: root, start: 'top bottom', end: 'bottom top',
-      onToggle: function (self) { seen = self.isActive; if (seen && !raf) { last = 0; raf = requestAnimationFrame(tick); } },
-      onUpdate: function (self) { boost = Math.min(3.2, Math.abs(self.getVelocity()) / 700); }
+      onToggle: function (self) { seen = self.isActive; syncVisibility(); },
+      onRefresh: function (self) { seen = self.isActive; syncVisibility(); },
+      onUpdate: function (self) { if (active) boost = Math.min(3.2, Math.abs(self.getVelocity()) / 700); }
     });
+    document.addEventListener('visibilitychange', syncVisibility);
   }
 
   function auto() {
