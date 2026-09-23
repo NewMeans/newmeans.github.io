@@ -77,7 +77,7 @@
 .pts{position:absolute;inset:0;pointer-events:none;z-index:3}
 .pt{position:absolute;will-change:transform}.pt svg{display:block;width:100%;height:100%;overflow:visible}
 .acc .ac{position:absolute;display:block}
-.acc .ac.hit{pointer-events:auto;cursor:pointer;touch-action:none}
+.acc .ac.hit{pointer-events:auto;cursor:pointer;touch-action:pan-y}
 .acc .ac.pop{animation:pop .5s var(--ease) both}
 .acc svg.ac{overflow:visible}
 .acc .ac.carry{transition:left .5s var(--ease),top .5s var(--ease)}
