@@ -7,7 +7,7 @@
 @font-face{font-family:"SUIT";src:url("assets/fonts/SUIT-Variable.woff2") format("woff2-variations");font-weight:100 900;font-display:swap}
 @font-face{font-family:"Pally";src:url("assets/fonts/Pally-500.woff2") format("woff2");font-weight:500;font-display:swap}
 @font-face{font-family:"Pally";src:url("assets/fonts/Pally-700.woff2") format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"DNFBitBit";src:url("assets/fonts/DNFBitBitv2.ttf") format("truetype");font-display:swap}
+@font-face{font-family:"DNFBitBit";src:url("assets/fonts/DNFBitBitv2.otf") format("opentype");font-display:swap}
 
 :root{
   --n-50:#FCFBF7; --n-100:#F9F5F1; --n-200:#F1ECE6; --n-300:#DFDAD4; --n-400:#BCB6B0; --n-500:#97918A; --n-600:#706B64; --n-700:#514D48; --n-800:#3B3732; --n-900:#24211D;
