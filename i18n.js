@@ -4,8 +4,8 @@
   "use strict";
   var STRINGS = {
     ko: {
-      "meta.title": "NewMeans: 게임과 AI 서비스",
-      "meta.description": "게임 Typer와 AI 심리테스트 도파민대학교를 만드는 2인 스튜디오, 뉴민스.",
+      "meta.title": "NewMeans | 뉴민스",
+      "meta.description": "조금 더 즐거운 인생을 위해",
       "nav.skip": "본문으로 건너뛰기",
       "nav.works": "제품",
       "nav.studio": "스튜디오",
@@ -34,8 +34,8 @@
       
       "foot.privacy": "개인정보 처리방침",
 
-      "typer.meta.title": "Typer: 기계식 키보드 타건음 아케이드",
-      "typer.meta.description": "키캡을 부수며 타건음을 듣는 벽돌깨기 게임. 스위치와 키캡을 바꾸고 책상을 꾸며보세요.",
+      "typer.meta.title": "Typer | NewMeans",
+      "typer.meta.description": "ASMR 키캡 벽돌깨기",
       "typer.shots": "Typer 화면 열 장. 옆으로 밀어서 볼 수 있습니다.", "typer.lofi": "Lo-Fi 틀기",
       "typer.group.keycap": "키캡", "typer.group.frame": "프레임", "typer.group.monitor": "모니터", "typer.group.switch": "스위치", "typer.group.sculpture": "오브제", "typer.group.ball": "볼",
       "typer.sound.on": "소리 끄기", "typer.sound.off": "소리 켜기",
@@ -52,8 +52,8 @@
       "typer.review.7": "очень помогло мне во время панической атаки.", "typer.review.7.meta": "Google Play · Русский", "typer.review.7.ko": "공황 발작이 왔을 때 큰 도움이 됐어요",
       "typer.review.8": "色々な軸を集めるのが楽しかったです。", "typer.review.8.meta": "App Store · 日本語", "typer.review.8.ko": "여러 축을 모으는 게 즐거웠어요",
 
-      "dopa.meta.title": "도파민대학교: AI 심리테스트 플랫폼",
-      "dopa.meta.description": "16개 유형으로는 정의할 수 없는 우리를 위해. 채팅 기록 하나로 AI가 쓰는 나만의 연구 보고서.",
+      "dopa.meta.title": "도파민대학교 | NewMeans",
+      "dopa.meta.description": "AI 심리테스트 플랫폼",
       "dopa.here": "도파민대학교",
       "dopa.count.a": "명의 사람", "dopa.count.b": "개의 유형", "dopa.count.sr": "사람 수만큼의 유형",
       "dopa.note": "{n}개의 서로 다른 도형, 16개로 분류할 수 있을까?",
@@ -62,7 +62,7 @@
 "dopa.review.2.by": "ㅇ***", "dopa.review.3.by": "지***", "dopa.review.4.by": "h***", "dopa.review.5.by": "민***", "dopa.review.6.by": "y***",
       "dopa.review.1.by": "수***", "dopa.review.2.by": "지***", "dopa.review.3.by": "h***", "dopa.review.4.by": "y***",
       "dopa.review.1": "심리테스트 이것저것 많이 해봤는데 이게 제일 재밌었어요 ㅋㅋ",
-      "dopa.review.2": "친구랑 해보고 단톡방 네 개 다 돌렸어요 다들 난리남",
+      "dopa.review.2": "친구랑 해보고 단톡방 네 개 다 돌렸어요",
       "dopa.review.3": "솔직히 기대 안 했는데 생각보다 정확해서 놀랐습니다",
       "dopa.review.4": "이 퀄리티가 무료라니",
       "dopa.fact": "16개 유형으로는 정의할 수 없는 우리를 위해",
@@ -71,8 +71,8 @@
       "studio.run": "두 사람이 함께 달린다"
     },
     en: {
-      "meta.title": "NewMeans: games and AI",
-      "meta.description": "NewMeans is the two-person studio behind Typer, a keyboard-sound game, and Dopamine University, an AI personality test.",
+      "meta.title": "NewMeans",
+      "meta.description": "Life, a little more joyful.",
       "nav.skip": "Skip to content",
       "nav.works": "Products",
       "nav.studio": "Studio",
@@ -101,8 +101,8 @@
       
       "foot.privacy": "Privacy",
 
-      "typer.meta.title": "Typer: a mechanical-keyboard arcade",
-      "typer.meta.description": "Break keycaps to the sound of mechanical switches. Customize your keyboard and desk in Typer.",
+      "typer.meta.title": "Typer | NewMeans",
+      "typer.meta.description": "ASMR KeyboardSmash",
       "typer.shots": "Ten screens from Typer. Swipe sideways.", "typer.lofi": "Play Lo-Fi",
       "typer.group.keycap": "Keycaps", "typer.group.frame": "Frame", "typer.group.monitor": "Monitor", "typer.group.switch": "Switch", "typer.group.sculpture": "Object", "typer.group.ball": "Ball",
       "typer.sound.on": "Turn sound off", "typer.sound.off": "Turn sound on",
@@ -119,8 +119,8 @@
       "typer.review.7": "очень помогло мне во время панической атаки.", "typer.review.7.meta": "Google Play · Russian", "typer.review.7.ko": "It helped me a lot during a panic attack",
       "typer.review.8": "色々な軸を集めるのが楽しかったです。", "typer.review.8.meta": "App Store · Japanese", "typer.review.8.ko": "Collecting all the different switches was fun",
 
-      "dopa.meta.title": "Dopamine University: AI personality tests",
-      "dopa.meta.description": "For all of us that sixteen types cannot describe. One chat log, one AI-written research report.",
+      "dopa.meta.title": "Dopamine University | NewMeans",
+      "dopa.meta.description": "AI Personality Test Platform",
       "dopa.here": "Dopamine University",
       "dopa.count.a": "people", "dopa.count.b": "types", "dopa.count.sr": "As many types as there are people",
       "dopa.note": "{n} shapes, no two alike. Sort those into sixteen?",
@@ -129,7 +129,7 @@
 "dopa.review.2.by": "ㅇ***", "dopa.review.3.by": "지***", "dopa.review.4.by": "h***", "dopa.review.5.by": "민***", "dopa.review.6.by": "y***",
       "dopa.review.1.by": "수***", "dopa.review.2.by": "지***", "dopa.review.3.by": "h***", "dopa.review.4.by": "y***",
       "dopa.review.1": "I have done loads of these and this one was by far the most fun.",
-      "dopa.review.2": "Did it with a friend, then ran four group chats through it. Everyone lost it.",
+      "dopa.review.2": "Did it with a friend, then ran four group chats through it.",
       "dopa.review.3": "Did not expect much and then it got me. Surprisingly sharp.",
       "dopa.review.4": "Cannot believe this costs nothing.",
       "dopa.fact": "For all of us that sixteen types cannot describe",

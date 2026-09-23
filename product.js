@@ -2,7 +2,7 @@
  * catalog: the game's shop data (assets/shop/catalog.json), fetched once.
  * Sound: the switch clips. Board: Typer's loop on a screen (drag to aim, keys fire, rows come down).
  * Play: the board with a switch row and the keyboard as a controller. Tilt: cards that lean to the cursor.
- * Field: 2,000 shapes, no two alike, stirred by the cursor; press and the nearest one becomes the AI sparkle. */
+ * Field: an adaptive shape field, stirred by the cursor; tap for a ripple and a brief AI sparkle. */
 (function () {
   'use strict';
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -176,12 +176,25 @@
   // ---------------------------------------------------------------- tilt cards
   function mountTilt(card) {
     if (card.__tilt || reduce) return; card.__tilt = true;
+    var finePointer = matchMedia('(hover: hover) and (pointer: fine)'), raf = 0, pointerX = 0, pointerY = 0;
+    function reset() {
+      if (raf) cancelAnimationFrame(raf); raf = 0;
+      card.style.setProperty('--ry', '0deg'); card.style.setProperty('--rx', '0deg'); card.classList.remove('is-tilting');
+    }
     card.addEventListener('pointermove', function (e) {
-      var r = card.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      card.style.setProperty('--ry', ((x - 0.5) * 12).toFixed(2) + 'deg'); card.style.setProperty('--rx', ((0.5 - y) * 10).toFixed(2) + 'deg');
-      card.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); card.style.setProperty('--gy', (y * 100).toFixed(1) + '%'); card.classList.add('is-tilting');
-    });
-    card.addEventListener('pointerleave', function () { card.style.setProperty('--ry', '0deg'); card.style.setProperty('--rx', '0deg'); card.classList.remove('is-tilting'); });
+      if (!finePointer.matches || e.pointerType === 'touch') return;
+      pointerX = e.clientX; pointerY = e.clientY;
+      if (raf) return;
+      raf = requestAnimationFrame(function () {
+        raf = 0;
+        var r = card.getBoundingClientRect(), x = (pointerX - r.left) / r.width, y = (pointerY - r.top) / r.height;
+        card.style.setProperty('--ry', ((x - 0.5) * 12).toFixed(2) + 'deg'); card.style.setProperty('--rx', ((0.5 - y) * 10).toFixed(2) + 'deg');
+        card.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); card.style.setProperty('--gy', (y * 100).toFixed(1) + '%'); card.classList.add('is-tilting');
+      });
+    }, { passive: true });
+    card.addEventListener('pointerleave', reset);
+    card.addEventListener('pointercancel', reset);
+    if (finePointer.addEventListener) finePointer.addEventListener('change', reset);
   }
 
   // ---------------------------------------------------------------- a field of shapes, no two alike.
@@ -190,7 +203,11 @@
     if (!root || root.__uf) return; root.__uf = true;
     var canvas = document.createElement('canvas'); root.appendChild(canvas);
     var ctx = canvas.getContext('2d');
-    var dots = [], w = 0, hgt = 0, dpr = 1, px = -9999, py = -9999, lastMove = 0, raf = 0, chosen = null, chosenAt = 0;
+    if (!ctx) throw new Error('NewMeansProduct.field: Canvas 2D is unavailable.');
+    var dots = [], w = 0, hgt = 0, dpr = 1, px = -9999, py = -9999, lastMove = -9999, raf = 0, lastFrame = 0;
+    var chosen = null, chosenAt = 0, wave = null, visible = !window.IntersectionObserver, pendingLayout = 0;
+    var compact = false, touchStart = null, pointerEvent = null, pointerRect = null, effectBounds = null;
+    var motionQuery = matchMedia('(prefers-reduced-motion: reduce)'), reduced = motionQuery.matches;
     var INK = ['#E8392F', '#FF4A3E', '#D22F28'], HOT = ['#F97316', '#FF8B1A', '#E8690A'], PALE = ['#FFCBC0', '#FFDAD2', '#FFBCAE'];
     var note = document.querySelector('[data-shape-note]');
     var masked = root.hasAttribute('data-mask');
@@ -245,13 +262,27 @@
       return { d: d, area: area };
     }
 
-    // Exactly TARGET shapes. Each part of the picture gets its own grid, sized from how much
-    // area it covers and how many shapes it should get, so the number is made of big shapes,
-    // the two lines beside it of small ones, and the field behind of large sparse ones.
-    var TARGET = 3000, WANT = [900, 1100, 1000];      // background, the number, the two lines
-    function layout() {
-      var r = root.getBoundingClientRect(); w = r.width; hgt = r.height; dpr = Math.min(2, devicePixelRatio || 1);
-      if (!w || !hgt) return;
+    // Preserve the main design's fine-grained lettering and dense backdrop.
+    // Geometry is built once per layout instead of tessellating thousands of shapes per frame.
+    function geometry(d) {
+      var path = new Path2D();
+      for (var k = 0; k < d.n; k++) {
+        var angle = d.rot + k / d.n * 6.283;
+        var x = Math.cos(angle) * d.size, y = Math.sin(angle) * d.size;
+        if (k) path.lineTo(x, y); else path.moveTo(x, y);
+      }
+      path.closePath(); d.path = path; d.extent = d.size + 2;
+    }
+    var sparkle = new Path2D('M0 -1C.12 -.3 .3 -.12 1 0C.3 .12 .12 .3 0 1C-.12 .3 -.3 .12 -1 0C-.3 -.12 -.12 -.3 0 -1Z');
+    function layout(force) {
+      pendingLayout = 0;
+      var r = root.getBoundingClientRect(), nextCompact = r.width <= 860 || matchMedia('(pointer: coarse)').matches;
+      var nextDpr = Math.min(nextCompact ? 1.5 : 2, devicePixelRatio || 1);
+      if (!r.width || !r.height) return;
+      if (force !== true && w === r.width && hgt === r.height && dpr === nextDpr && compact === nextCompact) return;
+      w = r.width; hgt = r.height; compact = nextCompact; dpr = nextDpr;
+      var target = 3000, wantNum = 1100, wantText = 1000;
+      chosen = null; wave = null; pointerEvent = null; pointerRect = null; effectBounds = null; px = py = -9999; lastMove = -9999;
       canvas.width = w * dpr; canvas.height = hgt * dpr; canvas.style.width = w + 'px'; canvas.style.height = hgt + 'px';
       var m = maskData(), mask = m && m.d, W = w | 0;
       var area = m ? m.area : [w * hgt, 0, 0, 0];
@@ -268,7 +299,7 @@
               hx: hx, hy: hy, x: hx, y: hy, vx: 0, vy: 0, s: s1,
               n: 3 + ((s3 * 6) | 0), rot: s1 * 6.28,
               size: Math.max(.8, step * sizeK * (.8 + s2 * .4)),
-              col: ramp[(s3 * 3) | 0], ink: !!g
+              col: ramp[(s3 * 3) | 0], ink: !!g, waveId: -1
             });
           }
         }
@@ -287,54 +318,179 @@
         }
         return out;
       }
-      var num = gather(WANT[1], area[1], [1], .5);
-      var kor = gather(WANT[2], area[2] + area[3], [2, 3], .46);
-      var bg = gather(Math.max(0, TARGET - num.length - kor.length), area[0], [0], .36);
-      var room = Math.max(0, TARGET - num.length - kor.length);
+      var num = gather(wantNum, area[1], [1], .5);
+      var kor = gather(wantText, area[2] + area[3], [2, 3], .46);
+      var bg = gather(Math.max(0, target - num.length - kor.length), area[0], [0], .36);
+      var room = Math.max(0, target - num.length - kor.length);
       if (bg.length > room) { bg.sort(function (a, b) { return a.s - b.s; }); bg.length = room; }
       for (var pad = bg.length; pad < room && bg.length; pad++) {                 // land on the number exactly
         var src = bg[(seed(pad + 31) * bg.length) | 0], off = 14 + seed(pad + 57) * 22;
         bg.push({ hx: src.hx + (seed(pad) - .5) * off, hy: src.hy + (seed(pad + 3) - .5) * off, x: 0, y: 0, vx: 0, vy: 0, s: seed(pad + 11),
-          n: src.n, rot: seed(pad + 5) * 6.28, size: src.size, col: src.col, ink: false });
+          n: src.n, rot: seed(pad + 5) * 6.28, size: src.size, col: src.col, ink: false, waveId: -1 });
         var q = bg[bg.length - 1]; q.x = q.hx; q.y = q.hy;
       }
       dots = bg.concat(num, kor);
+      dots.forEach(geometry);
       if (note) {                                               // the count is the point: give it the accent
         var parts = t('dopa.note', { n: '\u0000' }).split('\u0000'), strong = document.createElement('b');
         strong.textContent = (1000).toLocaleString();   // the headline says a thousand; the field holds more
         note.textContent = parts[0];
         note.appendChild(strong); note.appendChild(document.createTextNode(parts[1] || ''));
       }
-      draw(1);
+      draw(performance.now(), 0);
     }
-    function star(d, s) { ctx.beginPath(); for (var k = 0; k < 4; k++) { var a = d.rot + k * Math.PI / 2, b = a + Math.PI / 4; ctx.lineTo(d.x + Math.cos(a) * s, d.y + Math.sin(a) * s); ctx.lineTo(d.x + Math.cos(b) * s * .28, d.y + Math.sin(b) * s * .28); } ctx.closePath(); }
-    function draw(f) {
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, w, hgt);
-      var now = performance.now(), live = now - lastMove < 1500, any = false, glow = chosen && now - chosenAt < 1800;
-      for (var i = 0; i < dots.length; i++) {
-        var d = dots[i];
-        d.vx += (d.hx - d.x) * .06 * f; d.vy += (d.hy - d.y) * .06 * f;
-        if (live) { var dx = d.x - px, dy = d.y - py, dist = Math.hypot(dx, dy); if (dist < 110 && dist > .1) { var k = (1 - dist / 110); d.vx += dx / dist * k * 6 * f; d.vy += dy / dist * k * 6 * f; d.rot += k * .3 * f; } }
-        d.vx *= .82; d.vy *= .82; d.x += d.vx * f; d.y += d.vy * f;
-        if (Math.abs(d.vx) + Math.abs(d.vy) > .05) any = true;
-        var s = d.size;
-        if (d === chosen) { var q = Math.min(1, (now - chosenAt) / 400); star(d, s * (1 + q * 2.4)); ctx.fillStyle = '#FF6666'; ctx.globalAlpha = 1; ctx.fill(); continue; }
-        ctx.beginPath();
-        for (var k2 = 0; k2 < d.n; k2++) { var a = d.rot + k2 / d.n * 6.283; var X = d.x + Math.cos(a) * s, Y = d.y + Math.sin(a) * s; if (k2) ctx.lineTo(X, Y); else ctx.moveTo(X, Y); }
-        ctx.closePath(); ctx.fillStyle = d.col; ctx.globalAlpha = d.ink ? 1 : .62; ctx.fill();
+    function include(bounds, x, y, extent) {
+      bounds.left = Math.min(bounds.left, x - extent); bounds.top = Math.min(bounds.top, y - extent);
+      bounds.right = Math.max(bounds.right, x + extent); bounds.bottom = Math.max(bounds.bottom, y + extent);
+    }
+    function draw(now, f) {
+      if (pointerEvent) {
+        pointerRect = root.getBoundingClientRect();
+        px = pointerEvent.clientX - pointerRect.left; py = pointerEvent.clientY - pointerRect.top; pointerEvent = null;
       }
-      ctx.globalAlpha = 1;
-      return any || live || glow;
+      var dirty = f ? { left: w, top: hgt, right: 0, bottom: 0 } : { left: 0, top: 0, right: w, bottom: hgt };
+      if (effectBounds) { dirty.left = Math.min(dirty.left, effectBounds.left); dirty.top = Math.min(dirty.top, effectBounds.top); dirty.right = Math.max(dirty.right, effectBounds.right); dirty.bottom = Math.max(dirty.bottom, effectBounds.bottom); }
+      effectBounds = null;
+      var live = !reduced && now - lastMove < 160, any = false;
+      var glow = chosen && now - chosenAt < 1100, radius = compact ? 76 : 100, radiusSq = radius * radius;
+      var waveRadius = wave ? (now - wave.at) * .32 : 0;
+      if (wave && waveRadius > wave.max + 24) wave = null;
+      if (chosen && !glow) chosen = null;
+      var damping = Math.pow(.8, f);
+      for (var i = 0; i < dots.length; i++) {
+        var d = dots[i], oldX = d.x, oldY = d.y;
+        if (f && !reduced) {
+          d.vx += (d.hx - d.x) * .065 * f; d.vy += (d.hy - d.y) * .065 * f;
+          if (live) {
+            var dx = d.x - px, dy = d.y - py, distanceSq = dx * dx + dy * dy;
+            if (distanceSq < radiusSq && distanceSq > .01) {
+              var distance = Math.sqrt(distanceSq), force = (1 - distance / radius) * 2.7 * f;
+              d.vx += dx / distance * force; d.vy += dy / distance * force;
+            }
+          }
+          if (wave && d.waveId !== wave.at) {
+            var wx = d.hx - wave.x, wy = d.hy - wave.y, wdSq = wx * wx + wy * wy;
+            if (wdSq < wave.max * wave.max && wdSq <= waveRadius * waveRadius) {
+              var wd = Math.max(.1, Math.sqrt(wdSq)), impulse = (1 - wd / wave.max) * 5;
+              d.vx += wx / wd * impulse; d.vy += wy / wd * impulse; d.waveId = wave.at;
+            }
+          }
+          d.vx *= damping; d.vy *= damping; d.x += d.vx * f; d.y += d.vy * f;
+          if (Math.abs(d.vx) + Math.abs(d.vy) > .015 || Math.abs(d.hx - d.x) + Math.abs(d.hy - d.y) > .05) any = true;
+          else { d.x = d.hx; d.y = d.hy; d.vx = d.vy = 0; }
+        }
+        if (d.x !== oldX || d.y !== oldY) { include(dirty, oldX, oldY, d.extent); include(dirty, d.x, d.y, d.extent); }
+      }
+      var bloom = chosen && glow ? Math.sin((now - chosenAt) / 1100 * Math.PI) : 0;
+      var sparkleSize = chosen && glow ? Math.max(6, chosen.size) * (1 + bloom * 2.1) : 0;
+      if (wave || sparkleSize) {
+        effectBounds = { left: w, top: hgt, right: 0, bottom: 0 };
+        if (wave) {
+          var waveExtent = Math.max(0, waveRadius) + 2;
+          effectBounds = { left: wave.x - waveExtent, top: wave.y - waveExtent, right: wave.x + waveExtent, bottom: wave.y + waveExtent };
+          include(dirty, wave.x, wave.y, waveExtent);
+        }
+        if (sparkleSize) {
+          var sparkExtent = sparkleSize + 2;
+          effectBounds.left = Math.min(effectBounds.left, chosen.x - sparkExtent); effectBounds.top = Math.min(effectBounds.top, chosen.y - sparkExtent);
+          effectBounds.right = Math.max(effectBounds.right, chosen.x + sparkExtent); effectBounds.bottom = Math.max(effectBounds.bottom, chosen.y + sparkExtent);
+          include(dirty, chosen.x, chosen.y, sparkExtent);
+        }
+      }
+      // Keep the untouched pixels. Repaint every overlapping shape in its original order,
+      // and align the clip to physical pixels so antialiased edges never leave a seam.
+      var left = Math.max(0, Math.floor(dirty.left * dpr) / dpr), top = Math.max(0, Math.floor(dirty.top * dpr) / dpr);
+      var right = Math.min(w, Math.ceil(dirty.right * dpr) / dpr), bottom = Math.min(hgt, Math.ceil(dirty.bottom * dpr) / dpr);
+      var active = any || live || !!wave || !!glow;
+      var full = !f || !active || (right - left) * (bottom - top) > w * hgt * .65;
+      if (full) { left = top = 0; right = w; bottom = hgt; }
+      if (left >= right || top >= bottom) return active;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (!full) { ctx.save(); ctx.beginPath(); ctx.rect(left, top, right - left, bottom - top); ctx.clip(); }
+      ctx.clearRect(left, top, right - left, bottom - top);
+      for (var j = 0; j < dots.length; j++) {
+        var dot = dots[j];
+        if (!full && (dot.x + dot.extent < left || dot.x - dot.extent > right || dot.y + dot.extent < top || dot.y - dot.extent > bottom)) continue;
+        ctx.setTransform(dpr, 0, 0, dpr, dot.x * dpr, dot.y * dpr);
+        ctx.fillStyle = dot.col; ctx.globalAlpha = dot.ink ? 1 : .62;
+        if (dot === chosen && glow) ctx.globalAlpha *= 1 - bloom;
+        ctx.fill(dot.path);
+      }
+      if (wave) {
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.beginPath();
+        ctx.arc(wave.x, wave.y, Math.max(0, waveRadius), 0, Math.PI * 2);
+        ctx.lineWidth = 1; ctx.strokeStyle = INK[0]; ctx.globalAlpha = .13 * Math.max(0, 1 - waveRadius / wave.max); ctx.stroke();
+      }
+      if (chosen && glow) {
+        ctx.setTransform(dpr * sparkleSize, 0, 0, dpr * sparkleSize, chosen.x * dpr, chosen.y * dpr);
+        ctx.globalAlpha = bloom; ctx.fillStyle = INK[0]; ctx.fill(sparkle);
+      }
+      if (!full) ctx.restore(); ctx.globalAlpha = 1;
+      return active;
     }
-    function tick() { raf = 0; if (draw(1)) raf = requestAnimationFrame(tick); }
-    function pointer(e) { var r = root.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; lastMove = performance.now(); if (!raf) raf = requestAnimationFrame(tick); }
-    root.addEventListener('pointermove', pointer);
-    root.addEventListener('pointerdown', function (e) { pointer(e); var best = null, bd = 1e9; dots.forEach(function (d) { var dd = Math.hypot(d.x - px, d.y - py); if (dd < bd) { bd = dd; best = d; } }); chosen = best; chosenAt = performance.now(); });
-    root.addEventListener('pointerleave', function () { px = py = -9999; lastMove = performance.now(); if (!raf) raf = requestAnimationFrame(tick); });
-    layout();
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
-    window.addEventListener('nm:langchange', layout);
-    if (window.ResizeObserver) new ResizeObserver(layout).observe(root); else addEventListener('resize', layout);
+    function wake() {
+      if (!raf && visible && !document.hidden && !reduced) raf = requestAnimationFrame(tick);
+    }
+    function tick(now) {
+      raf = 0;
+      if (!visible || document.hidden || reduced) { lastFrame = 0; return; }
+      if (compact && lastFrame && now - lastFrame < 1000 / 60 - 1) { wake(); return; }
+      var f = lastFrame ? Math.min(2, (now - lastFrame) / 16.667) : 1;
+      lastFrame = now;
+      if (draw(now, f)) wake(); else lastFrame = 0;
+    }
+    function rest() {
+      cancelAnimationFrame(raf); raf = 0; lastFrame = 0; pointerEvent = null;
+      chosen = null; wave = null; touchStart = null; px = py = -9999; lastMove = -9999;
+      dots.forEach(function (d) { d.x = d.hx; d.y = d.hy; d.vx = d.vy = 0; });
+    }
+    function pointer(e) {
+      if (reduced || e.pointerType === 'touch') return;
+      pointerEvent = { clientX: e.clientX, clientY: e.clientY }; lastMove = performance.now(); wake();
+    }
+    function press(e) {
+      if (reduced) return;
+      var r = root.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+      var best = null, nearest = Infinity;
+      dots.forEach(function (d) { var dx = d.x - x, dy = d.y - y, dd = dx * dx + dy * dy; if (dd < nearest) { nearest = dd; best = d; } });
+      chosen = best; chosenAt = performance.now(); wave = { x: x, y: y, at: chosenAt, max: compact ? 180 : 250 }; wake();
+    }
+    root.addEventListener('pointermove', function (e) {
+      if (e.pointerType === 'touch') {
+        if (touchStart && (Math.abs(e.clientX - touchStart.x) > 10 || Math.abs(e.clientY - touchStart.y) > 10)) touchStart = null;
+        return;
+      }
+      pointer(e);
+    }, { passive: true });
+    root.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') { touchStart = { x: e.clientX, y: e.clientY, at: performance.now() }; return; }
+      if (e.button === 0) { pointer(e); press(e); }
+    }, { passive: true });
+    root.addEventListener('pointerup', function (e) {
+      if (e.pointerType === 'touch' && touchStart && performance.now() - touchStart.at < 600 && Math.abs(e.clientX - touchStart.x) <= 10 && Math.abs(e.clientY - touchStart.y) <= 10) press(e);
+      touchStart = null;
+    }, { passive: true });
+    root.addEventListener('pointercancel', function () { touchStart = null; }, { passive: true });
+    root.addEventListener('pointerleave', function (e) {
+      touchStart = null;
+      if (e.pointerType === 'touch') return;
+      pointerEvent = null; px = py = -9999; lastMove = -9999; wake();
+    });
+    function queueLayout() { if (!pendingLayout) pendingLayout = requestAnimationFrame(function () { layout(false); }); }
+    layout(true);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { layout(true); });
+    window.addEventListener('nm:langchange', function () { layout(true); });
+    if (window.ResizeObserver) new ResizeObserver(queueLayout).observe(root); else addEventListener('resize', queueLayout);
+    if (window.IntersectionObserver) new IntersectionObserver(function (entries) {
+      visible = entries[0].isIntersecting;
+      if (!visible) rest(); else { draw(performance.now(), 0); wake(); }
+    }).observe(root);
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) rest(); else if (visible) { draw(performance.now(), 0); wake(); }
+    });
+    function motionChanged() { reduced = motionQuery.matches; rest(); if (visible && !document.hidden) draw(performance.now(), 0); }
+    if (motionQuery.addEventListener) motionQuery.addEventListener('change', motionChanged);
+    else motionQuery.addListener(motionChanged);
   }
 
   function auto() {
