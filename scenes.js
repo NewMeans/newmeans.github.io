@@ -9,6 +9,21 @@
   var P = window.NewMeansProduct, sound = P && P.sound, G = window.gsap, ST = window.ScrollTrigger;
   if (!G || !ST) return;
   G.registerPlugin(ST);
+  // Position measurements must finish before CSS smooth scrolling resumes.
+  var scrollStyle = document.documentElement.style, scrollBehavior = null, scrollRestore = 0;
+  ST.addEventListener('refreshInit', function () {
+    if (scrollBehavior === null) scrollBehavior = scrollStyle.scrollBehavior;
+    cancelAnimationFrame(scrollRestore);
+    scrollStyle.scrollBehavior = 'auto';
+    // Flush the style change before ScrollTrigger temporarily resets the scroll position.
+    void document.documentElement.offsetHeight;
+  });
+  ST.addEventListener('refresh', function () {
+    scrollRestore = requestAnimationFrame(function () {
+      scrollStyle.scrollBehavior = scrollBehavior;
+      scrollBehavior = null; scrollRestore = 0;
+    });
+  });
   var touched = false; addEventListener('pointerdown', function () { touched = true; }, { once: true });
   function debounce(fn, ms) { var id; return function () { clearTimeout(id); id = setTimeout(fn, ms); }; }
 
@@ -233,7 +248,7 @@
 
   // ================================================================ the studio: two rabbits running
   // They face right, take turns leading, jump what is on the ground and swat what flies at them.
-  var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242], [17, 923, 1192, 206, 42], [18, 2379, 1192, 205, 42]];
+  var RP = [[1, 1673, 357, 133, 400], [2, 2401, 357, 133, 400], [3, 3383, 357, 99, 99], [4, 1415, 361, 193, 392], [5, 2142, 361, 194, 392], [7, 3501, 446, 225, 220], [8, 2846, 840, 403, 84], [9, 1217, 842, 132, 400], [10, 2644, 842, 133, 400], [11, 3291, 842, 132, 400], [12, 1477, 864, 96, 69], [13, 1936, 864, 94, 69], [14, 1659, 887, 190, 169], [15, 2127, 931, 225, 221], [16, 3518, 955, 187, 242]];
   // Whatever the day throws at you. Mostly drawn; the desk objects come out of the game.
   var SHOP = 'assets/shop/';
   var GROUND_OBS = [
@@ -273,7 +288,7 @@
     ceo: { role: 'CEO', name: 'Minsik Kim', nick: 'Olive', does: ['Game Client Dev', 'Web Frontend Dev', 'Applied AI Engineer', 'Designer by Necessity', 'Lunch Menu Select'] },
     cto: { role: 'CTO', name: 'Minseok Chang', nick: 'Ricotta', does: ['Game Client Dev', 'Infrastructure Dev', 'AI Research Engineer', 'Swimming'] }
   };
-  var FACE = { 12: 1, 13: 1, 14: 1 }, FOOT = { 17: 0, 18: 1 };
+  var FACE = { 12: 1, 13: 1, 14: 1 };
   var HX0 = 923, HY0 = 357, HW = 1854, HH = 885;
   var EYE = { 12: 1, 13: 1 };                  // both eyes borrow the caret, so they smile
   function buildRabbit(box, who) {
@@ -283,7 +298,7 @@
       var x = p[1], y = p[2], w = p[3], h = p[4], mask = p[0];
       if (EYE[p[0]]) { mask = 14; var nh = w * 169 / 190; y += (h - nh) / 2; h = nh; }
       var el = document.createElement('i');
-      el.className = 'rb' + (FACE[p[0]] ? ' rb--face' : '') + (p[0] in FOOT ? ' rb--paw' : '');
+      el.className = 'rb' + (FACE[p[0]] ? ' rb--face' : '');
       el.style.left = (x - HX0) / HW * 100 + '%'; el.style.top = (y - HY0) / HH * 100 + '%';
       el.style.width = w / HW * 100 + '%'; el.style.height = h / HH * 100 + '%';
       el.style.setProperty('--m', 'url("' + base + 'p' + mask + '.png")');
@@ -309,12 +324,10 @@
     rabbits.forEach(function (r, i) { G.set(r, { x: slot[i] }); });
     // on the ground they squash and stretch, like something soft landing over and over
     if (!reduce) rabbits.forEach(function (r, i) {
-      var art = arts[i], feet = art.querySelectorAll('.rb--paw');
-      r.__art = art; r.__feet = [];
+      var art = arts[i];
+      r.__art = art;
       r.__idle = G.fromTo(art, { scaleX: -1.06, scaleY: .94 },
         { scaleX: -.96, scaleY: 1.06, duration: .36, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .18, paused: true });
-      if (feet[0]) r.__feet.push(G.to(feet[0], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: i * .15, paused: true }));
-      if (feet[1]) r.__feet.push(G.to(feet[1], { y: 5, duration: .17, ease: 'sine.inOut', yoyo: true, repeat: -1, delay: .17 + i * .15, paused: true }));
     });
     function settle(r) { if (r.__idle) { G.set(r.__art, { scaleX: -1, scaleY: 1 }); r.__idle.restart(); } }
     // takeoff stretches, the air is neutral, the landing squashes
@@ -418,7 +431,6 @@
       active = nextActive;
       rabbits.forEach(function (r) {
         if (r.__idle) r.__idle.paused(!active || !!r.__busy);
-        if (r.__feet) r.__feet.forEach(function (tween) { tween.paused(!active); });
         if (r.__tl) r.__tl.paused(!active);
         if (r.__shift) r.__shift.paused(!active);
       });
