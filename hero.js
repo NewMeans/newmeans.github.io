@@ -299,10 +299,16 @@
       if (!active) {
         if (raf) cancelAnimationFrame(raf); raf = 0; lastT = 0;
         if (spinAnimation) spinAnimation.pause();
+        if (spinReactions) spinReactions.forEach(function (animation) { animation.pause(); });
         if (clips) clips.forEach(function (clip) { clip.pause(); });
         if (tpool) tpool.forEach(function (clip) { clip.pause(); });
       }
-      else { geometryDirty = true; if (spinAnimation && spinAnimation.playState === 'paused') spinAnimation.play(); wake(); }
+      else {
+        geometryDirty = true;
+        if (spinAnimation && spinAnimation.playState === 'paused') spinAnimation.play();
+        if (spinReactions) spinReactions.forEach(function (animation) { animation.play(); });
+        wake();
+      }
     }
     if (window.IntersectionObserver) new IntersectionObserver(function (es) { es.forEach(function (e) { heroSeen = e.isIntersecting; syncActivity(); }); }, { threshold: 0 }).observe(hero);
     document.addEventListener('visibilitychange', syncActivity);
@@ -339,6 +345,8 @@
     function tick(now) {
       raf = 0;
       if (!heroSeen || document.hidden) { lastT = 0; return; }
+      // Mobile spin reactions run on the compositor alongside the reel.
+      if (compact && spinning) { lastT = 0; return; }
       // Keep mobile physics at 60 Hz; the compositor can still move the reel at native refresh.
       if (compact && lastT && now - lastT < 1000 / 60 - 1) { raf = requestAnimationFrame(tick); return; }
       if (geometryDirty) measure();
@@ -788,7 +796,29 @@
       return pool[pool.length - 1];
     }
     // Short pooled cues from the game's roulette sound, independent of animation frames.
-    var TICK = 'assets/audio/roulette.m4a', tpool = [], tp = 0, spinAnimation = null, spinSound = 0, spinRowHeight = 0;
+    var TICK = 'assets/audio/roulette.m4a', tpool = [], tp = 0, spinAnimation = null, spinReactions = [], spinSound = 0, spinRowHeight = 0;
+    function animateSpinReaction() {
+      if (!compact || reduce) return;
+      setEyes(REACTION_EYES[reaction] || eyeMood);
+      pieces.forEach(function (p) {
+        if (p.role === 'word') return;
+        var y = 0, rotation = 0;
+        if (reaction === 'hop') y = -6;
+        else if (reaction === 'wave') y = p.hx < .5 ? -2 : 2;
+        else if (reaction === 'dizzy' && p.role === 'face') { y = 2; rotation = 6; }
+        else if (reaction === 'flap') {
+          if (p.role === 'ear') rotation = p.id === 4 || p.id === 1 ? 24 : -24;
+          else if (p.role === 'feet' || p.role === 'tail') rotation = 20;
+        }
+        if (!y && !rotation) return;
+        var base = p.el.style.transform || 'translate(0px,0px)';
+        spinReactions.push(p.el.animate([
+          { transform: base },
+          { transform: base + ' translateY(' + y + 'px) rotate(' + rotation + 'deg)' },
+          { transform: base }
+        ], { duration: reaction === 'flap' ? 320 : 500, iterations: Infinity, easing: 'ease-in-out' }));
+      });
+    }
     var audioWarnings = {};
     function audioError(err) {
       var key = err && (err.name + ': ' + err.message);
@@ -808,6 +838,7 @@
       lever.classList.remove('is-pulled'); void lever.offsetWidth; lever.classList.add('is-pulled'); setTimeout(function () { lever.classList.remove('is-pulled'); }, 1000);
       var opts = ['dizzy', 'wave', 'flap', 'hop'].filter(function (r) { return r !== lastReaction; });
       reaction = lastReaction = opts[(Math.random() * opts.length) | 0];
+      animateSpinReaction();
       if (reaction === 'wave' && !reduce && !compact) { var i = 0; waveTimer = setInterval(function () { if (heroSeen && !document.hidden) poke(letters[i++ % letters.length], true); }, 110); }
       wake();
       var seq = [current || WORDS[0]]; var n = reduce ? 0 : compact ? 9 : 14;
@@ -828,6 +859,7 @@
     }
     function land(next) {
       if (spinAnimation) { spinAnimation.cancel(); spinAnimation = null; }
+      spinReactions.forEach(function (animation) { animation.cancel(); }); spinReactions = [];
       clearInterval(spinSound); spinSound = 0;
       slot.classList.remove('is-spinning'); lever.removeAttribute('aria-disabled');
       slot.classList.add('is-landed'); setTimeout(function () { slot.classList.remove('is-landed'); }, 500);
@@ -880,7 +912,13 @@
     }
     if (wordsBtn && wordsDlg) {
       wordsBtn.addEventListener('click', function () { wordsDlg.showModal(); renderWords(); });
-      wordsDlg.addEventListener('click', function (e) { if (e.target === wordsDlg || e.target.closest('.words__close')) wordsDlg.close(); });
+      wordsDlg.addEventListener('click', function (e) {
+        var r = wordsDlg.getBoundingClientRect();
+        var outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+        if (e.target.closest('.words__close') || (e.target === wordsDlg && outside)) wordsDlg.close();
+      });
+    } else if (wordsBtn) {
+      throw new Error('NewMeans hero collection: #words-btn requires the #words dialog in index.html.');
     }
 
     var saved = null; try { saved = sessionStorage.getItem('nm-word'); } catch (_) { }
@@ -911,6 +949,7 @@
     });
     if (compactMQ.addEventListener) compactMQ.addEventListener('change', function () {
       compact = compactMQ.matches; hero.classList.toggle('hero--compact', compact);
+      if (spinAnimation) spinAnimation.finish();
       letters.forEach(function (p) { p.hover = false; p.dragging = false; p.x = p.y = p.vx = p.vy = 0; p.el.classList.remove('drag'); });
       dragEl = null; away = null; tnx = tny = nx = ny = 0;
       if (current) applyWord(current, false); buildKeys(); invalidateGeometry();

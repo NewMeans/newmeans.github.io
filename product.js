@@ -282,7 +282,7 @@
       if (force !== true && w === r.width && hgt === r.height && dpr === nextDpr && compact === nextCompact) return;
       w = r.width; hgt = r.height; compact = nextCompact; dpr = nextDpr;
       var target = 3000, wantNum = 1100, wantText = 1000;
-      chosen = null; wave = null; pointerEvent = null; pointerRect = null; effectBounds = null; px = py = -9999; lastMove = -9999;
+      chosen = null; wave = null; touchStart = null; pointerEvent = null; pointerRect = null; effectBounds = null; px = py = -9999; lastMove = -9999;
       canvas.width = w * dpr; canvas.height = hgt * dpr; canvas.style.width = w + 'px'; canvas.style.height = hgt + 'px';
       var m = maskData(), mask = m && m.d, W = w | 0;
       var area = m ? m.area : [w * hgt, 0, 0, 0];
@@ -445,8 +445,11 @@
       dots.forEach(function (d) { d.x = d.hx; d.y = d.hy; d.vx = d.vy = 0; });
     }
     function pointer(e) {
-      if (reduced || e.pointerType === 'touch') return;
+      if (reduced) return;
       pointerEvent = { clientX: e.clientX, clientY: e.clientY }; lastMove = performance.now(); wake();
+    }
+    function clearPointer() {
+      pointerEvent = null; px = py = -9999; lastMove = -9999; wake();
     }
     function press(e) {
       if (reduced) return;
@@ -456,25 +459,57 @@
       chosen = best; chosenAt = performance.now(); wave = { x: x, y: y, at: chosenAt, max: compact ? 180 : 250 }; wake();
     }
     root.addEventListener('pointermove', function (e) {
-      if (e.pointerType === 'touch') {
-        if (touchStart && (Math.abs(e.clientX - touchStart.x) > 10 || Math.abs(e.clientY - touchStart.y) > 10)) touchStart = null;
-        return;
-      }
-      pointer(e);
+      if (e.pointerType !== 'touch') pointer(e);
     }, { passive: true });
     root.addEventListener('pointerdown', function (e) {
-      if (e.pointerType === 'touch') { touchStart = { x: e.clientX, y: e.clientY, at: performance.now() }; return; }
+      if (e.pointerType === 'touch') return;
       if (e.button === 0) { pointer(e); press(e); }
     }, { passive: true });
-    root.addEventListener('pointerup', function (e) {
-      if (e.pointerType === 'touch' && touchStart && performance.now() - touchStart.at < 600 && Math.abs(e.clientX - touchStart.x) <= 10 && Math.abs(e.clientY - touchStart.y) <= 10) press(e);
+    // Decide before native scrolling takes ownership. Changing touch-action after
+    // pointerdown cannot rescue a cancelled pointer stream; Touch Events can cancel
+    // the first intentional drag while leaving native scroll momentum and pinch intact.
+    root.addEventListener('touchstart', function (e) {
       touchStart = null;
+      if (reduced || e.touches.length !== 1) { clearPointer(); return; }
+      var touch = e.touches[0], r = root.getBoundingClientRect();
+      var x = touch.clientX - r.left, y = touch.clientY - r.top;
+      var edge = Math.max(24, r.height * .09);
+      touchStart = { id: touch.identifier, x: touch.clientX, y: touch.clientY, at: performance.now(), distance: 0,
+        inside: x > 24 && x < r.width - 24 && y > edge && y < r.height - edge, mode: 'pending' };
     }, { passive: true });
-    root.addEventListener('pointercancel', function () { touchStart = null; }, { passive: true });
+    root.addEventListener('touchmove', function (e) {
+      if (!touchStart) return;
+      if (e.touches.length !== 1) { touchStart = null; clearPointer(); return; }
+      var touch = e.touches[0];
+      if (touch.identifier !== touchStart.id) return;
+      var dx = Math.abs(touch.clientX - touchStart.x), dy = Math.abs(touch.clientY - touchStart.y);
+      var distance = Math.hypot(dx, dy), elapsed = Math.max(1, performance.now() - touchStart.at);
+      touchStart.distance = Math.max(touchStart.distance, distance);
+      if (touchStart.mode === 'pending') {
+        if (distance < 8) return;
+        var sideways = dx > dy * 1.2;
+        var strongDiagonal = dx > dy * .65 && distance / elapsed > .35;
+        var held = elapsed >= 240 && touchStart.distance < 24;
+        touchStart.mode = touchStart.inside && (sideways || strongDiagonal || held) ? 'drag' : 'scroll';
+      }
+      if (touchStart.mode !== 'drag') return;
+      if (!e.cancelable) { touchStart.mode = 'scroll'; clearPointer(); return; }
+      e.preventDefault(); pointer(touch);
+    }, { passive: false });
+    root.addEventListener('touchend', function (e) {
+      if (!touchStart) return;
+      var touch = null;
+      for (var i = 0; i < e.changedTouches.length; i++) if (e.changedTouches[i].identifier === touchStart.id) touch = e.changedTouches[i];
+      if (!touch) return;
+      var distance = Math.max(touchStart.distance, Math.hypot(touch.clientX - touchStart.x, touch.clientY - touchStart.y));
+      if (!e.touches.length && touchStart.mode === 'pending' && distance < 8 && performance.now() - touchStart.at < 600) press(touch);
+      touchStart = null; clearPointer();
+    }, { passive: true });
+    root.addEventListener('touchcancel', function () { touchStart = null; clearPointer(); }, { passive: true });
+    root.addEventListener('pointercancel', function (e) { if (e.pointerType !== 'touch') clearPointer(); }, { passive: true });
     root.addEventListener('pointerleave', function (e) {
-      touchStart = null;
       if (e.pointerType === 'touch') return;
-      pointerEvent = null; px = py = -9999; lastMove = -9999; wake();
+      clearPointer();
     });
     function queueLayout() { if (!pendingLayout) pendingLayout = requestAnimationFrame(function () { layout(false); }); }
     layout(true);
