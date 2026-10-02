@@ -207,7 +207,7 @@ button.wd{padding:0;text-decoration:underline;text-decoration-color:transparent;
 .scene--typer{background:var(--m-100);--cta:var(--m-700);--cta-text:var(--n-50);--accent:var(--m-700);--surface-hover:var(--m-200)}
 .scene--typer .scene__pin{position:relative;padding:clamp(64px,9vh,110px) 0}
 .typer-stage{position:relative;width:min(100%,760px)}
-.typer-stage .replay{position:absolute;top:calc(50% - 22px);left:calc(672 / 760 * 100% + 4px)}
+.typer-stage .replay{position:absolute;top:calc(50% - 22px);left:min(calc(672 / 760 * 100% + 12px),calc(50% + 50vw - 48px))}
 .stage--typer{position:relative;width:min(100%,760px);aspect-ratio:760/320;margin:0 auto;overflow:hidden}
 .portal,.lip{position:absolute;width:calc(68 / 760 * 100%);aspect-ratio:68/24;transform:translate(-50%,-50%);opacity:0;border-radius:50%;overflow:hidden}
 .portal{z-index:2}
