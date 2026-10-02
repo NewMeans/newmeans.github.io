@@ -125,6 +125,16 @@
   </section>
 
 </main>
+<dialog class="words" id="words" aria-labelledby="words-title">
+  <div class="words__head">
+    <h2 id="words-title" data-i18n="home.words.title">모은 단어</h2>
+    <p id="words-count"></p>
+    <button type="button" class="words__close" data-i18n="home.words.close" data-i18n-attr="aria-label" aria-label="닫기" autofocus>
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div id="words-grid"></div>
+</dialog>
 <dialog class="crew" id="crew" aria-labelledby="crew-name">
   <div class="crew__in">
     <button type="button" class="crew__close" data-crew-close data-i18n="crew.close" data-i18n-attr="aria-label" aria-label="닫기">

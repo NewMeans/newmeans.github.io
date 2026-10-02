@@ -880,7 +880,13 @@
     }
     if (wordsBtn && wordsDlg) {
       wordsBtn.addEventListener('click', function () { wordsDlg.showModal(); renderWords(); });
-      wordsDlg.addEventListener('click', function (e) { if (e.target === wordsDlg || e.target.closest('.words__close')) wordsDlg.close(); });
+      wordsDlg.addEventListener('click', function (e) {
+        var r = wordsDlg.getBoundingClientRect();
+        var outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+        if (e.target.closest('.words__close') || (e.target === wordsDlg && outside)) wordsDlg.close();
+      });
+    } else if (wordsBtn) {
+      throw new Error('NewMeans hero collection: #words-btn requires the #words dialog in index.html.');
     }
 
     var saved = null; try { saved = sessionStorage.getItem('nm-word'); } catch (_) { }
