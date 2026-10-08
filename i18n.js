@@ -33,6 +33,14 @@
       "studio.title": "만드는 사람들", "crew.close": "닫기",
       
       "foot.privacy": "개인정보 처리방침",
+      "foot.business": "사업자 정보",
+      "foot.business.name": "상호명",
+      "foot.business.representative": "대표자",
+      "foot.business.registration": "사업자등록번호",
+      "foot.business.mailOrder": "통신판매업 신고번호",
+      "foot.business.address": "사업장 주소",
+      "foot.business.phone": "전화번호",
+      "foot.business.email": "이메일",
 
       "typer.meta.title": "Typer | NewMeans",
       "typer.meta.description": "ASMR 키캡 벽돌깨기",
@@ -100,6 +108,14 @@
       "studio.title": "The makers", "crew.close": "Close",
       
       "foot.privacy": "Privacy",
+      "foot.business": "Business information",
+      "foot.business.name": "Business name",
+      "foot.business.representative": "Representative",
+      "foot.business.registration": "Business registration number",
+      "foot.business.mailOrder": "Mail-order business registration number",
+      "foot.business.address": "Business address",
+      "foot.business.phone": "Phone",
+      "foot.business.email": "Email",
 
       "typer.meta.title": "Typer | NewMeans",
       "typer.meta.description": "ASMR KeyboardSmash",

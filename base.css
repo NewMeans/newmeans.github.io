@@ -103,17 +103,28 @@ h1,h2,h3{font-weight:600;letter-spacing:-.015em;line-height:1.2}
 [data-reveal].in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){[data-reveal]{opacity:1;transform:none;transition:none}.btn{transition:none}}
 
-/* ---------- footer: one line above a hairline, the same on every page ---------- */
+/* ---------- footer: links and business information, the same on every page ---------- */
 .foot{border-top:1px solid var(--line);margin-top:clamp(64px,10vh,120px);padding:26px 0 40px}
 .foot__in{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;font-size:13px;color:var(--text-2)}
 .foot__logo{height:14px;width:auto;margin-right:4px}
 .foot__in a{transition:color var(--dur) var(--ease)}
 .foot__in a:hover{color:var(--text-1)}
 .foot__copy{margin-left:auto}
+.foot__business{margin-top:24px;font-size:13px;color:var(--text-2)}
+.foot__business h2{margin-bottom:8px;font-size:13px;font-weight:600;color:var(--text-1)}
+.foot__business dl{display:flex;flex-wrap:wrap;gap:4px 24px}
+.foot__business dl>div{max-width:100%}
+.foot__business dt,.foot__business dd{display:inline}
+.foot__business dt::after{content:": "}
+.foot__business dd{overflow-wrap:anywhere}
+.foot__address{flex-basis:100%}
+.foot__business a{text-decoration:underline;text-underline-offset:3px}
+.foot__business a:hover{color:var(--text-1)}
 
 @media (max-width:680px){
   .nav__links{display:none}
   .nav__in{gap:10px}
   .nav__tools{gap:8px}
   .foot__copy{margin-left:0;flex-basis:100%}
+  .foot__business dl{flex-direction:column;gap:6px}
 }
