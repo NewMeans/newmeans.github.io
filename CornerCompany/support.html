@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Corner Company | Support</title>
+  <meta name="description" content="Get started with Corner Company, fix input and sound issues, connect optional AI tools, and contact NewMeans support.">
+  <link rel="canonical" href="https://newmeans.dev/CornerCompany/support.html">
+  <link rel="icon" type="image/png" href="../assets/brand/newmeans-logo.png">
+  <link rel="stylesheet" href="../base.css">
+  <style>
+    html { scroll-behavior: auto; }
+    .support { max-width: 920px; margin: auto; padding: 32px 24px 56px; }
+    .support-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; padding-bottom: 28px; border-bottom: 1px solid var(--line-strong); }
+    .support-header img { width: 130px; height: auto; }
+    .support a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+    .support-header nav { display: flex; gap: 24px; }
+    .support .eyebrow { color: var(--accent-strong); font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-top: 42px; }
+    .support h1 { font-size: clamp(34px, 6vw, 54px); line-height: 1.08; max-width: 690px; margin: 14px 0 20px; }
+    .support h2 { font-size: 25px; margin-bottom: 14px; }
+    .support p { margin: 12px 0; }
+    .support .lead { max-width: 650px; color: var(--text-2); font-size: 18px; }
+    .support .topics { display: flex; flex-wrap: wrap; gap: 10px; margin: 28px 0 38px; }
+    .support .topics a { padding: 9px 15px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-pill); font-size: 14px; text-decoration: none; }
+    .support section { margin-top: 36px; scroll-margin-top: 24px; }
+    .support .start { background: var(--accent-soft); border-radius: var(--r-tile); padding: 26px 28px; }
+    .support ol, .support ul { padding-left: 24px; }
+    .support li { padding-left: 3px; margin: 10px 0; }
+    .support details { border-bottom: 1px solid var(--line-strong); padding: 18px 0; }
+    .support summary { cursor: pointer; font-size: 18px; font-weight: 600; }
+    .support details > :not(summary) { margin-left: 22px; max-width: 740px; }
+    .support code { font-family: ui-monospace, monospace; font-size: .9em; overflow-wrap: anywhere; }
+    .support .contact { background: var(--surface); border: 1px solid var(--line-strong); border-radius: var(--r-tile); padding: 26px 28px; }
+    .support .contact .email { display: inline-block; font-size: 21px; font-weight: 600; margin: 4px 0 10px; }
+    .support .note, .support footer { color: var(--text-2); font-size: 14px; }
+    .support footer { margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--line-strong); }
+    @media (max-width: 480px) { .support { padding: 24px 18px 40px; } .support .start, .support .contact { padding: 22px 20px; } }
+  </style>
+</head>
+<body>
+  <main class="support">
+    <header class="support-header">
+      <a href="../" aria-label="NewMeans home"><img src="../assets/brand/newmeans-wordmark-ink.png" alt="NewMeans"></a>
+      <nav aria-label="Support navigation"><a href="privacy.html">Privacy Policy</a><a href="#contact">Contact</a></nav>
+    </header>
+    <p class="eyebrow">Corner Company Support</p>
+    <h1>A little help for your<br>desktop companion.</h1>
+    <p class="lead">Settle in with your pet, get typing, and make the corner of your screen your own. Find setup help and answers below.</p>
+    <p class="note">The first beta is for Apple silicon Macs. The app interface supports English and Korean.</p>
+    <nav class="topics" aria-label="Help topics">
+      <a href="#start">Get started</a><a href="#input">Input &amp; sound</a><a href="#pet">Pet &amp; controls</a><a href="#ai">AI activity</a><a href="#data">Data &amp; privacy</a>
+    </nav>
+
+    <section id="start" class="start" aria-labelledby="start-title">
+      <h2 id="start-title">Your first few minutes</h2>
+      <ol>
+        <li>Install the beta offered to your Mac in TestFlight, then open <strong>Corner Company</strong>.</li>
+        <li>Read the input explanation. To let your pet react while you use other apps, allow Corner Company under <strong>System Settings → Privacy &amp; Security → Accessibility</strong>. Quit and reopen the app if needed.</li>
+        <li>AI activity connections are optional. Continue without connecting them if you do not use Codex or Claude Code.</li>
+        <li>Choose a pet, preview a switch sound, and start. Open the bag beside your pet to find your three free starter boxes.</li>
+        <li>Type in another app to see your pet react. Hover over your pet for controls, or use its icon in the macOS menu bar.</li>
+      </ol>
+      <p class="note">No Corner Company account is required. The beta has no ads or real-money purchases.</p>
+    </section>
+
+    <section id="input" aria-labelledby="input-title">
+      <h2 id="input-title">Input &amp; sound</h2>
+      <details>
+        <summary>My pet does not react when I type.</summary>
+        <ol>
+          <li>Open Corner Company Settings and check <strong>Input permission</strong>.</li>
+          <li>In macOS Accessibility settings, make sure the installed Corner Company app is allowed, then quit and reopen it.</li>
+          <li>Test in a normal TextEdit document. Password fields and other Secure Input contexts can prevent keyboard events from reaching the app.</li>
+        </ol>
+        <p>If you previously used a separately downloaded development build, macOS may remember permission for that copy. Remove the obsolete Corner Company entry and add the copy you actually installed from TestFlight. This resets that app's grant; macOS may ask you to allow it again.</p>
+        <p>If the problem continues, <a href="#contact">contact us</a> with your macOS version, app build, and the app you were typing in. Do not include what you typed.</p>
+      </details>
+      <details>
+        <summary>The pet moves, but I cannot hear typing sounds.</summary>
+        <p>In Settings, turn on <strong>Typing sounds</strong> and raise the volume. Check your Mac's sound output and system volume. Preview a different switch sound to compare.</p>
+        <p>Holding one key does not repeatedly play the sound. Separate physical presses trigger separate reactions. Mouse activity can contribute to progress without producing a keyboard sound.</p>
+      </details>
+    </section>
+
+    <section id="pet" aria-labelledby="pet-title">
+      <h2 id="pet-title">Pet &amp; controls</h2>
+      <details>
+        <summary>My pet is hidden or off screen.</summary>
+        <p>Open the pet icon in the macOS menu bar and choose <strong>Show pet</strong> if it is hidden. Use <strong>Reset position</strong> to return it to a visible position, especially after changing displays.</p>
+        <p>When its options window is closed, Corner Company can run without a visible Dock icon. The menu-bar icon remains the place to reopen controls or quit.</p>
+      </details>
+      <details>
+        <summary>I cannot click my pet or its controls.</summary>
+        <p><strong>Game mode</strong> intentionally lets clicks pass through the pet. Turn it off from the menu-bar icon. The default shortcut is <strong>Shift–Option–Command–G</strong> when shortcuts are enabled and no other app has claimed it.</p>
+        <p>Outside Game mode, hover over the pet to reveal its buttons. Empty space in the transparent window lets you interact with the apps underneath.</p>
+      </details>
+      <details>
+        <summary>How do I change the language or quit?</summary>
+        <p>Open Settings and find <strong>Language</strong> under Other. Choose English or 한국어. The first launch follows your Mac's language.</p>
+        <p>Choose <strong>Quit</strong> from the menu-bar icon, or use <strong>Quit app</strong> in Settings. Closing the options window keeps your companion running.</p>
+      </details>
+      <details>
+        <summary>How do boxes and coins work?</summary>
+        <p>Normal keyboard and mouse activity earns coins, and running the app earns boxes over time. Your first three boxes are free to open. Open the bag or Draw view to claim rewards, and use Collection to equip them.</p>
+        <p>Choose <strong>View odds</strong> in the Draw view for the randomized item probabilities. Coins and items cannot be bought for real money, traded, or cashed out in this beta.</p>
+      </details>
+    </section>
+
+    <section id="ai" aria-labelledby="ai-title">
+      <h2 id="ai-title">Optional AI activity</h2>
+      <details>
+        <summary>How do I connect Codex or Claude Code?</summary>
+        <p>In the TestFlight/Mac App Store build, open <strong>Settings → AI activity → Connect folder</strong> for the tool you use. Choose its local session directory:</p>
+        <ul><li>Codex: <code>~/.codex/sessions</code></li><li>Claude Code: <code>~/.claude/projects</code></li></ul>
+        <p>In the macOS folder picker, press <strong>Shift–Command–G</strong> to enter a hidden folder path. If your tool uses a custom location, choose that location instead. Select the session folder, rather than your entire home folder.</p>
+        <p>The connection reports activity from local records; it does not sign in to an AI service or send conversations to NewMeans. These files may contain conversation text, so connect only folders you want the app to read. The core pet, sound, and collection features work without either tool.</p>
+      </details>
+      <details>
+        <summary>The indicator says “Reconnect required” or stays idle.</summary>
+        <p>Check that the selected folder still exists and contains sessions from the correct tool. Reconnect it if it was moved or access changed. Start a new task in that tool to check for activity.</p>
+        <p>Choose <strong>Disconnect</strong> to stop monitoring that tool and remove its saved connection. This does not delete the AI tool's original files. A connected but idle tool is not an error.</p>
+      </details>
+    </section>
+
+    <section id="data" aria-labelledby="data-title">
+      <h2 id="data-title">Data &amp; privacy</h2>
+      <details>
+        <summary>Does Corner Company record what I type?</summary>
+        <p>It uses physical key events in memory for reactions and saves aggregate activity counts locally. It does not save a keystroke history or reconstruct and save text typed in other apps. Task text and preset names you intentionally enter in Corner Company are saved locally as part of your progress.</p>
+        <p>Apple separately supplies TestFlight usage and crash information, and receives feedback you choose to send. See our <a href="privacy.html">Privacy Policy</a> for local AI access, support correspondence, and beta diagnostics.</p>
+      </details>
+      <details>
+        <summary>How do I save a pet photo?</summary>
+        <p>Use the pet photo save control in Settings and choose a destination. The exported PNG contains the pet scene with a transparent background; it does not capture your desktop or other apps. Canceling the save leaves your data unchanged.</p>
+      </details>
+      <details>
+        <summary>How do I reset or delete my data?</summary>
+        <p><strong>Reset all data</strong> in Settings removes local progress, activity statistics, currency, collections, tasks, and other saved settings, then returns to first-run setup. Your selected interface language can be retained. Connected AI folders are disconnected.</p>
+        <p><strong>This cannot be undone through the app.</strong> Reset is not the first step for fixing input or sound issues. Contact us before resetting if you want help preserving progress.</p>
+        <p>Exported photos, system diagnostics, your backups, and the original Codex or Claude Code session files are not deleted by the reset. Removing the app may leave local files behind. Privacy requests about information held by NewMeans can be sent to the address below.</p>
+      </details>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <h2 id="contact-title">Still need a hand?</h2>
+      <p>For help, beta feedback, or privacy requests, email NewMeans:</p>
+      <a class="email" href="mailto:newmeans.dev@gmail.com?subject=Corner%20Company%20support">newmeans.dev@gmail.com</a>
+      <p>For a bug report, include your Mac model, macOS version, Corner Company version/build, what you expected, what happened, and the steps to reproduce it. You can also send feedback through TestFlight.</p>
+      <p class="note">Remove personal text from screenshots. Do not send passwords, signing keys, or complete AI conversation logs. We can ask for a smaller, relevant diagnostic if needed.</p>
+    </section>
+    <footer>© 2026 NewMeans · <a href="privacy.html">Privacy Policy</a> · <a href="../">newmeans.dev</a></footer>
+  </main>
+</body>
+</html>
