@@ -48,7 +48,7 @@
     <p class="lead">Settle in with your pet, get typing, and make the corner of your screen your own. Find setup help and answers below.</p>
     <p class="note">The first beta is for Apple silicon Macs. The app interface supports English and Korean.</p>
     <nav class="topics" aria-label="Help topics">
-      <a href="#start">Get started</a><a href="#input">Input &amp; sound</a><a href="#pet">Pet &amp; controls</a><a href="#ai">AI activity</a><a href="#data">Data &amp; privacy</a>
+      <a href="#start">Get started</a><a href="#input">Input &amp; sound</a><a href="#pet">Pet &amp; controls</a><a href="#ai">AI activity</a><a href="#rankings">Rankings</a><a href="#data">Data &amp; privacy</a>
     </nav>
 
     <section id="start" class="start" aria-labelledby="start-title">
@@ -57,8 +57,8 @@
         <li>Install the beta offered to your Mac in TestFlight, then open <strong>Corner Company</strong>.</li>
         <li>Read the input explanation. To let your pet react while you use other apps, allow Corner Company under <strong>System Settings → Privacy &amp; Security → Accessibility</strong>. Quit and reopen the app if needed.</li>
         <li>AI activity connections are optional. Continue without connecting them if you do not use Codex or Claude Code.</li>
-        <li>Choose a pet, preview a switch sound, and start. Open the bag beside your pet to find your three free starter boxes.</li>
-        <li>Type in another app to see your pet react. Hover over your pet for controls, or use its icon in the macOS menu bar.</li>
+        <li>Choose a local nickname and a pet, preview a switch sound, and start. A local nickname does not publish a ranking entry. Open the bag beside your pet to find your three free starter boxes.</li>
+        <li>Type in another app to see your pet react. Hover over the menu button beneath your pet for controls, or use its icon in the macOS menu bar.</li>
       </ol>
       <p class="note">No Corner Company account is required. The beta has no ads or real-money purchases.</p>
     </section>
@@ -92,7 +92,7 @@
       <details>
         <summary>I cannot click my pet or its controls.</summary>
         <p><strong>Game mode</strong> intentionally lets clicks pass through the pet. Turn it off from the menu-bar icon. The default shortcut is <strong>Shift–Option–Command–G</strong> when shortcuts are enabled and no other app has claimed it.</p>
-        <p>Outside Game mode, hover over the pet to reveal its buttons. Empty space in the transparent window lets you interact with the apps underneath.</p>
+        <p>Outside Game mode, hover over the menu button beneath your pet to reveal its controls. The pet itself lets clicks pass through to the apps underneath.</p>
       </details>
       <details>
         <summary>How do I change the language or quit?</summary>
@@ -101,7 +101,8 @@
       </details>
       <details>
         <summary>How do boxes and coins work?</summary>
-        <p>Normal keyboard and mouse activity earns coins, and running the app earns boxes over time. Your first three boxes are free to open. Open the bag or Draw view to claim rewards, and use Collection to equip them.</p>
+        <p>Normal keyboard and mouse activity earns coins. If you connect a supported AI tool, active AI work also earns coins: one coin for each five seconds of active work, regardless of how many agents run together. AI work stops accruing during sleep, screen lock, or app closure.</p>
+        <p>Boxes accrue over time, including elapsed time while the app is closed, up to the three-box storage limit. Your first three boxes are free to open. Open the bag or Draw view to claim rewards, and use Collection to equip them.</p>
         <p>Choose <strong>View odds</strong> in the Draw view for the randomized item probabilities. Coins and items cannot be bought for real money, traded, or cashed out in this beta.</p>
       </details>
     </section>
@@ -122,6 +123,20 @@
       </details>
     </section>
 
+    <section id="rankings" aria-labelledby="rankings-title">
+      <h2 id="rankings-title">Optional rankings</h2>
+      <details>
+        <summary>How do I browse or share my look?</summary>
+        <p>Open <strong>Lounge → Rankings</strong> to browse public looks. Browsing does not need a sign-in. <strong>Share my look</strong> publishes your nickname and selected appearance; creating a local profile alone does not share anything.</p>
+        <p>Your equipment changes stay local until you choose <strong>Use current look</strong>. If you already have a public entry, changing your profile nickname updates its name. Ranking scores use item grades, not keyboard activity or AI conversation contents. See the <a href="privacy.html#rankings">ranking privacy details</a>.</p>
+      </details>
+      <details>
+        <summary>How do I remove my public look?</summary>
+        <p>Open <strong>My look</strong> and choose <strong>Remove</strong>. If offline, reconnect and reopen the app so the request can finish. Before uninstalling, remove your entry while online. Uninstalling alone does not withdraw an entry.</p>
+        <p>Publication is managed by a securely stored key for this installation, so there is no email/password sign-in or cross-device recovery. Contact support if you need help with a public entry, and never send your installation secret.</p>
+      </details>
+    </section>
+
     <section id="data" aria-labelledby="data-title">
       <h2 id="data-title">Data &amp; privacy</h2>
       <details>
@@ -135,7 +150,7 @@
       </details>
       <details>
         <summary>How do I reset or delete my data?</summary>
-        <p><strong>Reset all data</strong> in Settings removes local progress, activity statistics, currency, collections, tasks, and other saved settings, then returns to first-run setup. Your selected interface language can be retained. Connected AI folders are disconnected.</p>
+        <p><strong>Reset all data</strong> in Settings removes local progress, activity statistics, currency, collections, tasks, and other saved settings, then returns to first-run setup. Your selected interface language can be retained. Connected AI folders are disconnected. If you have a shared ranking entry, the app queues its removal; reconnect so the request can finish.</p>
         <p><strong>This cannot be undone through the app.</strong> Reset is not the first step for fixing input or sound issues. Contact us before resetting if you want help preserving progress.</p>
         <p>Exported photos, system diagnostics, your backups, and the original Codex or Claude Code session files are not deleted by the reset. Removing the app may leave local files behind. Privacy requests about information held by NewMeans can be sent to the address below.</p>
       </details>
