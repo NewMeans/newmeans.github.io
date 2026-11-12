@@ -1,0 +1,10 @@
+{
+  "ref": "origin/dev/store-docs",
+  "commit": "86c22e8e2a273e3c85cfbadc6ab8c56139a135c1",
+  "files": {
+    "terms-of-service.md": "9a6410ac37ac0eb1f31a4f0b9f60889c889302bd",
+    "privacy-policy.md": "ae57c83cd118c8773031782a3c6d55be513e2010",
+    "refund-policy.md": "2fac26a8a137e331177c17beda86b572786d264e",
+    "probability.md": "75a8b0cd6a9c6eac3e95f21c5c7169b2921d90c1"
+  }
+}
