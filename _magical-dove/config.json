@@ -1,0 +1,43 @@
+{
+  "siteUrl": "https://newmeans.dev/MagicalDove",
+  "gameName": "매지컬 비둘기",
+  "values": {
+    "상호": "뉴민스",
+    "대표자": "김민식",
+    "주소": "서울특별시 관악구 봉천로 408-1, 3층-96A호",
+    "전화": "010-2115-8023",
+    "이메일": "newmeans.dev@gmail.com",
+    "사업자등록번호": "174-20-02438",
+    "통신판매업신고번호": "2025-서울관악-1463",
+    "보호책임자 성명과 직책": "김민식 (대표)",
+    "시행일": "2026-11-13",
+    "확인: RevenueCat 개인정보 문의처": "compliance@revenuecat.com"
+  },
+  "documents": [
+    {
+      "id": "terms",
+      "label": "이용약관",
+      "file": "terms-of-service.md",
+      "versions": [{ "version": "1.0" }]
+    },
+    {
+      "id": "privacy",
+      "label": "개인정보 처리방침",
+      "file": "privacy-policy.md",
+      "memoAfterRule": true,
+      "versions": [{ "version": "1.0" }]
+    },
+    {
+      "id": "refund",
+      "label": "유료 상품 및 환불 안내",
+      "file": "refund-policy.md",
+      "versions": [{ "version": "1.0" }]
+    },
+    {
+      "id": "probability",
+      "label": "확률형 아이템 정보",
+      "file": "probability.md",
+      "versions": [{ "version": "1.0" }]
+    }
+  ]
+}

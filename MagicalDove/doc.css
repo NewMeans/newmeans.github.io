@@ -1,0 +1,76 @@
+/* 매지컬 비둘기 문서 페이지(_magical-dove/pages.mjs가 만드는 이용약관, 처리방침, 환불, 확률, 문의).
+   base.css의 토큰 위에 휴대폰에서 읽기 위한 레이아웃만 더한다. 강조색은 민트 하나. */
+html{scroll-behavior:auto}
+.md-top,.md-doc,.md-foot{max-width:760px;margin:0 auto;padding-left:20px;padding-right:20px}
+.md-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid var(--line-strong)}
+.md-top img{width:112px;height:auto}
+.md-top>a:last-child{padding:10px 0 10px 12px;font-size:14px;font-weight:500;color:var(--text-2)}
+.md-top>a:last-child:hover,.md-top>a[aria-current]{color:var(--text-1)}
+
+.md-doc{padding-top:4px;padding-bottom:48px;line-height:1.75;overflow-wrap:break-word}
+.md-doc h1{margin:28px 0 12px;font-size:clamp(26px,6.5vw,36px);line-height:1.3}
+.md-doc h2{margin:44px 0 12px;font-size:20px;line-height:1.45}
+.md-doc h3{margin:28px 0 8px;font-size:17px;line-height:1.5}
+.md-doc p,.md-doc ul,.md-doc ol,.md-doc blockquote{margin:10px 0}
+.md-doc ul{padding-left:1.3em}
+.md-doc li{margin:6px 0}
+.md-doc li>ul{margin:6px 0 0}
+.md-doc blockquote{padding-left:14px;border-left:2px solid var(--line-strong);color:var(--text-2)}
+.md-doc hr{margin:32px 0;border:0;border-top:1px solid var(--line-strong)}
+.md-doc a{color:var(--accent);text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;overflow-wrap:anywhere}
+.md-doc a:hover{color:var(--accent-strong)}
+.md-doc :target{scroll-margin-top:16px}
+.md-meta{color:var(--text-2);font-size:14px}
+
+/* 조항 번호는 목록 표시가 아니라 글자 */
+.md-ol{list-style:none;padding:0}
+.md-ol>li{position:relative;padding-left:1.8em}
+.md-ol__n{position:absolute;left:0;top:0;font-variant-numeric:tabular-nums}
+
+.md-toc{margin:22px 0 8px;padding:12px 18px;background:var(--surface);border-radius:var(--r-small)}
+.md-toc summary{padding:4px 0;font-weight:600;cursor:pointer}
+.md-toc ol{list-style:none;margin:8px 0 4px;padding:0;font-size:15px;line-height:1.55}
+.md-toc ol ol{margin:4px 0 10px;padding-left:1em;font-size:14px}
+.md-toc li{margin:0}
+.md-toc a{display:block;padding:5px 0;color:var(--text-1);text-decoration:none}
+.md-toc a:hover{color:var(--accent)}
+
+/* 표: 휴대폰보다 넓으면 표 상자 안에서 옆으로 밀림 */
+.md-table{margin:14px 0 18px;overflow-x:auto;border:1px solid var(--line-strong);border-radius:var(--r-small)}
+.md-table table{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.6;font-variant-numeric:tabular-nums}
+.md-table th,.md-table td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.md-table th+th,.md-table td+td{border-left:1px solid var(--line)}
+.md-table th{background:var(--surface);font-weight:600}
+.md-table tr:last-child td{border-bottom:0}
+.md-table--wide td{min-width:8.5em}
+
+.md-archived,.md-draft{margin:20px 0 0;padding:12px 16px;border-radius:var(--r-small);font-size:14px}
+.md-archived{background:var(--accent-soft);color:var(--accent-strong)}
+.md-doc .md-archived a{color:var(--accent-strong)}
+/* 미리보기 전용(serve --draft). 공개 페이지에는 나오지 않음 */
+.md-draft{background:var(--c-100);color:var(--c-800)}
+mark.md-todo{padding:0 3px;border-radius:4px;background:var(--c-100);color:var(--c-800);font-weight:600}
+
+/* 공지: 새 것이 위. 공지 하나가 여러 문단이어도 문서 본문과 같은 간격으로 읽힘 */
+.md-notice{margin-top:28px;padding-top:24px;border-top:1px solid var(--line-strong)}
+.md-doc .md-notice h2{margin:0 0 2px}
+.md-doc .md-notice>.md-meta{margin:0 0 14px}
+.md-notice p{margin:12px 0}
+.md-empty{margin:28px 0;padding:40px 20px;background:var(--surface);border-radius:var(--r-tile);color:var(--text-2);text-align:center}
+
+.md-contact{margin:24px 0;padding:20px 22px;background:var(--accent-soft);border-radius:var(--r-tile)}
+.md-doc .md-contact h2{margin:0 0 2px;font-size:14px;color:var(--accent-strong)}
+.md-doc .md-email{font-size:20px;font-weight:600;color:var(--accent-strong)}
+.md-links{list-style:none;padding:0!important}
+.md-links li{margin:0;border-bottom:1px solid var(--line)}
+.md-doc .md-links a{display:block;padding:14px 2px;color:var(--text-1);font-weight:500;text-decoration:none}
+.md-doc .md-links a:hover{color:var(--accent)}
+
+.md-foot{padding-top:12px;padding-bottom:36px;border-top:1px solid var(--line-strong);font-size:13px;color:var(--text-2)}
+.md-foot nav{display:flex;flex-wrap:wrap;gap:0 18px}
+.md-foot a{display:inline-block;padding:8px 0}
+.md-foot a:hover,.md-foot a[aria-current]{color:var(--text-1)}
+.md-foot a[aria-current]{font-weight:600}
+
+@media (max-width:480px){.md-top,.md-doc,.md-foot{padding-left:16px;padding-right:16px}}
+@media (max-width:360px){.md-table table{font-size:14px}.md-table th,.md-table td{padding:8px 8px}}
