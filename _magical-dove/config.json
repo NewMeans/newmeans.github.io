@@ -13,16 +13,25 @@
     "시행일": "2026-11-13",
     "확인: RevenueCat 개인정보 문의처": "compliance@revenuecat.com"
   },
+  "en": {
+    "gameName": "Magical Dove",
+    "values": {
+      "상호": "뉴민스 (NewMeans)",
+      "보호책임자 성명과 직책": "김민식 (Representative)"
+    }
+  },
   "documents": [
     {
       "id": "terms",
       "label": "이용약관",
+      "en": { "label": "Terms of Service" },
       "file": "terms-of-service.md",
       "versions": [{ "version": "1.0" }]
     },
     {
       "id": "privacy",
       "label": "개인정보 처리방침",
+      "en": { "label": "Privacy Policy" },
       "file": "privacy-policy.md",
       "memoAfterRule": true,
       "versions": [{ "version": "1.0" }]
@@ -30,12 +39,14 @@
     {
       "id": "refund",
       "label": "유료 상품 및 환불 안내",
+      "en": { "label": "Paid Items and Refunds" },
       "file": "refund-policy.md",
       "versions": [{ "version": "1.0" }]
     },
     {
       "id": "probability",
       "label": "확률형 아이템 정보",
+      "en": { "label": "Random Item Odds" },
       "file": "probability.md",
       "versions": [{ "version": "1.0" }]
     }

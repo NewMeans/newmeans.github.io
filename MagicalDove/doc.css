@@ -1,11 +1,12 @@
-/* 매지컬 비둘기 문서 페이지(_magical-dove/pages.mjs가 만드는 이용약관, 처리방침, 환불, 확률, 문의).
+/* 매지컬 비둘기 문서 페이지(_magical-dove/pages.mjs가 만드는 이용약관, 처리방침, 환불, 확률, 공지, 문의와 그 영어판 en/).
    base.css의 토큰 위에 휴대폰에서 읽기 위한 레이아웃만 더한다. 강조색은 민트 하나. */
 html{scroll-behavior:auto}
 .md-top,.md-doc,.md-foot{max-width:760px;margin:0 auto;padding-left:20px;padding-right:20px}
 .md-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px;border-bottom:1px solid var(--line-strong)}
 .md-top img{width:112px;height:auto}
-.md-top>a:last-child{padding:10px 0 10px 12px;font-size:14px;font-weight:500;color:var(--text-2)}
-.md-top>a:last-child:hover,.md-top>a[aria-current]{color:var(--text-1)}
+.md-top__links{display:flex;gap:6px}
+.md-top__links a{padding:10px 0 10px 12px;font-size:14px;font-weight:500;color:var(--text-2)}
+.md-top__links a:hover,.md-top__links a[aria-current]{color:var(--text-1)}
 
 .md-doc{padding-top:4px;padding-bottom:48px;line-height:1.75;overflow-wrap:break-word}
 .md-doc h1{margin:28px 0 12px;font-size:clamp(26px,6.5vw,36px);line-height:1.3}
@@ -21,6 +22,8 @@ html{scroll-behavior:auto}
 .md-doc a:hover{color:var(--accent-strong)}
 .md-doc :target{scroll-margin-top:16px}
 .md-meta{color:var(--text-2);font-size:14px}
+/* 영어판 맨 위: 번역이라는 것과 한국어 원문으로 가는 링크 */
+.md-translation{margin:12px 0 14px;padding:10px 14px;background:var(--surface);border-radius:var(--r-small);color:var(--text-2);font-size:14px;line-height:1.6}
 
 /* 조항 번호는 목록 표시가 아니라 글자 */
 .md-ol{list-style:none;padding:0}
@@ -72,5 +75,6 @@ mark.md-todo{padding:0 3px;border-radius:4px;background:var(--c-100);color:var(-
 .md-foot a:hover,.md-foot a[aria-current]{color:var(--text-1)}
 .md-foot a[aria-current]{font-weight:600}
 
-@media (max-width:480px){.md-top,.md-doc,.md-foot{padding-left:16px;padding-right:16px}}
-@media (max-width:360px){.md-table table{font-size:14px}.md-table th,.md-table td{padding:8px 8px}}
+/* 칸이 넷 이상인데 옆으로 밀지 않는 표(영어판 조커 표처럼 끝 칸이 확률인 것)는 휴대폰에서 칸 여백을 줄여 끝 칸까지 보이게 */
+@media (max-width:480px){.md-top,.md-doc,.md-foot{padding-left:16px;padding-right:16px}.md-table:not(.md-table--wide):has(th:nth-child(4)) :is(th,td){padding-left:8px;padding-right:8px}}
+@media (max-width:360px){.md-table table{font-size:14px}.md-table th,.md-table td{padding:8px 8px}.md-table:not(.md-table--wide):has(th:nth-child(4)) :is(th,td){padding-left:6px;padding-right:6px}}
