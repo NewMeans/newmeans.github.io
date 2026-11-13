@@ -1,10 +1,10 @@
 {
-  "ref": "origin/dev/store-docs",
-  "commit": "86c22e8e2a273e3c85cfbadc6ab8c56139a135c1",
+  "ref": "origin/main",
+  "commit": "6baf318e601498b588fe5753c423c452ab9270d4",
   "files": {
-    "terms-of-service.md": "9a6410ac37ac0eb1f31a4f0b9f60889c889302bd",
-    "privacy-policy.md": "ae57c83cd118c8773031782a3c6d55be513e2010",
-    "refund-policy.md": "2fac26a8a137e331177c17beda86b572786d264e",
-    "probability.md": "75a8b0cd6a9c6eac3e95f21c5c7169b2921d90c1"
+    "terms-of-service.md": "012962639857f3db34abacc7964f7327350341a9",
+    "privacy-policy.md": "ca199d4a5ba63a24c328a0480bbca85da3ff5297",
+    "refund-policy.md": "68e11f5828cad6b3594076571b9fc6bccf2899ed",
+    "probability.md": "3557d2f457817ac5cad041a7b51c01aaa91114d1"
   }
 }
