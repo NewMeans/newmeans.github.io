@@ -49,7 +49,7 @@
       "label": "확률형 아이템 정보",
       "en": { "label": "Random Item Odds" },
       "file": "probability.md",
-      "versions": [{ "version": "1.0" }]
+      "versions": [{ "version": "1.0" }, { "version": "1.4" }]
     }
   ]
 }

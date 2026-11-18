@@ -1,9 +1,10 @@
 {
-  "ref": "origin/dev/game-event-platform-candidates",
-  "commit": "354db0a84ab2a25722d49d2ce9d7ee6c34a1a894",
+  "ref": "origin/main",
+  "commit": "5840409161a5018523a32c1258f8093524061fef",
   "files": {
     "terms-of-service.md": "012962639857f3db34abacc7964f7327350341a9",
     "privacy-policy.md": "1adabc10bd523806803f7cb9301594bd753e2740",
-    "refund-policy.md": "68e11f5828cad6b3594076571b9fc6bccf2899ed"
+    "refund-policy.md": "68e11f5828cad6b3594076571b9fc6bccf2899ed",
+    "probability.md": "28a9287feb46f3f1b05299947c7fd17cf300a903"
   }
 }
