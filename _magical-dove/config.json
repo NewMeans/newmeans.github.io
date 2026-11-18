@@ -35,7 +35,7 @@
       "en": { "label": "Privacy Policy" },
       "file": "privacy-policy.md",
       "memoAfterRule": true,
-      "versions": [{ "version": "1.0" }, { "version": "1.1", "values": { "시행일": "2026-11-25" } }]
+      "versions": [{ "version": "1.0" }, { "version": "1.1", "values": { "시행일": "2026-11-18" } }]
     },
     {
       "id": "refund",
