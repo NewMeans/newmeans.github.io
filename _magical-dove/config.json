@@ -11,7 +11,8 @@
     "통신판매업신고번호": "2025-서울관악-1463",
     "보호책임자 성명과 직책": "김민식 (대표)",
     "시행일": "2026-11-13",
-    "확인: RevenueCat 개인정보 문의처": "compliance@revenuecat.com"
+    "확인: RevenueCat 개인정보 문의처": "compliance@revenuecat.com",
+    "확인: Google 개인정보 문의처": "googlekrsupport@google.com"
   },
   "en": {
     "gameName": "Magical Dove",
@@ -34,7 +35,7 @@
       "en": { "label": "Privacy Policy" },
       "file": "privacy-policy.md",
       "memoAfterRule": true,
-      "versions": [{ "version": "1.0" }]
+      "versions": [{ "version": "1.0" }, { "version": "1.1", "values": { "시행일": "2026-11-18" } }]
     },
     {
       "id": "refund",
