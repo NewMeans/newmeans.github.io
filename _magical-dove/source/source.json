@@ -1,9 +1,9 @@
 {
-  "ref": "origin/main",
-  "commit": "5840409161a5018523a32c1258f8093524061fef",
+  "ref": "origin/dev/privacy-policy-1.2",
+  "commit": "09b1374c5eb1fc4d2bb2ef95f0c9405d1cc092d9",
   "files": {
     "terms-of-service.md": "012962639857f3db34abacc7964f7327350341a9",
-    "privacy-policy.md": "1adabc10bd523806803f7cb9301594bd753e2740",
+    "privacy-policy.md": "4ba2a62de81a5985de639aa4a7ef2a7e002ac0a8",
     "refund-policy.md": "68e11f5828cad6b3594076571b9fc6bccf2899ed",
     "probability.md": "28a9287feb46f3f1b05299947c7fd17cf300a903"
   }
